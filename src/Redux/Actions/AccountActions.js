@@ -1,8 +1,8 @@
-export const SET_HOTEL_DATA = "SET_HOTEL_DATA"
+export const ADD_NEW_HOTEL_DATA = "ADD_NEW_HOTEL_DATA";
 
-export function setHotelData(data) {
-    return {
-        type: SET_HOTEL_DATA,
-        payload: data,
-    }
+export function addNewHotelData(data) {
+  return {
+    type: ADD_NEW_HOTEL_DATA,
+    payload: data,
+  };
 }

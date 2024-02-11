@@ -1,40 +1,40 @@
-import { useState } from "react"
-import { connect } from "react-redux"
-import {setHotelData} from "../../Redux/Actions/AccountActions"
+import { useState } from "react";
+import { connect } from "react-redux";
+import { addNewHotelData } from "../../Redux/Actions/AccountActions";
 
 const DEFAULT_FORM_DATA = {
-  name: null,
-  arrival: null,
-  depature: null,
-  confirmation: null,
-  NameOnReservation: null,
-}
+  hotelName: null,
+  arrivalData: null,
+  departureDate: null,
+  hotelConfirmation: null,
+  nameOnReservation: null,
+};
 
-function AddHotel({...props}){
-  const [formData, setFormData] = useState(DEFAULT_FORM_DATA)
-  const [displayNewNameInput, setDisplayNewNameInput] = useState(false)
+function AddHotel({ ...props }) {
+  const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+  const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
-    setFormData({[targetKey] : newValue })
-  }
+    setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
+  };
 
   const newNameInputToggle = () => {
-    setDisplayNewNameInput(!displayNewNameInput)
-  }
+    setDisplayNewNameInput(!displayNewNameInput);
+  };
 
   const handleReservationName = (event) => {
     let name;
     if (displayNewNameInput) {
       name = event.target.value;
     } else {
-      name = props.userAccount.firstName + ' ' + props.userAccount.lastName
+      name = props.userData?.firstName + " " + props.userData?.lastName;
     }
-    
-    setFormData({NameOnReservation: name})
-  }
+
+    setFormData((prevState) => ({ ...prevState, nameOnReservation: name }));
+  };
 
   const handleSubmit = () => {
     // ...
@@ -43,53 +43,83 @@ function AddHotel({...props}){
     // ...
     // ...
     // If API successful save data to redux state. Redux state not yet created.
-    props.addNewHotelData(formData)
-  }
+    props.addNewHotelData(formData);
+  };
 
-  
-return (
-    <div class="content-body">
-      {console.log(props.setHotelData)}
-      <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="inputHotel" placeholder="Hotel Name" onChange={handleChange}/>
+  return (
+    <div className="content-body">
+      <div className="form-floating mb-3">
+        <input
+          className="form-control"
+          name="hotelName"
+          id="hotelName"
+          placeholder="Hotel Name"
+          onChange={handleChange}
+        />
         <label for="inputHotel">Hotel Name</label>
       </div>
       {/* Dates here */}
-      <div class="form-floating">
-        <input type="password" class="form-control" id="inputConfirmation" placeholder="Confirmation #" onChange={handleChange}/>
+      <div className="form-floating">
+        <input
+          className="form-control"
+          name="hotelConfirmation"
+          id="hotelConfirmation"
+          placeholder="Confirmation #"
+          onChange={handleChange}
+        />
         <label for="inputConfirmation">Confirmation #</label>
       </div>
-      <div class="form-check my-2">
-        <input class="form-check-input" type="checkbox" value="" id="checkReservationSelf" onClick={handleReservationName}/>
-        <label class="form-check-label" for="checkReservationSelf">
+      <div className="form-check my-2">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          id="checkReservationSelf"
+          onClick={handleReservationName}
+        />
+        <label className="form-check-label" for="checkReservationSelf">
           The reservation is under my name
         </label>
       </div>
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" value="" id="checkReservationOther" onClick={newNameInputToggle}/>
-        <label class="form-check-label" for="checkReservationOther">
+      <div className="form-check mb-2">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          id="checkReservationOther"
+          onClick={newNameInputToggle}
+        />
+        <label className="form-check-label" for="checkReservationOther">
           The reservation is under another name
         </label>
       </div>
-      { displayNewNameInput ? 
-        (<div class="form-floating">
-        <input type="password" class="form-control" id="inputReservationName" placeholder="Name on Reservation" onChange={handleReservationName}/>
-        <label for="inputReservationName">Name on Reservation</label></div>) 
-        : null}
-      <button class="btn-save mt-3" type="submit" onClick={handleSubmit}>Save</button>
-  </div>
-  )
-
+      {displayNewNameInput ? (
+        <div className="form-floating">
+          <input
+            className="form-control"
+            name="nameOnReservation"
+            id="nameOnReservation"
+            placeholder="Name on Reservation"
+            onChange={handleReservationName}
+          />
+          <label for="inputReservationName">Name on Reservation</label>
+        </div>
+      ) : null}
+      <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
+        Save
+      </button>
+    </div>
+  );
 }
 
 function mapStateToProps(state) {
-    return{
-        hotel: state.account?.h
-    }
+  return {
+    userData: state.account?.userAccount,
+  };
 }
 
 const mapDispatchToProps = {
-setHotelData
+  addNewHotelData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddHotel)
+export default connect(mapStateToProps, mapDispatchToProps)(AddHotel);
