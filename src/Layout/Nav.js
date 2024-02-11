@@ -1,14 +1,32 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-function Nav() {
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [trips, setTrip] = useState([{ trip: 1 }, { trip: 2 }]);
-  // const [trips, setTrip] = useState([{trip:1},{trip:2}])
+import { connect } from "react-redux";
+
+function Nav({ ...props }) {
+  const loggedInNav = () => {
+    return (
+      <>
+        <Link to="/">Home</Link> <br />
+        <Link to="/hotels">Hotels</Link>
+        <br />
+        <Link to="/login">Login</Link>
+        <br />
+      </>
+    );
+  };
+
+  const guestNav = () => {
+    return (
+      <>
+        <Link to="/login">Login</Link>
+      </>
+    );
+  };
 
   return (
     <>
       <div
-        class="offcanvas  offcanvas-start"
+        class="offcanvas show offcanvas-start"
         tabindex="-1"
         id="offcanvas"
         aria-labelledby="offcanvasLabel"
@@ -25,12 +43,19 @@ function Nav() {
           ></button>
         </div>
         <div class="offcanvas-body">
-          <Link to="/">Home</Link>
-          <Link to="/hotels">Hotels</Link>
+          {props.userData ? loggedInNav() : guestNav()}
         </div>
       </div>
     </>
   );
 }
 
-export default Nav;
+function mapStateToProps(state) {
+  return {
+    userData: state.account?.userAccount,
+  };
+}
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

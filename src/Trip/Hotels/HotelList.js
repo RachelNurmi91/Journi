@@ -7,7 +7,7 @@ function HotelList({ ...props }) {
 
   useEffect(() => {
     sortByDate();
-  }, []);
+  }, [props.hotelListData]);
 
   const sortByDate = () => {
     let sortedHotels;
@@ -30,7 +30,7 @@ function HotelList({ ...props }) {
   const displayHotels = () => {
     return hotelList?.map((hotel) => {
       return (
-        <div className="listItem">
+        <div className="listItem" key={Math.random()}>
           <div className="container">
             <div className="row align-items-end">
               <div className="col">

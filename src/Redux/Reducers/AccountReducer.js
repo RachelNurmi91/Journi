@@ -21,10 +21,11 @@ const accountReducer = (state = initalState, action) => {
         ...state,
         userAccount: {
           ...state.userAccount,
-          trips: {
-            ...state.userAccount.trips,
-            hotels: [...state.userAccount.trips.hotels, action.payload],
-          },
+          trips: [
+            {
+              hotels: [...state.userAccount.trips[0].hotels, action.payload],
+            },
+          ],
         },
       };
     case SET_LOGGED_IN_USER_DATA:

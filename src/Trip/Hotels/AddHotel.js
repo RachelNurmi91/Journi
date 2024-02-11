@@ -72,6 +72,26 @@ function AddHotel({ ...props }) {
       <div className="form-floating mb-3">
         <input
           className="form-control"
+          name="country"
+          id="country"
+          placeholder="Country"
+          onChange={handleChange}
+        />
+        <label for="country">Country</label>
+      </div>
+      <div className="form-floating mb-3">
+        <input
+          className="form-control"
+          name="city"
+          id="city"
+          placeholder="City"
+          onChange={handleChange}
+        />
+        <label for="city">City</label>
+      </div>
+      <div className="form-floating mb-3">
+        <input
+          className="form-control"
           name="departureDate"
           id="departureDate"
           placeholder="Departure (mm/dd/yyy)"
