@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 function HotelList({ ...props }) {
   const [hotelList, setHotelList] = useState(null);
@@ -11,9 +12,9 @@ function HotelList({ ...props }) {
   const sortByDate = () => {
     let sortedHotels;
 
-    let hotels = props.hotelListData?.[0].hotels;
+    let hotels = props.hotelListData?.[0]?.hotels;
 
-    if (hotels > 1) {
+    if (hotels > 10) {
       sortedHotels = hotels.sort((a, b) => {
         if (a.arrivalDate > b.arrivalDate) return 1;
         if (a.arrivalDate < b.arrivalDate) return -1;
@@ -54,12 +55,10 @@ function HotelList({ ...props }) {
 
   return (
     <div className="constraint">
-      <h1>Hello</h1>
-      {console.log("TEST")}
       {displayHotels()}
 
       <button className="btn-save mt-3" type="submit">
-        Add New
+        <Link to="/hotels/add">Add New</Link>
       </button>
     </div>
   );

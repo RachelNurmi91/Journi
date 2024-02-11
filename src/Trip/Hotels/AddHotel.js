@@ -44,6 +44,7 @@ function AddHotel({ ...props }) {
     // ...
     // If API successful save data to redux state. Redux state not yet created.
     props.addNewHotelData(formData);
+    props.navigate("/hotels");
   };
 
   return (
@@ -56,9 +57,28 @@ function AddHotel({ ...props }) {
           placeholder="Hotel Name"
           onChange={handleChange}
         />
-        <label for="inputHotel">Hotel Name</label>
+        <label for="hotelName">Hotel Name</label>
       </div>
-      {/* Dates here */}
+      <div className="form-floating mb-3">
+        <input
+          className="form-control"
+          name="arrivalDate"
+          id="arrivalDate"
+          placeholder="Arrival (mm/dd/yyy)"
+          onChange={handleChange}
+        />
+        <label for="arrivalDate">Arrival</label>
+      </div>
+      <div className="form-floating mb-3">
+        <input
+          className="form-control"
+          name="departureDate"
+          id="departureDate"
+          placeholder="Departure (mm/dd/yyy)"
+          onChange={handleChange}
+        />
+        <label for="departureDate">Departure</label>
+      </div>
       <div className="form-floating">
         <input
           className="form-control"
@@ -67,7 +87,7 @@ function AddHotel({ ...props }) {
           placeholder="Confirmation #"
           onChange={handleChange}
         />
-        <label for="inputConfirmation">Confirmation #</label>
+        <label for="confirmationNumber">Confirmation #</label>
       </div>
       <div className="form-check my-2">
         <input
@@ -102,7 +122,7 @@ function AddHotel({ ...props }) {
             placeholder="Name on Reservation"
             onChange={handleReservationName}
           />
-          <label for="inputReservationName">Name on Reservation</label>
+          <label for="nameOnReservation">Name on Reservation</label>
         </div>
       ) : null}
       <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
