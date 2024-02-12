@@ -58,7 +58,9 @@ function HotelList({ ...props }) {
       {displayHotels()}
 
       <button className="btn-save mt-3" type="submit">
-        <Link to="/hotels/add">Add New</Link>
+        <Link to="/hotels/add" className="btn-link">
+          Add New
+        </Link>
       </button>
     </div>
   );

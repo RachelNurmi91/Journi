@@ -30,6 +30,9 @@ function Nav({ ...props }) {
         <Link to="/login" className="nav-link">
           Login
         </Link>
+        <Link to="/login" className="nav-link">
+          Register
+        </Link>
       </>
     );
   };
@@ -37,7 +40,9 @@ function Nav({ ...props }) {
   return (
     <>
       <nav id="navbar-container">
-        {props.userData ? loggedInNav() : guestNav()}
+        <div className="navbar-body ">
+          {props.userData ? loggedInNav() : guestNav()}
+        </div>
       </nav>
     </>
   );
