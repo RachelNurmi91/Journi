@@ -26,6 +26,17 @@ export const testAccount01 = {
           nameOnReservation: "Rachel Nurmi",
         },
       ],
+      flights: [
+        {
+          airlineName: "Air Tokyo",
+          airportName: "Bradley International Airport",
+          flightNumber: "ZM2913",
+          flightDate: "02/01/2026",
+          ticketHolderName: "Rachel Nurmi",
+          confirmationNumber: "0293X2",
+          seatAssignment: "23C",
+        },
+      ],
     },
   ],
 };

@@ -1,6 +1,9 @@
-import { ADD_NEW_HOTEL_DATA } from "../Actions/AccountActions";
-import { SET_LOGGED_IN_USER_DATA } from "../Actions/AccountActions";
-import { SET_ACTIVE_TRIP } from "../Actions/AccountActions";
+import {
+  ADD_NEW_HOTEL_DATA,
+  SET_LOGGED_IN_USER_DATA,
+  SET_ACTIVE_TRIP,
+  ADD_NEW_FLIGHT_DATA,
+} from "../Actions/AccountActions";
 
 const initalState = {
   userAccount: null,
@@ -15,19 +18,6 @@ const initalState = {
 
 const accountReducer = (state = initalState, action) => {
   switch (action.type) {
-    case ADD_NEW_HOTEL_DATA:
-      //   let updatedTrips = state.userAccount.trips.push(action.payload);
-      return {
-        ...state,
-        userAccount: {
-          ...state.userAccount,
-          trips: [
-            {
-              hotels: [...state.userAccount.trips[0].hotels, action.payload],
-            },
-          ],
-        },
-      };
     case SET_LOGGED_IN_USER_DATA:
       return {
         userAccount: action.payload,
@@ -41,6 +31,30 @@ const accountReducer = (state = initalState, action) => {
             country: action.payload.destination,
             departure: action.payload.departure,
           },
+        },
+      };
+    case ADD_NEW_HOTEL_DATA:
+      return {
+        ...state,
+        userAccount: {
+          ...state.userAccount,
+          trips: [
+            {
+              hotels: [...state.userAccount.trips[0].hotels, action.payload],
+            },
+          ],
+        },
+      };
+    case ADD_NEW_FLIGHT_DATA:
+      return {
+        ...state,
+        userAccount: {
+          ...state.userAccount,
+          trips: [
+            {
+              flights: [...state.userAccount.trips[0].flights, action.payload],
+            },
+          ],
         },
       };
     default:

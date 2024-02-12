@@ -9,6 +9,8 @@ function Nav({ ...props }) {
         <Link to="/">Home</Link> <br />
         <Link to="/hotels">Hotels</Link>
         <br />
+        <Link to="/flights">Flights</Link>
+        <br />
         <Link to="/login">Login</Link>
         <br />
       </>
@@ -25,6 +27,13 @@ function Nav({ ...props }) {
 
   return (
     <>
+      <nav className="navbar bg-body-tertiary">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
+            Navbar
+          </a>
+        </div>
+      </nav>
       <div
         class="offcanvas show offcanvas-start"
         tabindex="-1"

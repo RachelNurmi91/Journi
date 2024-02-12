@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { addNewHotelData } from "../../Redux/Actions/AccountActions";
+import { addNewFlightData } from "../../Redux/Actions/AccountActions";
 
 const DEFAULT_FORM_DATA = {
-  hotelName: null,
-  arrivalData: null,
-  departureDate: null,
-  hotelConfirmation: null,
-  nameOnReservation: null,
+  airlineName: null,
+  airportName: null,
+  flightNumber: null,
+  flightDate: null,
+  ticketHolderName: null,
+  confirmationNumber: null,
+  seatAssignment: null,
 };
 
-function AddHotel({ ...props }) {
+function AddFlight({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
 
@@ -43,8 +45,8 @@ function AddHotel({ ...props }) {
     // ...
     // ...
     // If API successful save data to redux state. Redux state not yet created.
-    props.addNewHotelData(formData);
-    props.navigate("/hotels");
+    props.addNewFlightData(formData);
+    props.navigate("/flights");
   };
 
   return (
@@ -52,62 +54,62 @@ function AddHotel({ ...props }) {
       <div className="form-floating mb-3">
         <input
           className="form-control"
-          name="hotelName"
-          id="hotelName"
-          placeholder="Hotel Name"
+          name="airlineName"
+          id="airlineName"
+          placeholder="Airline"
           onChange={handleChange}
         />
-        <label for="hotelName">Hotel Name</label>
+        <label for="airlineName">Airline</label>
       </div>
       <div className="form-floating mb-3">
         <input
           className="form-control"
-          name="country"
-          id="country"
-          placeholder="Country"
+          name="airportName"
+          id="airportName"
+          placeholder="Airport"
           onChange={handleChange}
         />
-        <label for="country">Country</label>
+        <label for="airportName">Airport</label>
       </div>
       <div className="form-floating mb-3">
         <input
           className="form-control"
-          name="city"
-          id="city"
-          placeholder="City"
+          name="flightNumber"
+          id="flightNumber"
+          placeholder="Flight #"
           onChange={handleChange}
         />
-        <label for="city">City</label>
+        <label for="flightNumber">Flight #</label>
       </div>
       <div className="form-floating mb-3">
         <input
           className="form-control"
-          name="arrivalDate"
-          id="arrivalDate"
-          placeholder="Arrival"
+          name="flightDate"
+          id="flightDate"
+          placeholder="Departure Date"
           onChange={handleChange}
         />
-        <label for="arrivalDate">Arrival</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="departureDate"
-          id="departureDate"
-          placeholder="Departure (mm/dd/yyy)"
-          onChange={handleChange}
-        />
-        <label for="departureDate">Departure</label>
+        <label for="flightDate">Departure Date</label>
       </div>
       <div className="form-floating">
         <input
           className="form-control"
-          name="hotelConfirmation"
-          id="hotelConfirmation"
+          name="confirmationNumber"
+          id="confirmationNumber"
           placeholder="Confirmation #"
           onChange={handleChange}
         />
         <label for="confirmationNumber">Confirmation #</label>
+      </div>
+      <div className="form-floating">
+        <input
+          className="form-control"
+          name="seatAssignment"
+          id="seatAssignment"
+          placeholder="seatAssignment"
+          onChange={handleChange}
+        />
+        <label for="seatAssignment">seatAssignment</label>
       </div>
       <div className="form-check my-2">
         <input
@@ -137,12 +139,12 @@ function AddHotel({ ...props }) {
         <div className="form-floating">
           <input
             className="form-control"
-            name="nameOnReservation"
-            id="nameOnReservation"
-            placeholder="Name on Reservation"
+            name="ticketHolderName"
+            id="ticketHolderName"
+            placeholder="Ticket Holder"
             onChange={handleReservationName}
           />
-          <label for="nameOnReservation">Name on Reservation</label>
+          <label for="ticketHolderName">Ticket Holder</label>
         </div>
       ) : null}
       <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
@@ -159,7 +161,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  addNewHotelData,
+  addNewFlightData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddHotel);
+export default connect(mapStateToProps, mapDispatchToProps)(AddFlight);
