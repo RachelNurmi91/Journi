@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import ItemCollapse from "../../Layout/Shared/ItemCollapse";
 
 function FlightList({ ...props }) {
   const [flightList, setFlightList] = useState(null);
@@ -29,19 +30,7 @@ function FlightList({ ...props }) {
 
   const displayFlights = () => {
     return flightList?.map((flight) => {
-      return (
-        <div className="listItem" key={Math.random()}>
-          <div className="container">
-            <div className="row align-items-end">
-              <div className="col">
-                <span className="listItemMajor">{flight.airlineName}</span>
-                <br />
-                {flight.flightConfirmation}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
+      return <ItemCollapse />;
     });
   };
 

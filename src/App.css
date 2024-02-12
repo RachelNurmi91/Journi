@@ -1,9 +1,22 @@
-body {
-  background-color: #fff;
+
+#navbar-container {
+  /* max-width: 15%; */
+  position: absolute;
+  top: 0;
+  width:200px;
+  background: #000;
+  height: 100vh;
+  /* flex: auto; */
 }
 
-.content-body{
-  margin: auto;
+#content-container {
+  margin-left: 200px;
+  background: #fff;
+  /* flex: auto; */
+}
+
+#content-body {
+  margin: 100px auto;
   width: 600px;
 }
 

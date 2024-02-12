@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
+import Input from "../../Layout/Shared/Input";
 
 const DEFAULT_FORM_DATA = {
   hotelName: null,
@@ -49,66 +50,48 @@ function AddHotel({ ...props }) {
 
   return (
     <div className="content-body">
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="hotelName"
-          id="hotelName"
-          placeholder="Hotel Name"
-          onChange={handleChange}
-        />
-        <label for="hotelName">Hotel Name</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="country"
-          id="country"
-          placeholder="Country"
-          onChange={handleChange}
-        />
-        <label for="country">Country</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="city"
-          id="city"
-          placeholder="City"
-          onChange={handleChange}
-        />
-        <label for="city">City</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="arrivalDate"
-          id="arrivalDate"
-          placeholder="Arrival"
-          onChange={handleChange}
-        />
-        <label for="arrivalDate">Arrival</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="departureDate"
-          id="departureDate"
-          placeholder="Departure (mm/dd/yyy)"
-          onChange={handleChange}
-        />
-        <label for="departureDate">Departure</label>
-      </div>
-      <div className="form-floating">
-        <input
-          className="form-control"
-          name="hotelConfirmation"
-          id="hotelConfirmation"
-          placeholder="Confirmation #"
-          onChange={handleChange}
-        />
-        <label for="confirmationNumber">Confirmation #</label>
-      </div>
+      <Input
+        name="hotelName"
+        onChange={handleChange}
+        placeholder="Hotel"
+        label="Hotel"
+      />
+      <Input
+        name="country"
+        onChange={handleChange}
+        placeholder="Country"
+        label="Country"
+      />
+      <Input
+        name="city"
+        onChange={handleChange}
+        placeholder="City"
+        label="City"
+      />
+      <Input
+        name="arrivalDate"
+        onChange={handleChange}
+        placeholder="Arrival"
+        label="Arrival"
+      />
+      <Input
+        name="departureDate"
+        onChange={handleChange}
+        placeholder="Departure"
+        label="Departure"
+      />
+      <Input
+        name="hotelConfirmation"
+        onChange={handleChange}
+        placeholder="Confirmation #"
+        label="Confirmation #"
+      />
+      <Input
+        name="city"
+        onChange={handleChange}
+        placeholder="City"
+        label="City"
+      />
       <div className="form-check my-2">
         <input
           className="form-check-input"
@@ -134,16 +117,12 @@ function AddHotel({ ...props }) {
         </label>
       </div>
       {displayNewNameInput ? (
-        <div className="form-floating">
-          <input
-            className="form-control"
-            name="nameOnReservation"
-            id="nameOnReservation"
-            placeholder="Name on Reservation"
-            onChange={handleReservationName}
-          />
-          <label for="nameOnReservation">Name on Reservation</label>
-        </div>
+        <Input
+          name="nameOnReservation"
+          onChange={handleReservationName}
+          placeholder="Name on Reservation"
+          label="Name on Reservation"
+        />
       ) : null}
       <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
         Save

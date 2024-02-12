@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 function Summary({ ...props }) {
   const loggedInSummary = () => {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="content">
         <div className="text-center">
           <h1>
             Welcome back{" "}

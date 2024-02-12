@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewFlightData } from "../../Redux/Actions/AccountActions";
+import Input from "../../Layout/Shared/Input";
 
 const DEFAULT_FORM_DATA = {
   airlineName: null,
@@ -51,7 +52,43 @@ function AddFlight({ ...props }) {
 
   return (
     <div className="content-body">
-      <div className="form-floating mb-3">
+      <Input
+        name="Test"
+        onChange={handleChange}
+        placeholder="Test Placeholder"
+        label="Test Label"
+      />
+      <Input
+        name="Test"
+        onChange={handleChange}
+        placeholder="Test Placeholder"
+        label="Test Label"
+      />
+      <Input
+        name="Test"
+        onChange={handleChange}
+        placeholder="Test Placeholder"
+        label="Test Label"
+      />
+      <Input
+        name="Test"
+        onChange={handleChange}
+        placeholder="Test Placeholder"
+        label="Test Label"
+      />
+      <Input
+        name="Test"
+        onChange={handleChange}
+        placeholder="Test Placeholder"
+        label="Test Label"
+      />
+      <Input
+        name="Test"
+        onChange={handleChange}
+        placeholder="Test Placeholder"
+        label="Test Label"
+      />
+      {/* <div className="form-floating mb-3">
         <input
           className="form-control"
           name="airlineName"
@@ -149,7 +186,7 @@ function AddFlight({ ...props }) {
       ) : null}
       <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
         Save
-      </button>
+      </button> */}
     </div>
   );
 }
