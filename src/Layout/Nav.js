@@ -6,13 +6,18 @@ function Nav({ ...props }) {
   const loggedInNav = () => {
     return (
       <>
-        <Link to="/">Home</Link> <br />
-        <Link to="/hotels">Hotels</Link>
-        <br />
-        <Link to="/flights">Flights</Link>
-        <br />
-        <Link to="/login">Login</Link>
-        <br />
+        <li>
+          <Link to="/">Home</Link>{" "}
+        </li>
+        <li>
+          <Link to="/hotels">Hotels</Link>
+        </li>
+        <li>
+          <Link to="/flights">Flights</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
       </>
     );
   };
@@ -20,14 +25,39 @@ function Nav({ ...props }) {
   const guestNav = () => {
     return (
       <>
-        <Link to="/login">Login</Link>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
       </>
     );
   };
 
   return (
     <>
-      <nav className="navbar bg-body-tertiary">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          Navbar
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            {props.userData ? loggedInNav() : guestNav()}
+          </ul>
+        </div>
+      </nav>
+
+      {/* <nav className="navbar bg-body-tertiary">
+        
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             Navbar
@@ -54,7 +84,7 @@ function Nav({ ...props }) {
         <div class="offcanvas-body">
           {props.userData ? loggedInNav() : guestNav()}
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
