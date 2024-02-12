@@ -15,16 +15,13 @@ function ItemCollapse({ flightData }) {
 
   return (
     <>
-      {console.log(flightData)}
       <div ref={inputRef} className="item-collapse">
-        <div className="row">
-          <div className="col">
-            {flightData?.airlineName}
-            <br />
-            {flightData?.airportName}
+        <div className="row mb-2">
+          <div className="col text-left">
+            <span className="listItemMajor">{flightData?.airlineName}</span>
           </div>
+          <div className="col text-center">{flightData?.airportName}</div>
           <div className="col">{flightData?.flightDate}</div>
-          <div className="col">{flightData?.seatAssignment}</div>
         </div>
         <div className="row showMore">
           <div onClick={handleCollapse}>{isCollapsed ? "+" : "-"}</div>
@@ -32,11 +29,21 @@ function ItemCollapse({ flightData }) {
 
         {!isCollapsed && (
           <div className="row showMoreContent">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            vel ultrices tortor. Aliquam iaculis aliquam urna. Vestibulum ut
-            enim tincidunt, aliquam neque a, posuere felis. In mollis porta diam
-            tempor vulputate. Sed cursus nibh turpis, a elementum enim bibendum
-            eu. Nam aliquet erat eu elementum iaculis. In porta mollis ex.
+            <div className="col ">
+              <span className="fw-bold">Flight No. </span>
+
+              {flightData?.flightNumber}
+            </div>
+            <div className="col text-center">
+              <span className="fw-bold">Confirmation No. </span>
+
+              {flightData?.flightNumber}
+            </div>
+            <div className="col">
+              <span className="fw-bold">Seat </span>
+
+              {flightData?.seatAssignment}
+            </div>
           </div>
         )}
       </div>

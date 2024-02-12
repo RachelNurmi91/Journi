@@ -1,13 +1,14 @@
 .item-collapse {
   padding: 0px 11px;
-  border-bottom: 1px rgb(186, 186, 186) solid;
+  border-bottom: 2px #767676 solid;
+  margin-bottom: 25px;
 }
 
 .showMore {
   text-align: center;
-  background-color: rgb(246, 246, 246);
 }
 
 .showMoreContent {
-  background-color: rgb(246, 246, 246);
+  background-color: #f8f8f8;
+  padding: 20px 0px;
 }
