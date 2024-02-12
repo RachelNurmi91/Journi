@@ -1,26 +1,13 @@
-.collapsible {
-  background-color: #c46363;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
+.item-collapse {
+  padding: 0px 11px;
+  border-bottom: 1px rgb(186, 186, 186) solid;
 }
 
-.active, .collapsible:hover {
-  background-color: #502d2d;
+.showMore {
+  text-align: center;
+  background-color: rgb(246, 246, 246);
 }
 
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #bc0303;
-}
-
-.test {
-  background-color: red;
+.showMoreContent {
+  background-color: rgb(246, 246, 246);
 }

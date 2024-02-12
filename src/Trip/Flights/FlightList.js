@@ -30,7 +30,7 @@ function FlightList({ ...props }) {
 
   const displayFlights = () => {
     return flightList?.map((flight) => {
-      return <ItemCollapse />;
+      return <ItemCollapse flightData={flight} />;
     });
   };
 
