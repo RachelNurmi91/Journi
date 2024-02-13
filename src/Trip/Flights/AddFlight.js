@@ -2,6 +2,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewFlightData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Layout/Shared/Input";
+import Button from "../../Layout/Shared/Button";
 
 const DEFAULT_FORM_DATA = {
   airlineName: null,
@@ -24,22 +25,7 @@ function AddFlight({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const newNameInputToggle = () => {
-    setDisplayNewNameInput(!displayNewNameInput);
-  };
-
-  const handleReservationName = (event) => {
-    let name;
-    if (displayNewNameInput) {
-      name = event.target.value;
-    } else {
-      name = props.userData?.firstName + " " + props.userData?.lastName;
-    }
-
-    setFormData((prevState) => ({ ...prevState, nameOnReservation: name }));
-  };
-
-  const handleSubmit = () => {
+  const handleSave = () => {
     // ...
     // ...
     // Code to call server API here...
@@ -187,6 +173,7 @@ function AddFlight({ ...props }) {
       <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
         Save
       </button> */}
+      <Button label="Save" onClick={handleSave}/>
     </div>
   );
 }

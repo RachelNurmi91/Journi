@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import Button from "../../Layout/Shared/Button"
 
 function HotelList({ ...props }) {
   const [hotelList, setHotelList] = useState(null);
@@ -57,11 +57,7 @@ function HotelList({ ...props }) {
     <div className="constraint">
       {displayHotels()}
 
-      <button className="btn-save mt-3" type="submit">
-        <Link to="/hotels/add" className="btn-link">
-          Add New
-        </Link>
-      </button>
+<Button destination="/hotels/add" label="Add New" />
     </div>
   );
 }

@@ -34,7 +34,7 @@
 
 #content-body {
   margin: auto;
-  min-width: 600px;
+  min-width: 700px;
   /* width: 60%;
   font-size:12px; */
 }
@@ -64,4 +64,19 @@
 
 .listItemMinor {
  font-size: 9px;
+}
+
+.item-collapse {
+  padding: 0px 11px;
+  border-bottom: 2px #767676 solid;
+  margin-bottom: 25px;
+}
+
+.showMore {
+  text-align: center;
+}
+
+.showMoreContent {
+  background-color: #f8f8f8;
+  padding: 20px 0px;
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import ItemCollapse from "../../Layout/Shared/ItemCollapse";
+import Button from "../../Layout/Shared/Button";
 
 function FlightList({ ...props }) {
   const [flightList, setFlightList] = useState(null);
@@ -30,7 +30,7 @@ function FlightList({ ...props }) {
 
   const displayFlights = () => {
     return flightList?.map((flight) => {
-      return <ItemCollapse flightData={flight} key={Math.random()} />;
+      return <ItemCollapse flightData={flight} keyNo={Math.floor(Math.random() * 1000)} />;
     });
   };
 
@@ -38,9 +38,8 @@ function FlightList({ ...props }) {
     <div className="constraint">
       {displayFlights()}
 
-      <button className="btn-save mt-3" type="submit">
-        <Link to="/flights/add">Add New</Link>
-      </button>
+      <Button label="Add New" destination={"/flights/add"}/>
+
     </div>
   );
 }

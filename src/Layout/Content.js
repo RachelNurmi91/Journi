@@ -5,6 +5,7 @@ import AddHotel from "../Trip/Hotels/AddHotel";
 import Login from "../Account/AccountAccess/Login";
 import FlightList from "../Trip/Flights/FlightList";
 import AddFlight from "../Trip/Flights/AddFlight";
+import Register from "../Account/AccountAccess/Register";
 
 function Content() {
   return (
@@ -13,6 +14,7 @@ function Content() {
         <Routes>
           <Route path="/" element={<Summary />} />
           <Route path="/login" element={<Login navigate={useNavigate()} />} />
+          <Route path="/register" element={<Register navigate={useNavigate()} />} />
           <Route path="/hotels" element={<HotelList />} />
           <Route
             path="/hotels/add"

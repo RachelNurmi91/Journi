@@ -1,21 +1,20 @@
 import { useRef, useEffect, useState } from "react";
-import "./styles.css";
 
-function ItemCollapse({ flightData }) {
+function ItemCollapse({ flightData, keyNo }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [focusedInput, setFocusedInput] = useState(null)
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
-
   const handleCollapse = () => {
+    setFocusedInput(keyNo)
+    
     setIsCollapsed(!isCollapsed);
   };
 
   return (
     <>
-      <div ref={inputRef} className="item-collapse">
+        {console.log(focusedInput, keyNo)}
+      <div ref={inputRef} className="item-collapse" key={keyNo}>
         <div className="row mb-2">
           <div className="col text-left">
             <span className="listItemMajor">{flightData?.airlineName}</span>
@@ -24,7 +23,7 @@ function ItemCollapse({ flightData }) {
           <div className="col">{flightData?.flightDate}</div>
         </div>
         <div className="row showMore">
-          <div onClick={handleCollapse}>{isCollapsed ? "+" : "-"}</div>
+          <div onClick={() => handleCollapse(keyNo)}>{isCollapsed ? "+" : "-"}</div>
         </div>
 
         {!isCollapsed && (

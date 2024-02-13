@@ -17,8 +17,8 @@ function Nav({ ...props }) {
           Flights
         </Link>
 
-        <Link to="/login" className="nav-link">
-          Login
+        <Link to="/logout" className="nav-link">
+          Logout
         </Link>
       </>
     );
@@ -30,7 +30,7 @@ function Nav({ ...props }) {
         <Link to="/login" className="nav-link">
           Login
         </Link>
-        <Link to="/login" className="nav-link">
+        <Link to="/register" className="nav-link">
           Register
         </Link>
       </>

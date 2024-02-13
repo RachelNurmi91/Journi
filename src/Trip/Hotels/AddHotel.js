@@ -2,6 +2,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Layout/Shared/Input";
+import Button from "../../Layout/Shared/Button";
 
 const DEFAULT_FORM_DATA = {
   hotelName: null,
@@ -37,7 +38,7 @@ function AddHotel({ ...props }) {
     setFormData((prevState) => ({ ...prevState, nameOnReservation: name }));
   };
 
-  const handleSubmit = () => {
+  const handleSave = () => {
     // ...
     // ...
     // Code to call server API here...
@@ -124,9 +125,8 @@ function AddHotel({ ...props }) {
           label="Name on Reservation"
         />
       ) : null}
-      <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
-        Save
-      </button>
+
+<Button label="Save" onClick={handleSave}/>
     </div>
   );
 }

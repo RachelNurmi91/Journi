@@ -1,11 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 
 function Input({ name, onChange, placeholder, label }) {
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
 
   return (
     <div className="form-floating mb-3 d-block">

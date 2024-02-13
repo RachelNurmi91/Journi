@@ -6,6 +6,7 @@ import {
   setLoggedInUserData,
 } from "../../Redux/Actions/AccountActions";
 import { testAccount01 } from "../../Test/testAccount01";
+import Button from "../../Layout/Shared/Button";
 
 const DEFAULT_FORM_DATA = {
   username: null,
@@ -57,9 +58,8 @@ function AddHotel({ ...props }) {
         />
         <label for="password">Password</label>
       </div>
-      <button className="btn-save mt-3" type="submit" onClick={handleLogin}>
-        Login
-      </button>
+
+      <Button label="Login" onClick={handleLogin}/>
     </div>
   );
 }
