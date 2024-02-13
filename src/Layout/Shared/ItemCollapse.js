@@ -1,20 +1,28 @@
 import { useRef, useEffect, useState } from "react";
 
-function ItemCollapse({ flightData, keyNo }) {
+function ItemCollapse({ flightData, itemIndex, expandedItem, handleExpand }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [focusedInput, setFocusedInput] = useState(null)
   const inputRef = useRef(null);
 
+  useEffect(() => {
+    if (itemIndex !== expandedItem) {
+      setIsCollapsed(true);
+    } else {
+      setIsCollapsed(false);
+    }
+  }, [expandedItem, itemIndex]);
+
   const handleCollapse = () => {
-    setFocusedInput(keyNo)
-    
-    setIsCollapsed(!isCollapsed);
+    if (itemIndex === expandedItem) {
+      handleExpand(null);
+    } else {
+      handleExpand(itemIndex);
+    }
   };
 
   return (
     <>
-        {console.log(focusedInput, keyNo)}
-      <div ref={inputRef} className="item-collapse" key={keyNo}>
+      <div ref={inputRef} className="item-collapse" key={itemIndex}>
         <div className="row mb-2">
           <div className="col text-left">
             <span className="listItemMajor">{flightData?.airlineName}</span>
@@ -23,24 +31,21 @@ function ItemCollapse({ flightData, keyNo }) {
           <div className="col">{flightData?.flightDate}</div>
         </div>
         <div className="row showMore">
-          <div onClick={() => handleCollapse(keyNo)}>{isCollapsed ? "+" : "-"}</div>
+          <div onClick={handleCollapse}>{isCollapsed ? "+" : "-"}</div>
         </div>
 
         {!isCollapsed && (
           <div className="row showMoreContent">
             <div className="col ">
               <span className="fw-bold">Flight No. </span>
-
               {flightData?.flightNumber}
             </div>
             <div className="col text-center">
               <span className="fw-bold">Confirmation No. </span>
-
               {flightData?.flightNumber}
             </div>
             <div className="col">
               <span className="fw-bold">Seat </span>
-
               {flightData?.seatAssignment}
             </div>
           </div>

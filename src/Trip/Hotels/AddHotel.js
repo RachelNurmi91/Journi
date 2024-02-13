@@ -2,12 +2,16 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Layout/Shared/Input";
+import Select from "../../Layout/Shared/Select";
 import Button from "../../Layout/Shared/Button";
+import { countryList } from "../../Layout/Shared/Data/CountryList";
 
 const DEFAULT_FORM_DATA = {
   hotelName: null,
   arrivalData: null,
   departureDate: null,
+  hotelCity: null,
+  hotelCountry: null,
   hotelConfirmation: null,
   nameOnReservation: null,
 };
@@ -21,6 +25,10 @@ function AddHotel({ ...props }) {
     const newValue = event.target.value;
 
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
+  };
+
+  const handleCountrySelect = (newValue) => {
+    setFormData((prevState) => ({ ...prevState, hotelCountry: newValue }));
   };
 
   const newNameInputToggle = () => {
@@ -51,18 +59,15 @@ function AddHotel({ ...props }) {
 
   return (
     <div className="content-body">
+      <h1>Add Hotel</h1>
       <Input
         name="hotelName"
         onChange={handleChange}
         placeholder="Hotel"
         label="Hotel"
       />
-      <Input
-        name="country"
-        onChange={handleChange}
-        placeholder="Country"
-        label="Country"
-      />
+      <Select category={countryList} onChange={handleCountrySelect} />
+
       <Input
         name="city"
         onChange={handleChange}
@@ -126,7 +131,7 @@ function AddHotel({ ...props }) {
         />
       ) : null}
 
-<Button label="Save" onClick={handleSave}/>
+      <Button label="Save" onClick={handleSave} />
     </div>
   );
 }

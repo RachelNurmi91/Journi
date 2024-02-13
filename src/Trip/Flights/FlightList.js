@@ -3,43 +3,50 @@ import { connect } from "react-redux";
 import ItemCollapse from "../../Layout/Shared/ItemCollapse";
 import Button from "../../Layout/Shared/Button";
 
-function FlightList({ ...props }) {
-  const [flightList, setFlightList] = useState(null);
+function FlightList({ flightListData }) {
+  const [expandedItem, setExpandedItem] = useState(null);
+  const [sortedFlights, setSortedFlights] = useState([]);
 
   useEffect(() => {
     sortByDate();
-  }, [props.flightListData]);
+  }, [flightListData]);
 
   const sortByDate = () => {
-    let sortedFlights;
+    let flights = flightListData?.[0]?.flights;
 
-    let flights = props.flightListData?.[0]?.flights;
-
-    if (flights > 10) {
-      sortedFlights = flights.sort((a, b) => {
+    if (flights && flights.length > 10) {
+      flights.sort((a, b) => {
         if (a.arrivalDate > b.arrivalDate) return 1;
         if (a.arrivalDate < b.arrivalDate) return -1;
         return 0;
       });
-    } else {
-      sortedFlights = flights;
     }
 
-    setFlightList(sortedFlights);
+    setSortedFlights(flights || []);
+  };
+
+  const handleExpand = (itemIndex) => {
+    setExpandedItem((prevExpandedItem) =>
+      prevExpandedItem === itemIndex ? null : itemIndex
+    );
   };
 
   const displayFlights = () => {
-    return flightList?.map((flight) => {
-      return <ItemCollapse flightData={flight} keyNo={Math.floor(Math.random() * 1000)} />;
-    });
+    return sortedFlights.map((flight, index) => (
+      <ItemCollapse
+        itemIndex={index}
+        flightData={flight}
+        expandedItem={expandedItem}
+        handleExpand={handleExpand}
+      />
+    ));
   };
 
   return (
     <div className="constraint">
+      <h1>Flights</h1>
       {displayFlights()}
-
-      <Button label="Add New" destination={"/flights/add"}/>
-
+      <Button label="Add New" destination={"/flights/add"} />
     </div>
   );
 }
@@ -50,6 +57,4 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FlightList);
+export default connect(mapStateToProps)(FlightList);

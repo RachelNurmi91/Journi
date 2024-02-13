@@ -29,7 +29,7 @@ function Summary({ ...props }) {
   };
 
   const guestWelcome = () => {
-    return <h1 className="text-center">Test</h1>;
+    return <h1 className="text-center">Please Log In</h1>;
   };
 
   return <>{props.userData ? loggedInSummary() : guestWelcome()}</>;

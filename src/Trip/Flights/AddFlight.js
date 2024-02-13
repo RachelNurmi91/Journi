@@ -38,41 +38,48 @@ function AddFlight({ ...props }) {
 
   return (
     <div className="content-body">
+      <h1>Add Flight</h1>
       <Input
-        name="Test"
+        name="airlineName"
         onChange={handleChange}
-        placeholder="Test Placeholder"
-        label="Test Label"
+        placeholder="Airline"
+        label="Airline"
       />
       <Input
-        name="Test"
+        name="airportName"
         onChange={handleChange}
-        placeholder="Test Placeholder"
-        label="Test Label"
+        placeholder="Airport Name"
+        label="Airport Name"
       />
       <Input
-        name="Test"
+        name="flightNumber"
         onChange={handleChange}
-        placeholder="Test Placeholder"
-        label="Test Label"
+        placeholder="Flight Number"
+        label="Flight Number"
       />
       <Input
-        name="Test"
+        name="flightDate"
         onChange={handleChange}
-        placeholder="Test Placeholder"
-        label="Test Label"
+        placeholder="Departure Date"
+        label="Departure Date"
       />
       <Input
-        name="Test"
+        name="ticketHolderName"
         onChange={handleChange}
-        placeholder="Test Placeholder"
-        label="Test Label"
+        placeholder="Name on Ticket"
+        label="Name on Ticket"
       />
       <Input
-        name="Test"
+        name="confirmationNumber"
         onChange={handleChange}
-        placeholder="Test Placeholder"
-        label="Test Label"
+        placeholder="Confirmation Number"
+        label="Confirmation Number"
+      />
+      <Input
+        name="seatAssignment"
+        onChange={handleChange}
+        placeholder="Seat Assignment"
+        label="Seat Assignment"
       />
       {/* <div className="form-floating mb-3">
         <input
@@ -173,7 +180,7 @@ function AddFlight({ ...props }) {
       <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
         Save
       </button> */}
-      <Button label="Save" onClick={handleSave}/>
+      <Button label="Save" onClick={handleSave} />
     </div>
   );
 }

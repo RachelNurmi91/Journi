@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import Button from "../../Layout/Shared/Button"
+import Button from "../../Layout/Shared/Button";
 
 function HotelList({ ...props }) {
   const [hotelList, setHotelList] = useState(null);
@@ -55,9 +55,10 @@ function HotelList({ ...props }) {
 
   return (
     <div className="constraint">
+      <h1>Hotels</h1>
       {displayHotels()}
 
-<Button destination="/hotels/add" label="Add New" />
+      <Button destination="/hotels/add" label="Add New" />
     </div>
   );
 }
