@@ -9,12 +9,11 @@ import {
 const initialState = {
   userAccount: null,
   activeTrip: {
-    tripId: null,
-    tripDetails: null,
     tripSummary: {
       country: null,
       departure: null,
     },
+    tripData: null,
   },
 };
 
@@ -26,19 +25,15 @@ export default produce((draft, action) => {
       draft.userAccount = action.payload;
       return draft;
     case SET_ACTIVE_TRIP:
-      draft.activeTrip.tripId = action.payload.id;
-      draft.activeTrip.tripDetails = action.payload;
       draft.activeTrip.tripSummary.country = action.payload.destination;
       draft.activeTrip.tripSummary.departure = action.payload.departure;
+      draft.activeTrip.tripData = action.payload;
       return draft;
     case ADD_NEW_HOTEL_DATA:
-      console.log(draft.userAccount);
-      let newHotelList = draft.userAccount.trips.hotels.push(action.payload);
-      console.log(draft.userAccount.trips.hotels);
-      draft.userAccount.trips.hotels = newHotelList;
+      draft.activeTrip.tripData.hotels.push(action.payload);
       return draft;
     case ADD_NEW_FLIGHT_DATA:
-      draft.userAccount.trips.flights = action.payload;
+      draft.activeTrip.tripData.flights.push(action.payload);
       return draft;
     default:
       return draft;

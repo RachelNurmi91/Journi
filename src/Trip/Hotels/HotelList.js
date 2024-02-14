@@ -12,9 +12,9 @@ function HotelList({ ...props }) {
   const sortByDate = () => {
     let sortedHotels;
 
-    let hotels = props.hotelListData?.[0]?.hotels;
+    let hotels = props.hotelListData;
 
-    if (hotels > 10) {
+    if (hotels && hotels.length > 10) {
       sortedHotels = hotels.sort((a, b) => {
         if (a.arrivalDate > b.arrivalDate) return 1;
         if (a.arrivalDate < b.arrivalDate) return -1;
@@ -65,7 +65,7 @@ function HotelList({ ...props }) {
 
 function mapStateToProps(state) {
   return {
-    hotelListData: state.account?.userAccount?.trips,
+    hotelListData: state.account?.activeTrip?.tripData?.hotels,
   };
 }
 

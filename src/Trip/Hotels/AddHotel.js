@@ -7,13 +7,13 @@ import Button from "../../Layout/Shared/Button";
 import { countryList } from "../../Layout/Shared/Data/CountryList";
 
 const DEFAULT_FORM_DATA = {
-  hotelName: null,
-  arrivalData: null,
-  departureDate: null,
-  hotelCity: null,
-  hotelCountry: null,
-  hotelConfirmation: null,
-  nameOnReservation: null,
+  hotelName: "Temple House by Curio",
+  arrivalDate: "02/10/2026",
+  departureDate: "02/15/2026",
+  city: "Okinawa",
+  country: "Japan",
+  hotelConfirmation: "03432432432",
+  nameOnReservation: "Rachel Nurmi",
 };
 
 function AddHotel({ ...props }) {
@@ -91,12 +91,6 @@ function AddHotel({ ...props }) {
         onChange={handleChange}
         placeholder="Confirmation #"
         label="Confirmation #"
-      />
-      <Input
-        name="city"
-        onChange={handleChange}
-        placeholder="City"
-        label="City"
       />
       <div className="form-check my-2">
         <input

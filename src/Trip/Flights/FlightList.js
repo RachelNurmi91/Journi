@@ -12,7 +12,7 @@ function FlightList({ flightListData }) {
   }, [flightListData]);
 
   const sortByDate = () => {
-    let flights = flightListData?.[0]?.flights;
+    let flights = flightListData;
 
     if (flights && flights.length > 10) {
       flights.sort((a, b) => {
@@ -53,7 +53,7 @@ function FlightList({ flightListData }) {
 
 function mapStateToProps(state) {
   return {
-    flightListData: state.account?.userAccount?.trips,
+    flightListData: state.account?.activeTrip?.tripData?.flights,
   };
 }
 
