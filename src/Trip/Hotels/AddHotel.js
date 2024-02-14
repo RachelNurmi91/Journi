@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
-import Input from "../../Layout/Shared/UI/Input";
-import Select from "../../Layout/Shared/UI/Select";
-import Button from "../../Layout/Shared/UI/Button";
-import Header from "../../Layout/Shared/UI/Header";
-import { countryList } from "../../Layout/Shared/Data/CountryList";
+import Input from "../../Shared/UI/Input";
+import Select from "../../Shared/UI/Select";
+import Button from "../../Shared/UI/Button";
+import Header from "../../Shared/UI/Header";
+import { countryList } from "../../Shared/Data/CountryList";
 
 const DEFAULT_FORM_DATA = {
   hotelName: "Temple House by Curio",

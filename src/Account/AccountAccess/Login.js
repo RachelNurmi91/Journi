@@ -6,7 +6,7 @@ import {
   setLoggedInUserData,
 } from "../../Redux/Actions/AccountActions";
 import { testAccount01 } from "../../Test/testAccount01";
-import Button from "../../Layout/Shared/UI/Button";
+import Button from "../../Shared/UI/Button";
 
 const DEFAULT_FORM_DATA = {
   username: null,

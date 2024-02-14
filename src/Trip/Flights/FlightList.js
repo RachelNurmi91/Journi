@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import ItemCollapse from "../../Layout/Shared/UI/ItemCollapse";
-import Button from "../../Layout/Shared/UI/Button";
-import Header from "../../Layout/Shared/UI/Header";
+import ItemCollapse from "../../Shared/UI/ItemCollapse";
+import Button from "../../Shared/UI/Button";
+import Header from "../../Shared/UI/Header";
 
 function FlightList({ flightListData }) {
   const [expandedItem, setExpandedItem] = useState(null);

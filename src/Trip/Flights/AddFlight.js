@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewFlightData } from "../../Redux/Actions/AccountActions";
-import Input from "../../Layout/Shared/UI/Input";
-import Button from "../../Layout/Shared/UI/Button";
-import Header from "../../Layout/Shared/UI/Header";
+import Input from "../../Shared/UI/Input";
+import Button from "../../Shared/UI/Button";
+import Header from "../../Shared/UI/Header";
 
 const DEFAULT_FORM_DATA = {
   airlineName: null,

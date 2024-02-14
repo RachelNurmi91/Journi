@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import Button from "../../Layout/Shared/UI/Button";
-import Header from "../../Layout/Shared/UI/Header";
+import Button from "../../Shared/UI/Button";
+import Header from "../../Shared/UI/Header";
 
 function HotelList({ ...props }) {
   const [hotelList, setHotelList] = useState(null);
