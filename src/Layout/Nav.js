@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 
 function Nav({ ...props }) {
   const loggedInNav = () => {
@@ -17,7 +18,12 @@ function Nav({ ...props }) {
           Flights
         </Link>
 
-        <Link to="/logout" className="nav-link">
+        <Link
+          onClick={() => {
+            props.removeLoggedInUserData();
+          }}
+          className="nav-link"
+        >
           Logout
         </Link>
       </>
@@ -54,6 +60,8 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  removeLoggedInUserData,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

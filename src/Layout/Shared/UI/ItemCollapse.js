@@ -30,7 +30,12 @@ function ItemCollapse({ flightData, itemIndex, expandedItem, handleExpand }) {
           <div className="col text-center">{flightData?.airportName}</div>
           <div className="col">{flightData?.flightDate}</div>
         </div>
-        <div className="row showMore">
+
+        <div
+          className={`row ${
+            isCollapsed ? "showMoreCollapsed" : "showMoreOpen"
+          }`}
+        >
           <div onClick={handleCollapse}>{isCollapsed ? "+" : "-"}</div>
         </div>
 

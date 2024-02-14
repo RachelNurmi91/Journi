@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
-import Input from "../../Layout/Shared/Input";
-import Select from "../../Layout/Shared/Select";
-import Button from "../../Layout/Shared/Button";
+import Input from "../../Layout/Shared/UI/Input";
+import Select from "../../Layout/Shared/UI/Select";
+import Button from "../../Layout/Shared/UI/Button";
+import Header from "../../Layout/Shared/UI/Header";
 import { countryList } from "../../Layout/Shared/Data/CountryList";
 
 const DEFAULT_FORM_DATA = {
@@ -59,7 +60,7 @@ function AddHotel({ ...props }) {
 
   return (
     <div className="content-body">
-      <h1>Add Hotel</h1>
+      <Header title="Add Hotel" />
       <Input
         name="hotelName"
         onChange={handleChange}

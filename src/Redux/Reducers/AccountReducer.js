@@ -4,6 +4,7 @@ import {
   SET_LOGGED_IN_USER_DATA,
   SET_ACTIVE_TRIP,
   ADD_NEW_FLIGHT_DATA,
+  REMOVE_LOGGED_IN_USER_DATA,
 } from "../Actions/AccountActions";
 
 const initialState = {
@@ -23,6 +24,9 @@ export default produce((draft, action) => {
   switch (action.type) {
     case SET_LOGGED_IN_USER_DATA:
       draft.userAccount = action.payload;
+      return draft;
+    case REMOVE_LOGGED_IN_USER_DATA:
+      draft = initialState;
       return draft;
     case SET_ACTIVE_TRIP:
       draft.activeTrip.tripSummary.country = action.payload.destination;

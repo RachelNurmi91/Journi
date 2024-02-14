@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import ItemCollapse from "../../Layout/Shared/ItemCollapse";
-import Button from "../../Layout/Shared/Button";
+import ItemCollapse from "../../Layout/Shared/UI/ItemCollapse";
+import Button from "../../Layout/Shared/UI/Button";
+import Header from "../../Layout/Shared/UI/Header";
 
 function FlightList({ flightListData }) {
   const [expandedItem, setExpandedItem] = useState(null);
@@ -44,7 +45,7 @@ function FlightList({ flightListData }) {
 
   return (
     <div className="constraint">
-      <h1>Flights</h1>
+      <Header title="Flights" />
       {displayFlights()}
       <Button label="Add New" destination={"/flights/add"} />
     </div>

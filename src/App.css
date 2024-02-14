@@ -3,7 +3,7 @@
   position: absolute;
   top: 0;
   width:250px;
-  background: #000;
+  background: #00B7BD;
   height: 100vh;
   display: flex;
 }
@@ -34,8 +34,8 @@
   font-size:12px; */
 }
 
-.font-highlights {
-  color: #0d5d93
+.font-highlights, .font-headers {
+  color: #00B7BD;
 }
 
 .btn-save {
@@ -53,6 +53,7 @@
 }
 
 .listItemMajor {
+  color:#00B7BD;
  font-weight: bold;
  font-size: 15px;
 }
@@ -62,16 +63,23 @@
 }
 
 .item-collapse {
-  padding: 0px 11px;
-  border-bottom: 2px #767676 solid;
+  padding: 25px 25px 11px;
   margin-bottom: 25px;
 }
 
-.showMore {
+.showMoreCollapsed {
   text-align: center;
+  background-color: #00B7BD;
+  border-radius: 0px 0px 20px 20px;
+}
+
+.showMoreOpen {
+  text-align: center;
+  background-color: #00B7BD;
 }
 
 .showMoreContent {
-  background-color: #f8f8f8;
+  background-color: #00B7BD;
+  border-radius: 0px 0px 20px 20px;
   padding: 20px 0px;
 }

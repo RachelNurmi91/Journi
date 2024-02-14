@@ -6,8 +6,8 @@ import {
   setLoggedInUserData,
 } from "../../Redux/Actions/AccountActions";
 import { testAccount01 } from "../../Test/testAccount01";
-import Button from "../../Layout/Shared/Button";
-import Input from "../../Layout/Shared/Input"
+import Button from "../../Layout/Shared/UI/Button";
+import Input from "../../Layout/Shared/UI/Input";
 
 const DEFAULT_FORM_DATA = {
   username: null,
@@ -38,12 +38,32 @@ function Register({ ...props }) {
 
   return (
     <div className="content-body">
-      <Input name="firstName" onChange={handleChange} placeholder="First Name" label="First Name"/>
-      <Input name="lastName" onChange={handleChange} placeholder="Last Name" label="Last Name"/>
-      <Input name="email" onChange={handleChange} placeholder="Email" label="Email"/>
-      <Input name="password" onChange={handleChange} placeholder="Password" label="Password"/>
+      <Input
+        name="firstName"
+        onChange={handleChange}
+        placeholder="First Name"
+        label="First Name"
+      />
+      <Input
+        name="lastName"
+        onChange={handleChange}
+        placeholder="Last Name"
+        label="Last Name"
+      />
+      <Input
+        name="email"
+        onChange={handleChange}
+        placeholder="Email"
+        label="Email"
+      />
+      <Input
+        name="password"
+        onChange={handleChange}
+        placeholder="Password"
+        label="Password"
+      />
 
-      <Button label="Register" onClick={handleRegister}/>
+      <Button label="Register" onClick={handleRegister} />
     </div>
   );
 }

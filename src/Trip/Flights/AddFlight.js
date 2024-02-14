@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewFlightData } from "../../Redux/Actions/AccountActions";
-import Input from "../../Layout/Shared/Input";
-import Button from "../../Layout/Shared/Button";
+import Input from "../../Layout/Shared/UI/Input";
+import Button from "../../Layout/Shared/UI/Button";
+import Header from "../../Layout/Shared/UI/Header";
 
 const DEFAULT_FORM_DATA = {
   airlineName: null,
@@ -38,7 +39,7 @@ function AddFlight({ ...props }) {
 
   return (
     <div className="content-body">
-      <h1>Add Flight</h1>
+      <Header title="Add Flight" />
       <Input
         name="airlineName"
         onChange={handleChange}
