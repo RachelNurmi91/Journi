@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import {
   ADD_NEW_HOTEL_DATA,
   SET_LOGGED_IN_USER_DATA,
@@ -5,9 +6,10 @@ import {
   ADD_NEW_FLIGHT_DATA,
 } from "../Actions/AccountActions";
 
-const initalState = {
+const initialState = {
   userAccount: null,
   activeTrip: {
+    tripId: null,
     tripDetails: null,
     tripSummary: {
       country: null,
@@ -16,50 +18,29 @@ const initalState = {
   },
 };
 
-const accountReducer = (state = initalState, action) => {
+export { initialState };
+
+export default produce((draft, action) => {
   switch (action.type) {
     case SET_LOGGED_IN_USER_DATA:
-      return {
-        userAccount: action.payload,
-      };
+      draft.userAccount = action.payload;
+      return draft;
     case SET_ACTIVE_TRIP:
-      return {
-        ...state,
-        activeTrip: {
-          tripDetails: action.payload,
-          tripSummary: {
-            country: action.payload.destination,
-            departure: action.payload.departure,
-          },
-        },
-      };
+      draft.activeTrip.tripId = action.payload.id;
+      draft.activeTrip.tripDetails = action.payload;
+      draft.activeTrip.tripSummary.country = action.payload.destination;
+      draft.activeTrip.tripSummary.departure = action.payload.departure;
+      return draft;
     case ADD_NEW_HOTEL_DATA:
-      return {
-        ...state,
-        userAccount: {
-          ...state.userAccount,
-          trips: [
-            {
-              hotels: [...state.userAccount.trips[0].hotels, action.payload],
-            },
-          ],
-        },
-      };
+      console.log(draft.userAccount);
+      let newHotelList = draft.userAccount.trips.hotels.push(action.payload);
+      console.log(draft.userAccount.trips.hotels);
+      draft.userAccount.trips.hotels = newHotelList;
+      return draft;
     case ADD_NEW_FLIGHT_DATA:
-      return {
-        ...state,
-        userAccount: {
-          ...state.userAccount,
-          trips: [
-            {
-              flights: [...state.userAccount.trips[0].flights, action.payload],
-            },
-          ],
-        },
-      };
+      draft.userAccount.trips.flights = action.payload;
+      return draft;
     default:
-      return state;
+      return draft;
   }
-};
-
-export default accountReducer;
+}, initialState);
