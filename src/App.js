@@ -1,12 +1,12 @@
 import "./App.css";
 import Nav from "./Layout/Nav";
-import Content from "./Layout/Content";
+import Routing from "./Layout/Routing";
 
 function App() {
   return (
     <>
       <Nav />
-      <Content />
+      <Routing />
     </>
   );
 }

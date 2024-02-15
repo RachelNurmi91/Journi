@@ -45,7 +45,7 @@ function AddHotel({ ...props }) {
           placeholder="Username"
           onChange={handleChange}
         />
-        <label for="username">Username</label>
+        <label htmlFor="username">Username</label>
       </div>
       <div className="form-floating mb-3">
         <input
@@ -56,7 +56,7 @@ function AddHotel({ ...props }) {
           placeholder="Password"
           onChange={handleChange}
         />
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
       </div>
 
       <Button label="Login" onClick={onLogin} />

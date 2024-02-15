@@ -1,23 +1,17 @@
 import { useRef } from "react";
 
-function Select({ category, onChange }) {
+function Select({ title, options, onChange }) {
   const selectRef = useRef(null);
-
-  const generateOptions = () => {
-    return category.map((item, index) => (
-      <option value={index + 1}>{item}</option>
-    ));
-  };
 
   return (
     <div className="mb-3 d-block">
       <select
         ref={selectRef}
-        class="form-select"
-        onChange={(event) => onChange(event.target.value)}
+        className="form-select"
+        onChange={(event) => onChange(event)}
       >
-        <option selected>Choose a country</option>
-        {generateOptions()}
+        <option defaultValue>{title}</option>
+        {options()}
       </select>
     </div>
   );

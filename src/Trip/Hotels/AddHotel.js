@@ -67,7 +67,11 @@ function AddHotel({ ...props }) {
         placeholder="Hotel"
         label="Hotel"
       />
-      <Select category={countryList} onChange={handleCountrySelect} />
+      <Select
+        title="Choose a country"
+        category={countryList}
+        onChange={handleCountrySelect}
+      />
 
       <Input
         name="city"
@@ -101,7 +105,7 @@ function AddHotel({ ...props }) {
           id="checkReservationSelf"
           onClick={handleReservationName}
         />
-        <label className="form-check-label" for="checkReservationSelf">
+        <label className="form-check-label" htmlFor="checkReservationSelf">
           The reservation is under my name
         </label>
       </div>
@@ -113,7 +117,7 @@ function AddHotel({ ...props }) {
           id="checkReservationOther"
           onClick={newNameInputToggle}
         />
-        <label className="form-check-label" for="checkReservationOther">
+        <label className="form-check-label" htmlFor="checkReservationOther">
           The reservation is under another name
         </label>
       </div>

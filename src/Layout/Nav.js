@@ -1,11 +1,13 @@
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
+import TripSelector from "./TripSelector";
 
 function Nav({ ...props }) {
   const loggedInNav = () => {
     return (
       <>
+        <TripSelector />
         <Link to="/" className="nav-link">
           Home
         </Link>

@@ -14,7 +14,7 @@ function Input({ name, onChange, placeholder, label, type = "text" }) {
         onChange={onChange}
         type={type}
       />
-      <label for={name}>{label}</label>
+      <label htmlFor={name}>{label}</label>
     </div>
   );
 }
