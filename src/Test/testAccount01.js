@@ -1,6 +1,9 @@
 export const testAccount01 = {
   firstName: "Rachel",
   lastName: "Nurmi",
+  username: "snurmi2",
+  email: "stephnurmi@gmail.com",
+  password: "123",
   trips: [
     {
       id: 1312324,

@@ -10,7 +10,9 @@ import Button from "../../Shared/UI/Button";
 import Input from "../../Shared/UI/Input";
 
 const DEFAULT_FORM_DATA = {
-  username: null,
+  firstName: null,
+  lastName: null,
+  email: null,
   password: null,
 };
 
@@ -25,14 +27,19 @@ function Register({ ...props }) {
   };
 
   const handleRegister = () => {
-    if (formData.username === "snurmi2" && formData.password === "123") {
-      //Set logged in user data if username and password are correct.
-      props.setLoggedInUserData(testAccount01);
+    const newAccount = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      trips: [],
+    };
+    // API Call to create an account.
 
-      //Set first trip in list as active. Will need to make sure date is soonest.
-      let activeTrip = testAccount01?.trips?.[0];
-      props.setActiveTrip(activeTrip);
-    }
+    //On success we login automatically
+    props.setLoggedInUserData(newAccount);
+
     props.navigate("/");
   };
 
@@ -51,6 +58,12 @@ function Register({ ...props }) {
         label="Last Name"
       />
       <Input
+        name="username"
+        onChange={handleChange}
+        placeholder="Username"
+        label="Username"
+      />
+      <Input
         name="email"
         onChange={handleChange}
         placeholder="Email"
@@ -61,6 +74,7 @@ function Register({ ...props }) {
         onChange={handleChange}
         placeholder="Password"
         label="Password"
+        type="password"
       />
 
       <Button label="Register" onClick={handleRegister} />

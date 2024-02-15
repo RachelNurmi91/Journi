@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function Input({ name, onChange, placeholder, label }) {
+function Input({ name, onChange, placeholder, label, type = "text" }) {
   const inputRef = useRef(null);
 
   return (
@@ -12,6 +12,7 @@ function Input({ name, onChange, placeholder, label }) {
         id={name}
         placeholder={placeholder}
         onChange={onChange}
+        type={type}
       />
       <label for={name}>{label}</label>
     </div>

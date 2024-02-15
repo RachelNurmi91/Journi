@@ -30,6 +30,7 @@
 #content-body {
   margin: auto;
   min-width: 700px;
+  padding: 50px;
   /* width: 60%;
   font-size:12px; */
 }
