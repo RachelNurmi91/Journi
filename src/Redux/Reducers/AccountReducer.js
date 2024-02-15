@@ -36,6 +36,11 @@ export default produce((draft, action) => {
       return draft;
     case ADD_NEW_TRIP_DATA:
       draft.userAccount.trips.push(action.payload);
+      if (!draft.activeTrip.tripData) {
+        draft.activeTrip.tripSummary.country = action.payload.destination;
+        draft.activeTrip.tripSummary.departure = action.payload.departure;
+        draft.activeTrip.tripData = action.payload;
+      }
       return draft;
     case ADD_NEW_HOTEL_DATA:
       draft.activeTrip.tripData.hotels.push(action.payload);
