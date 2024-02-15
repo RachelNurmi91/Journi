@@ -23,7 +23,7 @@ function AddHotel({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const handleLogin = () => {
+  const onLogin = () => {
     if (formData.username === "snurmi2" && formData.password === "123") {
       //Set logged in user data if username and password are correct.
       props.setLoggedInUserData(testAccount01);
@@ -59,7 +59,7 @@ function AddHotel({ ...props }) {
         <label for="password">Password</label>
       </div>
 
-      <Button label="Login" onClick={handleLogin} />
+      <Button label="Login" onClick={onLogin} />
     </div>
   );
 }

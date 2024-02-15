@@ -18,6 +18,13 @@ function Nav({ ...props }) {
           Flights
         </Link>
 
+        <Link to="/trips/" className="nav-link">
+          Trips
+        </Link>
+        <Link to="/trips/add" className="nav-link">
+          New Trip
+        </Link>
+
         <Link
           onClick={() => {
             props.removeLoggedInUserData();

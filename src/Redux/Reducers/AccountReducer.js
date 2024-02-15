@@ -5,6 +5,7 @@ import {
   SET_ACTIVE_TRIP,
   ADD_NEW_FLIGHT_DATA,
   REMOVE_LOGGED_IN_USER_DATA,
+  ADD_NEW_TRIP_DATA,
 } from "../Actions/AccountActions";
 
 const initialState = {
@@ -32,6 +33,9 @@ export default produce((draft, action) => {
       draft.activeTrip.tripSummary.country = action.payload.destination;
       draft.activeTrip.tripSummary.departure = action.payload.departure;
       draft.activeTrip.tripData = action.payload;
+      return draft;
+    case ADD_NEW_TRIP_DATA:
+      draft.userAccount.trips.push(action.payload);
       return draft;
     case ADD_NEW_HOTEL_DATA:
       draft.activeTrip.tripData.hotels.push(action.payload);

@@ -47,7 +47,7 @@ function AddHotel({ ...props }) {
     setFormData((prevState) => ({ ...prevState, nameOnReservation: name }));
   };
 
-  const handleSave = () => {
+  const onSave = () => {
     // ...
     // ...
     // Code to call server API here...
@@ -126,7 +126,7 @@ function AddHotel({ ...props }) {
         />
       ) : null}
 
-      <Button label="Save" onClick={handleSave} />
+      <Button label="Save" onClick={onSave} />
     </div>
   );
 }

@@ -26,7 +26,7 @@ function Register({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const handleRegister = () => {
+  const onRegister = () => {
     const newAccount = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -77,7 +77,7 @@ function Register({ ...props }) {
         type="password"
       />
 
-      <Button label="Register" onClick={handleRegister} />
+      <Button label="Register" onClick={onRegister} />
     </div>
   );
 }

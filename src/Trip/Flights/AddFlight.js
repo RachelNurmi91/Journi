@@ -26,7 +26,7 @@ function AddFlight({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const handleSave = () => {
+  const onSave = () => {
     // ...
     // ...
     // Code to call server API here...
@@ -82,106 +82,7 @@ function AddFlight({ ...props }) {
         placeholder="Seat Assignment"
         label="Seat Assignment"
       />
-      {/* <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="airlineName"
-          id="airlineName"
-          placeholder="Airline"
-          onChange={handleChange}
-        />
-        <label for="airlineName">Airline</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="airportName"
-          id="airportName"
-          placeholder="Airport"
-          onChange={handleChange}
-        />
-        <label for="airportName">Airport</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="flightNumber"
-          id="flightNumber"
-          placeholder="Flight #"
-          onChange={handleChange}
-        />
-        <label for="flightNumber">Flight #</label>
-      </div>
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="flightDate"
-          id="flightDate"
-          placeholder="Departure Date"
-          onChange={handleChange}
-        />
-        <label for="flightDate">Departure Date</label>
-      </div>
-      <div className="form-floating">
-        <input
-          className="form-control"
-          name="confirmationNumber"
-          id="confirmationNumber"
-          placeholder="Confirmation #"
-          onChange={handleChange}
-        />
-        <label for="confirmationNumber">Confirmation #</label>
-      </div>
-      <div className="form-floating">
-        <input
-          className="form-control"
-          name="seatAssignment"
-          id="seatAssignment"
-          placeholder="seatAssignment"
-          onChange={handleChange}
-        />
-        <label for="seatAssignment">seatAssignment</label>
-      </div>
-      <div className="form-check my-2">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value=""
-          id="checkReservationSelf"
-          onClick={handleReservationName}
-        />
-        <label className="form-check-label" for="checkReservationSelf">
-          The reservation is under my name
-        </label>
-      </div>
-      <div className="form-check mb-2">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value=""
-          id="checkReservationOther"
-          onClick={newNameInputToggle}
-        />
-        <label className="form-check-label" for="checkReservationOther">
-          The reservation is under another name
-        </label>
-      </div>
-      {displayNewNameInput ? (
-        <div className="form-floating">
-          <input
-            className="form-control"
-            name="ticketHolderName"
-            id="ticketHolderName"
-            placeholder="Ticket Holder"
-            onChange={handleReservationName}
-          />
-          <label for="ticketHolderName">Ticket Holder</label>
-        </div>
-      ) : null}
-      <button className="btn-save mt-3" type="submit" onClick={handleSubmit}>
-        Save
-      </button> */}
-      <Button label="Save" onClick={handleSave} />
+      <Button label="Save" onClick={onSave} />
     </div>
   );
 }
