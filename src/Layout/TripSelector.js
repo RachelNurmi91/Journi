@@ -10,6 +10,7 @@ function TripSelector({ ...props }) {
     const tripName = selectedTrip.value;
     const tripId = selectedTrip.getAttribute("data-id");
 
+    // Match the selected trip id & name to the corresponding trip to return the correct data.
     let activeTrip = tripList.find(
       (trip) =>
         trip.id.toString() === tripId.toString() && trip.tripName === tripName
@@ -27,11 +28,14 @@ function TripSelector({ ...props }) {
   };
 
   return (
-    <Select
-      title="Select Trip"
-      options={generateOptions}
-      onChange={handleChange}
-    />
+    <>
+      {
+        // Only show the select if there are enough trips to toggle between.
+        props.tripListData.length >= 2 ? (
+          <Select options={generateOptions} onChange={handleChange} />
+        ) : null
+      }
+    </>
   );
 }
 

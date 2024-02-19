@@ -28,8 +28,12 @@ function AddHotel({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const handleCountrySelect = (newValue) => {
-    setFormData((prevState) => ({ ...prevState, hotelCountry: newValue }));
+  const handleCountrySelect = (event) => {
+    const selectedCountry = event.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      country: selectedCountry,
+    }));
   };
 
   const newNameInputToggle = () => {
@@ -58,6 +62,14 @@ function AddHotel({ ...props }) {
     props.navigate("/hotels");
   };
 
+  const generateOptions = () => {
+    return countryList.map((country, i) => (
+      <option value={country} key={i + 1}>
+        {country}
+      </option>
+    ));
+  };
+
   return (
     <div className="content-body">
       <Header title="Add Hotel" />
@@ -69,7 +81,7 @@ function AddHotel({ ...props }) {
       />
       <Select
         title="Choose a country"
-        category={countryList}
+        options={generateOptions}
         onChange={handleCountrySelect}
       />
 

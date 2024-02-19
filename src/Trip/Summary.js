@@ -14,13 +14,13 @@ function Summary({ ...props }) {
           <h2>
             Your next trip is to{" "}
             <span className="fw-bold font-highlights">
-              {props.travelData?.country}
+              {props.travelData?.tripName}
             </span>{" "}
           </h2>
           <h3>
             Get ready to leave on{" "}
             <span className="fw-bold font-highlights">
-              {props.travelData?.departure}
+              {props.travelData?.departureDate}
             </span>
           </h3>
         </div>
@@ -45,7 +45,7 @@ function Summary({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
-    travelData: state.account?.activeTrip?.tripSummary,
+    travelData: state.account?.activeTrip?.tripData,
   };
 }
 

@@ -10,7 +10,7 @@ function Select({ title, options, onChange }) {
         className="form-select"
         onChange={(event) => onChange(event)}
       >
-        <option defaultValue>{title}</option>
+        {title ? <option defaultValue>{title}</option> : null}
         {options()}
       </select>
     </div>
