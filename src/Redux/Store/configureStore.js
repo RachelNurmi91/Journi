@@ -1,20 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { createStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import thunk from "redux-thunk";
-import AccountReducer from "../Reducers/AccountReducer";
+import rootReducer from "../Reducers";
 
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["account"],
 };
 
-const persistedReducer = persistReducer(persistConfig, AccountReducer);
-
-export const store = configureStore({
-  reducer: persistedReducer,
-  devTools: process.env.NODE_ENV !== "production",
-  middleware: [thunk],
-});
-
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+export const store = createStore(persistedReducer);
 export const persistor = persistStore(store);

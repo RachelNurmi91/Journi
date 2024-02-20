@@ -27,8 +27,7 @@ export default produce((draft, action) => {
       draft.userAccount = action.payload;
       return draft;
     case REMOVE_LOGGED_IN_USER_DATA:
-      draft = initialState;
-      return draft;
+      return { ...initialState };
     case SET_ACTIVE_TRIP:
       draft.activeTrip.tripSummary.country = action.payload.destination;
       draft.activeTrip.tripSummary.departure = action.payload.departure;
