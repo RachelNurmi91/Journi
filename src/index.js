@@ -8,6 +8,13 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./Redux/Store/configureStore";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faSuitcaseRolling,
+  faPlaneDeparture,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faSuitcaseRolling, faPlaneDeparture);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

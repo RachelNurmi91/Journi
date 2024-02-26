@@ -21,8 +21,8 @@ function TripSelector({ ...props }) {
 
   const generateOptions = () => {
     return tripList.map((trip, i) => (
-      <option value={trip.tripName} data-id={trip.id} key={i + 1}>
-        {trip.tripName}
+      <option value={trip?.tripName} data-id={trip.id} key={i + 1}>
+        {trip?.tripName}
       </option>
     ));
   };
@@ -31,7 +31,7 @@ function TripSelector({ ...props }) {
     <>
       {
         // Only show the select if there are enough trips to toggle between.
-        props.tripListData.length >= 2 ? (
+        props.tripListData?.length >= 2 ? (
           <Select options={generateOptions} onChange={handleChange} />
         ) : null
       }

@@ -1,13 +1,17 @@
 import "./App.css";
-import Nav from "./Layout/Nav";
-import Routing from "./Layout/Routing";
+import Sidebar from "./Layout/Sidebar";
+import Navbar from "./Layout/Navbar";
+import Content from "./Layout/Content";
 
 function App() {
   return (
-    <>
-      <Nav />
-      <Routing />
-    </>
+    <div>
+      <Sidebar />
+      <div className="content-position">
+        <Navbar />
+        <Content />
+      </div>
+    </div>
   );
 }
 

@@ -4,7 +4,10 @@ function Input({ name, onChange, placeholder, label, type = "text" }) {
   const inputRef = useRef(null);
 
   return (
-    <div className="form-floating mb-3 d-block">
+    <div class="form-group my-3">
+      <label for={name} className="my-2">
+        {label}
+      </label>
       <input
         ref={inputRef}
         className="form-control"
@@ -14,7 +17,6 @@ function Input({ name, onChange, placeholder, label, type = "text" }) {
         onChange={onChange}
         type={type}
       />
-      <label htmlFor={name}>{label}</label>
     </div>
   );
 }

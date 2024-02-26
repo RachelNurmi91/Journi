@@ -4,7 +4,7 @@ function Select({ title, options, onChange }) {
   const selectRef = useRef(null);
 
   return (
-    <div className="mb-3 d-block">
+    <div className="d-block">
       <select
         ref={selectRef}
         className="form-select"

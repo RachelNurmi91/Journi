@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import TripSelector from "./TripSelector";
 
-function Nav({ ...props }) {
+function Navbar({ ...props }) {
   const loggedInNav = () => {
     return (
       <>
@@ -54,10 +54,25 @@ function Nav({ ...props }) {
 
   return (
     <>
-      <nav id="navbar-container">
-        <div className="navbar-body ">
-          {props.userData ? loggedInNav() : guestNav()}
+      <nav className="navbar navbar-expand-lg navbar-body p-3">
+        <div className="row w-100">
+          <div className="col align-self-center">
+            <div className="w-50">
+              <TripSelector />
+            </div>
+          </div>
+          <div className="col align-self-center">
+            <div className="float-end d-flex align-items-center">
+              <div className="text-bold">{props.userData.firstName}</div>
+              <div className="profile-icon mx-2">
+                {props.userData.firstName.slice(0, 1).toUpperCase()}
+              </div>
+            </div>
+          </div>
         </div>
+        {/* <a className="navabar__menu position-relative d-inline-block" href="#">
+          <i className="fa fa-bars" aria-hidden="true"></i>
+        </a> */}
       </nav>
     </>
   );
@@ -73,4 +88,4 @@ const mapDispatchToProps = {
   removeLoggedInUserData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
