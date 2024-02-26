@@ -54,7 +54,7 @@ function Navbar({ ...props }) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-body p-3">
+      <nav className="navbar navbar-expand-lg navbar-body p-3 sticky-top">
         <div className="row w-100">
           <div className="col align-self-center">
             <div className="w-50">
