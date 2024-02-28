@@ -5,6 +5,7 @@ import Input from "../../Shared/UI/Input";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Radio from "../../Shared/UI/Radio";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DEFAULT_FORM_DATA = {
   airlineName: null,
@@ -19,12 +20,24 @@ const DEFAULT_FORM_DATA = {
 function AddFlight({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
+  const [isOneWay, setIsOneWay] = useState(false);
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
+  };
+
+  const handleRadio = (event) => {
+    const targetValue = event.target.value;
+    console.log(event);
+
+    if (targetValue === "oneway") {
+      setIsOneWay(true);
+    } else {
+      setIsOneWay(false);
+    }
   };
 
   const onSave = () => {
@@ -41,21 +54,57 @@ function AddFlight({ ...props }) {
   const renderOptions = () => {
     return (
       <>
-        <div className="box add-flight-box">
+        <div className="shadow-box p3-per">
           <div className="row">
             <div className="col d-flex justify-content-end">
-              <Radio name="oneway" label="One Way" onChange={null} />
+              <Radio
+                name="flightType"
+                value="roundtrip"
+                label="Roundtrip"
+                onChange={handleRadio}
+              />
             </div>
             <div className="col d-flex justify-content-start">
-              <Radio name="roundtrip" label="Roundtrip" onChange={null} />
+              <Radio
+                name="flightType"
+                value="oneway"
+                label="One Way"
+                onChange={handleRadio}
+              />
             </div>
           </div>
           <hr />
           <div className="row">
-            <div className="col d-flex justify-content-center">From</div>
-            <div className="col d-flex justify-content-center">To</div>
-            <div className="col d-flex justify-content-center">Depart</div>
-            <div className="col d-flex justify-content-center">Return</div>
+            <div className="col d-flex justify-content-center">
+              <FontAwesomeIcon
+                icon="fa-solid fa-plane-departure"
+                style={{ color: "#0bb6c0" }}
+              />
+              <span className="label mx-3">From</span>
+            </div>
+            <div className="col d-flex justify-content-center">
+              <FontAwesomeIcon
+                icon="fa-solid fa-plane-arrival"
+                style={{ color: "#0bb6c0" }}
+              />
+              <span className="label mx-3">To</span>
+            </div>
+            <div className="col d-flex justify-content-center">
+              <FontAwesomeIcon
+                icon="fa-solid fa-calendar-days"
+                style={{ color: "#0bb6c0" }}
+              />
+              <span className="label mx-3">Depart</span>
+            </div>
+            {isOneWay ? null : (
+              <div className="col d-flex justify-content-center">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-calendar-days"
+                  style={{ color: "#0bb6c0" }}
+                />
+                <span className="label mx-3">Return</span>
+              </div>
+            )}
           </div>
         </div>
       </>

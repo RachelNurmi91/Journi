@@ -7,7 +7,7 @@ function Summary({ ...props }) {
     if (props.userData.trips.length) {
       return (
         <div className="content-body">
-          <div className="container">
+          <div className="container summary">
             <div className="row">
               <h1>
                 Welcome back{" "}
@@ -19,7 +19,7 @@ function Summary({ ...props }) {
             </div>
             <div className="row mt-5">
               <div className="col">
-                <div className="box next-trip-box">
+                <div className="outlined-box p10-per text-center">
                   <div>
                     <FontAwesomeIcon
                       icon="fa-solid fa-suitcase-rolling"
@@ -33,7 +33,7 @@ function Summary({ ...props }) {
                 </div>
               </div>
               <div className="col">
-                <div className="box next-trip-box">
+                <div className="outlined-box p10-per text-center">
                   <div>
                     <FontAwesomeIcon
                       icon="fa-solid fa-plane-departure"
@@ -48,26 +48,6 @@ function Summary({ ...props }) {
             </div>
           </div>
         </div>
-        // <div className="content-body text-center">
-        //   <h1>
-        //     Welcome back{" "}
-        //     <span className="fw-bold font-highlights">
-        //       {props.userData?.firstName}
-        //     </span>
-        //   </h1>
-        //   <h2>
-        //     Your next trip is to{" "}
-        //     <span className="fw-bold font-highlights">
-        //       {props.travelData?.tripName}
-        //     </span>{" "}
-        //   </h2>
-        //   <h3>
-        //     Get ready to leave on{" "}
-        //     <span className="fw-bold font-highlights">
-        //       {props.travelData?.departureDate}
-        //     </span>
-        //   </h3>
-        // </div>
       );
     } else {
       return (

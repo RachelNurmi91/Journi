@@ -3,6 +3,10 @@
   margin-left: 250px;
 }
 
+.content-body {  
+  padding: 3% 10%;
+}
+
 /* Branding */
 
 .primary-color {
@@ -16,9 +20,6 @@
   background-image: linear-gradient(to right, #0BB6C0, #56B0D2);
   width: 0;
   border-radius: 0 25px 25px 0;
-  /* left: -100%; */
-  /* z-index: 999;
-  transition: 0.5s ease; */
 }
 
 .sidebar-body.active {
@@ -53,23 +54,14 @@ color: #fff;
   color: #000;
 }
 
+/* Navbar */
+
 .navbar-body {
   background-color: #ffffff;
   height: 75px;
   border-bottom: 1px solid #c0c0c0;
 }
 
-
-.content-container {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-  padding: 10%;
-}
-
-.content-body {  
-  padding: 5% 10%;
-}
 
 .profile-icon {
   border-radius: 100%;
@@ -83,24 +75,27 @@ color: #fff;
   font-weight: bold;
 }
 
-.box {
+/* Box styles */
+
+.outlined-box {
   font-family: 'Inter', sans-serif;
   border-radius: 10px;
-}
-
-.next-trip-box {
-  text-align: center;
   border: 1px solid #c0c0c0;
-  padding: 10%;
 }
 
-.next-trip-box .title{
+.shadow-box {
+  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.094);
+}
+
+.summary .title{
   font-weight: 700;
   font-size: 35px;
   text-transform: uppercase;
 }
 
-.next-trip-box .subtitle{
+.summary .subtitle{
   font-weight: 600;
   font-size: 20px;
   line-height: 24.2px;
@@ -121,7 +116,39 @@ h1 {
   font-weight: 900 !important;
 }
 
-label {
+h2 {
+  font-family: "Inter", sans-serif;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+}
+
+/* Padding by percentage */
+
+.p3-per {
+  padding: 3%
+}
+
+.p10-per {
+  padding: 10%
+}
+
+.b16-mon {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.b22-mon {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.dashed {
+    border-top: 1px dashed #c0c0c0;
+}
+
+label, .label {
   font-family: "Inter", sans-serif;
   font-size: 16px !important;
   font-weight: 600 !important;
@@ -135,6 +162,7 @@ button {
 }
 
 button .btn-link {
+  font-family: "Sora", sans-serif;
   color: #fff;
   text-decoration: none;
 }
@@ -158,5 +186,13 @@ input[type="radio"]:checked {
 
 .flex {
   display: flex;
+  align-items: center;
+}
+
+
+.flight-list-info {
+  justify-content: space-evenly;
+  justify-items: center;
+  align-content: space-evenly;
   align-items: center;
 }

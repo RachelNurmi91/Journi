@@ -12,9 +12,16 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faSuitcaseRolling,
   faPlaneDeparture,
+  faPlaneArrival,
+  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faSuitcaseRolling, faPlaneDeparture);
+library.add(
+  faSuitcaseRolling,
+  faPlaneDeparture,
+  faPlaneArrival,
+  faCalendarDays
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

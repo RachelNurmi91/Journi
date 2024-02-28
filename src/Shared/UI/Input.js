@@ -4,8 +4,8 @@ function Input({ name, onChange, placeholder, label, type = "text" }) {
   const inputRef = useRef(null);
 
   return (
-    <div class="form-group my-3">
-      <label for={name} className="my-2">
+    <div className="form-group my-3">
+      <label htmlFor={name} className="my-2">
         {label}
       </label>
       <input

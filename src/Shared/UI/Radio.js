@@ -4,10 +4,10 @@ function Radio({ name, onChange, label }) {
   const inputRef = useRef(null);
 
   return (
-    <div class="flex">
+    <div className="flex">
       <input
         ref={inputRef}
-        class="form-check-input"
+        className="form-check-input"
         name={name}
         onChange={onChange}
         type="radio"

@@ -45,7 +45,7 @@ function AddTrip({ ...props }) {
   };
 
   return (
-    <div className="content-container">
+    <div>
       <Header title="Add Trip" />
       <Input
         name="tripName"

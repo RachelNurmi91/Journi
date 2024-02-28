@@ -11,7 +11,7 @@ import AddTrip from "../Trip/Trips/AddTrip";
 
 function Content() {
   return (
-    <div id="content-container">
+    <div>
       <Routes>
         <Route path="/" element={<Summary />} />
         <Route path="/login" element={<Login navigate={useNavigate()} />} />
