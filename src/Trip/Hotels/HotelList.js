@@ -76,7 +76,7 @@ function HotelList({ ...props }) {
     <div className="content-body hotel-list">
       <Header title="Hotels" />
       <div className="row mb-4 w-25" align="right">
-        <Button label={addLabel()} destination={"/flights/add"} />
+        <Button label={addLabel()} destination={"/hotels/add"} />
       </div>
       {displayHotels()}
     </div>
