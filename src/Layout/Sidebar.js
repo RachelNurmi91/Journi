@@ -71,14 +71,14 @@ function Sidebar({ ...props }) {
   return (
     <div className="sidebar-body active d-flex flex-column">
       <img className="logo" src={logo} alt="Journi logo" height="150px" />
-      {props.userData ? loggedIn() : guest()}
+      {props.userId ? loggedIn() : guest()}
     </div>
   );
 }
 
 function mapStateToProps(state) {
   return {
-    userData: state.account?.userAccount,
+    userId: state.account?.userAccount?.id,
   };
 }
 

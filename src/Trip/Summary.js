@@ -65,12 +65,13 @@ function Summary({ ...props }) {
     return <h1 className="content-body text-center">Please Log In</h1>;
   };
 
-  return <>{props.userData ? loggedInSummary() : guestWelcome()}</>;
+  return <>{props.userId ? loggedInSummary() : guestWelcome()}</>;
 }
 
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
+    userId: state.account?.userAccount?.id,
     activeTrip: state.account?.activeTrip,
   };
 }

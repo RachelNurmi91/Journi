@@ -1,4 +1,5 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 import Summary from "../Trip/Summary";
 import HotelList from "../Trip/Hotels/HotelList";
 import AddHotel from "../Trip/Hotels/AddHotel";
@@ -10,32 +11,44 @@ import TripList from "../Trip/Trips/TripList";
 import AddTrip from "../Trip/Trips/AddTrip";
 import Profile from "../Account/Profile";
 
-function Content() {
+function Content({ ...props }) {
+  const navigate = useNavigate();
   return (
     <div>
       <Routes>
         <Route path="/" element={<Summary />} />
-        <Route path="/login" element={<Login navigate={useNavigate()} />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route
-          path="/register"
-          element={<Register navigate={useNavigate()} />}
-        />
-        <Route path="/hotels" element={<HotelList />} />
-        <Route
-          path="/hotels/add"
-          element={<AddHotel navigate={useNavigate()} />}
-        />
-        <Route path="/flights" element={<FlightList />} />
-        <Route
-          path="/flights/add"
-          element={<AddFlight navigate={useNavigate()} />}
-        />
-        <Route path="/trips" element={<TripList />} />
-        <Route path="/trips/add" element={<AddTrip />} />
+        <Route path="*" element={<Summary />} />
+        <Route path="/login" element={<Login navigate={navigate} />} />
+        <Route path="/register" element={<Register navigate={navigate} />} />
+        {props.userId && (
+          <>
+            <Route path="/profile" element={<Profile />} />
+
+            <Route path="/hotels" element={<HotelList />} />
+            <Route
+              path="/hotels/add"
+              element={<AddHotel navigate={navigate} />}
+            />
+            <Route path="/flights" element={<FlightList />} />
+            <Route
+              path="/flights/add"
+              element={<AddFlight navigate={navigate} />}
+            />
+            <Route path="/trips" element={<TripList />} />
+            <Route path="/trips/add" element={<AddTrip />} />
+          </>
+        )}
       </Routes>
     </div>
   );
 }
 
-export default Content;
+function mapStateToProps(state) {
+  return {
+    userId: state.account?.userAccount?.id,
+  };
+}
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Content);

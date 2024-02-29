@@ -11,6 +11,7 @@ import {
 
 const initialState = {
   userAccount: {
+    id: null,
     firstName: null,
     lastName: null,
     username: null,

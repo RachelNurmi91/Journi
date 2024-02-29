@@ -26,8 +26,23 @@ function Register({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
+  const generateUserId = () => {
+    const nameId =
+      formData.firstName.substring(0, 1).toUpperCase() +
+      formData.lastName.substring(0, 1).toUpperCase();
+    const numberId =
+      Math.floor(Math.random() * 80) +
+      100 +
+      "-" +
+      (Math.floor(Math.random() * 8) + 10) +
+      "-" +
+      (Math.floor(Math.random() * 80000) + 10000);
+    return nameId + "-" + numberId;
+  };
+
   const onRegister = () => {
     const newAccount = {
+      id: generateUserId(),
       firstName: formData.firstName,
       lastName: formData.lastName,
       username: formData.username,
