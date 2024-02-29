@@ -15,7 +15,6 @@ function FlightList({ flightListData }) {
 
   const sortByDate = () => {
     let flights = flightListData;
-    console.log(flightListData);
 
     if (flights && flights.length > 10) {
       flights.sort((a, b) => {
@@ -26,6 +25,36 @@ function FlightList({ flightListData }) {
     }
 
     setSortedFlights(flights || []);
+  };
+
+  const getDate = (unformattedDate) => {
+    const date = new Date(unformattedDate);
+
+    // Define the days of the week and months
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    // Get the components of the date
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    // Return the formatted date string
+    return `${dayOfWeek}, ${day} ${month} ${year}`;
   };
 
   const handleExpand = (itemIndex) => {
@@ -60,22 +89,28 @@ function FlightList({ flightListData }) {
           </div>
           <div className="row flight-list-info">
             <div className="col d-flex justify-content-start b22-mon">
-              {flight?.flightDate}
+              {getDate(flight?.departureFlight?.departureDate)}
             </div>
             <div className="col d-flex justify-content-center">
               <div className="float-left">
-                <span className="b16-mon">{flight?.airline}</span> <br />
-                {flight?.airport}
+                <span className="b16-mon">
+                  {flight?.departureFlight?.departureAirportCity}
+                </span>
+                <br />({flight?.departureFlight?.departureAirportCode})
               </div>
-              <div className="align-items-self">----</div>
+              <div className="align-items-self px-3">to</div>
               <div className="float-right">
-                <span className="b16-mon">New York </span>
+                <span className="b16-mon">
+                  {flight?.returnFlight?.returnAirportCity}
+                </span>
                 <br />
-                NY
+                {flight?.returnAirportCode}
               </div>
             </div>
-            <div className="col text-center">Emirates</div>
-            <div className="col b16-mon d-flex justify-content-end"> 23C</div>
+            <div className="col text-center">{flight?.airline}</div>
+            <div className="col b16-mon d-flex justify-content-end">
+              {flight?.departureFlight?.departureSeat}
+            </div>
           </div>
         </div>
       </div>
@@ -83,6 +118,7 @@ function FlightList({ flightListData }) {
   };
 
   const renderRoundtripFlight = (flight, index) => {
+    console.log(flight);
     return (
       <div className="shadow-box p3-per" key="index">
         <div className="container ">
@@ -97,22 +133,28 @@ function FlightList({ flightListData }) {
           </div>
           <div className="row flight-list-info">
             <div className="col d-flex justify-content-start b22-mon">
-              Sun, 24 Feb 2024
+              {getDate(flight?.departureFlight?.departureDate)}
             </div>
             <div className="col d-flex justify-content-center">
               <div className="float-left">
-                <span className="b16-mon">Tokyo</span> <br />
-                TYO
+                <span className="b16-mon">
+                  {flight?.departureFlight?.departureAirportCity}
+                </span>{" "}
+                <br />({flight?.departureFlight?.departureAirportCode})
               </div>
               <div className="align-items-self">----</div>
               <div className="float-right">
-                <span className="b16-mon">New York </span>
-                <br />
-                NY
+                <span className="b16-mon">
+                  {flight?.returnFlight?.returnAirportCity}{" "}
+                </span>
+                <br />({flight?.returnFlight?.returnAirportCode})
               </div>
             </div>
-            <div className="col text-center">Emirates</div>
-            <div className="col b16-mon d-flex justify-content-end"> 23C</div>
+            <div className="col text-center">{flight?.airline}</div>
+            <div className="col b16-mon d-flex justify-content-end">
+              {" "}
+              {flight?.departureFlight?.departureSeat}
+            </div>
           </div>
         </div>
         <hr className="dashed m-3" />
@@ -128,33 +170,51 @@ function FlightList({ flightListData }) {
           </div>
           <div className="row flight-list-info">
             <div className="col d-flex justify-content-start b22-mon">
-              Tue, 29 Mar 2024
+              {getDate(flight?.returnFlight?.returnDate)}
             </div>
             <div className="col d-flex justify-content-center">
               <div className="float-left">
-                <span className="b16-mon">New York</span> <br />
-                NY
+                <span className="b16-mon">
+                  {flight?.returnFlight?.returnAirportCity}
+                </span>{" "}
+                <br />({flight?.returnFlight?.returnAirportCode})
               </div>
               <div className="align-items-self">----</div>
               <div className="float-right">
-                <span className="b16-mon">Tokyo</span>
-                <br />
-                TYK
+                <span className="b16-mon">
+                  {flight?.departureFlight?.departureAirportCity}{" "}
+                </span>
+                <br />({flight?.departureFlight?.departureAirportCode})
               </div>
             </div>
-            <div className="col text-center">Emirates</div>
-            <div className="col b16-mon d-flex justify-content-end"> 23C</div>
+            <div className="col text-center">{flight?.airline}</div>
+            <div className="col b16-mon d-flex justify-content-end">
+              {" "}
+              {flight?.returnFlight?.returnSeat}
+            </div>
           </div>
         </div>
       </div>
     );
   };
 
+  const addLabel = () => {
+    return (
+      <>
+        <FontAwesomeIcon icon="fa-solid fa-plus" style={{ color: "#fff" }} />{" "}
+        Add New
+      </>
+    );
+  };
+
   return (
     <>
-      <div className="content-body add-flight">
+      <div className="content-body flight-list">
+        <div className="row mb-4 w-25" align="right">
+          <Button label={addLabel()} destination={"/flights/add"} />
+        </div>
+
         {displayFlights()}
-        <Button label="Add New" destination={"/flights/add"} />
       </div>
     </>
   );

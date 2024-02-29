@@ -5,7 +5,7 @@ import Input from "../../Shared/UI/Input";
 import Select from "../../Shared/UI/Select";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
-import { countryList } from "../../Shared/Data/CountryList";
+import { CountryList } from "../../Shared/Data/CountryList";
 
 const DEFAULT_FORM_DATA = {
   hotelName: "Temple House by Curio",
@@ -63,7 +63,7 @@ function AddHotel({ ...props }) {
   };
 
   const generateOptions = () => {
-    return countryList.map((country, i) => (
+    return CountryList.map((country, i) => (
       <option value={country} key={i + 1}>
         {country}
       </option>

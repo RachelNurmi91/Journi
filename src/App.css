@@ -103,11 +103,6 @@ color: #fff;
   color: #6d6d6d;
 }
 
-.add-flight-box {
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.094);
-  padding: 3%;
-}
-
 /* Elements */
 
 h1 {
@@ -124,6 +119,10 @@ h2 {
 
 /* Padding by percentage */
 
+
+.mn10 {
+  margin-left: -20px;
+}
 .p3-per {
   padding: 3%
 }
@@ -138,6 +137,12 @@ h2 {
   font-size: 16px;
 }
 
+.b18-mon {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
+
 .b22-mon {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
@@ -148,10 +153,15 @@ h2 {
     border-top: 1px dashed #c0c0c0;
 }
 
-label, .label {
+label {
   font-family: "Inter", sans-serif;
   font-size: 16px !important;
   font-weight: 600 !important;
+}
+
+.form-check-label {
+  font-size: 15px !important;
+  font-weight: 400 !important;
 }
 
 button {
@@ -167,32 +177,41 @@ button .btn-link {
   text-decoration: none;
 }
 
-/* Customizing Radio Btn */
-
-input[type="radio"] {
-  appearance: none;
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  padding: 4px;
-  border: 2px solid #0BB6C0;
-
-  border-radius: 50%;
-}
-
-input[type="radio"]:checked {
-  background-color: #fff;
-}
-
-.flex {
-  display: flex;
-  align-items: center;
-}
-
-
 .flight-list-info {
   justify-content: space-evenly;
   justify-items: center;
   align-content: space-evenly;
   align-items: center;
+}
+
+.calendar {
+  width: 100px;
+  border-style: none;
+  border-bottom: solid 3px #0BB6C0;
+}
+
+.autocomplete-container {
+  position: relative;
+}
+
+.autocomplete-input {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  background-color: #fcfcfc; 
+  list-style-type: none;
+  margin:0;
+  padding: 0;
+  max-height: 300px; 
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.autocomplete-item {
+  padding: 10px;
+}
+
+.autocomplete-item:hover {
+  background-color: #0BB6C0;
+  color: #fff;
 }

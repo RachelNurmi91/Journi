@@ -31,20 +31,27 @@ function HotelList({ ...props }) {
   const displayHotels = () => {
     return hotelList?.map((hotel) => {
       return (
-        <div className="listItem" key={Math.random()}>
+        <div className="shadow-box p3-per my-4" key="index">
           <div className="container">
-            <div className="row align-items-end">
+            <div className="row">
+              <span className="b22-mon">{hotel.hotelName}</span>
+            </div>
+            <div className="row flight-list-info">
+              <div className="col d-flex justify-content-start">
+                {hotel.city}, {hotel.country}
+              </div>
               <div className="col">
-                <span className="listItemMajor">{hotel.hotelName}</span>
-                <br />
-                {hotel.hotelConfirmation}
+                <div className="row d-inline-block">
+                  <span className="b16-mon"> Arrival </span>
+                  {hotel.arrivalDate}
+                </div>
+                <div className="row d-inline-block">
+                  <span className="b16-mon "> Departure </span>
+                  {hotel.departureDate}
+                </div>
               </div>
-              <div className="col text-center">
-                {hotel.city}, {hotel.country} <br />
-                {hotel.arrivalDate} - {hotel.departureDate}
-              </div>
-              <div className="col listItemMinor ">
-                <br />
+              <div className="col text-center">{hotel.hotelConfirmation}</div>
+              <div className="col b16-mon d-flex justify-content-end">
                 *Booked by {hotel.nameOnReservation}
               </div>
             </div>
@@ -55,7 +62,7 @@ function HotelList({ ...props }) {
   };
 
   return (
-    <div className="constraint">
+    <div className="content-body hotel-list">
       <Header title="Hotels" />
       {displayHotels()}
       <Button destination="/hotels/add" label="Add New" />

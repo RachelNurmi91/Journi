@@ -41,7 +41,6 @@ function AddTrip({ ...props }) {
       flights: [],
     };
     props.addNewTripData(newTrip);
-    console.log(newTrip);
   };
 
   return (
