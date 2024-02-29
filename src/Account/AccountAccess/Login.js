@@ -7,6 +7,8 @@ import {
 } from "../../Redux/Actions/AccountActions";
 import { testAccount01 } from "../../Test/testAccount01";
 import Button from "../../Shared/UI/Button";
+import Header from "../../Shared/UI/Header";
+import Input from "../../Shared/UI/Input";
 
 const DEFAULT_FORM_DATA = {
   username: null,
@@ -37,29 +39,28 @@ function AddHotel({ ...props }) {
 
   return (
     <div className="content-body">
-      <div className="form-floating mb-3">
-        <input
-          className="form-control"
-          name="username"
-          id="username"
-          placeholder="Username"
-          onChange={handleChange}
-        />
-        <label htmlFor="username">Username</label>
+      <Header title="Login" />
+      <div className="container">
+        <div className="row">
+          <Input
+            name="username"
+            onChange={handleChange}
+            placeholder="Username/Email"
+            label="Username/Email"
+          />
+        </div>
+        <div className="row">
+          <Input
+            name="password"
+            onChange={handleChange}
+            placeholder="Password"
+            label="Password"
+          />
+        </div>
+        <div className="row">
+          <Button label="Login" onClick={onLogin} />
+        </div>
       </div>
-      <div className="form-floating mb-3">
-        <input
-          type="password"
-          className="form-control"
-          name="password"
-          id="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-        <label htmlFor="password">Password</label>
-      </div>
-
-      <Button label="Login" onClick={onLogin} />
     </div>
   );
 }

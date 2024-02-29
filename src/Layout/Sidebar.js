@@ -43,7 +43,7 @@ function Sidebar({ ...props }) {
                   icon="fa-solid fa-arrow-right-from-bracket"
                   style={{ color: "#fff" }}
                 />
-                Logout
+                <span className="ms-2">Logout</span>
               </div>
             </li>
           </ul>
@@ -59,7 +59,20 @@ function Sidebar({ ...props }) {
           <ul className="sidebar-menu">
             <li>
               <Link to="/login" className="nav-link">
-                Login
+                <FontAwesomeIcon
+                  icon="fa-solid fa-right-to-bracket"
+                  style={{ color: "#fff" }}
+                />
+                <span className="ms-2">Login</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/register" className="nav-link">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-user-plus"
+                  style={{ color: "#fff" }}
+                />
+                <span className="ms-2">Register</span>
               </Link>
             </li>
           </ul>

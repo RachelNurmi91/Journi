@@ -8,6 +8,7 @@ import {
 import { testAccount01 } from "../../Test/testAccount01";
 import Button from "../../Shared/UI/Button";
 import Input from "../../Shared/UI/Input";
+import Header from "../../Shared/UI/Header";
 
 const DEFAULT_FORM_DATA = {
   firstName: null,
@@ -60,39 +61,47 @@ function Register({ ...props }) {
 
   return (
     <div className="content-body">
-      <Input
-        name="firstName"
-        onChange={handleChange}
-        placeholder="First Name"
-        label="First Name"
-      />
-      <Input
-        name="lastName"
-        onChange={handleChange}
-        placeholder="Last Name"
-        label="Last Name"
-      />
-      <Input
-        name="username"
-        onChange={handleChange}
-        placeholder="Username"
-        label="Username"
-      />
-      <Input
-        name="email"
-        onChange={handleChange}
-        placeholder="Email"
-        label="Email"
-      />
-      <Input
-        name="password"
-        onChange={handleChange}
-        placeholder="Password"
-        label="Password"
-        type="password"
-      />
-
-      <Button label="Register" onClick={onRegister} />
+      <Header title="Register" />
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <Input
+              name="firstName"
+              onChange={handleChange}
+              placeholder="First Name"
+              label="First Name"
+            />
+          </div>
+          <div className="col">
+            <Input
+              name="lastName"
+              onChange={handleChange}
+              placeholder="Last Name"
+              label="Last Name"
+            />
+          </div>
+          <div className="row">
+            <Input
+              name="email"
+              onChange={handleChange}
+              placeholder="Email"
+              label="Email"
+            />
+          </div>
+          <div className="row">
+            <Input
+              name="password"
+              onChange={handleChange}
+              placeholder="Password"
+              label="Password"
+              type="password"
+            />
+          </div>
+          <div className="row">
+            <Button label="Register" onClick={onRegister} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
