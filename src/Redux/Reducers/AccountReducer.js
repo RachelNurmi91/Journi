@@ -6,10 +6,18 @@ import {
   ADD_NEW_FLIGHT_DATA,
   REMOVE_LOGGED_IN_USER_DATA,
   ADD_NEW_TRIP_DATA,
+  DELETE_TRIP_DATA,
 } from "../Actions/AccountActions";
 
 const initialState = {
-  userAccount: null,
+  userAccount: {
+    firstName: null,
+    lastName: null,
+    username: null,
+    email: null,
+    password: null,
+    trips: [],
+  },
   activeTrip: {
     tripData: null,
   },
@@ -32,6 +40,11 @@ export default produce((draft, action) => {
       if (!draft.activeTrip) {
         draft.activeTrip = action.payload;
       }
+      return draft;
+    case DELETE_TRIP_DATA:
+      draft.userAccount.trips = draft.userAccount.trips.filter((trip) => {
+        return trip.id !== action.payload.id;
+      });
       return draft;
     case ADD_NEW_HOTEL_DATA:
       draft.activeTrip.hotels.push(action.payload);

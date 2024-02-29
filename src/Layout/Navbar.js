@@ -13,9 +13,9 @@ function Navbar({ ...props }) {
         </div>
         <div className="col align-self-center">
           <div className="float-end d-flex align-items-center">
-            <div className="text-bold">{props.userData.firstName}</div>
+            <div className="text-bold">{props.userData?.firstName}</div>
             <div className="profile-icon mx-2">
-              {props.userData.firstName.slice(0, 1).toUpperCase()}
+              {props.userData?.firstName?.slice(0, 1).toUpperCase()}
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import AddFlight from "../Trip/Flights/AddFlight";
 import Register from "../Account/AccountAccess/Register";
 import TripList from "../Trip/Trips/TripList";
 import AddTrip from "../Trip/Trips/AddTrip";
+import Profile from "../Account/Profile";
 
 function Content() {
   return (
@@ -15,6 +16,7 @@ function Content() {
       <Routes>
         <Route path="/" element={<Summary />} />
         <Route path="/login" element={<Login navigate={useNavigate()} />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/register"
           element={<Register navigate={useNavigate()} />}

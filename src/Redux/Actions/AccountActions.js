@@ -4,6 +4,7 @@ export const SET_ACTIVE_TRIP = "SET_ACTIVE_TRIP";
 export const ADD_NEW_FLIGHT_DATA = "ADD_NEW_FLIGHT_DATA";
 export const REMOVE_LOGGED_IN_USER_DATA = "REMOVE_LOGGED_IN_USER_DATA";
 export const ADD_NEW_TRIP_DATA = "ADD_NEW_TRIP_DATA";
+export const DELETE_TRIP_DATA = "DELETE_TRIP_DATA";
 
 export function setLoggedInUserData(data) {
   return {
@@ -28,6 +29,14 @@ export function setActiveTrip(activeTrip) {
 export function addNewTripData(data) {
   return {
     type: ADD_NEW_TRIP_DATA,
+    payload: data,
+  };
+}
+
+export function deleteTripData(data) {
+  console.log(data);
+  return {
+    type: DELETE_TRIP_DATA,
     payload: data,
   };
 }
