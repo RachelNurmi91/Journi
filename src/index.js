@@ -16,6 +16,7 @@ import {
   faCalendarDays,
   faPlus,
   faXmark,
+  faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -24,7 +25,8 @@ library.add(
   faPlaneArrival,
   faCalendarDays,
   faPlus,
-  faXmark
+  faXmark,
+  faArrowRightFromBracket
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

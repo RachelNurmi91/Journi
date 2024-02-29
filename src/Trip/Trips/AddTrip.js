@@ -57,7 +57,8 @@ function AddTrip({ ...props }) {
   return (
     <div>
       <div onClick={toggleModal} className="nav-link">
-        Add Trip
+        <FontAwesomeIcon icon="fa-solid fa-plus" style={{ color: "#fff" }} />
+        <span className="ms-2">Add Trip</span>
       </div>
       <Modal
         isOpen={isModalOpen}

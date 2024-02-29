@@ -1,6 +1,7 @@
 import logo from "../Media/Images/logo.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import AddTrip from "../Trip/Trips/AddTrip";
 
@@ -27,11 +28,6 @@ function Sidebar({ ...props }) {
               </Link>
             </li>
             <li>
-              <Link to="/trips/" className="nav-link">
-                Trips
-              </Link>
-            </li>
-            <li>
               <AddTrip />
             </li>
           </ul>
@@ -43,6 +39,10 @@ function Sidebar({ ...props }) {
                 className="nav-link"
                 onClick={() => props.removeLoggedInUserData()}
               >
+                <FontAwesomeIcon
+                  icon="fa-solid fa-arrow-right-from-bracket"
+                  style={{ color: "#fff" }}
+                />
                 Logout
               </div>
             </li>
