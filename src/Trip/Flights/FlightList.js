@@ -184,7 +184,7 @@ function FlightList({ flightListData }) {
 
 function mapStateToProps(state) {
   return {
-    flightListData: state.account?.activeTrip?.tripData?.flights,
+    flightListData: state.account?.activeTrip?.flights,
   };
 }
 

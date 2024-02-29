@@ -11,10 +11,6 @@ import {
 const initialState = {
   userAccount: null,
   activeTrip: {
-    tripSummary: {
-      country: null,
-      departure: null,
-    },
     tripData: null,
   },
 };
@@ -29,23 +25,19 @@ export default produce((draft, action) => {
     case REMOVE_LOGGED_IN_USER_DATA:
       return { ...initialState };
     case SET_ACTIVE_TRIP:
-      draft.activeTrip.tripSummary.country = action.payload.destination;
-      draft.activeTrip.tripSummary.departure = action.payload.departure;
-      draft.activeTrip.tripData = action.payload;
+      draft.activeTrip = action.payload;
       return draft;
     case ADD_NEW_TRIP_DATA:
       draft.userAccount.trips.push(action.payload);
-      if (!draft.activeTrip.tripData) {
-        draft.activeTrip.tripSummary.country = action.payload.destination;
-        draft.activeTrip.tripSummary.departure = action.payload.departure;
-        draft.activeTrip.tripData = action.payload;
+      if (!draft.activeTrip) {
+        draft.activeTrip = action.payload;
       }
       return draft;
     case ADD_NEW_HOTEL_DATA:
-      draft.activeTrip.tripData.hotels.push(action.payload);
+      draft.activeTrip.hotels.push(action.payload);
       return draft;
     case ADD_NEW_FLIGHT_DATA:
-      draft.activeTrip.tripData.flights.push(action.payload);
+      draft.activeTrip.flights.push(action.payload);
       return draft;
     default:
       return draft;

@@ -85,7 +85,7 @@ function HotelList({ ...props }) {
 
 function mapStateToProps(state) {
   return {
-    hotelListData: state.account?.activeTrip?.tripData?.hotels,
+    hotelListData: state.account?.activeTrip?.hotels,
   };
 }
 

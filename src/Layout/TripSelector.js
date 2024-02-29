@@ -1,9 +1,25 @@
+import { useCallback } from "react";
 import { setActiveTrip } from "../Redux/Actions/AccountActions";
 import Select from "../Shared/UI/Select";
 import { connect } from "react-redux";
 
-function TripSelector({ ...props }) {
-  let tripList = props.tripListData;
+function TripSelector({ tripListData, activeTrip, setActiveTrip }) {
+  const generateOptions = useCallback(() => {
+    return tripListData.map((trip, i) => {
+      const isSelected = trip.tripName === activeTrip?.tripName;
+
+      return (
+        <option
+          value={trip.tripName}
+          data-id={trip.id}
+          key={i + 1}
+          selected={isSelected}
+        >
+          {trip.tripName}
+        </option>
+      );
+    });
+  }, [tripListData, activeTrip]);
 
   const handleChange = (event) => {
     const selectedTrip = event.target.selectedOptions[0];
@@ -11,30 +27,19 @@ function TripSelector({ ...props }) {
     const tripId = selectedTrip.getAttribute("data-id");
 
     // Match the selected trip id & name to the corresponding trip to return the correct data.
-    let activeTrip = tripList.find(
+    let activeTrip = tripListData.find(
       (trip) =>
         trip.id.toString() === tripId.toString() && trip.tripName === tripName
     );
 
-    props.setActiveTrip(activeTrip);
-  };
-
-  const generateOptions = () => {
-    return tripList.map((trip, i) => (
-      <option value={trip?.tripName} data-id={trip.id} key={i + 1}>
-        {trip?.tripName}
-      </option>
-    ));
+    setActiveTrip(activeTrip);
   };
 
   return (
     <>
-      {
-        // Only show the select if there are enough trips to toggle between.
-        props.tripListData?.length >= 2 ? (
-          <Select options={generateOptions} onChange={handleChange} />
-        ) : null
-      }
+      {tripListData?.length >= 2 ? (
+        <Select options={generateOptions} onChange={handleChange} />
+      ) : null}
     </>
   );
 }
@@ -42,6 +47,7 @@ function TripSelector({ ...props }) {
 function mapStateToProps(state) {
   return {
     tripListData: state.account?.userAccount?.trips,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

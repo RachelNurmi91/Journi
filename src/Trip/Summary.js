@@ -27,7 +27,7 @@ function Summary({ ...props }) {
                       size="4x"
                     />
                   </div>
-                  <div className="title">{props.travelData?.tripName}</div>
+                  <div className="title">{props.activeTrip?.tripName}</div>
                   <div className="subtitle"></div>
                   Your Next Trip
                 </div>
@@ -42,7 +42,7 @@ function Summary({ ...props }) {
                     />
                   </div>
                   <div className="title">
-                    {Methods.formatDate(props.travelData?.departureDate)}
+                    {Methods.formatDate(props.activeTrip?.departureDate)}
                   </div>
                   <div className="subtitle">Get Ready to Leave</div>
                 </div>
@@ -71,7 +71,7 @@ function Summary({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
-    travelData: state.account?.activeTrip?.tripData,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function Select({ title, options, onChange }) {
+function Select({ options, onChange }) {
   const selectRef = useRef(null);
 
   return (
@@ -10,7 +10,6 @@ function Select({ title, options, onChange }) {
         className="form-select"
         onChange={(event) => onChange(event)}
       >
-        {title ? <option defaultValue>{title}</option> : null}
         {options()}
       </select>
     </div>

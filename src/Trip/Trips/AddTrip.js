@@ -2,7 +2,10 @@ import { useState } from "react";
 import Modal from "react-modal";
 import Input from "../../Shared/UI/Input";
 import { connect } from "react-redux";
-import { addNewTripData } from "../../Redux/Actions/AccountActions";
+import {
+  addNewTripData,
+  setActiveTrip,
+} from "../../Redux/Actions/AccountActions";
 import Button from "../../Shared/UI/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -47,6 +50,7 @@ function AddTrip({ ...props }) {
       flights: [],
     };
     props.addNewTripData(newTrip);
+    props.setActiveTrip(newTrip);
     toggleModal(!isModalOpen);
   };
 
@@ -66,6 +70,7 @@ function AddTrip({ ...props }) {
             bottom: "auto",
             padding: "30px",
             width: "500px",
+            maxWidth: "80%",
             borderRadius: "15px",
             transform: "translate(-50%, -50%)",
           },
@@ -120,6 +125,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   addNewTripData,
+  setActiveTrip,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTrip);
