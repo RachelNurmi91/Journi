@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSuitcaseRolling } from "@fortawesome/free-solid-svg-icons"; // Import the specific icon
+import Methods from "../Shared/Methods";
 
 function Summary({ ...props }) {
   const loggedInSummary = () => {
@@ -41,7 +41,9 @@ function Summary({ ...props }) {
                       size="4x"
                     />
                   </div>
-                  <div className="title">{props.travelData?.departureDate}</div>
+                  <div className="title">
+                    {Methods.formatDate(props.travelData?.departureDate)}
+                  </div>
                   <div className="subtitle">Get Ready to Leave</div>
                 </div>
               </div>

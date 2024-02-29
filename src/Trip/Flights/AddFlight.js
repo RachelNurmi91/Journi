@@ -2,14 +2,13 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewFlightData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Shared/UI/Input";
-import InputAutocomplete from "../../Shared/UI/InputAutocomplete";
+import AirportAutocomplete from "./AirportAutocomplete";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Radio from "../../Shared/UI/Radio";
 import Checkbox from "../../Shared/UI/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
-import { AirportList } from "../../Shared/Data/AirportList";
 
 const DEFAULT_FORM_DATA = {
   type: "roundtrip",
@@ -40,7 +39,7 @@ function AddFlight({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [isOneWay, setIsOneWay] = useState(false);
-  const [departDate, setDepartDate] = useState(new Date());
+  const [departureDate, setDepartureDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
 
   const onSave = () => {
@@ -103,7 +102,7 @@ function AddFlight({ ...props }) {
     }
 
     if (today < selectedDate) {
-      setDepartDate(date);
+      setDepartureDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
         departureFlight: {
@@ -122,7 +121,7 @@ function AddFlight({ ...props }) {
   const handleReturnDate = (date) => {
     let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
-    let selectedDepartDate = new Date(departDate).getTime();
+    let selectedDepartDate = new Date(departureDate).getTime();
 
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
@@ -208,10 +207,8 @@ function AddFlight({ ...props }) {
                 style={{ color: "#0bb6c0" }}
               />
               <span className="label mx-3">From</span>
-              <InputAutocomplete
-                listData={AirportList}
-                filterType={"airport"}
-                inputExample={"Departure city..."}
+              <AirportAutocomplete
+                placeholder="Departure city"
                 onChange={handleDepartureAirport}
               />
             </div>
@@ -221,10 +218,8 @@ function AddFlight({ ...props }) {
                 style={{ color: "#0bb6c0" }}
               />
               <span className="label mx-3">To</span>
-              <InputAutocomplete
-                listData={AirportList}
-                filterType={"airport"}
-                inputExample={"Arrival city..."}
+              <AirportAutocomplete
+                placeholder="Arrival city"
                 onChange={handleReturnAirport}
               />
             </div>
@@ -235,7 +230,7 @@ function AddFlight({ ...props }) {
               />
               <span className="label mx-3">Depart</span>
               <Calendar
-                selectedDate={departDate}
+                selectedDate={departureDate}
                 onDateChange={handleDepartureDate}
               />
             </div>

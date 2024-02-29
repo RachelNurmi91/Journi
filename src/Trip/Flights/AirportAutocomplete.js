@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { CountryList } from "../Data/CountryList";
+import React, { useState, useRef } from "react";
+import { CountryList } from "../../Shared/Data/CountryList";
+import { AirportList } from "../../Shared/Data/AirportList";
 
-const AutocompleteInput = ({ listData, inputExample, onChange }) => {
+const AirportAutocomplete = ({ placeholder, onChange }) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const inputRef = useRef(null);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -13,7 +15,7 @@ const AutocompleteInput = ({ listData, inputExample, onChange }) => {
       return;
     }
 
-    const filteredSuggestions = listData.filter((item) =>
+    const filteredSuggestions = AirportList.filter((item) =>
       item.city.toLowerCase().includes(value.toLowerCase())
     );
     setSuggestions(filteredSuggestions);
@@ -40,10 +42,11 @@ const AutocompleteInput = ({ listData, inputExample, onChange }) => {
   return (
     <div className="autocomplete-container" onMouseLeave={handleMouseLeave}>
       <input
+        ref={inputRef}
         type="text"
         value={inputValue}
         onChange={handleChange}
-        placeholder={inputExample}
+        placeholder={placeholder}
       />
       <ul className="autocomplete-input">
         {suggestions.map((item, index) => (
@@ -62,4 +65,4 @@ const AutocompleteInput = ({ listData, inputExample, onChange }) => {
   );
 };
 
-export default AutocompleteInput;
+export default AirportAutocomplete;

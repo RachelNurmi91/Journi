@@ -8,7 +8,7 @@ export const testAccount01 = {
     {
       id: 1312324,
       tripName: "Japan",
-      departureDate: "02/01/2026",
+      departureDate: "2024-08-02T00:25:16.000Z",
       hotels: [
         {
           hotelName: "Temple House by Curio",

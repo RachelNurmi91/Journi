@@ -198,11 +198,11 @@ button .btn-link {
   position: absolute;
   width: 100%;
   z-index: 1;
-  background-color: #fcfcfc; 
+  background-color: #ededed; 
   list-style-type: none;
   margin:0;
   padding: 0;
-  max-height: 300px; 
+  max-height: 100px; 
   overflow: scroll;
   scrollbar-width: none;
 }

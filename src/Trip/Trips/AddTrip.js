@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { connect } from "react-redux";
-import Button from "../../Shared/UI/Button";
+import Modal from "react-modal";
 import Input from "../../Shared/UI/Input";
+import { connect } from "react-redux";
 import { addNewTripData } from "../../Redux/Actions/AccountActions";
-import Header from "../../Shared/UI/Header";
+import Button from "../../Shared/UI/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
@@ -12,6 +13,11 @@ const DEFAULT_FORM_DATA = {
 
 function AddTrip({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function toggleModal() {
+    setIsModalOpen(!isModalOpen);
+  }
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -41,24 +47,67 @@ function AddTrip({ ...props }) {
       flights: [],
     };
     props.addNewTripData(newTrip);
+    toggleModal(!isModalOpen);
   };
 
   return (
     <div>
-      <Header title="Add Trip" />
-      <Input
-        name="tripName"
-        onChange={handleChange}
-        label="Trip Name"
-        placeholder="Trip Name"
-      />
-      <Input
-        name="departureDate"
-        onChange={handleChange}
-        label="Departure Date"
-        placeholder="Departure Date"
-      />
-      <Button label="Create Trip" onClick={onCreateTrip} />
+      <div onClick={toggleModal} className="nav-link">
+        Add Trip
+      </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={toggleModal}
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            padding: "30px",
+            width: "500px",
+            borderRadius: "15px",
+            transform: "translate(-50%, -50%)",
+          },
+        }}
+        contentLabel="Example Modal"
+      >
+        <div className="container">
+          <div className="row d-flex">
+            <div className="col">
+              <h2 className="d-inline-block">Add Trip</h2>
+            </div>
+            <div className="col d-flex justify-content-end">
+              <span onClick={toggleModal}>
+                <FontAwesomeIcon
+                  icon="fa-solid fa-xmark"
+                  style={{ color: "#0bb6c0" }}
+                  size="2x"
+                />
+              </span>
+            </div>
+          </div>
+          <div className="row">
+            <Input
+              name="tripName"
+              onChange={handleChange}
+              label="Trip Name"
+              placeholder="Unique Trip Name"
+            />
+          </div>
+          <div className="row">
+            <Input
+              name="departureDate"
+              onChange={handleChange}
+              label="Departure Date"
+              placeholder="MM/DD/YYYY"
+            />
+          </div>
+          <div className="row">
+            <Button label="Create Trip" onClick={onCreateTrip} />
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

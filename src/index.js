@@ -15,6 +15,7 @@ import {
   faPlaneArrival,
   faCalendarDays,
   faPlus,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -22,7 +23,8 @@ library.add(
   faPlaneDeparture,
   faPlaneArrival,
   faCalendarDays,
-  faPlus
+  faPlus,
+  faXmark
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

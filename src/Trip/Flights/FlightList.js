@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ItemCollapse from "../../Shared/UI/ItemCollapse";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
+import Methods from "../../Shared/Methods";
 
 function FlightList({ flightListData }) {
-  const [expandedItem, setExpandedItem] = useState(null);
   const [sortedFlights, setSortedFlights] = useState([]);
 
   useEffect(() => {
@@ -27,44 +26,7 @@ function FlightList({ flightListData }) {
     setSortedFlights(flights || []);
   };
 
-  const getDate = (unformattedDate) => {
-    const date = new Date(unformattedDate);
-
-    // Define the days of the week and months
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    // Get the components of the date
-    const dayOfWeek = daysOfWeek[date.getDay()];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-
-    // Return the formatted date string
-    return `${dayOfWeek}, ${day} ${month} ${year}`;
-  };
-
-  const handleExpand = (itemIndex) => {
-    setExpandedItem((prevExpandedItem) =>
-      prevExpandedItem === itemIndex ? null : itemIndex
-    );
-  };
-
   const displayFlights = () => {
-    console.log("sorted: ", sortedFlights);
     return sortedFlights.map((flight, index) => {
       if (flight.type === "oneway") {
         return renderOnewayFlight(flight, index);
@@ -76,7 +38,7 @@ function FlightList({ flightListData }) {
 
   const renderOnewayFlight = (flight, index) => {
     return (
-      <div className="shadow-box p3-per my-4" key="index">
+      <div className="shadow-box p3-per my-4" key={index}>
         <div className="container">
           <div className="row">
             <span className="float-right b16-mon">
@@ -89,7 +51,7 @@ function FlightList({ flightListData }) {
           </div>
           <div className="row flight-list-info">
             <div className="col d-flex justify-content-start b22-mon">
-              {getDate(flight?.departureFlight?.departureDate)}
+              {Methods.formatDate(flight?.departureFlight?.departureDate)}
             </div>
             <div className="col d-flex justify-content-center">
               <div className="float-left">
@@ -118,9 +80,8 @@ function FlightList({ flightListData }) {
   };
 
   const renderRoundtripFlight = (flight, index) => {
-    console.log(flight);
     return (
-      <div className="shadow-box p3-per" key="index">
+      <div className="shadow-box p3-per" key={index}>
         <div className="container ">
           <div className="row">
             <span className="float-right b16-mon">
@@ -133,7 +94,7 @@ function FlightList({ flightListData }) {
           </div>
           <div className="row flight-list-info">
             <div className="col d-flex justify-content-start b22-mon">
-              {getDate(flight?.departureFlight?.departureDate)}
+              {Methods.formatDate(flight?.departureFlight?.departureDate)}
             </div>
             <div className="col d-flex justify-content-center">
               <div className="float-left">
@@ -170,7 +131,7 @@ function FlightList({ flightListData }) {
           </div>
           <div className="row flight-list-info">
             <div className="col d-flex justify-content-start b22-mon">
-              {getDate(flight?.returnFlight?.returnDate)}
+              {Methods.formatDate(flight?.returnFlight?.returnDate)}
             </div>
             <div className="col d-flex justify-content-center">
               <div className="float-left">
@@ -210,6 +171,7 @@ function FlightList({ flightListData }) {
   return (
     <>
       <div className="content-body flight-list">
+        <Header title="Flights" />
         <div className="row mb-4 w-25" align="right">
           <Button label={addLabel()} destination={"/flights/add"} />
         </div>

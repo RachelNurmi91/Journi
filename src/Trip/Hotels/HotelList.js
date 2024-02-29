@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
+import Methods from "../../Shared/Methods";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function HotelList({ ...props }) {
   const [hotelList, setHotelList] = useState(null);
@@ -29,9 +31,9 @@ function HotelList({ ...props }) {
   };
 
   const displayHotels = () => {
-    return hotelList?.map((hotel) => {
+    return hotelList?.map((hotel, index) => {
       return (
-        <div className="shadow-box p3-per my-4" key="index">
+        <div className="shadow-box p3-per my-4" key={index}>
           <div className="container">
             <div className="row">
               <span className="b22-mon">{hotel.hotelName}</span>
@@ -43,11 +45,11 @@ function HotelList({ ...props }) {
               <div className="col">
                 <div className="row d-inline-block">
                   <span className="b16-mon"> Arrival </span>
-                  {hotel.arrivalDate}
+                  {Methods.formatDate(hotel.arrivalDate)}
                 </div>
                 <div className="row d-inline-block">
                   <span className="b16-mon "> Departure </span>
-                  {hotel.departureDate}
+                  {Methods.formatDate(hotel.departureDate)}
                 </div>
               </div>
               <div className="col text-center">{hotel.hotelConfirmation}</div>
@@ -61,11 +63,22 @@ function HotelList({ ...props }) {
     });
   };
 
+  const addLabel = () => {
+    return (
+      <>
+        <FontAwesomeIcon icon="fa-solid fa-plus" style={{ color: "#fff" }} />{" "}
+        Add New
+      </>
+    );
+  };
+
   return (
     <div className="content-body hotel-list">
       <Header title="Hotels" />
+      <div className="row mb-4 w-25" align="right">
+        <Button label={addLabel()} destination={"/flights/add"} />
+      </div>
       {displayHotels()}
-      <Button destination="/hotels/add" label="Add New" />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import logo from "../Media/Images/logo.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
+import AddTrip from "../Trip/Trips/AddTrip";
 
 function Sidebar({ ...props }) {
   const loggedIn = () => {
@@ -31,9 +32,7 @@ function Sidebar({ ...props }) {
               </Link>
             </li>
             <li>
-              <Link to="/trips/add" className="nav-link">
-                New Trip
-              </Link>
+              <AddTrip />
             </li>
           </ul>
         </div>
