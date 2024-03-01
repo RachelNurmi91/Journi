@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import Input from "../../Shared/UI/Input";
 import { connect } from "react-redux";
@@ -17,6 +18,7 @@ const DEFAULT_FORM_DATA = {
 function AddTrip({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   function toggleModal() {
     setIsModalOpen(!isModalOpen);
@@ -52,6 +54,7 @@ function AddTrip({ ...props }) {
     props.addNewTripData(newTrip);
     props.setActiveTrip(newTrip);
     toggleModal(!isModalOpen);
+    navigate("/summary");
   };
 
   return (

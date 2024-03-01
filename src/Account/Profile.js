@@ -1,11 +1,14 @@
 import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deleteTripData } from "../Redux/Actions/AccountActions";
+import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 
 function Profile({ ...props }) {
   const deleteTrip = (selectedTrip) => {
     props.deleteTripData(selectedTrip);
+    if (selectedTrip.id === props.activeTrip.id) {
+      props.setActiveTrip(props.tripsData[0]);
+    }
   };
 
   const renderTripList = () => {
@@ -48,7 +51,6 @@ function Profile({ ...props }) {
       <div className="row">
         <h1>{props.userData?.firstName + " " + props.userData?.lastName}</h1>
       </div>
-
       <div className="outlined-box mt-5 p3-per">
         <div className="container">
           <div className="row mb-3">
@@ -73,7 +75,11 @@ function Profile({ ...props }) {
         <div className="row mb-3">
           <span className="float-right primary-color b22-mon">Trips</span>
         </div>
-        <div className="container">{renderTripList()}</div>
+        <div className="container">
+          {props.tripsData.length
+            ? renderTripList()
+            : "Friend, you need a vacation."}
+        </div>
       </div>
     </div>
   );
@@ -83,9 +89,10 @@ function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
     tripsData: state.account?.userAccount?.trips,
+    activeTrip: state.account?.activeTrip,
   };
 }
 
-const mapDispatchToProps = { deleteTripData };
+const mapDispatchToProps = { deleteTripData, setActiveTrip };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
