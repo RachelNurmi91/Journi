@@ -5,20 +5,22 @@ import {
   setActiveTrip,
   setLoggedInUserData,
 } from "../../Redux/Actions/AccountActions";
-import { testAccount01 } from "../../Test/testAccount01";
 import Button from "../../Shared/UI/Button";
 import Input from "../../Shared/UI/Input";
 import Header from "../../Shared/UI/Header";
+import AccountRequests from "../../Requests/AccountRequests";
 
 const DEFAULT_FORM_DATA = {
   firstName: null,
   lastName: null,
-  email: null,
+  username: null,
   password: null,
 };
 
 function Register({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+
+  const accountRequest = new AccountRequests();
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -27,34 +29,37 @@ function Register({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const generateUserId = () => {
-    const nameId =
-      formData.firstName.substring(0, 1).toUpperCase() +
-      formData.lastName.substring(0, 1).toUpperCase();
-    const numberId =
-      Math.floor(Math.random() * 80) +
-      100 +
-      "-" +
-      (Math.floor(Math.random() * 8) + 10) +
-      "-" +
-      (Math.floor(Math.random() * 80000) + 10000);
-    return nameId + "-" + numberId;
-  };
-
-  const onRegister = () => {
-    const newAccount = {
-      id: generateUserId(),
+  const onRegister = async () => {
+    const registrationData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       username: formData.username,
-      email: formData.email,
       password: formData.password,
-      trips: [],
     };
-    // API Call to create an account.
+    await accountRequest
+      .registerAccount(registrationData)
+      .then((response) => {
+        console.log("We got a response! ", response);
+        accountRequest
+          .getAccount(formData.username)
+          .then((account) => {
+            if (!account) console.error("No account found");
+            //On success we login automatically
 
-    //On success we login automatically
-    props.setLoggedInUserData(newAccount);
+            const accountData = {
+              id: account.data._id,
+              firstName: account.data.firstName,
+              lastName: account.data.lastName,
+              username: account.data.username,
+              password: null,
+              trips: [],
+            };
+
+            props.setLoggedInUserData(accountData);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log("Failed to register: ", err));
 
     props.navigate("/");
   };
@@ -82,10 +87,10 @@ function Register({ ...props }) {
           </div>
           <div className="row">
             <Input
-              name="email"
+              name="username"
               onChange={handleChange}
-              placeholder="Email"
-              label="Email"
+              placeholder="Username"
+              label="Username"
             />
           </div>
           <div className="row">

@@ -5,7 +5,6 @@ import {
   setActiveTrip,
   setLoggedInUserData,
 } from "../../Redux/Actions/AccountActions";
-import { testAccount01 } from "../../Test/testAccount01";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Input from "../../Shared/UI/Input";
@@ -28,11 +27,10 @@ function AddHotel({ ...props }) {
   const onLogin = () => {
     if (formData.username === "snurmi2" && formData.password === "123") {
       //Set logged in user data if username and password are correct.
-      props.setLoggedInUserData(testAccount01);
-
+      // props.setLoggedInUserData(testAccount01);
       //Set first trip in list as active. Will need to make sure date is soonest.
-      let activeTrip = testAccount01?.trips?.[0];
-      props.setActiveTrip(activeTrip);
+      // let activeTrip = testAccount01?.trips?.[0];
+      // props.setActiveTrip(activeTrip);
     }
     props.navigate("/");
   };
