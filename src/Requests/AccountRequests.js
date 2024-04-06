@@ -1,9 +1,11 @@
 import axios from "axios";
+const SERVER = "http://localhost:8080";
 
 export default class AccountRequests {
-  registerAccount(registrationData) {
+  login(loginData) {
+    console.log(loginData);
     return axios
-      .post("/users/register", registrationData)
+      .post(`${SERVER}/users/login`, loginData)
       .then(function (response) {
         console.log(response);
         return response; // Return the response for chaining
@@ -14,7 +16,25 @@ export default class AccountRequests {
       });
   }
 
-  getAccount(username) {
-    return axios.get(`/users/${username}`);
+  registerAccount(registrationData) {
+    return axios
+      .post(`${SERVER}/users/register`, registrationData)
+      .then(function (response) {
+        console.log(response);
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.log(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
+  fetchAccountData(username) {
+    const token = localStorage.getItem("token");
+    return axios.get(`${SERVER}/users/${username}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }

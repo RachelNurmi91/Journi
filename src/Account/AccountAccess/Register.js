@@ -41,7 +41,7 @@ function Register({ ...props }) {
       .then((response) => {
         console.log("We got a response! ", response);
         accountRequest
-          .getAccount(formData.username)
+          .fetchAccountData(formData.username)
           .then((account) => {
             if (!account) console.error("No account found");
             //On success we login automatically

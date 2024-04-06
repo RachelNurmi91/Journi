@@ -8,6 +8,7 @@ import {
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Input from "../../Shared/UI/Input";
+import AccountRequests from "../../Requests/AccountRequests";
 
 const DEFAULT_FORM_DATA = {
   username: null,
@@ -16,6 +17,7 @@ const DEFAULT_FORM_DATA = {
 
 function AddHotel({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+  const accountRequest = new AccountRequests();
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -24,13 +26,46 @@ function AddHotel({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const onLogin = () => {
-    if (formData.username === "snurmi2" && formData.password === "123") {
+  const onLogin = async () => {
+    if (formData.username && formData.password) {
+      await accountRequest
+        .login(formData)
+        .then((response) => {
+          const token = response.data.token;
+          console.log("We got a token! ", token);
+          localStorage.setItem("token", token);
+          if (token) {
+            accountRequest
+              .fetchAccountData(formData.username, token)
+              .then((account) => {
+                if (!account) console.error("No account found");
+                //On success we login automatically
+
+                const accountData = {
+                  id: account.data._id,
+                  firstName: account.data.firstName,
+                  lastName: account.data.lastName,
+                  username: account.data.username,
+                  password: null,
+                  trips: [],
+                };
+
+                props.setLoggedInUserData(accountData);
+              });
+          } else {
+            console.log("Login failed: No token returned");
+          }
+        })
+        .catch((err) => console.log(err));
       //Set logged in user data if username and password are correct.
       // props.setLoggedInUserData(testAccount01);
       //Set first trip in list as active. Will need to make sure date is soonest.
       // let activeTrip = testAccount01?.trips?.[0];
       // props.setActiveTrip(activeTrip);
+    } else {
+      console.log(
+        "Login Failed: Please provide both your user name and password"
+      );
     }
     props.navigate("/");
   };
