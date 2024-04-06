@@ -7,21 +7,23 @@ import TripRequests from "../Requests/TripRequests";
 function Profile({ ...props }) {
   const tripRequest = new TripRequests();
 
-  const deleteTrip = (selectedTrip) => {
-    tripRequest
+  const setNewActiveTrip = (selectedTrip) => {
+    if (selectedTrip.tripId === props.activeTrip.tripId) {
+      props.setActiveTrip(props.tripsData[0]);
+    }
+  };
+
+  const deleteTrip = async (selectedTrip) => {
+    await tripRequest
       .deleteTrip(selectedTrip.tripId)
       .then((response) => {
         console.log("We got a response!", response);
-
+        props.deleteTripData(selectedTrip);
         if (props.tripsData.length > 1) {
-          if (selectedTrip.tripId === props.activeTrip.tripId) {
-            props.setActiveTrip(props.tripsData[1]);
-          }
+          setNewActiveTrip(selectedTrip);
         } else {
           props.setActiveTrip(null);
         }
-
-        props.deleteTripData(selectedTrip);
       })
       .catch((error) => console.log("Cannot delete trip: ", error));
   };
