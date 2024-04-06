@@ -11,7 +11,7 @@ function TripSelector({ tripListData, activeTrip, setActiveTrip }) {
       return (
         <option
           value={trip.tripName}
-          data-id={trip.id}
+          data-id={trip.tripId}
           key={i + 1}
           selected={isSelected}
         >
@@ -22,17 +22,22 @@ function TripSelector({ tripListData, activeTrip, setActiveTrip }) {
   }, [tripListData, activeTrip]);
 
   const handleChange = (event) => {
+    console.log(tripListData, activeTrip);
     const selectedTrip = event.target.selectedOptions[0];
+    console.log("selectedTrip ", selectedTrip);
     const tripName = selectedTrip.value;
+    console.log("tripName ", tripName);
     const tripId = selectedTrip.getAttribute("data-id");
+    console.log("tripId ", tripId);
 
     // Match the selected trip id & name to the corresponding trip to return the correct data.
-    let activeTrip = tripListData.find(
+    let trip = tripListData.find(
       (trip) =>
-        trip.id.toString() === tripId.toString() && trip.tripName === tripName
+        trip.tripId.toString() === tripId.toString() &&
+        trip.tripName === tripName
     );
 
-    setActiveTrip(activeTrip);
+    setActiveTrip(trip);
   };
 
   return (

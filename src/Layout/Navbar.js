@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import TripSelector from "./TripSelector";
 import { Link } from "react-router-dom";
 
@@ -41,8 +40,6 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = {
-  removeLoggedInUserData,
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

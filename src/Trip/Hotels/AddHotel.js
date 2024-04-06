@@ -7,6 +7,7 @@ import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
+import TripRequests from "../../Requests/TripRequests";
 
 const DEFAULT_FORM_DATA = {
   hotel: "Temple House by Curio",
@@ -23,6 +24,7 @@ function AddHotel({ ...props }) {
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [arrivalDate, setArrivalDate] = useState(new Date());
   const [departureDate, setDepartureDate] = useState(new Date());
+  const tripRequest = new TripRequests();
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -53,15 +55,17 @@ function AddHotel({ ...props }) {
     setDisplayNewNameInput(!displayNewNameInput);
   };
 
-  const onSave = () => {
-    // ...
-    // ...
-    // Code to call server API here...
-    // ...
-    // ...
-    // If API successful save data to redux state. Redux state not yet created.
-    props.addNewHotelData(formData);
-    props.navigate("/hotels");
+  const onSave = async () => {
+    console.log(props.currentTripId);
+    tripRequest
+      .addHotel(formData)
+      .then((response) => {
+        console.log("We got a response!", response);
+
+        props.addNewHotelData(formData);
+        props.navigate("/hotels");
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleArrivalDate = (date) => {
@@ -225,6 +229,7 @@ function AddHotel({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
+    currentTripId: state.account?.userAccount?.activeTrip,
   };
 }
 

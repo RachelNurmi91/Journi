@@ -6,6 +6,11 @@ import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import AddTrip from "../Trip/Trips/AddTrip";
 
 function Sidebar({ ...props }) {
+  const logout = () => {
+    localStorage.clear();
+    props.removeLoggedInUserData();
+  };
+
   const loggedIn = () => {
     return (
       <>
@@ -35,10 +40,7 @@ function Sidebar({ ...props }) {
         <div className="px-3">
           <ul className="sidebar-menu">
             <li>
-              <div
-                className="nav-link"
-                onClick={() => props.removeLoggedInUserData()}
-              >
+              <div className="nav-link" onClick={() => logout()}>
                 <FontAwesomeIcon
                   icon="fa-solid fa-arrow-right-from-bracket"
                   style={{ color: "#fff" }}

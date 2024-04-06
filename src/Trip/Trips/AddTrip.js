@@ -9,6 +9,7 @@ import {
 } from "../../Redux/Actions/AccountActions";
 import Button from "../../Shared/UI/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TripRequests from "../../Requests/TripRequests";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
@@ -18,6 +19,8 @@ const DEFAULT_FORM_DATA = {
 function AddTrip({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const tripRequest = new TripRequests();
+
   const navigate = useNavigate();
 
   function toggleModal() {
@@ -31,30 +34,27 @@ function AddTrip({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const generateTripId = () => {
-    const nameId = formData.tripName.substring(0, 3).toUpperCase();
-    const numberId =
-      Math.floor(Math.random() * 80) +
-      100 +
-      "-" +
-      (Math.floor(Math.random() * 8) + 10) +
-      "-" +
-      (Math.floor(Math.random() * 80000) + 10000);
-    return nameId + "-" + numberId;
-  };
-
-  const onCreateTrip = () => {
+  const onCreateTrip = async () => {
     const newTrip = {
-      id: generateTripId(),
       tripName: formData.tripName,
       departureDate: formData.departureDate,
       hotels: [],
       flights: [],
     };
-    props.addNewTripData(newTrip);
-    props.setActiveTrip(newTrip);
-    toggleModal(!isModalOpen);
-    navigate("/summary");
+
+    tripRequest
+      .addTrip(newTrip)
+      .then((response) => {
+        console.log("We got a response!", response);
+
+        newTrip.tripId = response.data._id;
+
+        props.addNewTripData(newTrip);
+        props.setActiveTrip(newTrip);
+        toggleModal(!isModalOpen);
+        navigate("/summary");
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -64,6 +64,7 @@ function AddTrip({ ...props }) {
         <span className="ms-2">Add Trip</span>
       </div>
       <Modal
+        ariaHideApp={false}
         isOpen={isModalOpen}
         onRequestClose={toggleModal}
         style={{
