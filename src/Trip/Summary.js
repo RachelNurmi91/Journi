@@ -62,7 +62,12 @@ function Summary({ ...props }) {
   };
 
   const guestWelcome = () => {
-    return <h1 className="content-body text-center">Please Log In</h1>;
+    return (
+      <div className="content-body text-center">
+        <h1>Your Journi Awaits</h1>
+        <p>Login or register to start planning</p>
+      </div>
+    );
   };
 
   return <>{props.userId ? loggedInSummary() : guestWelcome()}</>;
