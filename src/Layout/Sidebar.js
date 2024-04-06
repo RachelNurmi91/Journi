@@ -10,7 +10,7 @@ function Sidebar({ ...props }) {
     localStorage.clear();
     props.removeLoggedInUserData();
   };
-
+  console.log(props.activeTrip);
   const loggedIn = () => {
     return (
       <>
