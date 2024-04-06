@@ -88,6 +88,7 @@ function AddHotel({ ...props }) {
             onChange={handleChange}
             placeholder="Password"
             label="Password"
+            type="password"
           />
         </div>
         <div className="row">

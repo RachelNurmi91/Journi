@@ -12,9 +12,14 @@ function Profile({ ...props }) {
       .deleteTrip(selectedTrip.tripId)
       .then((response) => {
         console.log("We got a response!", response);
+
         props.deleteTripData(selectedTrip);
-        if (selectedTrip.id === props.activeTrip.id) {
-          props.setActiveTrip(props.tripsData[0]);
+        if (props.tripsData.length > 1) {
+          if (selectedTrip.id === props.activeTrip.id) {
+            props.setActiveTrip(props.tripsData[0]);
+          }
+        } else {
+          props.setActiveTrip(null);
         }
       })
       .catch((error) => console.log("Cannot delete trip: ", error));

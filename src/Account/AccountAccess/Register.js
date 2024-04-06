@@ -29,6 +29,50 @@ function Register({ ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
+  const loginAfterRegister = async () => {
+    if (formData.username && formData.password) {
+      await accountRequest
+        .login(formData)
+        .then((response) => {
+          const token = response.data.token;
+          console.log("We got a token! ", token);
+          localStorage.setItem("token", token);
+          if (token) {
+            accountRequest
+              .fetchAccountData(formData.username, token)
+              .then((account) => {
+                if (!account) console.error("No account found");
+                //On success we login automatically
+
+                const accountData = {
+                  id: account.data._id,
+                  firstName: account.data.firstName,
+                  lastName: account.data.lastName,
+                  username: account.data.username,
+                  password: null,
+                  trips: [],
+                };
+
+                props.setLoggedInUserData(accountData);
+              });
+          } else {
+            console.log("Login failed: No token returned");
+          }
+        })
+        .catch((err) => console.log(err));
+      //Set logged in user data if username and password are correct.
+      // props.setLoggedInUserData(testAccount01);
+      //Set first trip in list as active. Will need to make sure date is soonest.
+      // let activeTrip = testAccount01?.trips?.[0];
+      // props.setActiveTrip(activeTrip);
+    } else {
+      console.log(
+        "Login Failed: Please provide both your user name and password"
+      );
+    }
+    props.navigate("/");
+  };
+
   const onRegister = async () => {
     const registrationData = {
       firstName: formData.firstName,
@@ -38,26 +82,8 @@ function Register({ ...props }) {
     };
     await accountRequest
       .registerAccount(registrationData)
-      .then((response) => {
-        console.log("We got a response! ", response);
-        accountRequest
-          .fetchAccountData(formData.username)
-          .then((account) => {
-            if (!account) console.error("No account found");
-            //On success we login automatically
-
-            const accountData = {
-              id: account.data._id,
-              firstName: account.data.firstName,
-              lastName: account.data.lastName,
-              username: account.data.username,
-              password: null,
-              trips: [],
-            };
-
-            props.setLoggedInUserData(accountData);
-          })
-          .catch((err) => console.log(err));
+      .then(() => {
+        loginAfterRegister();
       })
       .catch((err) => console.log("Failed to register: ", err));
 
