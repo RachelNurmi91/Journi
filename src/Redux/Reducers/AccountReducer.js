@@ -19,7 +19,7 @@ const initialState = {
     password: null,
     trips: [],
   },
-  activeTrip: {},
+  activeTrip: null,
 };
 
 export { initialState };
