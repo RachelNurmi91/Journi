@@ -9,6 +9,7 @@ import Radio from "../../Shared/UI/Radio";
 import Checkbox from "../../Shared/UI/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
+import TripRequests from "../../Requests/TripRequests";
 
 const DEFAULT_FORM_DATA = {
   type: "roundtrip",
@@ -32,7 +33,7 @@ const DEFAULT_FORM_DATA = {
     returnDate: null,
     returnSeat: null,
   },
-  ticketHolderName: null,
+  ticketHolder: null,
 };
 
 function AddFlight({ ...props }) {
@@ -41,17 +42,21 @@ function AddFlight({ ...props }) {
   const [isOneWay, setIsOneWay] = useState(false);
   const [departureDate, setDepartureDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
+  const tripRequest = new TripRequests();
 
   const onSave = () => {
-    console.log(formData);
-    // ...
-    // ...
-    // Code to call server API here...
-    // ...
-    // ...
-    // If API successful save data to redux state. Redux state not yet created.
-    props.addNewFlightData(formData);
-    props.navigate("/flights");
+    formData.tripId = props.activeTripId;
+    if (!formData.ticketHolder)
+      formData.ticketHolder =
+        props.userData?.firstName + " " + props.userData?.lastName;
+    tripRequest
+      .addFlight(formData)
+      .then((response) => {
+        console.log("We got a response!", response);
+        props.addNewFlightData(formData);
+        props.navigate("/flights");
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleRadioCheck = (event) => {
@@ -148,7 +153,6 @@ function AddFlight({ ...props }) {
   const handleInputChange = (event) => {
     const targetKey = event.target.name;
     const newValue = event.target.value;
-    debugger;
 
     if (targetKey === "departureFlightNo" || targetKey === "departureSeat") {
       setFormData((prevFormData) => ({
@@ -323,7 +327,7 @@ function AddFlight({ ...props }) {
         {displayNewNameInput ? (
           <div className="row">
             <Input
-              name="ticketHolderName"
+              name="ticketHolder"
               onChange={handleInputChange}
               placeholder="Name on Ticket"
               label="Name on Ticket"
@@ -384,7 +388,7 @@ function AddFlight({ ...props }) {
         {displayNewNameInput ? (
           <div className="row">
             <Input
-              name="ticketHolderName"
+              name="ticketHolder"
               onChange={handleInputChange}
               placeholder="Name on Ticket"
               label="Name on Ticket"
@@ -415,6 +419,7 @@ function AddFlight({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
+    activeTripId: state.account?.activeTrip?.tripId,
   };
 }
 

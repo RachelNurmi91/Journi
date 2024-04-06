@@ -39,4 +39,23 @@ export default class TripRequests {
         throw error; // Re-throw the error to propagate it
       });
   }
+
+  addFlight(flightData) {
+    const token = localStorage.getItem("token");
+    console.log("Request hit: ", flightData, token);
+    return axios
+      .post(`${SERVER}/flights/add`, flightData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.log(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
 }

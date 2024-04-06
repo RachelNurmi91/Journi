@@ -56,12 +56,11 @@ function AddHotel({ ...props }) {
   };
 
   const onSave = async () => {
-    console.log(props.currentTripId);
+    formData.tripId = props.activeTripId;
     tripRequest
       .addHotel(formData)
       .then((response) => {
         console.log("We got a response!", response);
-
         props.addNewHotelData(formData);
         props.navigate("/hotels");
       })
@@ -229,7 +228,7 @@ function AddHotel({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
-    currentTripId: state.account?.userAccount?.activeTrip,
+    activeTripId: state.account?.activeTrip?.tripId,
   };
 }
 

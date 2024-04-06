@@ -22,13 +22,9 @@ function TripSelector({ tripListData, activeTrip, setActiveTrip }) {
   }, [tripListData, activeTrip]);
 
   const handleChange = (event) => {
-    console.log(tripListData, activeTrip);
     const selectedTrip = event.target.selectedOptions[0];
-    console.log("selectedTrip ", selectedTrip);
     const tripName = selectedTrip.value;
-    console.log("tripName ", tripName);
     const tripId = selectedTrip.getAttribute("data-id");
-    console.log("tripId ", tripId);
 
     // Match the selected trip id & name to the corresponding trip to return the correct data.
     let trip = tripListData.find(
