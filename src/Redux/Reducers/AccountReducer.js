@@ -44,7 +44,7 @@ export default produce((draft, action) => {
       return draft;
     case DELETE_TRIP_DATA:
       draft.userAccount.trips = draft.userAccount.trips.filter((trip) => {
-        return trip.id !== action.payload.id;
+        return trip.tripId !== action.payload.tripId;
       });
       return draft;
     case ADD_NEW_HOTEL_DATA:

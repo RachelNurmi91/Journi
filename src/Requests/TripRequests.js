@@ -21,6 +21,25 @@ export default class TripRequests {
       });
   }
 
+  deleteTrip(tripId) {
+    const token = localStorage.getItem("token");
+
+    return axios
+      .delete(`${SERVER}/trips/${tripId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.log(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
   addHotel(hotelData) {
     const token = localStorage.getItem("token");
 

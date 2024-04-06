@@ -35,7 +35,6 @@ export function addNewTripData(data) {
 }
 
 export function deleteTripData(data) {
-  console.log(data);
   return {
     type: DELETE_TRIP_DATA,
     payload: data,

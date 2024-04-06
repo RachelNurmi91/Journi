@@ -2,13 +2,22 @@ import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
+import TripRequests from "../Requests/TripRequests";
 
 function Profile({ ...props }) {
+  const tripRequest = new TripRequests();
+
   const deleteTrip = (selectedTrip) => {
-    props.deleteTripData(selectedTrip);
-    if (selectedTrip.id === props.activeTrip.id) {
-      props.setActiveTrip(props.tripsData[0]);
-    }
+    tripRequest
+      .deleteTrip(selectedTrip.tripId)
+      .then((response) => {
+        console.log("We got a response!", response);
+        props.deleteTripData(selectedTrip);
+        if (selectedTrip.id === props.activeTrip.id) {
+          props.setActiveTrip(props.tripsData[0]);
+        }
+      })
+      .catch((error) => console.log("Cannot delete trip: ", error));
   };
 
   const renderTripList = () => {
