@@ -6,7 +6,6 @@ export default class AccountRequests {
     return axios
       .post(`${SERVER}/users/login`, loginData)
       .then(function (response) {
-        console.log(response);
         return response; // Return the response for chaining
       })
       .catch(function (error) {
@@ -19,7 +18,6 @@ export default class AccountRequests {
     return axios
       .post(`${SERVER}/users/register`, registrationData)
       .then(function (response) {
-        console.log(response);
         return response; // Return the response for chaining
       })
       .catch(function (error) {

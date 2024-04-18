@@ -16,7 +16,6 @@ const initialState = {
     lastName: null,
     username: null,
     email: null,
-    password: null,
     trips: [],
   },
   activeTrip: null,

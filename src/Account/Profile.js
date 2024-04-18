@@ -10,8 +10,7 @@ function Profile({ ...props }) {
   const deleteTrip = async (selectedTrip) => {
     await tripRequest
       .deleteTrip(selectedTrip.tripId)
-      .then((response) => {
-        console.log("We got a response!", response);
+      .then(() => {
         if (selectedTrip.tripId === props.activeTrip.tripId) {
           if (props.tripsData.length > 1) {
             let updatedTrips = [...props.tripsData];
@@ -21,7 +20,6 @@ function Profile({ ...props }) {
             if (index !== -1) {
               updatedTrips.splice(index, 1);
             }
-            console.log(updatedTrips);
             props.setActiveTrip(updatedTrips[0]);
           } else {
             props.setActiveTrip(null);
@@ -31,7 +29,7 @@ function Profile({ ...props }) {
         }
         props.deleteTripData(selectedTrip);
       })
-      .catch((error) => console.log("Cannot delete trip: ", error));
+      .catch((error) => console.log("Error: Cannot delete trip: ", error));
   };
 
   const renderTripList = () => {
@@ -74,22 +72,22 @@ function Profile({ ...props }) {
       <div className="row">
         <h1>{props.userData?.firstName + " " + props.userData?.lastName}</h1>
       </div>
-      <div className="outlined-box mt-5 p3-per">
+      <div className="outlined-box mt-3 p3-per">
+        <div className="row mb-3">
+          <span className="float-right primary-color b22-mon">
+            User Details
+          </span>
+        </div>
         <div className="container">
-          <div className="row mb-3">
-            <span className="float-right primary-color b22-mon">
-              User Details
-            </span>
-          </div>
           <div className="row">
-            <div className="col-1 b16-mon">Name</div>
+            <div className="col-3 col-lg-1 b16-mon">Name</div>
             <div className="col">
               {props.userData?.firstName + " " + props.userData?.lastName}
             </div>
           </div>
           <div className="row">
-            <div className="col-1 b16-mon">Email</div>
-            <div className="col">{props.userData.email}</div>
+            <div className="col-3 col-lg-1 b16-mon">Email</div>
+            <div className="col">{props.userData.username}</div>
           </div>
         </div>
       </div>

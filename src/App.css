@@ -1,10 +1,10 @@
 /* Basic Layout Structure */
-.content-position {
+/* .content-position {
   margin-left: 250px;
-}
+} */
 
 .content-body {  
-  padding: 3% 10%;
+  padding: 25px;
 }
 
 /* Branding */
@@ -13,34 +13,42 @@
   color: #0BB6C0;
 }
 
+.primary-bg-color {
+  background-color: #0BB6C0;
+}
+
+
 /* Sidebar CSS */
-.sidebar-body {
+
+
+.sidenav {
   height: 100%;
-  position: fixed;
-  background-image: linear-gradient(to right, #0BB6C0, #56B0D2);
   width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #0BB6C0!important;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
   border-radius: 0 25px 25px 0;
 }
 
-.sidebar-body.active {
-  width: 250px;
-  left: 0;
-}
-
-.sidebar-body .logo {
+.sidenav .logo {
   display: block;
   margin: 0 auto;
 }
 
-.sidebar-menu {
-list-style-type: none;
+.sidenav-menu {
+  list-style-type: none;
 }
 
-.sidebar-menu li {
-color: #fff;
+.sidenav-menu li {  
+  color: #fff;
 }
 
-.sidebar-menu .nav-link {
+.sidenav-menu .nav-link {
   font-family: "Sora", sans-serif;
   font-size: 16px;
   line-height: 24px;
@@ -49,15 +57,19 @@ color: #fff;
   border-radius: 10px;
 }
 
-.sidebar-menu .nav-link:hover {
+.sidenav-menu .nav-link:hover {
   background-color: #fff;
   color: #000;
 }
 
 /* Navbar */
 
+.navbar-toggle {
+  margin-left: 20px;
+  display: inline;
+}
+
 .navbar-body {
-  background-color: #ffffff;
   height: 75px;
   border-bottom: 1px solid #c0c0c0;
 }
@@ -65,11 +77,11 @@ color: #fff;
 
 .profile-icon {
   border-radius: 100%;
-  background-color: #0BB6C0;
+  background-color: #fff;
   height: 40px;
   width: 40px;
   line-height: 40px;
-  color: #fff;
+  color: #0BB6C0;
   text-align: center;
   font-size: 20px;
   font-weight: bold;
@@ -216,3 +228,6 @@ button .btn-link {
   background-color: #0BB6C0;
   color: #fff;
 }
+
+/* ------------------------------------------ */
+

@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Methods from "../Shared/Methods";
 
 function Summary({ ...props }) {
-  console.log(props.activeTrip);
   const loggedInSummary = () => {
     if (props.userData.trips.length) {
       return (

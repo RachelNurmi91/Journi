@@ -12,7 +12,6 @@ export default class TripRequests {
         },
       })
       .then(function (response) {
-        console.log(response);
         return response; // Return the response for chaining
       })
       .catch(function (error) {
@@ -31,7 +30,6 @@ export default class TripRequests {
         },
       })
       .then(function (response) {
-        console.log(response);
         return response; // Return the response for chaining
       })
       .catch(function (error) {
@@ -50,7 +48,6 @@ export default class TripRequests {
         },
       })
       .then(function (response) {
-        console.log(response);
         return response; // Return the response for chaining
       })
       .catch(function (error) {
@@ -61,7 +58,6 @@ export default class TripRequests {
 
   addFlight(flightData) {
     const token = localStorage.getItem("token");
-    console.log("Request hit: ", flightData, token);
     return axios
       .post(`${SERVER}/flights/add`, flightData, {
         headers: {
@@ -69,7 +65,6 @@ export default class TripRequests {
         },
       })
       .then(function (response) {
-        console.log(response);
         return response; // Return the response for chaining
       })
       .catch(function (error) {

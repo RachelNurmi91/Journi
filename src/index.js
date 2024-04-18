@@ -21,6 +21,7 @@ import {
   faTrash,
   faPenToSquare,
   faUserPlus,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -34,7 +35,8 @@ library.add(
   faRightToBracket,
   faTrash,
   faPenToSquare,
-  faUserPlus
+  faUserPlus,
+  faBars
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

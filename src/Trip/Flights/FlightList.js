@@ -66,7 +66,7 @@ function FlightList({ flightListData }) {
                   {flight?.returnFlight?.returnAirportCity}
                 </span>
                 <br />
-                {flight?.returnAirportCode}
+                {flight?.returnFlight?.returnAirportCode}
               </div>
             </div>
             <div className="col text-center">{flight?.airline}</div>

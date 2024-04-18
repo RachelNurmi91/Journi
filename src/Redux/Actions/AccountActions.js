@@ -7,7 +7,6 @@ export const ADD_NEW_TRIP_DATA = "ADD_NEW_TRIP_DATA";
 export const DELETE_TRIP_DATA = "DELETE_TRIP_DATA";
 
 export function setLoggedInUserData(data) {
-  console.log("loggedInUserData: ", data);
   return {
     type: SET_LOGGED_IN_USER_DATA,
     payload: data,

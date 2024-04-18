@@ -32,7 +32,6 @@ function AddHotel({ ...props }) {
         .login(formData)
         .then((response) => {
           const token = response.data.token;
-          console.log("We got a token! ", token);
           localStorage.setItem("token", token);
           if (token) {
             accountRequest
@@ -46,25 +45,22 @@ function AddHotel({ ...props }) {
                   firstName: account.data.firstName,
                   lastName: account.data.lastName,
                   username: account.data.username,
-                  password: null,
-                  trips: [],
+                  trips: account.data.trips,
                 };
 
                 props.setLoggedInUserData(accountData);
+
+                let activeTrip = account.data.trips?.[0];
+                props.setActiveTrip(activeTrip);
               });
           } else {
             console.log("Login failed: No token returned");
           }
         })
         .catch((err) => console.log(err));
-      //Set logged in user data if username and password are correct.
-      // props.setLoggedInUserData(testAccount01);
-      //Set first trip in list as active. Will need to make sure date is soonest.
-      // let activeTrip = testAccount01?.trips?.[0];
-      // props.setActiveTrip(activeTrip);
     } else {
       console.log(
-        "Login Failed: Please provide both your user name and password"
+        "Error: Login Failed - Please provide both your user name and password"
       );
     }
     props.navigate("/");

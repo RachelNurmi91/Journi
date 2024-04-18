@@ -35,7 +35,6 @@ function Register({ ...props }) {
         .login(formData)
         .then((response) => {
           const token = response.data.token;
-          console.log("We got a token! ", token);
           localStorage.setItem("token", token);
           if (token) {
             accountRequest
@@ -56,7 +55,7 @@ function Register({ ...props }) {
                 props.setLoggedInUserData(accountData);
               });
           } else {
-            console.log("Login failed: No token returned");
+            console.log("Error: Login failed - No token returned");
           }
         })
         .catch((err) => console.log(err));
@@ -67,7 +66,7 @@ function Register({ ...props }) {
       // props.setActiveTrip(activeTrip);
     } else {
       console.log(
-        "Login Failed: Please provide both your user name and password"
+        "Error: Login Failed - Please provide both your user name and password"
       );
     }
     props.navigate("/");

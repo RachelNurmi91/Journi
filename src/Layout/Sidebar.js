@@ -25,12 +25,26 @@ function Sidebar({ ...props }) {
             {props.activeTrip ? (
               <>
                 <li>
-                  <Link to="/hotels" className="nav-link">
+                  <Link
+                    to={
+                      props.activeTrip?.hotels?.length > 0
+                        ? "/hotels"
+                        : "/hotels/add"
+                    }
+                    className="nav-link"
+                  >
                     Hotels
                   </Link>
                 </li>
                 <li>
-                  <Link to="/flights" className="nav-link">
+                  <Link
+                    to={
+                      props.activeTrip?.flights?.length > 0
+                        ? "/flights"
+                        : "/flights/add"
+                    }
+                    className="nav-link"
+                  >
                     Flights
                   </Link>
                 </li>
@@ -99,6 +113,7 @@ function mapStateToProps(state) {
   return {
     userId: state.account?.userAccount?.id,
     activeTrip: state.account?.activeTrip,
+    account: state.account,
   };
 }
 

@@ -6,7 +6,7 @@ import Content from "./Layout/Content";
 function App() {
   return (
     <div>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="content-position">
         <Navbar />
         <Content />
