@@ -117,7 +117,7 @@ function AddHotel({ ...props }) {
   const renderOptionsBox = () => {
     return (
       <>
-        <div className="shadow-box p3-per">
+        <div className="shadow-box p-4">
           <div className="row">
             <div className="col text-center">
               <FontAwesomeIcon
@@ -152,38 +152,37 @@ function AddHotel({ ...props }) {
       <Header title="Add Hotel" />
       <div className="container">
         <div className="row"> {renderOptionsBox()}</div>
-        <div className="row mt-4">
-          <div className="col">
-            <Input
-              name="hotelName"
-              onChange={handleChange}
-              placeholder="Hotel"
-              label="Hotel"
-            />
-          </div>
-          <div className="col">
-            <Input
-              name="hotelConfirmation"
-              onChange={handleChange}
-              placeholder="Confirmation #"
-              label="Confirmation #"
-            />
-          </div>
-          <div className="row">
-            <div className="col">
-              <Input
-                name="city"
-                onChange={handleChange}
-                placeholder="City"
-                label="City"
-              />
-            </div>
-            <div className="col">
-              <CountryAutocomplete onChange={handleCountrySelect} />
+        <div className="row mt-2">
+          <Input
+            name="hotelName"
+            onChange={handleChange}
+            placeholder="Hotel"
+            label="Hotel"
+          />
+
+          <Input
+            name="hotelConfirmation"
+            onChange={handleChange}
+            placeholder="Confirmation #"
+            label="Confirmation #"
+          />
+          <div className="container">
+            <div className="row">
+              <div className="col-6">
+                <Input
+                  name="city"
+                  onChange={handleChange}
+                  placeholder="City"
+                  label="City"
+                />
+              </div>
+              <div className="col-6">
+                <CountryAutocomplete onChange={handleCountrySelect} />
+              </div>
             </div>
           </div>
 
-          <div className="form-check my-2">
+          {/* <div className="form-check my-2">
             <input
               className="form-check-input"
               type="checkbox"
@@ -194,8 +193,8 @@ function AddHotel({ ...props }) {
             <label className="form-check-label" htmlFor="checkReservationSelf">
               The reservation is under my name
             </label>
-          </div>
-          <div className="form-check mb-2">
+          </div> */}
+          <div className="form-check mx-3 mt-2">
             <input
               className="form-check-input"
               type="checkbox"
@@ -216,10 +215,9 @@ function AddHotel({ ...props }) {
             />
           ) : null}
         </div>
-      </div>
-
-      <div className="row">
-        <Button label="Save" onClick={onSave} />
+        <div className="row mt-4">
+          <Button label="Save" onClick={onSave} />
+        </div>
       </div>
     </div>
   );

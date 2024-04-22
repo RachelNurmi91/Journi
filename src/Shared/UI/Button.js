@@ -11,6 +11,7 @@ function Button({ destination = null, label, onClick = null }) {
         className="btn-style mt-3"
         type="button"
         onClick={onClick}
+        class="w-100"
       >
         <Link to={destination} className="btn-link">
           {label}

@@ -20,7 +20,6 @@ function Navbar({ ...props }) {
         <div className="col align-self-center">
           <Link to="/profile">
             <div className="float-end d-flex align-items-center" to="/profile">
-              <div className="text-bold">{props.userData?.firstName}</div>
               <div className="profile-icon mx-2">
                 {props.userData?.firstName?.slice(0, 1).toUpperCase()}
               </div>

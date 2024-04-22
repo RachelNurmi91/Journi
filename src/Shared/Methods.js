@@ -3,27 +3,13 @@ export default class Methods {
     const date = new Date(unformattedDate);
 
     // Define the days of the week and months
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
 
     // Get the components of the date
     const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
+    const month = date.getMonth();
+    const year = date.getFullYear().toString().slice(-2);
 
-    const formattedDate = `${month} ${day}, ${year}`;
+    const formattedDate = `${month}/${day}/${year}`;
 
     return formattedDate;
   };

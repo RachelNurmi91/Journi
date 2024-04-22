@@ -32,29 +32,54 @@ function HotelList({ ...props }) {
 
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
+      console.log(hotel);
       return (
-        <div className="shadow-box p3-per my-4" key={index}>
+        <div className="shadow-box p-4 my-4" key={index}>
           <div className="container">
             <div className="row">
-              <span className="b22-mon">{hotel.hotelName}</span>
+              <span className="b22-mon primary-color text-center">
+                {hotel.hotel}
+              </span>
             </div>
-            <div className="row flight-list-info">
-              <div className="col d-flex justify-content-start">
+
+            <div className="row">
+              <div className="text-center b13-mon">
                 {hotel.city}, {hotel.country}
               </div>
-              <div className="col">
-                <div className="row d-inline-block">
-                  <span className="b16-mon"> Arrival </span>
-                  {Methods.formatDate(hotel.arrivalDate)}
-                </div>
-                <div className="row d-inline-block">
-                  <span className="b16-mon "> Departure </span>
-                  {Methods.formatDate(hotel.departureDate)}
+            </div>
+
+            <div className="row my-3">
+              <div className="b16-mon">Confirmation No.</div>
+              <div
+                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                style={{ borderRadius: "5px" }}
+              >
+                8456455455454
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-6 d-flex justify-content-start">
+                <div>
+                  <div className="b16-mon"> Arrival </div>
+                  <div className="text-center">
+                    {Methods.formatDate(hotel.arrivalDate)}
+                  </div>
                 </div>
               </div>
-              <div className="col text-center">{hotel.hotelConfirmation}</div>
-              <div className="col b16-mon d-flex justify-content-end">
-                *Booked by {hotel.nameOnReservation}
+              <div className="col-6 d-flex justify-content-end">
+                <div>
+                  <div className="b16-mon"> Departure </div>
+                  <div className="text-center">
+                    {Methods.formatDate(hotel.departureDate)}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="text-center b13-mon">
+                Reserved by Rachel Nurmi
               </div>
             </div>
           </div>
@@ -63,21 +88,9 @@ function HotelList({ ...props }) {
     });
   };
 
-  const addLabel = () => {
-    return (
-      <>
-        <FontAwesomeIcon icon="fa-solid fa-plus" style={{ color: "#fff" }} />{" "}
-        Add New
-      </>
-    );
-  };
-
   return (
     <div className="content-body hotel-list">
-      <Header title="Hotels" />
-      <div className="row mb-4 w-25" align="right">
-        <Button label={addLabel()} destination={"/hotels/add"} />
-      </div>
+      <Header title="Hotels" icon="add" destination={"/hotels/add"} />
       {displayHotels()}
     </div>
   );

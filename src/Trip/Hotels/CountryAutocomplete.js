@@ -32,10 +32,10 @@ const CountryAutocomplete = ({ onChange }) => {
 
   return (
     <div
-      className="autocomplete-container form-group my-3"
+      className="autocomplete-container form-group my-2"
       onMouseLeave={handleMouseLeave}
     >
-      <label htmlFor="country" className="my-2">
+      <label htmlFor="country" className="mb-2">
         Country
       </label>
       <input

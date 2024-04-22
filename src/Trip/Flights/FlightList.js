@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../../Shared/UI/Button";
@@ -8,11 +8,7 @@ import Methods from "../../Shared/Methods";
 function FlightList({ flightListData }) {
   const [sortedFlights, setSortedFlights] = useState([]);
 
-  useEffect(() => {
-    sortByDate();
-  }, [flightListData]);
-
-  const sortByDate = () => {
+  const sortByDate = useCallback(() => {
     let flights = flightListData;
 
     if (flights && flights.length > 10) {
@@ -23,8 +19,12 @@ function FlightList({ flightListData }) {
       });
     }
 
-    setSortedFlights(flights || []);
-  };
+    setSortedFlights([...flights]);
+  }, [flightListData]);
+
+  useEffect(() => {
+    sortByDate();
+  }, [flightListData, sortByDate]);
 
   const displayFlights = () => {
     return sortedFlights.map((flight, index) => {
@@ -38,7 +38,7 @@ function FlightList({ flightListData }) {
 
   const renderOnewayFlight = (flight, index) => {
     return (
-      <div className="shadow-box p3-per my-4" key={index}>
+      <div className="shadow-box p-4 my-4" key={index}>
         <div className="container">
           <div className="row">
             <span className="float-right b16-mon">
@@ -81,7 +81,7 @@ function FlightList({ flightListData }) {
 
   const renderRoundtripFlight = (flight, index) => {
     return (
-      <div className="shadow-box p3-per" key={index}>
+      <div className="shadow-box p-4 my-4" key={index}>
         <div className="container ">
           <div className="row">
             <span className="float-right b16-mon">
@@ -172,7 +172,7 @@ function FlightList({ flightListData }) {
     <>
       <div className="content-body flight-list">
         <Header title="Flights" />
-        <div className="row mb-4 w-25" align="right">
+        <div className="mb-4">
           <Button label={addLabel()} destination={"/flights/add"} />
         </div>
 

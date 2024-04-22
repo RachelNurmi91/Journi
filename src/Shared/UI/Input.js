@@ -5,7 +5,7 @@ function Input({ name, onChange, placeholder, label, type = "text" }) {
 
   return (
     <div className="form-group my-2">
-      <label htmlFor={name} className="my-2">
+      <label htmlFor={name} className="mb-2">
         {label}
       </label>
       <input
