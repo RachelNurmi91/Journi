@@ -3,7 +3,12 @@ import { setActiveTrip } from "../Redux/Actions/AccountActions";
 import Select from "../Shared/UI/Select";
 import { connect } from "react-redux";
 
-function TripSelector({ tripListData, activeTrip, setActiveTrip }) {
+function TripSelector({
+  tripListData,
+  activeTrip,
+  setActiveTrip,
+  toggleSideNav,
+}) {
   const generateOptions = useCallback(() => {
     return tripListData.map((trip, i) => {
       const isSelected = trip.tripName === activeTrip?.tripName;
@@ -11,9 +16,9 @@ function TripSelector({ tripListData, activeTrip, setActiveTrip }) {
       return (
         <option
           value={trip.tripName}
-          data-id={trip.tripId}
+          data-id={trip._id}
           key={i + 1}
-          selected={isSelected}
+          defaultValue={isSelected}
         >
           {trip.tripName}
         </option>
@@ -29,10 +34,10 @@ function TripSelector({ tripListData, activeTrip, setActiveTrip }) {
     // Match the selected trip id & name to the corresponding trip to return the correct data.
     let trip = tripListData.find(
       (trip) =>
-        trip.tripId.toString() === tripId.toString() &&
+        trip._id?.toString() === tripId?.toString() &&
         trip.tripName === tripName
     );
-
+    toggleSideNav();
     setActiveTrip(trip);
   };
 

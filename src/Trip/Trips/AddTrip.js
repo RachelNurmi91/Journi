@@ -84,10 +84,10 @@ function AddTrip({ ...props }) {
       >
         <div className="container">
           <div className="row d-flex">
-            <div className="col">
+            <div className="col-9">
               <h2 className="d-inline-block">Add Trip</h2>
             </div>
-            <div className="col d-flex justify-content-end">
+            <div className="col-3 d-flex justify-content-end">
               <span onClick={toggleModal}>
                 <FontAwesomeIcon
                   icon="fa-solid fa-xmark"

@@ -4,7 +4,7 @@ function Input({ name, onChange, placeholder, label, type = "text" }) {
   const inputRef = useRef(null);
 
   return (
-    <div className="form-group my-3">
+    <div className="form-group my-2">
       <label htmlFor={name} className="my-2">
         {label}
       </label>

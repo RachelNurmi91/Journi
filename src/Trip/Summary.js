@@ -8,7 +8,7 @@ function Summary({ ...props }) {
       return (
         <div className="content-body">
           <div className="container summary">
-            <div className="row">
+            <div className="row text-center">
               <h1>
                 Welcome back{" "}
                 <span className="primary-color">
@@ -18,7 +18,7 @@ function Summary({ ...props }) {
               </h1>
             </div>
             <div className="row mt-5">
-              <div className="col">
+              <div className="col-12">
                 <div className="outlined-box p10-per text-center">
                   <div>
                     <FontAwesomeIcon
@@ -32,7 +32,7 @@ function Summary({ ...props }) {
                   Your Next Trip
                 </div>
               </div>
-              <div className="col">
+              <div className="col-12 mt-3">
                 <div className="outlined-box p10-per text-center">
                   <div>
                     <FontAwesomeIcon

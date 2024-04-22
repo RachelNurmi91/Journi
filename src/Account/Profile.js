@@ -33,27 +33,36 @@ function Profile({ ...props }) {
   };
 
   const renderTripList = () => {
+    console.log(props.tripsData);
     return props.tripsData?.map((trip, index) => {
       return (
         <div key={index}>
           {index === 0 ? null : <hr />}
-          <div className="row py-3">
-            <div className="col b16-mon">{trip.tripName}</div>
-            <div className="col">{Methods.formatDate(trip.departureDate)}</div>
-            <div className="col">
-              {trip.hotels?.length ? trip.hotels.length + " Hotels" : null}
-            </div>
-            <div className="col">
-              {trip.flights?.length ? trip.flights.length + " Hotels" : null}
+          <div className="row py-2">
+            <div className="col-9">
+              <div className="row">
+                <div className="col-6 b16-mon">{trip.tripName}</div>
+                <div className="col-6">
+                  {Methods.formatDate(trip.departureDate)}
+                </div>
+
+                <div className="col-6">
+                  {console.log(trip.hotels)}
+                  {trip.hotels?.length ? trip.hotels.length : "0"} Hotels
+                </div>
+                <div className="col-6">
+                  {trip.flights?.length ? trip.flights.length : "0"} Flights
+                </div>
+              </div>
             </div>
 
-            {/* <div className="col">
+            <div className="col-1 d-flex align-items-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-pen-to-square"
                 style={{ color: "#0BB6C0" }}
               />
-            </div> */}
-            <div className="col">
+            </div>
+            <div className="col-1 d-flex align-items-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"
                 style={{ color: "#0BB6C0" }}
@@ -72,13 +81,13 @@ function Profile({ ...props }) {
       <div className="row">
         <h1>{props.userData?.firstName + " " + props.userData?.lastName}</h1>
       </div>
-      <div className="outlined-box mt-3 p3-per">
-        <div className="row mb-3">
+      <div className="outlined-box mt-3 p-4">
+        <div className="row">
           <span className="float-right primary-color b22-mon">
             User Details
           </span>
         </div>
-        <div className="container">
+        <div className="container mt-2">
           <div className="row">
             <div className="col-3 col-lg-1 b16-mon">Name</div>
             <div className="col">
@@ -92,11 +101,11 @@ function Profile({ ...props }) {
         </div>
       </div>
 
-      <div className="shadow-box mt-5 p3-per">
-        <div className="row mb-3">
+      <div className="outlined-box mt-4 p-4">
+        <div className="row">
           <span className="float-right primary-color b22-mon">Trips</span>
         </div>
-        <div className="container">
+        <div className="container mt-2">
           {props.tripsData.length
             ? renderTripList()
             : "Friend, you need a vacation."}
