@@ -205,8 +205,9 @@ function FlightList({ flightListData }) {
             </div>
           </div>
         </div>
-        <hr className="slash" />
-
+        <div class="separator">
+          <span className="b13-mon mx-3">ROUNDTRIP</span>
+        </div>
         <div className="container ">
           <div className="row mt-3">
             <div className="b18-mon primary-color text-center">
