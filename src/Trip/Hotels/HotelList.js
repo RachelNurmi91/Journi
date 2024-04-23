@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function HotelList({ ...props }) {
   const [hotelList, setHotelList] = useState(null);
@@ -32,7 +30,6 @@ function HotelList({ ...props }) {
 
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
-      console.log(hotel);
       return (
         <div className="shadow-box p-4 my-4" key={index}>
           <div className="container">

@@ -40,10 +40,14 @@ const AirportAutocomplete = ({ placeholder, onChange }) => {
   };
 
   return (
-    <div className="autocomplete-container" onMouseLeave={handleMouseLeave}>
+    <div
+      className="autocomplete-container form-group my-2"
+      onMouseLeave={handleMouseLeave}
+    >
       <input
         ref={inputRef}
         type="text"
+        className="form-control"
         value={inputValue}
         onChange={handleChange}
         placeholder={placeholder}

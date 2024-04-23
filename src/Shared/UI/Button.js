@@ -8,10 +8,9 @@ function Button({ destination = null, label, onClick = null }) {
     <>
       <button
         ref={btnRef}
-        className="btn-style mt-3"
+        className="btn-style mt-3 w-100"
         type="button"
         onClick={onClick}
-        class="w-100"
       >
         <Link to={destination} className="btn-link">
           {label}

@@ -45,6 +45,7 @@ function AddFlight({ ...props }) {
   const tripRequest = new TripRequests();
 
   const onSave = () => {
+    console.log(props.activeTripId);
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
@@ -182,7 +183,7 @@ function AddFlight({ ...props }) {
   const renderOptionsBox = () => {
     return (
       <>
-        <div className="shadow-box p3-per">
+        <div className="shadow-box p-4">
           <div className="row">
             <div className="col d-flex justify-content-end">
               <Radio
@@ -205,7 +206,7 @@ function AddFlight({ ...props }) {
           </div>
           <hr />
           <div className="row">
-            <div className="col d-flex justify-content-center">
+            <div className="col-6 text-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-plane-departure"
                 style={{ color: "#0bb6c0" }}
@@ -216,7 +217,7 @@ function AddFlight({ ...props }) {
                 onChange={handleDepartureAirport}
               />
             </div>
-            <div className="col d-flex justify-content-center">
+            <div className="col-6 text-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-plane-arrival"
                 style={{ color: "#0bb6c0" }}
@@ -227,7 +228,8 @@ function AddFlight({ ...props }) {
                 onChange={handleReturnAirport}
               />
             </div>
-            <div className="col text-center">
+
+            <div className="col-6 mt-2 text-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
@@ -238,8 +240,9 @@ function AddFlight({ ...props }) {
                 onDateChange={handleDepartureDate}
               />
             </div>
+
             {isOneWay ? null : (
-              <div className="col text-center">
+              <div className="col-6 mt-2 text-center">
                 <FontAwesomeIcon
                   icon="fa-solid fa-calendar-days"
                   style={{ color: "#0bb6c0" }}
@@ -261,7 +264,7 @@ function AddFlight({ ...props }) {
     return (
       <>
         <div className="row">
-          <div className="col">
+          <div className="col-12">
             <Input
               name="airline"
               onChange={handleInputChange}
@@ -277,25 +280,52 @@ function AddFlight({ ...props }) {
               label="Confirmation Number"
             />
           </div>
+          <div className="row mt-2">
+            <Checkbox
+              label="Tickets are under a different name."
+              toggleCheckbox={handleShowNameInput}
+            />
+          </div>
+          {displayNewNameInput ? (
+            <div className="row">
+              <Input
+                name="ticketHolder"
+                onChange={handleInputChange}
+                placeholder="Name on Ticket"
+                label="Name on Ticket"
+              />
+            </div>
+          ) : null}
         </div>
-
+        <div
+          className="primary-color b18-mon light-bg-color mt-4 px-2"
+          style={{ borderRadius: "5px" }}
+        >
+          Departure Flight
+        </div>
         <div className="row">
           <div className="col">
             <Input
               name="departureFlightNo"
               onChange={handleInputChange}
               placeholder="Flight Number"
-              label="Departure Flight No."
+              label="Flight Number"
             />
           </div>
           <div className="col">
             <Input
               name="departureSeat"
               onChange={handleInputChange}
-              placeholder="Seat Assignment"
-              label="Departure Seat"
+              placeholder="Seat"
+              label="Seat"
             />
           </div>
+        </div>
+        <div
+          className="primary-color b18-mon light-bg-color mt-4 px-2"
+          style={{ borderRadius: "5px" }}
+        >
+          Return Flight
         </div>
 
         <div className="row">
@@ -304,36 +334,18 @@ function AddFlight({ ...props }) {
               name="returnFlightNo"
               onChange={handleInputChange}
               placeholder="Flight Number"
-              label="Return Flight No."
+              label="Flight Number"
             />
           </div>
           <div className="col">
             <Input
               name="returnSeat"
               onChange={handleInputChange}
-              placeholder="Seat Assignment"
-              label="Return Seat"
+              placeholder="Seat"
+              label="Seat"
             />
           </div>
         </div>
-        <div className="row">
-          <div className=" d-flex justify-content-end">
-            <Checkbox
-              label="The ticket is under someone elses name."
-              toggleCheckbox={handleShowNameInput}
-            />
-          </div>
-        </div>
-        {displayNewNameInput ? (
-          <div className="row">
-            <Input
-              name="ticketHolder"
-              onChange={handleInputChange}
-              placeholder="Name on Ticket"
-              label="Name on Ticket"
-            />
-          </div>
-        ) : null}
       </>
     );
   };
@@ -342,7 +354,7 @@ function AddFlight({ ...props }) {
     return (
       <>
         <div className="row">
-          <div className="col">
+          <div className="col-12">
             <Input
               name="airline"
               onChange={handleInputChange}
@@ -350,7 +362,7 @@ function AddFlight({ ...props }) {
               label="Airline"
             />
           </div>
-          <div className="col">
+          <div className="col-12">
             <Input
               name="confirmationNo"
               onChange={handleInputChange}
@@ -372,18 +384,16 @@ function AddFlight({ ...props }) {
             <Input
               name="departureSeat"
               onChange={handleInputChange}
-              placeholder="Seat Assignment"
-              label="Seat Assignment"
+              placeholder="Seat"
+              label="Seat"
             />
           </div>
         </div>
-        <div className="row">
-          <div className=" d-flex justify-content-end">
-            <Checkbox
-              label="The ticket is under someone elses name."
-              toggleCheckbox={handleShowNameInput}
-            />
-          </div>
+        <div className="row mt-2">
+          <Checkbox
+            label="Ticket is under a different name."
+            toggleCheckbox={handleShowNameInput}
+          />
         </div>
         {displayNewNameInput ? (
           <div className="row">
@@ -404,7 +414,7 @@ function AddFlight({ ...props }) {
       <Header title="Add Flight" />
       <div className="container">
         <div className="row">{renderOptionsBox()}</div>
-        <div className="row mt-4">
+        <div className="mt-2">
           {isOneWay ? renderOnewayFields() : renderRoundtripFields()}
         </div>
 
@@ -419,7 +429,7 @@ function AddFlight({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
-    activeTripId: state.account?.activeTrip?.tripId,
+    activeTripId: state.account?.activeTrip?._id,
   };
 }
 

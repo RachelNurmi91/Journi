@@ -215,7 +215,7 @@ function AddHotel({ ...props }) {
             />
           ) : null}
         </div>
-        <div className="row mt-4">
+        <div className="row">
           <Button label="Save" onClick={onSave} />
         </div>
       </div>

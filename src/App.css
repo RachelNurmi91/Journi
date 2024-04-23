@@ -9,7 +9,14 @@
   max-width: 1000px;
 }
 
-
+hr.slash {
+  border: none;
+  height: 1px; /* Adjust height as needed */
+  background-image: repeating-linear-gradient(to right, black 0, black 10%, transparent 0, transparent 20%);
+  background-size: 100px 1px; /* Adjust the width of dashes */
+  background-repeat: repeat-x;
+  margin: 30px 0;
+}
 
 /* Branding */
 

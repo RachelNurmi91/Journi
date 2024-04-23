@@ -41,37 +41,81 @@ function FlightList({ flightListData }) {
       <div className="shadow-box p-4 my-4" key={index}>
         <div className="container">
           <div className="row">
-            <span className="float-right b16-mon">
-              <FontAwesomeIcon
-                icon="fa-solid fa-plane-departure"
-                style={{ color: "#0bb6c0" }}
-              />
-              Departure Flight
-            </span>
+            <div className="b18-mon primary-color text-center">
+              {flight?.departureFlight?.departureAirportCity}
+              <span className="mx-2">
+                ---
+                <FontAwesomeIcon
+                  icon="fa-solid fa-plane"
+                  style={{ color: "#0bb6c0" }}
+                />
+              </span>
+
+              {flight?.returnFlight?.returnAirportCity}
+            </div>
           </div>
-          <div className="row flight-list-info">
-            <div className="col d-flex justify-content-start b22-mon">
+          <div className="row">
+            <div className="text-center b13-mon">
               {Methods.formatDate(flight?.departureFlight?.departureDate)}
             </div>
-            <div className="col d-flex justify-content-center">
-              <div className="float-left">
-                <span className="b16-mon">
-                  {flight?.departureFlight?.departureAirportCity}
-                </span>
-                <br />({flight?.departureFlight?.departureAirportCode})
-              </div>
-              <div className="align-items-self px-3">to</div>
-              <div className="float-right">
-                <span className="b16-mon">
-                  {flight?.returnFlight?.returnAirportCity}
-                </span>
-                <br />
-                {flight?.returnFlight?.returnAirportCode}
+          </div>
+          <div className="row mt-3">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Airline </div>
+                <div>{flight?.airline}</div>
               </div>
             </div>
-            <div className="col text-center">{flight?.airline}</div>
-            <div className="col b16-mon d-flex justify-content-end">
-              {flight?.departureFlight?.departureSeat}
+            <div className="col-6">
+              <div className="b16-mon">Flight No.</div>
+              <div
+                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                style={{ borderRadius: "5px" }}
+              >
+                {flight?.departureFlight?.departureFlightNo}
+              </div>
+            </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Seat </div>
+                <div>{flight?.departureFlight?.departureSeat}</div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="b16-mon">Confirm. No.</div>
+              <div
+                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                style={{ borderRadius: "5px" }}
+              >
+                {flight.confirmationNo}
+              </div>
+            </div>
+          </div>
+
+          <div className="row mt-2">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Departure </div>
+                <div>
+                  {flight?.departureFlight?.departureAirportCity}{" "}
+                  <span className="b13-mon">
+                    ({flight?.departureFlight?.departureAirportCode})
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Arrival </div>
+                <div>
+                  {flight?.returnFlight?.returnAirportCity}{" "}
+                  <span className="b13-mon">
+                    ({flight?.returnFlight?.returnAirportCode})
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -83,75 +127,163 @@ function FlightList({ flightListData }) {
     return (
       <div className="shadow-box p-4 my-4" key={index}>
         <div className="container ">
-          <div className="row">
-            <span className="float-right b16-mon">
-              <FontAwesomeIcon
-                icon="fa-solid fa-plane-departure"
-                style={{ color: "#0bb6c0" }}
-              />
-              Departure Flight
-            </span>
+          <div className="row mt-3">
+            <div className="b18-mon primary-color text-center">
+              {flight?.departureFlight?.departureAirportCity}
+              <span className="mx-2">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-plane-departure"
+                  style={{ color: "#0bb6c0" }}
+                />
+              </span>
+
+              {flight?.returnFlight?.returnAirportCity}
+            </div>
           </div>
-          <div className="row flight-list-info">
-            <div className="col d-flex justify-content-start b22-mon">
+          <div className="row">
+            <div className="text-center b13-mon">
               {Methods.formatDate(flight?.departureFlight?.departureDate)}
             </div>
-            <div className="col d-flex justify-content-center">
-              <div className="float-left">
-                <span className="b16-mon">
-                  {flight?.departureFlight?.departureAirportCity}
-                </span>{" "}
-                <br />({flight?.departureFlight?.departureAirportCode})
-              </div>
-              <div className="align-items-self">----</div>
-              <div className="float-right">
-                <span className="b16-mon">
-                  {flight?.returnFlight?.returnAirportCity}{" "}
-                </span>
-                <br />({flight?.returnFlight?.returnAirportCode})
+          </div>
+          <div className="row mt-3">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Airline </div>
+                <div>{flight?.airline}</div>
               </div>
             </div>
-            <div className="col text-center">{flight?.airline}</div>
-            <div className="col b16-mon d-flex justify-content-end">
-              {" "}
-              {flight?.departureFlight?.departureSeat}
+            <div className="col-6">
+              <div className="b16-mon">Flight No.</div>
+              <div
+                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                style={{ borderRadius: "5px" }}
+              >
+                {flight?.departureFlight?.departureFlightNo}
+              </div>
+            </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Seat </div>
+                <div>{flight?.departureFlight?.departureSeat}</div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="b16-mon">Confirm. No.</div>
+              <div
+                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                style={{ borderRadius: "5px" }}
+              >
+                {flight.confirmationNo}
+              </div>
+            </div>
+          </div>
+
+          <div className="row mt-2">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Departure </div>
+                <div>
+                  {flight?.departureFlight?.departureAirportCity}{" "}
+                  <span className="b13-mon">
+                    ({flight?.departureFlight?.departureAirportCode})
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Arrival </div>
+                <div>
+                  {flight?.returnFlight?.returnAirportCity}{" "}
+                  <span className="b13-mon">
+                    ({flight?.returnFlight?.returnAirportCode})
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <hr className="dashed m-3" />
-        <div className="container">
-          <div className="row">
-            <span className="float-right b16-mon">
-              <FontAwesomeIcon
-                icon="fa-solid fa-plane-arrival"
-                style={{ color: "#0bb6c0" }}
-              />
-              Return Flight
-            </span>
+        <hr className="slash" />
+
+        <div className="container ">
+          <div className="row mt-3">
+            <div className="b18-mon primary-color text-center">
+              {flight?.returnFlight?.returnAirportCity}
+
+              <span className="mx-2">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-plane-arrival"
+                  style={{ color: "#0bb6c0" }}
+                />
+              </span>
+
+              {flight?.departureFlight?.departureAirportCity}
+            </div>
           </div>
-          <div className="row flight-list-info">
-            <div className="col d-flex justify-content-start b22-mon">
+          <div className="row">
+            <div className="text-center b13-mon">
               {Methods.formatDate(flight?.returnFlight?.returnDate)}
             </div>
-            <div className="col d-flex justify-content-center">
-              <div className="float-left">
-                <span className="b16-mon">
-                  {flight?.returnFlight?.returnAirportCity}
-                </span>{" "}
-                <br />({flight?.returnFlight?.returnAirportCode})
-              </div>
-              <div className="align-items-self">----</div>
-              <div className="float-right">
-                <span className="b16-mon">
-                  {flight?.departureFlight?.departureAirportCity}{" "}
-                </span>
-                <br />({flight?.departureFlight?.departureAirportCode})
+          </div>
+          <div className="row mt-3">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Airline </div>
+                <div>{flight?.airline}</div>
               </div>
             </div>
-            <div className="col text-center">{flight?.airline}</div>
-            <div className="col b16-mon d-flex justify-content-end">
-              {" "}
-              {flight?.returnFlight?.returnSeat}
+            <div className="col-6">
+              <div className="b16-mon">Flight No.</div>
+              <div
+                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                style={{ borderRadius: "5px" }}
+              >
+                {flight?.returnFlight?.returnFlightNo}
+              </div>
+            </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Seat </div>
+                <div>{flight?.returnFlight?.returnSeat}</div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="b16-mon">Confirm. No.</div>
+              <div
+                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                style={{ borderRadius: "5px" }}
+              >
+                {flight.confirmationNo}
+              </div>
+            </div>
+          </div>
+
+          <div className="row mt-2">
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Departure </div>
+                <div>
+                  {flight?.returnFlight?.returnAirportCity}{" "}
+                  <span className="b13-mon">
+                    ({flight?.returnFlight?.returnAirportCode})
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div>
+                <div className="b16-mon"> Arrival </div>
+                <div>
+                  {flight?.departureFlight?.departureAirportCity}{" "}
+                  <span className="b13-mon">
+                    ({flight?.departureFlight?.departureAirportCode})
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -159,22 +291,10 @@ function FlightList({ flightListData }) {
     );
   };
 
-  const addLabel = () => {
-    return (
-      <>
-        <FontAwesomeIcon icon="fa-solid fa-plus" style={{ color: "#fff" }} />{" "}
-        Add New
-      </>
-    );
-  };
-
   return (
     <>
       <div className="content-body flight-list">
-        <Header title="Flights" />
-        <div className="mb-4">
-          <Button label={addLabel()} destination={"/flights/add"} />
-        </div>
+        <Header title="Flights" icon="add" destination={"/flights/add"} />
 
         {displayFlights()}
       </div>
