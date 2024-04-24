@@ -19,6 +19,8 @@ const DEFAULT_FORM_DATA = {
 
 function Register({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+  const [error, setErrorStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const accountRequest = new AccountRequests();
 
@@ -73,6 +75,32 @@ function Register({ ...props }) {
   };
 
   const onRegister = async () => {
+    setLoading(true);
+    setErrorStatus(false);
+
+    // Account for all possible missing data error checks before attempting login.
+    if (!formData.firstName) {
+      console.error("Registration failed: First name missing.");
+      setErrorStatus("Please provide your first name.");
+      setLoading(false);
+      return;
+    } else if (!formData.lastName) {
+      console.error("Registration failed: Last name missing.");
+      setErrorStatus("Please provide your last name.");
+      setLoading(false);
+      return;
+    } else if (!formData.username) {
+      console.error("Registration failed: Username missing.");
+      setErrorStatus("Please provide a username.");
+      setLoading(false);
+      return;
+    } else if (!formData.password) {
+      console.error("Registration failed: Password missing.");
+      setErrorStatus("Please provide a password.");
+      setLoading(false);
+      return;
+    }
+
     const registrationData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -110,25 +138,35 @@ function Register({ ...props }) {
               label="Last Name"
             />
           </div>
-          <div className="row">
-            <Input
-              name="username"
-              onChange={handleChange}
-              placeholder="Username"
-              label="Username"
-            />
-          </div>
-          <div className="row">
-            <Input
-              name="password"
-              onChange={handleChange}
-              placeholder="Password"
-              label="Password"
-              type="password"
-            />
-          </div>
-          <div className="row">
-            <Button label="Register" onClick={onRegister} />
+          <div className="container">
+            <div className="row">
+              <Input
+                name="username"
+                onChange={handleChange}
+                placeholder="Username"
+                label="Username"
+              />
+            </div>
+            <div className="row">
+              <Input
+                name="password"
+                onChange={handleChange}
+                placeholder="Password"
+                label="Password"
+                type="password"
+              />
+            </div>
+
+            <div className="row">
+              <Button label="Register" onClick={onRegister} />
+            </div>
+            {error ? (
+              <div className="row">
+                <div className="b13-mon text-center error-color py-2 px-3 mt-3">
+                  {error}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
