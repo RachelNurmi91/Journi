@@ -89,9 +89,9 @@ function AddHotel({ ...props }) {
 
             let activeTrip = account.data.trips?.[0];
             props.setActiveTrip(activeTrip);
+            props.navigate("/");
+            setLoading(false);
           });
-        props.navigate("/");
-        setLoading(false);
       })
       .catch((err) => {
         console.error(err);

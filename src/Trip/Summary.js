@@ -1,8 +1,16 @@
+import { useState } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Methods from "../Shared/Methods";
+import AddTrip from "./Trips/AddTrip";
 
 function Summary({ ...props }) {
+  const [showSideBar, setShowSideBar] = useState(false);
+
+  const toggleSideNav = () => {
+    setShowSideBar((prevState) => !prevState);
+  };
+
   const loggedInSummary = () => {
     if (props.userData.trips.length) {
       return (
@@ -53,9 +61,50 @@ function Summary({ ...props }) {
       );
     } else {
       return (
-        <div className="content-body text-center">
-          <h1>Time to start traveling!</h1>
-          <h3>Set your first trip!</h3>
+        <div className="content-body">
+          <h1 className="text-center">Let's get started!</h1>
+          <div className="container">
+            <div className="row">
+              <h4 className="mt-4">
+                <span className="primary-color x-bold">Step 1:</span> Add your
+                first trip!
+              </h4>
+            </div>
+            <div className="row">
+              <div
+                className="primary-bg-color w-50 mx-auto text-center py-2"
+                style={{ borderRadius: "5px", color: "#fff" }}
+                onClick={toggleSideNav}
+              >
+                <AddTrip />
+              </div>
+            </div>
+            <div className="row">
+              <h4 className="mt-4">
+                <span className="primary-color x-bold">Step 2:</span> Add your
+                travel plans
+              </h4>
+            </div>
+            <div className="row">
+              <p className="px-4">
+                Under the navigation you'll find areas to add your tickets,
+                reservations, itinerary, and more.
+              </p>
+            </div>
+            <div className="row">
+              <h4 className="mt-4">
+                <span className="primary-color x-bold">Step 3:</span> Update
+                your profile
+              </h4>
+              <p className="px-4">
+                Add your rewards and membership numbers to your profile for easy
+                access!
+              </p>
+            </div>
+            <div className="row mt-3 text-center">
+              <h2 className="primary-color x-bold">Happy Travels!</h2>
+            </div>
+          </div>
         </div>
       );
     }

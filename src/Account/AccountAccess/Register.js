@@ -32,46 +32,54 @@ function Register({ ...props }) {
   };
 
   const loginAfterRegister = async () => {
-    if (formData.username && formData.password) {
+    if (!formData.username && formData.password) {
       await accountRequest
         .login(formData)
         .then((response) => {
           const token = response.data.token;
-          localStorage.setItem("token", token);
-          if (token) {
-            accountRequest
-              .fetchAccountData(formData.username, token)
-              .then((account) => {
-                if (!account) console.error("No account found");
-                //On success we login automatically
 
-                const accountData = {
-                  id: account.data._id,
-                  firstName: account.data.firstName,
-                  lastName: account.data.lastName,
-                  username: account.data.username,
-                  password: null,
-                  trips: [],
-                };
-
-                props.setLoggedInUserData(accountData);
-              });
-          } else {
-            console.log("Error: Login failed - No token returned");
+          // If there is no token don't attempt to fetch the account.
+          if (!token) {
+            console.error("Register failed: No token returned.");
+            setErrorStatus("Register unsuccessful.");
+            setLoading(false);
+            return;
           }
+
+          localStorage.setItem("token", token);
+          accountRequest
+            .fetchAccountData(formData.username, token)
+            .then((account) => {
+              if (!account) {
+                console.error("Login failed: No account found.");
+                setErrorStatus("Login unsuccessful.");
+                setLoading(false);
+                return;
+              }
+
+              //On a successful registration - log in automatically.
+
+              const accountData = {
+                id: account.data._id,
+                firstName: account.data.firstName,
+                lastName: account.data.lastName,
+                username: account.data.username,
+                password: null,
+                trips: [],
+              };
+
+              props.setLoggedInUserData(accountData);
+              setLoading(false);
+              props.navigate("/");
+            });
         })
-        .catch((err) => console.log(err));
-      //Set logged in user data if username and password are correct.
-      // props.setLoggedInUserData(testAccount01);
-      //Set first trip in list as active. Will need to make sure date is soonest.
-      // let activeTrip = testAccount01?.trips?.[0];
-      // props.setActiveTrip(activeTrip);
-    } else {
-      console.log(
-        "Error: Login Failed - Please provide both your user name and password"
-      );
+        .catch((err) => {
+          console.error(err);
+          console.error("Login failed: Server login error.");
+          setErrorStatus("Login unsuccessful.");
+          setLoading(false);
+        });
     }
-    props.navigate("/");
   };
 
   const onRegister = async () => {
@@ -112,7 +120,12 @@ function Register({ ...props }) {
       .then(() => {
         loginAfterRegister();
       })
-      .catch((err) => console.log("Failed to register: ", err));
+      .catch((err) => {
+        console.error(err);
+        console.error("Register failed: Server login error.");
+        setErrorStatus("Register unsuccessful.");
+        setLoading(false);
+      });
 
     props.navigate("/");
   };

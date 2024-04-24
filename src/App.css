@@ -170,6 +170,10 @@
 
 /* Elements */
 
+.x-bold {
+  font-weight: 900 !important;
+}
+
 h1 {
   font-family: "Inter", sans-serif;
   font-size: 36px !important;
@@ -181,6 +185,13 @@ h2 {
   font-size: 28px !important;
   font-weight: 700 !important;
 }
+
+h4 {
+  font-family: "Inter", sans-serif;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+}
+
 
 /* Padding by percentage */
 
