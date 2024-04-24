@@ -10,33 +10,38 @@ import Checkbox from "../../Shared/UI/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
+import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 
 const DEFAULT_FORM_DATA = {
   type: "roundtrip",
   airline: null,
   confirmationNo: null,
-  departureFlight: {
-    departureAirport: null,
-    departureAirportCode: null,
-    departureAirportCity: null,
-    departureAirportCountry: null,
-    departureFlightNo: null,
-    departureDate: null,
-    departureSeat: null,
-  },
-  returnFlight: {
-    returnAirport: null,
-    returnAirportCode: null,
-    returnAirportCity: null,
-    returnAirportCountry: null,
-    returnFlightNo: null,
-    returnDate: null,
-    returnSeat: null,
-  },
+  departureFlight: [
+    {
+      airport: null,
+      code: null,
+      city: null,
+      country: null,
+      flightNo: null,
+      date: null,
+      seat: null,
+    },
+  ],
+  returnFlight: [
+    {
+      airport: null,
+      code: null,
+      city: null,
+      country: null,
+      flightNo: null,
+      date: null,
+      seat: null,
+    },
+  ],
   ticketHolder: null,
 };
 
-function AddFlight({ ...props }) {
+function AddFlight({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [isOneWay, setIsOneWay] = useState(false);
@@ -45,17 +50,17 @@ function AddFlight({ ...props }) {
   const tripRequest = new TripRequests();
 
   const onSave = () => {
-    console.log(props.activeTripId);
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
         props.userData?.firstName + " " + props.userData?.lastName;
+    if (!formData.departureFlight.date)
+      formData.departureFlight.date = new Date();
+
     tripRequest
       .addFlight(formData)
-      .then((response) => {
-        console.log("We got a response!", response);
-        props.addNewFlightData(formData);
-        props.navigate("/flights");
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/flights"));
       })
       .catch((error) => console.log(error));
   };
@@ -77,10 +82,10 @@ function AddFlight({ ...props }) {
       ...prevFormData,
       departureFlight: {
         ...prevFormData.departureFlight,
-        departureAirport: name,
-        departureAirportCode: code,
-        departureAirportCity: city,
-        departureAirportCountry: country,
+        airport: name,
+        code: code,
+        city: city,
+        country: country,
       },
     }));
   };
@@ -90,10 +95,10 @@ function AddFlight({ ...props }) {
       ...prevFormData,
       returnFlight: {
         ...prevFormData.returnFlight,
-        returnAirport: name,
-        returnAirportCode: code,
-        returnAirportCity: city,
-        returnAirportCountry: country,
+        airport: name,
+        code: code,
+        city: city,
+        country: country,
       },
     }));
   };
@@ -155,20 +160,36 @@ function AddFlight({ ...props }) {
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
-    if (targetKey === "departureFlightNo" || targetKey === "departureSeat") {
+    if (targetKey === "departureFlightNo") {
       setFormData((prevFormData) => ({
         ...prevFormData,
         departureFlight: {
           ...prevFormData.departureFlight,
-          [targetKey]: newValue,
+          flightNo: newValue,
         },
       }));
-    } else if (targetKey === "returnFlightNo" || targetKey === "returnSeat") {
+    } else if (targetKey === "departureSeat") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        departureFlight: {
+          ...prevFormData.departureFlight,
+          seat: newValue,
+        },
+      }));
+    } else if (targetKey === "returnFlightNo") {
       setFormData((prevFormData) => ({
         ...prevFormData,
         returnFlight: {
           ...prevFormData.returnFlight,
-          [targetKey]: newValue,
+          flightNo: newValue,
+        },
+      }));
+    } else if (targetKey === "returnSeat") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        returnFlight: {
+          ...prevFormData.returnFlight,
+          seat: newValue,
         },
       }));
     } else {
@@ -435,6 +456,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   addNewFlightData,
+  fetchUpdatedTrips,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddFlight);

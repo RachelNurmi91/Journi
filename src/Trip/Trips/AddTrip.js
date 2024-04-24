@@ -45,8 +45,6 @@ function AddTrip({ ...props }) {
     tripRequest
       .addTrip(newTrip)
       .then((response) => {
-        console.log("We got a response!", response);
-
         newTrip.tripId = response.data._id;
 
         props.addNewTripData(newTrip);

@@ -27,6 +27,7 @@ export default class AccountRequests {
   }
 
   fetchAccountData(username) {
+    console.log("hit");
     const token = localStorage.getItem("token");
     return axios.get(`${SERVER}/users/${username}`, {
       headers: {

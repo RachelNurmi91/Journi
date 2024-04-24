@@ -1,15 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
 
-function FlightList({ flightListData }) {
+function FlightList({ flightListData, test }) {
   const [sortedFlights, setSortedFlights] = useState([]);
 
   const sortByDate = useCallback(() => {
-    let flights = flightListData;
+    let flights = [...flightListData];
 
     if (flights && flights.length > 10) {
       flights.sort((a, b) => {
@@ -22,9 +21,16 @@ function FlightList({ flightListData }) {
     setSortedFlights([...flights]);
   }, [flightListData]);
 
+  // const handleLoadData = useCallback(() => {
+  //   getAccountData().then((response) => sortByDate(response));
+  // }, [getAccountData, sortByDate]);
+
   useEffect(() => {
+    console.log("test", test);
+    console.log(flightListData);
+    console.log(typeof flightListData);
     sortByDate();
-  }, [flightListData, sortByDate]);
+  }, [sortByDate]);
 
   const displayFlights = () => {
     return sortedFlights.map((flight, index) => {
@@ -37,12 +43,15 @@ function FlightList({ flightListData }) {
   };
 
   const renderOnewayFlight = (flight, index) => {
+    const departureFlight = flight?.departureFlight?.[0];
+    const returnFlight = flight?.returnFlight?.[0];
+
     return (
       <div className="shadow-box p-4 my-4" key={index}>
         <div className="container">
           <div className="row">
             <div className="b18-mon primary-color text-center">
-              {flight?.departureFlight?.departureAirportCity}
+              {departureFlight?.city}
               <span className="mx-2">
                 ---
                 <FontAwesomeIcon
@@ -51,12 +60,12 @@ function FlightList({ flightListData }) {
                 />
               </span>
 
-              {flight?.returnFlight?.returnAirportCity}
+              {returnFlight?.city}
             </div>
           </div>
           <div className="row">
             <div className="text-center b13-mon">
-              {Methods.formatDate(flight?.departureFlight?.departureDate)}
+              {Methods.formatDate(departureFlight?.date)}
             </div>
           </div>
           <div className="row mt-3">
@@ -72,7 +81,7 @@ function FlightList({ flightListData }) {
                 className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
                 style={{ borderRadius: "5px" }}
               >
-                {flight?.departureFlight?.departureFlightNo}
+                {departureFlight?.flightNo}
               </div>
             </div>
           </div>
@@ -80,7 +89,7 @@ function FlightList({ flightListData }) {
             <div className="col-6">
               <div>
                 <div className="b16-mon"> Seat </div>
-                <div>{flight?.departureFlight?.departureSeat}</div>
+                <div>{departureFlight?.seat}</div>
               </div>
             </div>
             <div className="col-6">
@@ -99,10 +108,8 @@ function FlightList({ flightListData }) {
               <div>
                 <div className="b16-mon"> Departure </div>
                 <div>
-                  {flight?.departureFlight?.departureAirportCity}{" "}
-                  <span className="b13-mon">
-                    ({flight?.departureFlight?.departureAirportCode})
-                  </span>
+                  {departureFlight?.city}{" "}
+                  <span className="b13-mon">({departureFlight?.city})</span>
                 </div>
               </div>
             </div>
@@ -110,10 +117,8 @@ function FlightList({ flightListData }) {
               <div>
                 <div className="b16-mon"> Arrival </div>
                 <div>
-                  {flight?.returnFlight?.returnAirportCity}{" "}
-                  <span className="b13-mon">
-                    ({flight?.returnFlight?.returnAirportCode})
-                  </span>
+                  {returnFlight?.city}{" "}
+                  <span className="b13-mon">({returnFlight?.city})</span>
                 </div>
               </div>
             </div>
@@ -124,12 +129,15 @@ function FlightList({ flightListData }) {
   };
 
   const renderRoundtripFlight = (flight, index) => {
+    const departureFlight = flight?.departureFlight?.[0];
+    const returnFlight = flight?.returnFlight?.[0];
+
     return (
       <div className="shadow-box p-4 my-4" key={index}>
         <div className="container ">
           <div className="row mt-3">
             <div className="b18-mon primary-color text-center">
-              {flight?.departureFlight?.departureAirportCity}
+              {departureFlight?.[0]?.city}
               <span className="mx-2">
                 <FontAwesomeIcon
                   icon="fa-solid fa-plane-departure"
@@ -137,12 +145,12 @@ function FlightList({ flightListData }) {
                 />
               </span>
 
-              {flight?.returnFlight?.returnAirportCity}
+              {flight?.returnFlight?.city}
             </div>
           </div>
           <div className="row">
             <div className="text-center b13-mon">
-              {Methods.formatDate(flight?.departureFlight?.departureDate)}
+              {Methods.formatDate(departureFlight?.date)}
             </div>
           </div>
           <div className="row mt-3">
@@ -158,7 +166,7 @@ function FlightList({ flightListData }) {
                 className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
                 style={{ borderRadius: "5px" }}
               >
-                {flight?.departureFlight?.departureFlightNo}
+                {departureFlight?.flightNo}
               </div>
             </div>
           </div>
@@ -166,7 +174,7 @@ function FlightList({ flightListData }) {
             <div className="col-6">
               <div>
                 <div className="b16-mon"> Seat </div>
-                <div>{flight?.departureFlight?.departureSeat}</div>
+                <div>{departureFlight?.seat}</div>
               </div>
             </div>
             <div className="col-6">
@@ -185,10 +193,8 @@ function FlightList({ flightListData }) {
               <div>
                 <div className="b16-mon"> Departure </div>
                 <div>
-                  {flight?.departureFlight?.departureAirportCity}{" "}
-                  <span className="b13-mon">
-                    ({flight?.departureFlight?.departureAirportCode})
-                  </span>
+                  {departureFlight?.city}{" "}
+                  <span className="b13-mon">({departureFlight?.city})</span>
                 </div>
               </div>
             </div>
@@ -196,22 +202,20 @@ function FlightList({ flightListData }) {
               <div>
                 <div className="b16-mon"> Arrival </div>
                 <div>
-                  {flight?.returnFlight?.returnAirportCity}{" "}
-                  <span className="b13-mon">
-                    ({flight?.returnFlight?.returnAirportCode})
-                  </span>
+                  {returnFlight?.city}{" "}
+                  <span className="b13-mon">({returnFlight?.city})</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="separator">
+        <div className="separator">
           <span className="b13-mon mx-3">ROUNDTRIP</span>
         </div>
         <div className="container ">
           <div className="row mt-3">
             <div className="b18-mon primary-color text-center">
-              {flight?.returnFlight?.returnAirportCity}
+              {returnFlight?.city}
 
               <span className="mx-2">
                 <FontAwesomeIcon
@@ -220,12 +224,12 @@ function FlightList({ flightListData }) {
                 />
               </span>
 
-              {flight?.departureFlight?.departureAirportCity}
+              {departureFlight?.city}
             </div>
           </div>
           <div className="row">
             <div className="text-center b13-mon">
-              {Methods.formatDate(flight?.returnFlight?.returnDate)}
+              {Methods.formatDate(returnFlight?.date)}
             </div>
           </div>
           <div className="row mt-3">
@@ -241,7 +245,7 @@ function FlightList({ flightListData }) {
                 className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
                 style={{ borderRadius: "5px" }}
               >
-                {flight?.returnFlight?.returnFlightNo}
+                {returnFlight?.flightNo}
               </div>
             </div>
           </div>
@@ -249,7 +253,7 @@ function FlightList({ flightListData }) {
             <div className="col-6">
               <div>
                 <div className="b16-mon"> Seat </div>
-                <div>{flight?.returnFlight?.returnSeat}</div>
+                <div>{returnFlight?.seat}</div>
               </div>
             </div>
             <div className="col-6">
@@ -268,9 +272,9 @@ function FlightList({ flightListData }) {
               <div>
                 <div className="b16-mon"> Departure </div>
                 <div>
-                  {flight?.returnFlight?.returnAirportCity}{" "}
+                  {flight?.returnFlight?.city}{" "}
                   <span className="b13-mon">
-                    ({flight?.returnFlight?.returnAirportCode})
+                    ({flight?.returnFlight?.city})
                   </span>
                 </div>
               </div>
@@ -279,9 +283,9 @@ function FlightList({ flightListData }) {
               <div>
                 <div className="b16-mon"> Arrival </div>
                 <div>
-                  {flight?.departureFlight?.departureAirportCity}{" "}
+                  {flight?.departureFlight?.city}{" "}
                   <span className="b13-mon">
-                    ({flight?.departureFlight?.departureAirportCode})
+                    ({flight?.departureFlight?.city})
                   </span>
                 </div>
               </div>
@@ -306,6 +310,7 @@ function FlightList({ flightListData }) {
 function mapStateToProps(state) {
   return {
     flightListData: state.account?.activeTrip?.flights,
+    test: state.account,
   };
 }
 

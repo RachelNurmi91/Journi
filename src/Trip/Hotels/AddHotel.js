@@ -60,7 +60,6 @@ function AddHotel({ ...props }) {
     tripRequest
       .addHotel(formData)
       .then((response) => {
-        console.log("We got a response!", response);
         props.addNewHotelData(formData);
         props.navigate("/hotels");
       })

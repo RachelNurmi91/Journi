@@ -5,6 +5,7 @@ import {
   SET_ACTIVE_TRIP,
   ADD_NEW_FLIGHT_DATA,
   REMOVE_LOGGED_IN_USER_DATA,
+  UPDATE_TRIPS_DATA,
   ADD_NEW_TRIP_DATA,
   DELETE_TRIP_DATA,
 } from "../Actions/AccountActions";
@@ -32,6 +33,9 @@ export default produce((draft, action) => {
       return { ...initialState };
     case SET_ACTIVE_TRIP:
       draft.activeTrip = action.payload;
+      return draft;
+    case UPDATE_TRIPS_DATA:
+      draft.userAccount.trips = action.payload;
       return draft;
     case ADD_NEW_TRIP_DATA:
       draft.userAccount.trips.push(action.payload);

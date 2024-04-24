@@ -33,7 +33,6 @@ function Profile({ ...props }) {
   };
 
   const renderTripList = () => {
-    console.log(props.tripsData);
     return props.tripsData?.map((trip, index) => {
       return (
         <div key={index}>
@@ -47,7 +46,6 @@ function Profile({ ...props }) {
                 </div>
 
                 <div className="col-6">
-                  {console.log(trip.hotels)}
                   {trip.hotels?.length ? trip.hotels.length : "0"} Hotels
                 </div>
                 <div className="col-6">
