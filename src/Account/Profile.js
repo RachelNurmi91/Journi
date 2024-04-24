@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -5,6 +6,12 @@ import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 import TripRequests from "../Requests/TripRequests";
 
 function Profile({ ...props }) {
+  const [collapsed, setCollapsed] = useState(true);
+
+  const toggleExpand = () => {
+    setCollapsed(!collapsed);
+  };
+
   const tripRequest = new TripRequests();
 
   const deleteTrip = async (selectedTrip) => {
@@ -76,15 +83,16 @@ function Profile({ ...props }) {
   };
   return (
     <div className="content-body">
-      <div className="row">
-        <h1>{props.userData?.firstName + " " + props.userData?.lastName}</h1>
-      </div>
       <div className="outlined-box mt-3 p-4">
         <div className="row">
-          <span className="float-right primary-color b22-mon">
+          <span
+            className="float-right primary-color b22-mon"
+            onClick={toggleExpand}
+          >
             User Details
           </span>
         </div>
+
         <div className="container mt-2">
           <div className="row">
             <div className="col-3 col-lg-1 b16-mon">Name</div>
@@ -99,14 +107,61 @@ function Profile({ ...props }) {
         </div>
       </div>
 
-      <div className="outlined-box mt-4 p-4">
+      <div className="outlined-box mt-4 pt-4 px-4 pb-1">
         <div className="row">
           <span className="float-right primary-color b22-mon">Trips</span>
         </div>
         <div className="container mt-2">
-          {props.tripsData.length
-            ? renderTripList()
-            : "Friend, you need a vacation."}
+          {props.tripsData.length ? (
+            <>
+              <div
+                className={`container mt-2 ${
+                  collapsed ? "collapsed-content" : ""
+                }`}
+              >
+                {renderTripList()}
+              </div>
+              <div className={`text-center ${collapsed ? "" : "expanded"}`}>
+                <FontAwesomeIcon
+                  icon="fa-solid fa-angle-down"
+                  style={{ color: "#0BB6C0" }}
+                  size="2x"
+                  onClick={toggleExpand}
+                />
+              </div>
+            </>
+          ) : (
+            "Friend, you need a vacation."
+          )}
+        </div>
+      </div>
+
+      <div className="outlined-box mt-3 pt-4 px-4 pb-1">
+        <div className="row">
+          <span className="float-right primary-color b22-mon">
+            Reward Programs
+          </span>
+        </div>
+        <div
+          className={`container mt-2 ${collapsed ? "collapsed-content" : ""}`}
+        >
+          <div className="row">
+            <div className="col-6 col-lg-1 b16-mon">Marriot Bonvoyage</div>
+            <div className="col d-flex align-self-center">3425773899</div>
+          </div>
+          <hr />
+          <div className="row">
+            <div className="col-6 col-lg-1 b16-mon">Hilton Honors</div>
+            <div className="col d-flex align-self-center">1470023983</div>
+          </div>
+        </div>
+        <div className={`text-center ${collapsed ? "" : "expanded"}`}>
+          <FontAwesomeIcon
+            icon="fa-solid fa-angle-down"
+            style={{ color: "#0BB6C0" }}
+            size="2x"
+            onClick={toggleExpand}
+          />
         </div>
       </div>
     </div>

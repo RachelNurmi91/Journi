@@ -21,6 +21,7 @@ import {
   faRightToBracket,
   faTrash,
   faPenToSquare,
+  faAngleDown,
   faUserPlus,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
@@ -37,6 +38,7 @@ library.add(
   faRightToBracket,
   faTrash,
   faPenToSquare,
+  faAngleDown,
   faUserPlus,
   faBars
 );
