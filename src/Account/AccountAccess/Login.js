@@ -8,6 +8,7 @@ import {
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Input from "../../Shared/UI/Input";
+import Loader from "../../Shared/UI/Loader";
 import AccountRequests from "../../Requests/AccountRequests";
 
 const DEFAULT_FORM_DATA = {
@@ -17,6 +18,8 @@ const DEFAULT_FORM_DATA = {
 
 function AddHotel({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+  const [error, setErrorStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
   const accountRequest = new AccountRequests();
 
   const handleChange = (event) => {
@@ -27,43 +30,75 @@ function AddHotel({ ...props }) {
   };
 
   const onLogin = async () => {
-    if (formData.username && formData.password) {
-      await accountRequest
-        .login(formData)
-        .then((response) => {
-          const token = response.data.token;
-          localStorage.setItem("token", token);
-          if (token) {
-            accountRequest
-              .fetchAccountData(formData.username, token)
-              .then((account) => {
-                if (!account) console.error("No account found");
-                //On success we login automatically
+    setLoading(true);
+    setErrorStatus(false);
 
-                const accountData = {
-                  id: account.data._id,
-                  firstName: account.data.firstName,
-                  lastName: account.data.lastName,
-                  username: account.data.username,
-                  trips: account.data.trips,
-                };
-
-                props.setLoggedInUserData(accountData);
-
-                let activeTrip = account.data.trips?.[0];
-                props.setActiveTrip(activeTrip);
-              });
-          } else {
-            console.log("Login failed: No token returned");
-          }
-        })
-        .catch((err) => console.log(err));
-    } else {
-      console.log(
-        "Error: Login Failed - Please provide both your user name and password"
-      );
+    // Account for all possible missing data error checks before attempting login.
+    if (!formData.username && !formData.password) {
+      console.error("Login failed: Username and password missing.");
+      setErrorStatus("Please provide both username and password.");
+      setLoading(false);
+      return;
+    } else if (!formData.username) {
+      console.error("Login failed: Username missing.");
+      setErrorStatus("Please provide your username.");
+      setLoading(false);
+      return;
+    } else if (!formData.password) {
+      console.error("Login failed: Password missing.");
+      setErrorStatus("Please provide your password.");
+      setLoading(false);
+      return;
     }
-    props.navigate("/");
+
+    await accountRequest
+      .login(formData)
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+
+        // If there is no token don't attempt to fetch the account.
+        if (!token) {
+          console.error("Login failed: No token returned.");
+          setErrorStatus("Login unsuccessful.");
+          setLoading(false);
+          return;
+        }
+
+        accountRequest
+          .fetchAccountData(formData.username, token)
+          .then((account) => {
+            if (!account) {
+              console.error("Login failed: No account found.");
+              setErrorStatus("Login unsuccessful.");
+              setLoading(false);
+              return;
+            }
+
+            //On success we login automatically
+
+            const accountData = {
+              id: account.data._id,
+              firstName: account.data.firstName,
+              lastName: account.data.lastName,
+              username: account.data.username,
+              trips: account.data.trips,
+            };
+
+            props.setLoggedInUserData(accountData);
+
+            let activeTrip = account.data.trips?.[0];
+            props.setActiveTrip(activeTrip);
+          });
+        props.navigate("/");
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        console.error("Login failed: Server login error.");
+        setErrorStatus("Login unsuccessful.");
+        setLoading(false);
+      });
   };
 
   return (
@@ -88,8 +123,18 @@ function AddHotel({ ...props }) {
           />
         </div>
         <div className="row">
-          <Button label="Login" onClick={onLogin} />
+          <Button
+            label={loading ? <Loader size="10px" /> : "Login"}
+            onClick={onLogin}
+          />
         </div>
+        {error ? (
+          <div className="row">
+            <div className="b13-mon text-center error-color py-2 px-3 mt-3">
+              {error}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

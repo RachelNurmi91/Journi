@@ -41,12 +41,25 @@
   color: #0BB6C0;
 }
 
+.white-color {
+  color: #fff;
+}
+
+.error-color {
+  color: #d65d5d;
+}
+
+
 .primary-bg-color {
   background-color: #0BB6C0;
 }
 
 .light-bg-color {
   background-color: #ddefef;
+}
+
+.error-bg-color {
+  background-color: #d65d5d;
 }
 
 
@@ -187,6 +200,13 @@ h2 {
 .b13-mon {
   font-family: "Montserrat", sans-serif;
   font-size: 13px;
+}
+
+
+.b13-bold {
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 
