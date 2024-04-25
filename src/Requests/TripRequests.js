@@ -40,7 +40,7 @@ export default class TripRequests {
 
   addHotel(hotelData) {
     const token = localStorage.getItem("token");
-
+    console.log(hotelData);
     return axios
       .post(`${SERVER}/hotels/add`, hotelData, {
         headers: {

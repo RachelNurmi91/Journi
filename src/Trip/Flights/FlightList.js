@@ -21,14 +21,7 @@ function FlightList({ flightListData, test }) {
     setSortedFlights([...flights]);
   }, [flightListData]);
 
-  // const handleLoadData = useCallback(() => {
-  //   getAccountData().then((response) => sortByDate(response));
-  // }, [getAccountData, sortByDate]);
-
   useEffect(() => {
-    console.log("test", test);
-    console.log(flightListData);
-    console.log(typeof flightListData);
     sortByDate();
   }, [sortByDate]);
 

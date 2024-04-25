@@ -8,22 +8,24 @@ import Header from "../../Shared/UI/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
+import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 
 const DEFAULT_FORM_DATA = {
-  hotel: "Temple House by Curio",
-  city: "Okinawa",
-  country: "Japan",
-  arrivalDate: "02/10/2026",
-  departureDate: "02/15/2026",
-  confirmationNo: "03432432432",
-  nameOnReservation: "Rachel Nurmi",
+  hotel: null,
+  city: null,
+  country: null,
+  arrivalDate: null,
+  departureDate: null,
+  confirmationNo: null,
+  nameOnReservation: null,
 };
 
-function AddHotel({ ...props }) {
+function AddHotel({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [arrivalDate, setArrivalDate] = useState(new Date());
   const [departureDate, setDepartureDate] = useState(new Date());
+
   const tripRequest = new TripRequests();
 
   const handleChange = (event) => {
@@ -59,9 +61,8 @@ function AddHotel({ ...props }) {
     formData.tripId = props.activeTripId;
     tripRequest
       .addHotel(formData)
-      .then((response) => {
-        props.addNewHotelData(formData);
-        props.navigate("/hotels");
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/hotels"));
       })
       .catch((error) => console.log(error));
   };
@@ -79,7 +80,7 @@ function AddHotel({ ...props }) {
       setArrivalDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        arrivalDateDate: date,
+        arrivalDate: date,
       }));
     }
 
@@ -153,14 +154,14 @@ function AddHotel({ ...props }) {
         <div className="row"> {renderOptionsBox()}</div>
         <div className="row mt-2">
           <Input
-            name="hotelName"
+            name="hotel"
             onChange={handleChange}
             placeholder="Hotel"
             label="Hotel"
           />
 
           <Input
-            name="hotelConfirmation"
+            name="confirmationNo"
             onChange={handleChange}
             placeholder="Confirmation #"
             label="Confirmation #"
@@ -225,12 +226,13 @@ function AddHotel({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
-    activeTripId: state.account?.activeTrip?.tripId,
+    activeTripId: state.account?.activeTrip?._id,
   };
 }
 
 const mapDispatchToProps = {
   addNewHotelData,
+  fetchUpdatedTrips,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddHotel);
