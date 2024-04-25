@@ -4,23 +4,8 @@ import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 import TripRequests from "../Requests/TripRequests";
-import { config, useSpring, animated } from "@react-spring/web";
-import useMeasure from "react-use-measure";
 
 function Profile({ ...props }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [measureRef, { height }] = useMeasure();
-
-  const springs = useSpring({
-    config: config.stiff,
-    from: {
-      height: 35,
-    },
-    to: {
-      height: isOpen ? height : 35,
-    },
-  });
-
   const tripRequest = new TripRequests();
 
   const deleteTrip = async (selectedTrip) => {
@@ -120,15 +105,9 @@ function Profile({ ...props }) {
 
         {props.tripsData.length ? (
           <div className="container mt-2">
-            <animated.div style={{ overflow: "hidden", ...springs }}>
-              <div className="container mt-2" ref={measureRef}>
-                {renderTripList()}
-              </div>
-            </animated.div>
-            <div
-              className={isOpen ? "expanded text-center" : "text-center"}
-              onClick={() => setIsOpen((val) => !val)}
-            >
+            <div className="container mt-2">{renderTripList()}</div>
+
+            <div className="text-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-angle-down"
                 style={{ color: "#0BB6C0" }}
@@ -147,22 +126,19 @@ function Profile({ ...props }) {
             Rewards Programs
           </span>
         </div>
-        <animated.div style={{ overflow: "hidden", ...springs }}>
-          <div className="container mt-2">
-            <div className="row">
-              <div className="col-3 col-lg-1 b16-mon">Hilton Honors</div>
-              <div className="col">174932800</div>
-            </div>
-            <div className="row">
-              <div className="col-3 col-lg-1 b16-mon">Marriot Bonvoyage</div>
-              <div className="col">78954532</div>
-            </div>
+
+        <div className="container mt-2">
+          <div className="row">
+            <div className="col-3 col-lg-1 b16-mon">Hilton Honors</div>
+            <div className="col">174932800</div>
           </div>
-        </animated.div>
-        <div
-          className={isOpen ? "expanded text-center" : "text-center"}
-          onClick={() => setIsOpen((val) => !val)}
-        >
+          <div className="row">
+            <div className="col-3 col-lg-1 b16-mon">Marriot Bonvoyage</div>
+            <div className="col">78954532</div>
+          </div>
+        </div>
+
+        <div className="text-center">
           <FontAwesomeIcon
             icon="fa-solid fa-angle-down"
             style={{ color: "#0BB6C0" }}

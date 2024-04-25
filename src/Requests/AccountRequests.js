@@ -27,12 +27,29 @@ export default class AccountRequests {
   }
 
   fetchAccountData(username) {
-    console.log("hit");
     const token = localStorage.getItem("token");
     return axios.get(`${SERVER}/users/${username}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  addRewardProgram(tripData) {
+    const token = localStorage.getItem("token");
+
+    return axios
+      .post(`${SERVER}/rewardPrograms/add`, tripData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.log(error);
+        throw error;
+      });
   }
 }
