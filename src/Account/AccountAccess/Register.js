@@ -32,54 +32,52 @@ function Register({ ...props }) {
   };
 
   const loginAfterRegister = async () => {
-    if (!formData.username && formData.password) {
-      await accountRequest
-        .login(formData)
-        .then((response) => {
-          const token = response.data.token;
+    await accountRequest
+      .login(formData)
+      .then((response) => {
+        const token = response.data.token;
 
-          // If there is no token don't attempt to fetch the account.
-          if (!token) {
-            console.error("Register failed: No token returned.");
-            setErrorStatus("Register unsuccessful.");
-            setLoading(false);
-            return;
-          }
-
-          localStorage.setItem("token", token);
-          accountRequest
-            .fetchAccountData(formData.username, token)
-            .then((account) => {
-              if (!account) {
-                console.error("Login failed: No account found.");
-                setErrorStatus("Login unsuccessful.");
-                setLoading(false);
-                return;
-              }
-
-              //On a successful registration - log in automatically.
-
-              const accountData = {
-                id: account.data._id,
-                firstName: account.data.firstName,
-                lastName: account.data.lastName,
-                username: account.data.username,
-                password: null,
-                trips: [],
-              };
-
-              props.setLoggedInUserData(accountData);
-              setLoading(false);
-              props.navigate("/");
-            });
-        })
-        .catch((err) => {
-          console.error(err);
-          console.error("Login failed: Server login error.");
-          setErrorStatus("Login unsuccessful.");
+        // If there is no token don't attempt to fetch the account.
+        if (!token) {
+          console.error("Register failed: No token returned.");
+          setErrorStatus("Register unsuccessful.");
           setLoading(false);
-        });
-    }
+          return;
+        }
+
+        localStorage.setItem("token", token);
+        accountRequest
+          .fetchAccountData(formData.username, token)
+          .then((account) => {
+            if (!account) {
+              console.error("Login failed: No account found.");
+              setErrorStatus("Login unsuccessful.");
+              setLoading(false);
+              return;
+            }
+
+            //On a successful registration - log in automatically.
+
+            const accountData = {
+              id: account.data._id,
+              firstName: account.data.firstName,
+              lastName: account.data.lastName,
+              username: account.data.username,
+              password: null,
+              trips: [],
+            };
+
+            props.setLoggedInUserData(accountData);
+            setLoading(false);
+            props.navigate("/");
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+        console.error("Login failed: Server login error.");
+        setErrorStatus("Login unsuccessful.");
+        setLoading(false);
+      });
   };
 
   const onRegister = async () => {

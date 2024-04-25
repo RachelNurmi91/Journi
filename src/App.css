@@ -121,6 +121,7 @@
 
 .sidenav-menu li {  
   color: #fff;
+  white-space:nowrap;
 }
 
 .sidenav-menu .nav-link {

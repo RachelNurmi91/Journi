@@ -21,17 +21,8 @@ function Sidebar({
   const guestSideBar = () => {
     return (
       <>
-        <div className="px-3">
+        <div className="d-flex flex-grow-1 align-items-end">
           <ul className="sidenav-menu">
-            <li>
-              <Link to="/login" className="nav-link" onClick={toggleSideNav}>
-                <FontAwesomeIcon
-                  icon="fa-solid fa-right-to-bracket"
-                  style={{ color: "#fff" }}
-                />
-                <span className="ms-2">Login</span>
-              </Link>
-            </li>
             <li>
               <Link to="/register" className="nav-link" onClick={toggleSideNav}>
                 <FontAwesomeIcon
@@ -39,6 +30,15 @@ function Sidebar({
                   style={{ color: "#fff" }}
                 />
                 <span className="ms-2">Register</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className="nav-link" onClick={toggleSideNav}>
+                <FontAwesomeIcon
+                  icon="fa-solid fa-right-to-bracket"
+                  style={{ color: "#fff" }}
+                />
+                <span className="ms-2">Login</span>
               </Link>
             </li>
           </ul>
@@ -119,12 +119,15 @@ function Sidebar({
       }}
     >
       <div className="d-flex justify-content-center flex-column h-100">
-        <img
-          className="logo mt-3"
-          src={logo}
-          alt="Journi logo"
-          height="150px"
-        />
+        <div className="align-items-start">
+          <img
+            className="logo mt-3"
+            src={logo}
+            alt="Journi logo"
+            height="150px"
+          />
+        </div>
+
         {userId ? loggedInSideBar() : guestSideBar()}
       </div>
     </div>
