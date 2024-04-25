@@ -1,15 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Header({ title, icon, destination }) {
-  const renderIcon = (icon) => {
+function Header({ title, rightIcon, leftIcon, destination }) {
+  let navigate = useNavigate();
+
+  const renderRightIcon = (icon) => {
     switch (icon) {
       case "add":
         return (
           <Link to={destination} className="btn-link">
             <FontAwesomeIcon
               icon="fa-solid fa-plus"
-              size="2x"
+              size="lg"
               style={{ color: "#0BB6C0" }}
             />
           </Link>
@@ -19,14 +21,35 @@ function Header({ title, icon, destination }) {
     }
   };
 
+  const renderLeftIcon = () => {
+    return (
+      <Link to={destination} className="btn-link">
+        <FontAwesomeIcon
+          icon="fa-chevron-left"
+          size="lg"
+          style={{ color: "#0BB6C0" }}
+          onClick={navigate("/profile")}
+          className="pl-0"
+        />
+      </Link>
+    );
+  };
+
   return (
     <div className="row mt-2 mb-3">
-      <div className="col">
-        <h2 className="">{title}</h2>
+      {leftIcon ? (
+        <div className="col-1 d-flex align-items-center">
+          {renderLeftIcon(leftIcon)}
+        </div>
+      ) : null}
+      <div className={`${rightIcon || leftIcon ? "col-11" : "col-12"}`}>
+        <h2 className=" mb-0">{title}</h2>
       </div>
-      <div className="col d-flex justify-content-end">
-        {icon ? renderIcon(icon) : null}
-      </div>
+      {rightIcon ? (
+        <div className="col-1 d-flex justify-content-end">
+          {renderRightIcon(rightIcon)}
+        </div>
+      ) : null}
     </div>
   );
 }

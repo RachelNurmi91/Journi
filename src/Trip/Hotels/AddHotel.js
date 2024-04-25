@@ -64,7 +64,7 @@ function AddHotel({ fetchUpdatedTrips, ...props }) {
       .then(() => {
         fetchUpdatedTrips().then(() => props.navigate("/hotels"));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   const handleArrivalDate = (date) => {

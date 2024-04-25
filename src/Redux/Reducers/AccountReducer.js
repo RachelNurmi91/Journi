@@ -2,6 +2,7 @@ import { produce } from "immer";
 import {
   ADD_NEW_HOTEL_DATA,
   SET_LOGGED_IN_USER_DATA,
+  UPDATE_USER_DATA,
   SET_ACTIVE_TRIP,
   ADD_NEW_FLIGHT_DATA,
   REMOVE_LOGGED_IN_USER_DATA,
@@ -16,7 +17,7 @@ const initialState = {
     firstName: null,
     lastName: null,
     username: null,
-    email: null,
+    rewardPrograms: [],
     trips: [],
   },
   activeTrip: null,
@@ -31,6 +32,12 @@ export default produce((draft, action) => {
       return draft;
     case REMOVE_LOGGED_IN_USER_DATA:
       return { ...initialState };
+    case UPDATE_USER_DATA:
+      draft.userAccount.firstName = action.payload.firstName;
+      draft.userAccount.lastName = action.payload.lastName;
+      draft.userAccount.username = action.payload.username;
+      draft.userAccount.rewardPrograms = action.payload.rewardPrograms;
+      return draft;
     case SET_ACTIVE_TRIP:
       draft.activeTrip = action.payload;
       return draft;

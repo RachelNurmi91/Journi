@@ -292,7 +292,7 @@ function FlightList({ flightListData, test }) {
   return (
     <>
       <div className="content-body flight-list">
-        <Header title="Flights" icon="add" destination={"/flights/add"} />
+        <Header title="Flights" rightIcon="add" destination={"/flights/add"} />
 
         {displayFlights()}
       </div>

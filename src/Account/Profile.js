@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 import TripRequests from "../Requests/TripRequests";
+import { Link } from "react-router-dom";
 
-function Profile({ ...props }) {
+function Profile({ rewardProgramsData, ...props }) {
   const tripRequest = new TripRequests();
 
   const deleteTrip = async (selectedTrip) => {
@@ -30,7 +30,37 @@ function Profile({ ...props }) {
         }
         props.deleteTripData(selectedTrip);
       })
-      .catch((error) => console.log("Error: Cannot delete trip: ", error));
+      .catch((error) => console.error("Error: Cannot delete trip: ", error));
+  };
+
+  const renderProgramsList = () => {
+    return rewardProgramsData?.map((program, index) => {
+      return (
+        <div key={index}>
+          {index === 0 ? null : <hr />}
+
+          <div className="row">
+            <div className="col-4 col-lg-1 b16-mon">{program.programName}</div>
+            <div className="col-6 text-center">{program.membershipId}</div>
+            <div className="col-2 d-flex align-items-center justify-content-end">
+              <Link
+                to={"/profile/programs/edit"}
+                className="btn-link"
+                state={{
+                  editProgram: true,
+                  currentProgram: rewardProgramsData?.[index],
+                }}
+              >
+                <FontAwesomeIcon
+                  icon="fa-solid fa-pen-to-square"
+                  style={{ color: "#0BB6C0" }}
+                />
+              </Link>
+            </div>
+          </div>
+        </div>
+      );
+    });
   };
 
   const renderTripList = () => {
@@ -75,6 +105,7 @@ function Profile({ ...props }) {
       );
     });
   };
+
   return (
     <div className="content-body">
       <div className="outlined-box mt-3 p-4">
@@ -84,7 +115,7 @@ function Profile({ ...props }) {
           </span>
         </div>
 
-        <div className="container mt-2">
+        <div className="container mt-3">
           <div className="row">
             <div className="col-3 col-lg-1 b16-mon">Name</div>
             <div className="col">
@@ -98,52 +129,45 @@ function Profile({ ...props }) {
         </div>
       </div>
 
-      <div className="outlined-box mt-4 pt-4 px-4 pb-1">
+      <div className="outlined-box mt-3 p-4">
         <div className="row">
           <span className="float-right primary-color b22-mon">Trips</span>
         </div>
-
-        {props.tripsData.length ? (
-          <div className="container mt-2">
-            <div className="container mt-2">{renderTripList()}</div>
-
-            <div className="text-center">
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-down"
-                style={{ color: "#0BB6C0" }}
-                size="2x"
-              />
-            </div>
-          </div>
-        ) : (
-          "Friend, you need a vacation."
-        )}
+        <div className="container mt-3">
+          {props.tripsData.length
+            ? renderTripList()
+            : "Friend, you need a vacation."}
+        </div>
       </div>
 
-      <div className="outlined-box mt-4 pt-4 px-4 pb-1">
+      <div className="outlined-box mt-3 p-4">
         <div className="row">
-          <span className="float-right primary-color b22-mon">
-            Rewards Programs
-          </span>
+          <div className="col-10">
+            <span className="float-right primary-color b22-mon">
+              Reward Programs
+            </span>
+          </div>
+          <div className="col-2 d-flex justify-content-end">
+            <Link
+              to={"/profile/programs/add"}
+              className="btn-link"
+              state={{
+                addProgram: true,
+              }}
+            >
+              <FontAwesomeIcon
+                icon="fa-solid fa-plus"
+                size="lg"
+                style={{ color: "#0BB6C0" }}
+              />
+            </Link>
+          </div>
         </div>
 
-        <div className="container mt-2">
-          <div className="row">
-            <div className="col-3 col-lg-1 b16-mon">Hilton Honors</div>
-            <div className="col">174932800</div>
-          </div>
-          <div className="row">
-            <div className="col-3 col-lg-1 b16-mon">Marriot Bonvoyage</div>
-            <div className="col">78954532</div>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <FontAwesomeIcon
-            icon="fa-solid fa-angle-down"
-            style={{ color: "#0BB6C0" }}
-            size="2x"
-          />
+        <div className="container mt-3">
+          {props.rewardProgramsData?.length
+            ? renderProgramsList()
+            : "Add your reward programs!"}
         </div>
       </div>
     </div>
@@ -153,6 +177,7 @@ function Profile({ ...props }) {
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
+    rewardProgramsData: state.account?.userAccount?.rewardPrograms,
     tripsData: state.account?.userAccount?.trips,
     activeTrip: state.account?.activeTrip,
   };

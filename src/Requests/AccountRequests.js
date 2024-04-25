@@ -9,7 +9,7 @@ export default class AccountRequests {
         return response; // Return the response for chaining
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
         throw error; // Re-throw the error to propagate it
       });
   }
@@ -21,7 +21,7 @@ export default class AccountRequests {
         return response; // Return the response for chaining
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
         throw error; // Re-throw the error to propagate it
       });
   }
@@ -35,11 +35,11 @@ export default class AccountRequests {
     });
   }
 
-  addRewardProgram(tripData) {
+  addRewardProgram(programData) {
     const token = localStorage.getItem("token");
 
     return axios
-      .post(`${SERVER}/rewardPrograms/add`, tripData, {
+      .post(`${SERVER}/rewardPrograms/add`, programData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,25 @@ export default class AccountRequests {
         return response;
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
+        throw error;
+      });
+  }
+
+  deleteRewardProgram(id) {
+    const token = localStorage.getItem("token");
+
+    return axios
+      .delete(`${SERVER}/rewardPrograms/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
         throw error;
       });
   }

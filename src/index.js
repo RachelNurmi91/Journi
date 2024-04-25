@@ -20,6 +20,7 @@ import {
   faArrowRightFromBracket,
   faRightToBracket,
   faTrash,
+  faChevronLeft,
   faPenToSquare,
   faAngleDown,
   faUserPlus,
@@ -38,6 +39,7 @@ library.add(
   faRightToBracket,
   faTrash,
   faPenToSquare,
+  faChevronLeft,
   faAngleDown,
   faUserPlus,
   faBars

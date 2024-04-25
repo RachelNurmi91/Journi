@@ -15,7 +15,7 @@ export default class TripRequests {
         return response; // Return the response for chaining
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
         throw error; // Re-throw the error to propagate it
       });
   }
@@ -33,14 +33,13 @@ export default class TripRequests {
         return response; // Return the response for chaining
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
         throw error; // Re-throw the error to propagate it
       });
   }
 
   addHotel(hotelData) {
     const token = localStorage.getItem("token");
-    console.log(hotelData);
     return axios
       .post(`${SERVER}/hotels/add`, hotelData, {
         headers: {
@@ -51,7 +50,7 @@ export default class TripRequests {
         return response; // Return the response for chaining
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
         throw error; // Re-throw the error to propagate it
       });
   }
@@ -68,7 +67,7 @@ export default class TripRequests {
         return response; // Return the response for chaining
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
         throw error; // Re-throw the error to propagate it
       });
   }

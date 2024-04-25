@@ -82,6 +82,7 @@ function AddHotel({ ...props }) {
               firstName: account.data.firstName,
               lastName: account.data.lastName,
               username: account.data.username,
+              rewardPrograms: account.data.rewardPrograms,
               trips: account.data.trips,
             };
 

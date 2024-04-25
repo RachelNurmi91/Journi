@@ -62,7 +62,7 @@ function AddFlight({ fetchUpdatedTrips, ...props }) {
       .then(() => {
         fetchUpdatedTrips().then(() => props.navigate("/flights"));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   const handleRadioCheck = (event) => {

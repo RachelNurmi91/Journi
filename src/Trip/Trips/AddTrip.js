@@ -52,7 +52,7 @@ function AddTrip({ ...props }) {
         toggleModal(!isModalOpen);
         navigate("/summary");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   return (

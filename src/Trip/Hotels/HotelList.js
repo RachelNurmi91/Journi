@@ -87,7 +87,7 @@ function HotelList({ ...props }) {
 
   return (
     <div className="content-body hotel-list">
-      <Header title="Hotels" icon="add" destination={"/hotels/add"} />
+      <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
       {displayHotels()}
     </div>
   );

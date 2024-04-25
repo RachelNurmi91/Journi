@@ -1,5 +1,9 @@
 import AccountRequests from "../../Requests/AccountRequests";
-import { updateTripsData, setActiveTrip } from "../Actions/AccountActions";
+import {
+  updateTripsData,
+  setActiveTrip,
+  updateUserData,
+} from "../Actions/AccountActions";
 const accountRequest = new AccountRequests();
 
 export const fetchUpdatedTrips = () => (dispatch, getState) => {
@@ -26,6 +30,29 @@ export const fetchUpdatedTrips = () => (dispatch, getState) => {
         );
 
         dispatch(setActiveTrip(updatedActiveTrip));
+      } else {
+        throw new Error("Unable to parse user account.");
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const fetchUpdatedAccount = () => (dispatch, getState) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const {
+        account: {
+          userAccount: { username },
+        },
+      } = getState();
+      const token = localStorage.getItem("token");
+      const response = await accountRequest.fetchAccountData(username, token);
+      if (response.data) {
+        resolve(response.data);
+        //Update account to have new trips data
+        dispatch(updateUserData(response.data));
       } else {
         throw new Error("Unable to parse user account.");
       }
