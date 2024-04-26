@@ -11,20 +11,13 @@ function TripSelector({
 }) {
   const generateOptions = useCallback(() => {
     return tripListData.map((trip, i) => {
-      const isSelected = trip.tripName === activeTrip?.tripName;
-
       return (
-        <option
-          value={trip.tripName}
-          data-id={trip._id}
-          key={i + 1}
-          defaultValue={isSelected}
-        >
+        <option value={trip.tripName} data-id={trip._id} key={i + 1}>
           {trip.tripName}
         </option>
       );
     });
-  }, [tripListData, activeTrip]);
+  }, [activeTrip]);
 
   const handleChange = (event) => {
     const selectedTrip = event.target.selectedOptions[0];
@@ -44,7 +37,11 @@ function TripSelector({
   return (
     <>
       {tripListData?.length >= 2 ? (
-        <Select options={generateOptions} onChange={handleChange} />
+        <Select
+          value={activeTrip?.tripName}
+          options={generateOptions}
+          onChange={handleChange}
+        />
       ) : null}
     </>
   );

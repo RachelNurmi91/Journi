@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import logo from "../Media/Images/logo.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -17,6 +18,11 @@ function Sidebar({
     localStorage.clear();
     removeLoggedInUserData();
   };
+
+  const TripSelectorMemo = useMemo(
+    () => <TripSelector toggleSideNav={toggleSideNav} />,
+    []
+  );
 
   const guestSideBar = () => {
     return (
@@ -51,9 +57,7 @@ function Sidebar({
     return (
       <>
         <div className="flex-grow-1">
-          <div className="col align-self-center my-3">
-            <TripSelector toggleSideNav={toggleSideNav} />
-          </div>
+          <div className="col align-self-center my-3">{TripSelectorMemo}</div>
           <ul className="sidenav-menu mt-2 align-items-center">
             <li>
               <Link to="/" onClick={toggleSideNav} className="nav-link">

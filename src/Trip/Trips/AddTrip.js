@@ -48,10 +48,15 @@ function AddTrip({ fetchUpdatedTrips, ...props }) {
       .then((response) => {
         newTrip._id = response.data._id;
 
-        props.setActiveTrip(newTrip);
-        setIsModalOpen(false);
+        fetchUpdatedTrips().then((response) => {
+          let activeTrip = response.find(
+            (trips) => trips._id?.toString() === newTrip._id?.toString()
+          );
 
-        fetchUpdatedTrips().then(() => navigate("/summary"));
+          props.setActiveTrip(activeTrip);
+          setIsModalOpen(false);
+          navigate("/summary");
+        });
       })
       .catch((error) => console.error(error));
   };
