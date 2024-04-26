@@ -104,9 +104,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     tripRequest
       .deleteHotel(id)
       .then(() => {
-        console.log("hi");
         fetchUpdatedTrips().then(() => {
-          console.log(props.activeTrip.hotels);
           if (props.activeTrip.hotels.length > 1) {
             props.navigate("/hotels");
           } else {
