@@ -4,19 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 import TripRequests from "../Requests/TripRequests";
 import { Link } from "react-router-dom";
+import { fetchUpdatedTrips } from "../Redux/Operations/AccountOperations";
 
-function Profile({ rewardProgramsData, ...props }) {
+function Profile({ rewardProgramsData, fetchUpdatedTrips, ...props }) {
   const tripRequest = new TripRequests();
 
   const deleteTrip = async (selectedTrip) => {
     await tripRequest
-      .deleteTrip(selectedTrip.tripId)
+      .deleteTrip(selectedTrip._id)
       .then(() => {
-        if (selectedTrip.tripId === props.activeTrip.tripId) {
+        if (selectedTrip._id === props.activeTrip._id) {
           if (props.tripsData.length > 1) {
             let updatedTrips = [...props.tripsData];
             let index = updatedTrips.findIndex(
-              (x) => x.tripId === selectedTrip.tripId
+              (x) => x._id === selectedTrip._id
             );
             if (index !== -1) {
               updatedTrips.splice(index, 1);
@@ -28,7 +29,7 @@ function Profile({ rewardProgramsData, ...props }) {
         } else {
           props.setActiveTrip(props.tripsData[0]);
         }
-        props.deleteTripData(selectedTrip);
+        fetchUpdatedTrips().then(() => props.navigate("/profile"));
       })
       .catch((error) => console.error("Error: Cannot delete trip: ", error));
   };
@@ -183,6 +184,6 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = { deleteTripData, setActiveTrip };
+const mapDispatchToProps = { deleteTripData, setActiveTrip, fetchUpdatedTrips };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -10,13 +10,14 @@ import {
 import Button from "../../Shared/UI/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TripRequests from "../../Requests/TripRequests";
+import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
   departureDate: null,
 };
 
-function AddTrip({ ...props }) {
+function AddTrip({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const tripRequest = new TripRequests();
@@ -45,12 +46,12 @@ function AddTrip({ ...props }) {
     tripRequest
       .addTrip(newTrip)
       .then((response) => {
-        newTrip.tripId = response.data._id;
+        newTrip._id = response.data._id;
 
-        props.addNewTripData(newTrip);
         props.setActiveTrip(newTrip);
-        toggleModal(!isModalOpen);
-        navigate("/summary");
+        setIsModalOpen(false);
+
+        fetchUpdatedTrips().then(() => navigate("/summary"));
       })
       .catch((error) => console.error(error));
   };
@@ -129,6 +130,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   addNewTripData,
   setActiveTrip,
+  fetchUpdatedTrips,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTrip);

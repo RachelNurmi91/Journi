@@ -18,14 +18,15 @@ export const fetchUpdatedTrips = () => (dispatch, getState) => {
       const token = localStorage.getItem("token");
       const response = await accountRequest.fetchAccountData(username, token);
       if (response.data) {
-        resolve(response.data);
+        const updatedTrips = response.data.trips;
+        resolve(updatedTrips);
 
         //Update account to have new trips data
-        dispatch(updateTripsData(response.data));
+        dispatch(updateTripsData(updatedTrips));
 
         // Update the current active trip data to reflect new data
         const activeTripId = activeTrip._id;
-        let updatedActiveTrip = response.data.trips.find(
+        let updatedActiveTrip = updatedTrips.find(
           (trip) => trip._id?.toString() === activeTripId?.toString()
         );
 

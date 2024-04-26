@@ -23,7 +23,7 @@ function Content({ ...props }) {
         <Route path="/register" element={<Register navigate={navigate} />} />
         {props.userId && (
           <>
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile navigate={navigate} />} />
 
             <Route
               path="/profile/programs/*"
