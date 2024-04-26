@@ -1,4 +1,4 @@
-import "./App.css";
+import "./Styles.scss";
 import Sidebar from "./Layout/Sidebar";
 import Navbar from "./Layout/Navbar";
 import Content from "./Layout/Content";

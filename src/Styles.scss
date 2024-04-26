@@ -1,0 +1,315 @@
+/* Basic Layout Structure */
+$primary-color: #0BB6C0;
+// $secondary-color:;
+// $accent-color:;
+$error-color: #d65d5d;
+$white: #fff;
+
+.content-body {  
+  padding: 25px;
+  margin:  60px auto 0;
+  max-width: 1000px;
+}
+
+a {
+  &:link {
+    text-decoration: none;
+    color: #cc850a;
+  }
+  &:visited {
+    text-decoration: none;
+    color: #cc850a;
+  }
+  &hover {
+    text-decoration: none;
+    color: #47a1ad;
+  }
+  &active {
+    text-decoration: none;
+  }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 30px 0px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-image: repeating-linear-gradient(to right, black 0, black 10%, transparent 0, transparent 20%);
+    background-size: 100px 3px; /* Adjust the width of dashes */
+    background-repeat: repeat-x;
+  }
+
+  &::before {
+    margin-right: .25em;
+  }
+
+  &::after {
+    margin-left: .25em;
+  }
+}
+
+/* Branding */
+
+
+.primary-bg-color {
+  background-color: $primary-color;
+}
+
+.light-bg-color {
+  background-color: #ddefef;
+}
+
+/* Navbar */
+
+.navbar {
+  position: fixed !important;
+  background-color: $primary-color;
+  height: 60px;
+  width: 100%; /* Set navbar width to 100% */
+  top: 0;
+  left: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 15px !important;
+
+  .toggle {
+    position: absolute;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+
+    .logo {
+      margin: 0 auto; 
+    }
+  
+  }
+  
+}
+
+
+.profile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: $white;
+  height: 75px;
+  width: 75px;
+  color: #444;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  margin: 5px auto 10px;
+}
+
+
+/* Sidebar CSS */
+
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(45deg, #0cacb5, #0ec6d3);
+  /* background-color: #0ccdd7!important; */
+  overflow-x: hidden;
+  transition: 0.5s;
+  border-radius: 0 20px 20px 0;
+  z-index: 99;
+
+  .menu {
+    list-style-type: none;
+
+    li {  
+      color: $white;
+      white-space:nowrap;
+    }
+
+    .nav-link {
+      font-family: "Sora", sans-serif;
+      font-size: 16px;
+      line-height: 24px;
+      color: $white;
+      padding: 12px 16px;
+      border-radius: 10px;
+
+      &:hover {
+        background-color: $white;
+        color: #000;
+      }
+    }
+  }
+}
+
+
+
+
+
+/* Box styles */
+
+@mixin box($padding:20px) {
+  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  padding: $padding;
+}
+
+.outlined-box {
+  @include box(25px );
+  border: 1px solid #c0c0c0;
+
+  h3 {
+    color: $primary-color;
+  }
+}
+
+.shadow-box {
+  @include box(25px);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.094);
+}
+
+
+.summary {
+  .title{
+    font-weight: 700;
+    font-size: 35px;
+    text-transform: uppercase;
+  }
+
+  .subtitle{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24.2px;
+    text-transform: uppercase;
+    color: #6d6d6d;
+  }
+
+
+}
+
+/* Elements */
+
+.primary-color {
+  color: $primary-color
+}
+
+h1 {
+  font-family: "Inter", sans-serif;
+  font-size: 36px !important;
+  font-weight: 900 !important;
+}
+
+h2 {
+  font-family: "Inter", sans-serif;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+}
+
+h3 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+}
+
+h4 {
+  font-family: "Inter", sans-serif;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+}
+
+
+/* Padding by percentage */
+
+
+.b13-mon {
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+}
+
+
+.b16-mon {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.b18-mon {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.b22-mon {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+label {
+  font-family: "Inter", sans-serif;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+
+  &.form-check-label {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+}
+
+button {
+  border-style: none;
+  border-radius: 5px !important;
+  background-color: $primary-color;
+  padding: 10px;
+
+  .btn-link {
+    font-family: "Sora", sans-serif;
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.calendar {
+  width: 100px;
+  border-style: none;
+  border-bottom: solid 3px $primary-color;
+}
+
+.autocomplete-container {
+  position: relative;
+
+  .autocomplete-input {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: #ededed; 
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    max-height: 100px; 
+    overflow: scroll;
+    scrollbar-width: none;
+
+    .autocomplete-item {
+      padding: 10px;
+
+      :hover {
+        background-color: $primary-color;
+        color: $white;
+      }
+    }
+
+  }
+}

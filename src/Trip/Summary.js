@@ -25,9 +25,9 @@ function Summary({ ...props }) {
                 !
               </h1>
             </div>
-            <div className="row mt-5">
+            <div className="row mt-3">
               <div className="col-12">
-                <div className="outlined-box p10-per text-center">
+                <div className="outlined-box text-center">
                   <div>
                     <FontAwesomeIcon
                       icon="fa-solid fa-suitcase-rolling"

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-
-import { Link, useLocation } from "react-router-dom";
-
+import logo from "../Media/Images/logo-white.png";
+import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import Sidebar from "./Sidebar";
@@ -24,51 +23,25 @@ function Navbar({ ...props }) {
     closeSideNav();
   }, [location.pathname]);
 
-  const navBar = () => {
-    return (
-      <>
-        <div className="col align-self-center">
-          <Link to="/profile">
-            <div className="float-end d-flex align-items-center" to="/profile">
-              <div className="profile-icon mx-2">
-                {props.userData?.firstName?.slice(0, 1).toUpperCase()}
-              </div>
-            </div>
-          </Link>
-        </div>
-      </>
-    );
-  };
-
   return (
     <div className="row mx-0">
-      <nav className="navbar primary-bg-color ">
-        <div className="row w-100">
-          <div className="col align-self-center">
-            <div
-              className="navbar-toggle"
-              onClick={toggleSideNav}
-              style={{ zIndex: 2 }}
-            >
-              {showSideBar ? (
-                <FontAwesomeIcon
-                  icon="fa-solid fa-xmark"
-                  style={{ color: "#fff" }}
-                  size="2x"
-                />
-              ) : (
-                <FontAwesomeIcon
-                  icon="fa-solid fa-bars"
-                  style={{ color: "#fff" }}
-                  size="2x"
-                />
-              )}
-            </div>
-          </div>
-          {props.userId ? navBar() : null}
+      <nav className="navbar">
+        <div className="toggle" onClick={toggleSideNav} style={{ zIndex: 2 }}>
+          <FontAwesomeIcon
+            icon="fa-solid fa-bars"
+            style={{ color: "#fff" }}
+            size="2x"
+          />
+        </div>
+        <div className="logo-container">
+          <img className="logo" src={logo} alt="Journi logo" height="25px" />
         </div>
       </nav>
-      <Sidebar showSideBar={showSideBar} closeSideNav={closeSideNav} />
+      <Sidebar
+        showSideBar={showSideBar}
+        closeSideNav={closeSideNav}
+        toggleSideNav={toggleSideNav}
+      />
     </div>
   );
 }

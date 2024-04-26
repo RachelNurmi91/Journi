@@ -215,7 +215,7 @@ function AddHotel({ fetchUpdatedTrips, ...props }) {
             />
           ) : null}
         </div>
-        <div className="row">
+        <div className="row mt-3">
           <Button label="Save" onClick={onSave} />
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -5,31 +6,44 @@ import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 import TripRequests from "../Requests/TripRequests";
 import { Link } from "react-router-dom";
 import { fetchUpdatedTrips } from "../Redux/Operations/AccountOperations";
+import Header from "../Shared/UI/Header";
 
-function Profile({ rewardProgramsData, fetchUpdatedTrips, ...props }) {
+function Profile({
+  rewardProgramsData,
+  fetchUpdatedTrips,
+  userData,
+  activeTrip,
+  tripsData,
+  setActiveTrip,
+  navigate,
+}) {
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const deleteTrip = async (selectedTrip) => {
     await tripRequest
       .deleteTrip(selectedTrip?._id)
       .then(() => {
-        if (selectedTrip._id === props.activeTrip?._id) {
-          if (props.tripsData.length > 1) {
-            let updatedTrips = [...props.tripsData];
+        if (selectedTrip._id === activeTrip?._id) {
+          if (tripsData.length > 1) {
+            let updatedTrips = [...tripsData];
             let index = updatedTrips.findIndex(
               (x) => x._id === selectedTrip._id
             );
             if (index !== -1) {
               updatedTrips.splice(index, 1);
             }
-            props.setActiveTrip(updatedTrips[0]);
+            setActiveTrip(updatedTrips[0]);
           } else {
-            props.setActiveTrip(null);
+            setActiveTrip(null);
           }
         } else {
-          props.setActiveTrip(props.tripsData[0]);
+          setActiveTrip(tripsData[0]);
         }
-        fetchUpdatedTrips().then(() => props.navigate("/profile"));
+        fetchUpdatedTrips().then(() => navigate("/profile"));
       })
       .catch((error) => console.error("Error: Cannot delete trip: ", error));
   };
@@ -65,7 +79,7 @@ function Profile({ rewardProgramsData, fetchUpdatedTrips, ...props }) {
   };
 
   const renderTripList = () => {
-    return props.tripsData?.map((trip, index) => {
+    return tripsData?.map((trip, index) => {
       return (
         <div key={index}>
           {index === 0 ? null : <hr />}
@@ -109,44 +123,46 @@ function Profile({ rewardProgramsData, fetchUpdatedTrips, ...props }) {
 
   return (
     <div className="content-body">
+      <Header
+        title={
+          <>
+            Look at you,
+            <span className="primary-color"> {userData?.firstName}</span>!
+          </>
+        }
+      />
       <div className="outlined-box mt-3 p-4">
         <div className="row">
-          <span className="float-right primary-color b22-mon">
-            User Details
-          </span>
+          <h3 className="float-right">User Details</h3>
         </div>
 
         <div className="container mt-3">
           <div className="row">
             <div className="col-3 col-lg-1 b16-mon">Name</div>
             <div className="col">
-              {props.userData?.firstName + " " + props.userData?.lastName}
+              {userData?.firstName + " " + userData?.lastName}
             </div>
           </div>
           <div className="row">
             <div className="col-3 col-lg-1 b16-mon">Email</div>
-            <div className="col">{props.userData.username}</div>
+            <div className="col">{userData.username}</div>
           </div>
         </div>
       </div>
 
       <div className="outlined-box mt-3 p-4">
         <div className="row">
-          <span className="float-right primary-color b22-mon">Trips</span>
+          <h3 className="float-right">Trips</h3>
         </div>
         <div className="container mt-3">
-          {props.tripsData.length
-            ? renderTripList()
-            : "Friend, you need a vacation."}
+          {tripsData.length ? renderTripList() : "Friend, you need a vacation."}
         </div>
       </div>
 
       <div className="outlined-box mt-3 p-4">
         <div className="row">
           <div className="col-10">
-            <span className="float-right primary-color b22-mon">
-              Reward Programs
-            </span>
+            <h3 className="float-right">Reward Programs</h3>
           </div>
           <div className="col-2 d-flex justify-content-end">
             <Link
@@ -166,7 +182,7 @@ function Profile({ rewardProgramsData, fetchUpdatedTrips, ...props }) {
         </div>
 
         <div className="container mt-3">
-          {props.rewardProgramsData?.length
+          {rewardProgramsData?.length
             ? renderProgramsList()
             : "Add your reward programs!"}
         </div>

@@ -13,6 +13,8 @@ function Sidebar({
   activeTrip,
   userId,
   showSideBar,
+  userData,
+  toggleSideNav,
 }) {
   const logout = () => {
     localStorage.clear();
@@ -28,7 +30,7 @@ function Sidebar({
     return (
       <>
         <div className="d-flex flex-grow-1 align-items-end">
-          <ul className="sidenav-menu">
+          <ul className="menu">
             <li>
               <Link to="/register" className="nav-link">
                 <FontAwesomeIcon
@@ -57,11 +59,17 @@ function Sidebar({
     return (
       <>
         <div className="flex-grow-1">
-          <div className="col align-self-center my-3">{TripSelectorMemo}</div>
-          <ul className="sidenav-menu mt-2 align-items-center">
+          <div className="col align-self-center my-3 w-75 mx-auto">
+            {TripSelectorMemo}
+          </div>
+          <ul className="menu mt-2 align-items-center">
             <li>
               <Link to="/" className="nav-link">
-                Home
+                <FontAwesomeIcon
+                  icon="fa-solid fa-house"
+                  style={{ color: "#fff" }}
+                />
+                <span className="ms-2">Home</span>
               </Link>
             </li>
             {activeTrip ? (
@@ -73,7 +81,11 @@ function Sidebar({
                     }
                     className="nav-link"
                   >
-                    Hotels
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-hotel"
+                      style={{ color: "#fff" }}
+                    />
+                    <span className="ms-2">Hotels</span>
                   </Link>
                 </li>
                 <li>
@@ -85,7 +97,11 @@ function Sidebar({
                     }
                     className="nav-link"
                   >
-                    Flights
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-plane"
+                      style={{ color: "#fff" }}
+                    />
+                    <span className="ms-2">Flights</span>
                   </Link>
                 </li>
               </>
@@ -96,7 +112,7 @@ function Sidebar({
           </ul>
         </div>
         <div className="flex-shrink-1 align-items-end">
-          <ul className="sidenav-menu">
+          <ul className="menu">
             <li>
               <div className="nav-link" onClick={() => logout()}>
                 <FontAwesomeIcon
@@ -116,20 +132,35 @@ function Sidebar({
     <div
       className="sidenav"
       style={{
-        width: `${showSideBar ? "250px" : 0}`,
-        padding: `${showSideBar ? "60px 20px 5px" : "60px 0px 5px"}`,
+        width: `${showSideBar ? "300px" : 0}`,
+        padding: `${showSideBar ? "5px 20px" : "5px 0px"}`,
       }}
     >
       <div className="d-flex justify-content-center flex-column h-100">
-        <div className="align-items-start">
-          <img
+        <div className="align-self-start mt-2">
+          <FontAwesomeIcon
+            icon="fa-solid fa-xmark"
+            style={{ color: "#fff" }}
+            size="2x"
+            onClick={toggleSideNav}
+          />
+        </div>
+
+        <div className="align-items-center">
+          <Link to="/profile">
+            <div className="d-flex justify-content-center" to="/profile">
+              <div className="profile-icon">
+                {userData?.firstName?.slice(0, 1).toUpperCase()}
+              </div>
+            </div>
+          </Link>
+          {/* <img
             className="logo mt-3"
             src={logo}
             alt="Journi logo"
             height="150px"
-          />
+          /> */}
         </div>
-
         {userId ? loggedInSideBar() : guestSideBar()}
       </div>
     </div>
@@ -141,6 +172,7 @@ function mapStateToProps(state) {
     userId: state.account?.userAccount?.id,
     activeTrip: state.account?.activeTrip,
     account: state.account,
+    userData: state.account?.userAccount,
   };
 }
 
