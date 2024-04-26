@@ -8,7 +8,7 @@ import AddTrip from "../Trip/Trips/AddTrip";
 import TripSelector from "./TripSelector";
 
 function Sidebar({
-  toggleSideNav,
+  closeSideNav,
   removeLoggedInUserData,
   activeTrip,
   userId,
@@ -20,7 +20,7 @@ function Sidebar({
   };
 
   const TripSelectorMemo = useMemo(
-    () => <TripSelector toggleSideNav={toggleSideNav} />,
+    () => <TripSelector closeSideNav={closeSideNav} />,
     []
   );
 
@@ -30,7 +30,7 @@ function Sidebar({
         <div className="d-flex flex-grow-1 align-items-end">
           <ul className="sidenav-menu">
             <li>
-              <Link to="/register" className="nav-link" onClick={toggleSideNav}>
+              <Link to="/register" className="nav-link">
                 <FontAwesomeIcon
                   icon="fa-solid fa-user-plus"
                   style={{ color: "#fff" }}
@@ -39,7 +39,7 @@ function Sidebar({
               </Link>
             </li>
             <li>
-              <Link to="/login" className="nav-link" onClick={toggleSideNav}>
+              <Link to="/login" className="nav-link">
                 <FontAwesomeIcon
                   icon="fa-solid fa-right-to-bracket"
                   style={{ color: "#fff" }}
@@ -60,7 +60,7 @@ function Sidebar({
           <div className="col align-self-center my-3">{TripSelectorMemo}</div>
           <ul className="sidenav-menu mt-2 align-items-center">
             <li>
-              <Link to="/" onClick={toggleSideNav} className="nav-link">
+              <Link to="/" className="nav-link">
                 Home
               </Link>
             </li>
@@ -71,7 +71,6 @@ function Sidebar({
                     to={
                       activeTrip?.hotels?.length > 0 ? "/hotels" : "/hotels/add"
                     }
-                    onClick={toggleSideNav}
                     className="nav-link"
                   >
                     Hotels
@@ -84,7 +83,6 @@ function Sidebar({
                         ? "/flights"
                         : "/flights/add"
                     }
-                    onClick={toggleSideNav}
                     className="nav-link"
                   >
                     Flights
@@ -92,8 +90,8 @@ function Sidebar({
                 </li>
               </>
             ) : null}
-            <li onClick={toggleSideNav}>
-              <AddTrip />
+            <li>
+              <AddTrip closeSideNav={closeSideNav} />
             </li>
           </ul>
         </div>

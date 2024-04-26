@@ -7,7 +7,7 @@ function TripSelector({
   tripListData,
   activeTrip,
   setActiveTrip,
-  toggleSideNav,
+  closeSideNav,
 }) {
   const generateOptions = useCallback(() => {
     return tripListData.map((trip, i) => {
@@ -30,7 +30,7 @@ function TripSelector({
         trip._id?.toString() === tripId?.toString() &&
         trip.tripName === tripName
     );
-    toggleSideNav();
+    closeSideNav();
     setActiveTrip(trip);
   };
 

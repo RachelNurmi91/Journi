@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
@@ -10,9 +10,19 @@ import Sidebar from "./Sidebar";
 function Navbar({ ...props }) {
   const [showSideBar, setShowSideBar] = useState(false);
 
+  const location = useLocation();
+
   const toggleSideNav = () => {
     setShowSideBar((prevState) => !prevState);
   };
+
+  const closeSideNav = () => {
+    setShowSideBar(false);
+  };
+
+  useEffect(() => {
+    closeSideNav();
+  }, [location.pathname]);
 
   const navBar = () => {
     return (
@@ -58,7 +68,7 @@ function Navbar({ ...props }) {
           {props.userId ? navBar() : null}
         </div>
       </nav>
-      <Sidebar toggleSideNav={toggleSideNav} showSideBar={showSideBar} />
+      <Sidebar showSideBar={showSideBar} closeSideNav={closeSideNav} />
     </div>
   );
 }

@@ -17,14 +17,16 @@ const DEFAULT_FORM_DATA = {
   departureDate: null,
 };
 
-function AddTrip({ fetchUpdatedTrips, ...props }) {
+function AddTrip({ fetchUpdatedTrips, closeSideNav, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const tripRequest = new TripRequests();
 
   const navigate = useNavigate();
 
-  function toggleModal() {
+  function toggleModal(event) {
+    // Stop event propagation to prevent clicks on the modal from trigging toggle
+    event.stopPropagation();
     setIsModalOpen(!isModalOpen);
   }
 
@@ -55,6 +57,7 @@ function AddTrip({ fetchUpdatedTrips, ...props }) {
 
           props.setActiveTrip(activeTrip);
           setIsModalOpen(false);
+          closeSideNav();
           navigate("/summary");
         });
       })
@@ -72,6 +75,7 @@ function AddTrip({ fetchUpdatedTrips, ...props }) {
         isOpen={isModalOpen}
         onRequestClose={toggleModal}
         style={{
+          overlay: { zIndex: 99 },
           content: {
             top: "50%",
             left: "50%",

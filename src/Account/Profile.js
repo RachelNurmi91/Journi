@@ -11,9 +11,9 @@ function Profile({ rewardProgramsData, fetchUpdatedTrips, ...props }) {
 
   const deleteTrip = async (selectedTrip) => {
     await tripRequest
-      .deleteTrip(selectedTrip._id)
+      .deleteTrip(selectedTrip?._id)
       .then(() => {
-        if (selectedTrip._id === props.activeTrip._id) {
+        if (selectedTrip._id === props.activeTrip?._id) {
           if (props.tripsData.length > 1) {
             let updatedTrips = [...props.tripsData];
             let index = updatedTrips.findIndex(
