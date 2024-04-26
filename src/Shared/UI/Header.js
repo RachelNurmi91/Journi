@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 
-function Header({ title, rightIcon, leftIcon, destination }) {
+function Header({ title, rightIcon, leftIcon, destination, props }) {
   let navigate = useNavigate();
 
   const renderRightIcon = (icon) => {
@@ -23,12 +23,12 @@ function Header({ title, rightIcon, leftIcon, destination }) {
 
   const renderLeftIcon = () => {
     return (
-      <Link to={destination} className="btn-link">
+      <Link to={destination} className="btn-link" state={props}>
         <FontAwesomeIcon
           icon="fa-chevron-left"
           size="lg"
           style={{ color: "#0BB6C0" }}
-          onClick={navigate("/profile")}
+          onClick={() => navigate("/profile")}
           className="pl-0"
         />
       </Link>

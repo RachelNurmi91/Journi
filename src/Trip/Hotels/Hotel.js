@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
+import { useLocation } from "react-router-dom";
 
 const DEFAULT_FORM_DATA = {
   hotel: null,
@@ -20,13 +21,17 @@ const DEFAULT_FORM_DATA = {
   nameOnReservation: null,
 };
 
-function AddHotel({ fetchUpdatedTrips, ...props }) {
+function Hotel({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [arrivalDate, setArrivalDate] = useState(new Date());
   const [departureDate, setDepartureDate] = useState(new Date());
 
   const tripRequest = new TripRequests();
+
+  const location = useLocation();
+
+  const { addNew, edit, selectedItem } = location.state || {};
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -57,6 +62,7 @@ function AddHotel({ fetchUpdatedTrips, ...props }) {
     setDisplayNewNameInput(!displayNewNameInput);
   };
 
+  // onSave is for new hotels
   const onSave = async () => {
     formData.tripId = props.activeTripId;
     tripRequest
@@ -65,6 +71,25 @@ function AddHotel({ fetchUpdatedTrips, ...props }) {
         fetchUpdatedTrips().then(() => props.navigate("/hotels"));
       })
       .catch((error) => console.error(error));
+  };
+
+  // onUpdate is for editing exiting hotels
+  const onUpdate = () => {
+    tripRequest
+      .updateHotel(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/hotels"));
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const onDelete = (id) => {
+    tripRequest
+      .deleteHotel(id)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/profile"));
+      })
+      .catch((error) => console.error("Error: Cannot delete trip: ", error));
   };
 
   const handleArrivalDate = (date) => {
@@ -149,7 +174,14 @@ function AddHotel({ fetchUpdatedTrips, ...props }) {
 
   return (
     <div className="content-body">
-      <Header title="Add Hotel" />
+      <Header
+        title={edit ? "Update Hotel" : "Add Hotel"}
+        leftIcon
+        destination={"/hotels"}
+        props={{
+          addNew: true,
+        }}
+      />
       <div className="container">
         <div className="row"> {renderOptionsBox()}</div>
         <div className="row mt-2">
@@ -216,7 +248,7 @@ function AddHotel({ fetchUpdatedTrips, ...props }) {
           ) : null}
         </div>
         <div className="row mt-3">
-          <Button label="Save" onClick={onSave} />
+          <Button label={edit ? "Update" : "Save"} onClick={onSave} />
         </div>
       </div>
     </div>
@@ -235,4 +267,4 @@ const mapDispatchToProps = {
   fetchUpdatedTrips,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddHotel);
+export default connect(mapStateToProps, mapDispatchToProps)(Hotel);

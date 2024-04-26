@@ -62,8 +62,8 @@ function Profile({
                 to={"/profile/programs/edit"}
                 className="btn-link"
                 state={{
-                  editProgram: true,
-                  currentProgram: rewardProgramsData?.[index],
+                  edit: true,
+                  selectedItem: rewardProgramsData?.[index],
                 }}
               >
                 <FontAwesomeIcon
@@ -109,7 +109,7 @@ function Profile({
             <div className="col-1 d-flex align-items-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"
-                style={{ color: "#0BB6C0" }}
+                style={{ color: "#d65d5d" }}
                 onClick={() => {
                   deleteTrip(trip);
                 }}
@@ -169,7 +169,7 @@ function Profile({
               to={"/profile/programs/add"}
               className="btn-link"
               state={{
-                addProgram: true,
+                addNew: true,
               }}
             >
               <FontAwesomeIcon

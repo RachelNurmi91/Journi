@@ -16,7 +16,7 @@ const DEFAULT_FORM_DATA = {
   password: null,
 };
 
-function AddHotel({ ...props }) {
+function Login({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [error, setErrorStatus] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -154,4 +154,4 @@ const mapDispatchToProps = {
   setActiveTrip,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddHotel);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -2,9 +2,16 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 function HotelList({ ...props }) {
   const [hotelList, setHotelList] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setOpen((prevState) => !prevState);
+  };
 
   useEffect(() => {
     sortByDate();
@@ -31,8 +38,31 @@ function HotelList({ ...props }) {
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
       return (
-        <div className="shadow-box p-4 my-4" key={index}>
-          <div className="container">
+        <div className="shadow-box" key={index}>
+          <div className="row d-flex justify-content-end mx-1">
+            <div className="col-1">
+              <Link
+                to={"/hotels/edit"}
+                className="btn-link"
+                state={{
+                  edit: true,
+                  selectedItem: hotelList?.[index],
+                }}
+              >
+                <FontAwesomeIcon
+                  icon="fa-solid fa-pen-to-square"
+                  style={{ color: "#0BB6C0" }}
+                />
+              </Link>
+            </div>
+          </div>
+          <div
+            className="container collapsible"
+            style={{
+              height: `${open ? "" : "70px"}`,
+              transition: "height 0.10s ease",
+            }}
+          >
             <div className="row">
               <span className="b22-mon primary-color text-center">
                 {hotel.hotel}
@@ -79,6 +109,21 @@ function HotelList({ ...props }) {
                 Reserved by Rachel Nurmi
               </div>
             </div>
+          </div>
+          <div className="text-center">
+            {open ? (
+              <FontAwesomeIcon
+                icon="fa-solid fa-angle-up"
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpen}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon="fa-solid fa-angle-down"
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpen}
+              />
+            )}
           </div>
         </div>
       );

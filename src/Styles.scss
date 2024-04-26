@@ -14,11 +14,11 @@ $white: #fff;
 a {
   &:link {
     text-decoration: none;
-    color: #cc850a;
+    color: $primary-color;
   }
   &:visited {
     text-decoration: none;
-    color: #cc850a;
+    color: $primary-color;
   }
   &hover {
     text-decoration: none;
@@ -176,8 +176,16 @@ a {
 }
 
 .shadow-box {
-  @include box(25px);
+  @include box(15px);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.094);
+}
+
+.container {
+  overflow: hidden;
+  .collapsible {
+    padding: 25px;
+ 
+  }
 }
 
 
@@ -201,8 +209,13 @@ a {
 
 /* Elements */
 
+
 .primary-color {
   color: $primary-color
+}
+
+.error-color {
+  color: $error-color;
 }
 
 h1 {

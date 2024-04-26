@@ -18,7 +18,7 @@ const DEFAULT_FORM_DATA = {
   id: null,
 };
 
-function AddHotel({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
+function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [error, setErrorStatus] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -27,30 +27,30 @@ function AddHotel({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
 
   const location = useLocation();
 
-  const { addProgram, editProgram, currentProgram } = location.state || {};
+  const { addNew, edit, selectedItem } = location.state || {};
 
   const setCurrentProgram = useCallback(() => {
-    if (currentProgram) {
-      if (formData.id !== currentProgram?._id) {
+    if (selectedItem) {
+      if (formData.id !== selectedItem?._id) {
         setFormData((prevFormData) => ({
           ...prevFormData,
-          programName: currentProgram?.programName,
-          membershipId: currentProgram?.membershipId,
-          id: currentProgram?._id,
+          programName: selectedItem?.programName,
+          membershipId: selectedItem?.membershipId,
+          id: selectedItem?._id,
         }));
       }
     }
-  }, [currentProgram, formData.id]);
+  }, [selectedItem, formData.id]);
 
   useEffect(() => {
-    if (!addProgram && !editProgram) {
+    if (!addNew && !edit) {
       props.navigate("/profile");
     }
 
-    if (editProgram) {
+    if (edit) {
       setCurrentProgram();
     }
-  }, [addProgram, editProgram, props]);
+  }, [addNew, edit, props]);
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -91,10 +91,11 @@ function AddHotel({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
       })
       .catch((error) => console.error("Error: Cannot delete trip: ", error));
   };
+
   return (
     <div className="content-body">
       <Header
-        title={editProgram ? "Edit Reward Program" : "Add Reward Program"}
+        title={edit ? "Edit Reward Program" : "Add Reward Program"}
         leftIcon
         destination={"/profile"}
       />
@@ -105,7 +106,7 @@ function AddHotel({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             onChange={handleChange}
             placeholder="Reward Program"
             label="Reward Program"
-            value={editProgram ? formData.programName : ""}
+            value={edit ? formData.programName : ""}
           />
         </div>
         <div className="row">
@@ -114,25 +115,19 @@ function AddHotel({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             onChange={handleChange}
             placeholder="Rewards Number"
             label="Rewards Number"
-            value={editProgram ? formData.membershipId : ""}
+            value={edit ? formData.membershipId : ""}
           />
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button
               label={
-                loading ? (
-                  <Loader size="10px" />
-                ) : editProgram ? (
-                  "Update"
-                ) : (
-                  "Save"
-                )
+                loading ? <Loader size="10px" /> : edit ? "Update" : "Save"
               }
               onClick={onSave}
             />
           </div>
-          {editProgram ? (
+          {edit ? (
             <div className="col-2 d-flex align-self-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"
@@ -166,4 +161,4 @@ const mapDispatchToProps = {
   fetchUpdatedAccount,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddHotel);
+export default connect(mapStateToProps, mapDispatchToProps)(RewardProgram);

@@ -26,6 +26,7 @@ import {
   faChevronLeft,
   faPenToSquare,
   faAngleDown,
+  faAngleUp,
   faUserPlus,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
@@ -47,6 +48,7 @@ library.add(
   faPenToSquare,
   faChevronLeft,
   faAngleDown,
+  faAngleUp,
   faUserPlus,
   faBars
 );
