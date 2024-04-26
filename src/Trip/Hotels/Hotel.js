@@ -31,30 +31,24 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const location = useLocation();
 
-  const { addNew, edit, selectedItem } = location.state || {};
+  const { edit, selectedItem } = location.state || {};
 
   const setCurrentProgram = useCallback(() => {
     if (selectedItem) {
-      if (formData.id !== selectedItem?._id) {
+      if (formData._id !== selectedItem?._id) {
         setFormData((prevFormData) => ({
           ...prevFormData,
-          programName: selectedItem?.programName,
-          membershipId: selectedItem?.membershipId,
-          id: selectedItem?._id,
+          ...selectedItem,
         }));
       }
     }
-  }, [selectedItem, formData.id]);
+  }, [selectedItem, formData._id]);
 
   useEffect(() => {
-    if (!addNew && !edit) {
-      props.navigate("/profile");
-    }
-
     if (edit) {
       setCurrentProgram();
     }
-  }, [addNew, edit, props]);
+  }, [edit, setCurrentProgram]);
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -110,7 +104,15 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     tripRequest
       .deleteHotel(id)
       .then(() => {
-        fetchUpdatedTrips().then(() => props.navigate("/profile"));
+        console.log("hi");
+        fetchUpdatedTrips().then(() => {
+          console.log(props.activeTrip.hotels);
+          if (props.activeTrip.hotels.length > 1) {
+            props.navigate("/hotels");
+          } else {
+            props.navigate("/hotels/add");
+          }
+        });
       })
       .catch((error) => console.error("Error: Cannot delete trip: ", error));
   };
@@ -285,7 +287,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
                 style={{ color: "#d65d5d" }}
                 size="lg"
                 onClick={() => {
-                  deleteHotel(formData?.id);
+                  deleteHotel(formData?._id);
                 }}
               />
             </div>
@@ -300,6 +302,7 @@ function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
     activeTripId: state.account?.activeTrip?._id,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

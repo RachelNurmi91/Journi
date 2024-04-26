@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
@@ -13,11 +13,7 @@ function HotelList({ ...props }) {
     setOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    sortByDate();
-  }, [props.hotelListData]);
-
-  const sortByDate = () => {
+  const sortByDate = useCallback(() => {
     let sortedHotels;
 
     let hotels = props.hotelListData;
@@ -33,7 +29,15 @@ function HotelList({ ...props }) {
     }
 
     setHotelList(sortedHotels);
-  };
+  }, [props.hotelListData]);
+
+  useEffect(() => {
+    sortByDate();
+  }, [props.hotelListData, sortByDate]);
+
+  useEffect(() => {
+    sortByDate();
+  }, [props.hotelListData, sortByDate]);
 
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
