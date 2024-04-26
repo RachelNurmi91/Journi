@@ -128,11 +128,11 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             />
           </div>
           {edit ? (
-            <div className="col-2 d-flex align-self-center">
+            <div className="col-2 d-flex align-self-center p-2">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"
                 style={{ color: "#d65d5d" }}
-                size="2x"
+                size="lg"
                 onClick={() => {
                   deleteRewardProgram(formData?.id);
                 }}

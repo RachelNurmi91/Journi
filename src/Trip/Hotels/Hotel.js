@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Shared/UI/Input";
@@ -33,6 +33,29 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const { addNew, edit, selectedItem } = location.state || {};
 
+  const setCurrentProgram = useCallback(() => {
+    if (selectedItem) {
+      if (formData.id !== selectedItem?._id) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          programName: selectedItem?.programName,
+          membershipId: selectedItem?.membershipId,
+          id: selectedItem?._id,
+        }));
+      }
+    }
+  }, [selectedItem, formData.id]);
+
+  useEffect(() => {
+    if (!addNew && !edit) {
+      props.navigate("/profile");
+    }
+
+    if (edit) {
+      setCurrentProgram();
+    }
+  }, [addNew, edit, props]);
+
   const handleChange = (event) => {
     const targetKey = event.target.name;
     const newValue = event.target.value;
@@ -63,7 +86,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   };
 
   // onSave is for new hotels
-  const onSave = async () => {
+  const saveHotel = async () => {
     formData.tripId = props.activeTripId;
     tripRequest
       .addHotel(formData)
@@ -74,7 +97,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   };
 
   // onUpdate is for editing exiting hotels
-  const onUpdate = () => {
+  const updateHotel = () => {
     tripRequest
       .updateHotel(formData)
       .then(() => {
@@ -83,7 +106,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
       .catch((error) => console.error(error));
   };
 
-  const onDelete = (id) => {
+  const deleteHotel = (id) => {
     tripRequest
       .deleteHotel(id)
       .then(() => {
@@ -248,7 +271,25 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
           ) : null}
         </div>
         <div className="row mt-3">
-          <Button label={edit ? "Update" : "Save"} onClick={onSave} />
+          <div className="col d-flex align-self-center">
+            <Button
+              label={edit ? "Update" : "Save"}
+              onClick={edit ? updateHotel : saveHotel}
+            />
+          </div>
+
+          {edit ? (
+            <div className="col-1 d-flex align-self-center p-2">
+              <FontAwesomeIcon
+                icon="fa-solid fa-trash"
+                style={{ color: "#d65d5d" }}
+                size="lg"
+                onClick={() => {
+                  deleteHotel(formData?.id);
+                }}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
