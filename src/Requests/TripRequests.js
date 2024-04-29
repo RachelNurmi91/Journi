@@ -55,24 +55,24 @@ export default class TripRequests {
       });
   }
 
-  updateHotel(hotelData) {
-    const token = localStorage.getItem("token");
-    return axios
-      .post(`${SERVER}/hotels/add`, hotelData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(function (response) {
-        return response; // Return the response for chaining
-      })
-      .catch(function (error) {
-        console.error(error);
-        throw error; // Re-throw the error to propagate it
-      });
-  }
+  // updateHotel(hotelData) {
+  //   const token = localStorage.getItem("token");
+  //   return axios
+  //     .post(`${SERVER}/hotels/add`, hotelData, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       return response; // Return the response for chaining
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //       throw error; // Re-throw the error to propagate it
+  //     });
+  // }
 
-  deleteHotel(id) {
+  deleteFlight(id) {
     const token = localStorage.getItem("token");
     return axios
       .delete(`${SERVER}/hotels/${id}`, {
@@ -103,6 +103,23 @@ export default class TripRequests {
       .catch(function (error) {
         console.error(error);
         throw error; // Re-throw the error to propagate it
+      });
+  }
+
+  deleteFlight(id) {
+    const token = localStorage.getItem("token");
+    return axios
+      .delete(`${SERVER}/flights/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
       });
   }
 }

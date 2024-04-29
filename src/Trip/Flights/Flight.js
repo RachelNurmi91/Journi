@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { addNewFlightData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Shared/UI/Input";
@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
+import { useLocation } from "react-router-dom";
 
 const DEFAULT_FORM_DATA = {
   type: "roundtrip",
@@ -41,15 +42,37 @@ const DEFAULT_FORM_DATA = {
   ticketHolder: null,
 };
 
-function AddFlight({ fetchUpdatedTrips, ...props }) {
+function Flight({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [isOneWay, setIsOneWay] = useState(false);
   const [departureDate, setDepartureDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
+
   const tripRequest = new TripRequests();
 
-  const onSave = () => {
+  const location = useLocation();
+
+  const { edit, selectedItem } = location.state || {};
+
+  const setCurrentProgram = useCallback(() => {
+    if (selectedItem) {
+      if (formData._id !== selectedItem?._id) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...selectedItem,
+        }));
+      }
+    }
+  }, [selectedItem, formData._id]);
+
+  useEffect(() => {
+    if (edit) {
+      setCurrentProgram();
+    }
+  }, [edit, setCurrentProgram]);
+
+  const saveFlight = () => {
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
@@ -63,6 +86,31 @@ function AddFlight({ fetchUpdatedTrips, ...props }) {
         fetchUpdatedTrips().then(() => props.navigate("/flights"));
       })
       .catch((error) => console.error(error));
+  };
+
+  // onUpdate is for editing exiting flightss
+  const updateFlight = () => {
+    tripRequest
+      .updateFlight(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/flights"));
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const deleteFlight = (id) => {
+    tripRequest
+      .deleteFlight(id)
+      .then(() => {
+        fetchUpdatedTrips().then(() => {
+          if (props.activeTrip.flights.length > 1) {
+            props.navigate("/flights");
+          } else {
+            props.navigate("/flights/add");
+          }
+        });
+      })
+      .catch((error) => console.error("Error: Cannot delete trip: ", error));
   };
 
   const handleRadioCheck = (event) => {
@@ -432,15 +480,40 @@ function AddFlight({ fetchUpdatedTrips, ...props }) {
 
   return (
     <div className="content-body">
-      <Header title="Add Flight" />
+      <Header
+        title={edit ? "Update Flight" : "Add Flight"}
+        leftIcon={!!props.activeTrip.flights.length ? true : false}
+        destination={"/flights"}
+        props={{
+          addNew: true,
+        }}
+      />
       <div className="container">
         <div className="row">{renderOptionsBox()}</div>
         <div className="mt-2">
           {isOneWay ? renderOnewayFields() : renderRoundtripFields()}
         </div>
 
-        <div className="row">
-          <Button label="Save" onClick={onSave} />
+        <div className="row mt-3">
+          <div className="col d-flex align-self-center">
+            <Button
+              label={edit ? "Update" : "Save"}
+              onClick={edit ? updateFlight : saveFlight}
+            />
+          </div>
+
+          {edit ? (
+            <div className="col-1 d-flex align-self-center p-2">
+              <FontAwesomeIcon
+                icon="fa-solid fa-trash"
+                style={{ color: "#d65d5d" }}
+                size="lg"
+                onClick={() => {
+                  deleteFlight(formData?._id);
+                }}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
@@ -451,6 +524,7 @@ function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
     activeTripId: state.account?.activeTrip?._id,
+    activeTrip: state.account?.activeTrip,
   };
 }
 
@@ -459,4 +533,4 @@ const mapDispatchToProps = {
   fetchUpdatedTrips,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddFlight);
+export default connect(mapStateToProps, mapDispatchToProps)(Flight);

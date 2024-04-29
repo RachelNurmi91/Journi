@@ -102,7 +102,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const deleteHotel = (id) => {
     tripRequest
-      .deleteHotel(id)
+      .deleteFlight(id)
       .then(() => {
         fetchUpdatedTrips().then(() => {
           if (props.activeTrip.hotels.length > 1) {
@@ -199,7 +199,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title={edit ? "Update Hotel" : "Add Hotel"}
-        leftIcon
+        leftIcon={!!props.activeTrip.hotels.length ? true : false}
         destination={"/hotels"}
         props={{
           addNew: true,

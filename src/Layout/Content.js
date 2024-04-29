@@ -5,7 +5,7 @@ import HotelList from "../Trip/Hotels/HotelList";
 import Hotel from "../Trip/Hotels/Hotel";
 import Login from "../Account/AccountAccess/Login";
 import FlightList from "../Trip/Flights/FlightList";
-import AddFlight from "../Trip/Flights/AddFlight";
+import Flight from "../Trip/Flights/Flight";
 import Register from "../Account/AccountAccess/Register";
 import TripList from "../Trip/Trips/TripList";
 import AddTrip from "../Trip/Trips/AddTrip";
@@ -33,9 +33,11 @@ function Content({ ...props }) {
             <Route path="/hotels" element={<HotelList />} />
             <Route path="/hotels/*" element={<Hotel navigate={navigate} />} />
             <Route path="/flights" element={<FlightList />} />
+            <Route path="/flights/*" element={<Flight navigate={navigate} />} />
+
             <Route
               path="/flights/add"
-              element={<AddFlight navigate={navigate} />}
+              element={<Flight navigate={navigate} />}
             />
             <Route path="/trips" element={<TripList />} />
             <Route path="/trips/add" element={<AddTrip />} />

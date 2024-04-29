@@ -185,7 +185,6 @@ a {
   overflow: hidden;
   .collapsible {
     padding: 25px;
- 
   }
 }
 
@@ -253,10 +252,10 @@ h4 {
 }
 
 
-.b16-mon {
+@mixin font-mon($font:16px, $weight: 700) {
   font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: $weight;
+  font-size: $font;
 }
 
 .b18-mon {
@@ -324,6 +323,33 @@ button {
         color: $white;
       }
     }
-
   }
-}
+};
+
+.flight-list {
+  .shadow-box {
+    @include box(15px 15px 10px);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.094);
+  }
+ 
+  .header {
+    // margin-top: 10px;
+    text-align: center;
+    line-height: 20px;
+    color: $primary-color;
+    @include font-mon(20px);
+
+    .airport-city {
+      @include font-mon(13px, 500);
+    }
+
+    .icon {
+      margin: 7px 0 5px;
+    }
+  }
+
+  .input-title {
+    @include font-mon(16px, 700);
+  }
+
+};
