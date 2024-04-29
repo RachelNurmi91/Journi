@@ -5,7 +5,7 @@ import Methods from "../Shared/Methods";
 import AddTrip from "./Trips/AddTrip";
 
 function Summary({ ...props }) {
-  const [showSideBar, setShowSideBar] = useState(false);
+  const [setShowSideBar] = useState(false);
 
   const toggleSideNav = () => {
     setShowSideBar((prevState) => !prevState);

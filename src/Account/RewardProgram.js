@@ -50,7 +50,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
     if (edit) {
       setCurrentProgram();
     }
-  }, [addNew, edit, props]);
+  }, [addNew, edit, props, setCurrentProgram]);
 
   const handleChange = (event) => {
     const targetKey = event.target.name;

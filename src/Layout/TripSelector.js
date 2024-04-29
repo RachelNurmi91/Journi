@@ -17,7 +17,7 @@ function TripSelector({
         </option>
       );
     });
-  }, [activeTrip]);
+  }, [tripListData]);
 
   const handleChange = (event) => {
     const selectedTrip = event.target.selectedOptions[0];
