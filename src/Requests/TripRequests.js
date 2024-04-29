@@ -72,7 +72,7 @@ export default class TripRequests {
   //     });
   // }
 
-  deleteFlight(id) {
+  deleteHotel(id) {
     const token = localStorage.getItem("token");
     return axios
       .delete(`${SERVER}/hotels/${id}`, {
