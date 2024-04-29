@@ -86,11 +86,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
       .deleteFlight(id)
       .then(() => {
         fetchUpdatedTrips().then(() => {
-          if (props.activeTrip.flights.length > 1) {
-            props.navigate("/flights");
-          } else {
-            props.navigate("/flights/add");
-          }
+          props.navigate("/flights");
         });
       })
       .catch((error) => console.error("Error: Cannot delete trip: ", error));

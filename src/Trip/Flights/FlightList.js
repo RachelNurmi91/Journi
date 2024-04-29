@@ -5,7 +5,7 @@ import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
 import { Link } from "react-router-dom";
 
-function FlightList({ flightListData, test }) {
+function FlightList({ flightListData }) {
   const [sortedFlights, setSortedFlights] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -308,7 +308,9 @@ function FlightList({ flightListData, test }) {
       <div className="content-body flight-list">
         <Header title="Flights" rightIcon="add" destination={"/flights/add"} />
 
-        {displayFlights()}
+        {flightListData
+          ? "Girly pop, add your first flight!"
+          : displayFlights()}
       </div>
     </>
   );

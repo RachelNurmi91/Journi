@@ -105,11 +105,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
       .deleteFlight(id)
       .then(() => {
         fetchUpdatedTrips().then(() => {
-          if (props.activeTrip.hotels.length > 1) {
-            props.navigate("/hotels");
-          } else {
-            props.navigate("/hotels/add");
-          }
+          props.navigate("/hotels");
         });
       })
       .catch((error) => console.error("Error: Cannot delete trip: ", error));
