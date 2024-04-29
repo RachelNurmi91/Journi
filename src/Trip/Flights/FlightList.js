@@ -42,7 +42,6 @@ function FlightList({ flightListData, test }) {
   };
 
   const renderOnewayFlight = (flight, index) => {
-    console.log(flight);
     const departureFlight = flight?.departureFlight?.[0];
     const returnFlight = flight?.returnFlight?.[0];
 
@@ -55,7 +54,7 @@ function FlightList({ flightListData, test }) {
               className="btn-link"
               state={{
                 edit: true,
-                selectedItem: flight?.[index],
+                selectedItem: flight,
               }}
             >
               <FontAwesomeIcon
@@ -156,25 +155,56 @@ function FlightList({ flightListData, test }) {
 
     return (
       <div className="shadow-box" key={index}>
-        <div className="container ">
-          <div className="row mt-3">
-            <div className="b18-mon primary-color text-center">
-              {departureFlight?.[0]?.city}
-              <span className="mx-2">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-plane-departure"
-                  style={{ color: "#0bb6c0" }}
-                />
-              </span>
+        <div className="row d-flex justify-content-end mx-1">
+          <div className="col-1">
+            <Link
+              to={"/flights/edit"}
+              className="btn-link"
+              state={{
+                edit: true,
+                selectedItem: flight,
+              }}
+            >
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                style={{ color: "#0BB6C0" }}
+              />
+            </Link>
+          </div>
+        </div>
 
-              {flight?.returnFlight?.city}
+        <div
+          className="container collapsible mt-2"
+          style={{
+            height: `${open ? "" : "50px"}`,
+            transition: "height 0.10s ease",
+          }}
+        >
+          <div className="row header">
+            <div className="d-flex justify-content-center align-items-center">
+              <div className="col-5">
+                <div>{departureFlight?.code}</div>
+                <div className="airport-city">({departureFlight?.city})</div>
+              </div>
+              <div className="col-2">
+                <FontAwesomeIcon
+                  icon={["fas", "plane"]}
+                  style={{ color: "#0BB6C0" }}
+                  size="sm"
+                />
+              </div>
+              <div className="col-5">
+                <div>{returnFlight?.code}</div>
+                <div className="airport-city">({returnFlight?.city})</div>
+              </div>
             </div>
           </div>
-          <div className="row">
-            <div className="text-center b13-mon">
-              {Methods.formatDate(departureFlight?.date)}
-            </div>
+          <div className="separator">
+            <span className="b18-mon primary-color text-center">
+              {Methods.formatDate(returnFlight?.date)}
+            </span>
           </div>
+
           <div className="row mt-3">
             <div className="col-6">
               <div>
@@ -210,109 +240,64 @@ function FlightList({ flightListData, test }) {
             </div>
           </div>
 
-          <div className="row mt-2">
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Departure </div>
-                <div>
-                  {departureFlight?.city}{" "}
-                  <span className="b13-mon">({departureFlight?.city})</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Arrival </div>
-                <div>
-                  {returnFlight?.city}{" "}
-                  <span className="b13-mon">({returnFlight?.city})</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="separator">
-          <span className="b13-mon mx-3">ROUNDTRIP</span>
-        </div>
-        <div className="container ">
-          <div className="row mt-3">
-            <div className="b18-mon primary-color text-center">
-              {returnFlight?.city}
-
-              <span className="mx-2">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-plane-arrival"
-                  style={{ color: "#0bb6c0" }}
-                />
-              </span>
-
-              {departureFlight?.city}
-            </div>
-          </div>
-          <div className="row">
-            <div className="text-center b13-mon">
+          <div className="separator">
+            <span className="b18-mon primary-color text-center">
               {Methods.formatDate(returnFlight?.date)}
-            </div>
+            </span>
           </div>
-          <div className="row mt-3">
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Airline </div>
-                <div>{flight?.airline}</div>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="b16-mon">Flight No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {returnFlight?.flightNo}
-              </div>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Seat </div>
-                <div>{returnFlight?.seat}</div>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="b16-mon">Confirm. No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {flight.confirmationNo}
-              </div>
-            </div>
-          </div>
+          <div className="container ">
+            <div className="row"></div>
 
-          <div className="row mt-2">
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Departure </div>
+            <div className="row">
+              <div className="col-6">
                 <div>
-                  {flight?.returnFlight?.city}{" "}
-                  <span className="b13-mon">
-                    ({flight?.returnFlight?.city})
-                  </span>
+                  <div className="b16-mon"> Airline </div>
+                  <div>{flight?.airline}</div>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="b16-mon">Flight No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {returnFlight?.flightNo}
                 </div>
               </div>
             </div>
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Arrival </div>
+            <div className="row mt-2">
+              <div className="col-6">
                 <div>
-                  {flight?.departureFlight?.city}{" "}
-                  <span className="b13-mon">
-                    ({flight?.departureFlight?.city})
-                  </span>
+                  <div className="b16-mon"> Seat </div>
+                  <div>{returnFlight?.seat}</div>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="b16-mon">Confirm. No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {flight.confirmationNo}
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="text-center mt-2">
+          {open ? (
+            <FontAwesomeIcon
+              icon="fa-solid fa-angle-up"
+              style={{ color: "#0BB6C0" }}
+              onClick={toggleOpen}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon="fa-solid fa-angle-down"
+              style={{ color: "#0BB6C0" }}
+              onClick={toggleOpen}
+            />
+          )}
         </div>
       </div>
     );
