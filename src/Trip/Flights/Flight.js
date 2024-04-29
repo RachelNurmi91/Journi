@@ -17,28 +17,8 @@ const DEFAULT_FORM_DATA = {
   type: "roundtrip",
   airline: null,
   confirmationNo: null,
-  departureFlight: [
-    {
-      airport: null,
-      code: null,
-      city: null,
-      country: null,
-      flightNo: null,
-      date: null,
-      seat: null,
-    },
-  ],
-  returnFlight: [
-    {
-      airport: null,
-      code: null,
-      city: null,
-      country: null,
-      flightNo: null,
-      date: null,
-      seat: null,
-    },
-  ],
+  departureFlight: [],
+  returnFlight: [],
   ticketHolder: null,
 };
 
@@ -54,6 +34,8 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   const location = useLocation();
 
   const { edit, selectedItem } = location.state || {};
+
+  console.log(formData);
 
   const setCurrentProgram = useCallback(() => {
     if (selectedItem) {
@@ -73,6 +55,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   }, [edit, setCurrentProgram]);
 
   const saveFlight = () => {
+    console.log(formData);
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
@@ -166,7 +149,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
         ...prevFormData,
         departureFlight: {
           ...prevFormData.departureFlight,
-          departureDate: date,
+          date: date,
         },
       }));
     }
@@ -193,7 +176,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
         ...prevFormData,
         returnFlight: {
           ...prevFormData.returnFlight,
-          returnDate: date,
+          date: date,
         },
       }));
     }

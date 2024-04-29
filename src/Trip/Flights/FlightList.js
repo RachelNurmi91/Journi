@@ -92,7 +92,7 @@ function FlightList({ flightListData, test }) {
           </div>
           <div className="row mt-2">
             <div className="text-center b13-mon">
-              {Methods.formatDate(departureFlight?.date)}
+              {Methods.formatLongDate(departureFlight?.date)}
             </div>
           </div>
           <div className="row mt-3">
@@ -201,7 +201,7 @@ function FlightList({ flightListData, test }) {
           </div>
           <div className="separator">
             <span className="b18-mon primary-color text-center">
-              {Methods.formatDate(returnFlight?.date)}
+              {Methods.formatLongDate(flight?.departureFlight?.[0]?.date)}
             </span>
           </div>
 
@@ -242,7 +242,7 @@ function FlightList({ flightListData, test }) {
 
           <div className="separator">
             <span className="b18-mon primary-color text-center">
-              {Methods.formatDate(returnFlight?.date)}
+              {Methods.formatLongDate(flight?.returnFlight?.[0]?.date)}
             </span>
           </div>
           <div className="container ">
@@ -302,7 +302,7 @@ function FlightList({ flightListData, test }) {
       </div>
     );
   };
-
+  console.log(flightListData);
   return (
     <>
       <div className="content-body flight-list">
@@ -317,7 +317,6 @@ function FlightList({ flightListData, test }) {
 function mapStateToProps(state) {
   return {
     flightListData: state.account?.activeTrip?.flights,
-    test: state.account,
   };
 }
 
