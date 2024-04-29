@@ -271,6 +271,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               <span className="label mx-3">To</span>
               <AirportAutocomplete
                 placeholder="Arrival city"
+                onChange={handleReturnAirport}
                 value={formData?.returnFlight?.[0]?.airport}
               />
             </div>
