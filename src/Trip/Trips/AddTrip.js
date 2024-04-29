@@ -111,6 +111,7 @@ function AddTrip({ fetchUpdatedTrips, closeSideNav, ...props }) {
               onChange={handleChange}
               label="Trip Name"
               placeholder="Unique Trip Name"
+              value={formData.tripName}
             />
           </div>
           <div className="row">
@@ -119,6 +120,7 @@ function AddTrip({ fetchUpdatedTrips, closeSideNav, ...props }) {
               onChange={handleChange}
               label="Departure Date"
               placeholder="MM/DD/YYYY"
+              value={formData.departureDate}
             />
           </div>
           <div className="row">
