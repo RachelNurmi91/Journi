@@ -35,8 +35,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
   const { edit, selectedItem } = location.state || {};
 
-  console.log(formData);
-
   const setCurrentProgram = useCallback(() => {
     if (selectedItem) {
       if (formData._id !== selectedItem?._id) {
@@ -55,7 +53,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   }, [edit, setCurrentProgram]);
 
   const saveFlight = () => {
-    console.log(formData);
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
@@ -263,6 +260,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               <AirportAutocomplete
                 placeholder="Departure city"
                 onChange={handleDepartureAirport}
+                value={formData?.departureFlight?.[0]?.airport}
               />
             </div>
             <div className="col-6 text-center">
@@ -273,7 +271,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               <span className="label mx-3">To</span>
               <AirportAutocomplete
                 placeholder="Arrival city"
-                onChange={handleReturnAirport}
+                value={formData?.returnFlight?.[0]?.airport}
               />
             </div>
 
@@ -318,6 +316,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Airline"
               label="Airline"
+              value={formData?.airline}
             />
           </div>
           <div className="col">
@@ -326,6 +325,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Confirmation Number"
               label="Confirmation Number"
+              value={formData?.confirmationNo}
             />
           </div>
           <div className="row mt-2">
@@ -358,6 +358,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Flight Number"
               label="Flight Number"
+              value={formData?.departureFlight?.[0]?.flightNo}
             />
           </div>
           <div className="col">
@@ -366,6 +367,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Seat"
               label="Seat"
+              value={formData?.departureFlight?.[0]?.seat}
             />
           </div>
         </div>
@@ -383,6 +385,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Flight Number"
               label="Flight Number"
+              value={formData?.returnFlight?.[0]?.flightNo}
             />
           </div>
           <div className="col">
@@ -391,6 +394,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Seat"
               label="Seat"
+              value={formData?.returnFlight?.[0]?.seat}
             />
           </div>
         </div>
@@ -408,6 +412,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Airline"
               label="Airline"
+              value={formData?.airline}
             />
           </div>
           <div className="col-12">
@@ -416,6 +421,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Confirmation Number"
               label="Confirmation Number"
+              value={formData?.confirmationNo}
             />
           </div>
         </div>
@@ -426,6 +432,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Flight Number"
               label="Flight Number"
+              value={formData?.departureFlight?.[0]?.flightNo}
             />
           </div>
           <div className="col">
@@ -434,6 +441,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Seat"
               label="Seat"
+              value={formData?.departureFlight?.[0]?.seat}
             />
           </div>
         </div>

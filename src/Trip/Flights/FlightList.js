@@ -302,15 +302,15 @@ function FlightList({ flightListData }) {
       </div>
     );
   };
-  console.log(flightListData);
+
   return (
     <>
       <div className="content-body flight-list">
         <Header title="Flights" rightIcon="add" destination={"/flights/add"} />
 
         {flightListData
-          ? "Girly pop, add your first flight!"
-          : displayFlights()}
+          ? displayFlights()
+          : "Girly pop, add your first flight!"}
       </div>
     </>
   );

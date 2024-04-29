@@ -16,7 +16,7 @@ function Input({ name, onChange, placeholder, label, type = "text", value }) {
         placeholder={placeholder}
         onChange={onChange}
         type={type}
-        // value={value || ""}
+        value={value ? value : ""}
       />
     </div>
   );

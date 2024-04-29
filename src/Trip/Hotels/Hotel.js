@@ -102,7 +102,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const deleteHotel = (id) => {
     tripRequest
-      .deleteFlight(id)
+      .deleteHotel(id)
       .then(() => {
         fetchUpdatedTrips().then(() => {
           props.navigate("/hotels");
@@ -209,6 +209,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
             onChange={handleChange}
             placeholder="Hotel"
             label="Hotel"
+            value={formData.hotel}
           />
 
           <Input
@@ -216,6 +217,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
             onChange={handleChange}
             placeholder="Confirmation #"
             label="Confirmation #"
+            value={formData.confirmationNo}
           />
           <div className="container">
             <div className="row">
@@ -225,10 +227,14 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
                   onChange={handleChange}
                   placeholder="City"
                   label="City"
+                  value={formData.city}
                 />
               </div>
               <div className="col-6">
-                <CountryAutocomplete onChange={handleCountrySelect} />
+                <CountryAutocomplete
+                  onChange={handleCountrySelect}
+                  value={formData.country}
+                />
               </div>
             </div>
           </div>

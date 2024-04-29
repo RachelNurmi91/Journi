@@ -112,6 +112,7 @@ function Login({ ...props }) {
             onChange={handleChange}
             placeholder="Username/Email"
             label="Username/Email"
+            value={formData.username}
           />
         </div>
         <div className="row">
@@ -121,6 +122,7 @@ function Login({ ...props }) {
             placeholder="Password"
             label="Password"
             type="password"
+            value={formData.password}
           />
         </div>
         <div className="row">

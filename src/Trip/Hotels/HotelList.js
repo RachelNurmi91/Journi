@@ -85,7 +85,7 @@ function HotelList({ ...props }) {
                 className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
                 style={{ borderRadius: "5px" }}
               >
-                8456455455454
+                {hotel.confirmationNo}
               </div>
             </div>
 
@@ -138,8 +138,8 @@ function HotelList({ ...props }) {
     <div className="content-body hotel-list">
       <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
       {props.hotelListData
-        ? "Girly pop, add your first flight!"
-        : displayHotels()}
+        ? displayHotels()
+        : "Girly pop, add your first flight!"}
     </div>
   );
 }

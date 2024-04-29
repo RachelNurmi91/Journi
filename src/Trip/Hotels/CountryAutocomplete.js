@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { CountryList } from "../../Shared/Data/CountryList";
 
-const CountryAutocomplete = ({ onChange }) => {
+const CountryAutocomplete = ({ onChange, value }) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const inputRef = useRef(null);
@@ -42,7 +42,7 @@ const CountryAutocomplete = ({ onChange }) => {
         ref={inputRef}
         className="form-control"
         type="text"
-        value={inputValue}
+        value={value ? value : inputValue}
         onChange={handleChange}
         placeholder="Country"
       />
