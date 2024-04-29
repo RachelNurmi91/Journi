@@ -94,7 +94,7 @@ function HotelList({ ...props }) {
                 <div>
                   <div className="b16-mon"> Arrival </div>
                   <div className="text-center">
-                    {Methods.formatDate(hotel.arrivalDate)}
+                    {Methods.formatLongDate(hotel.arrivalDate)}
                   </div>
                 </div>
               </div>
@@ -102,7 +102,7 @@ function HotelList({ ...props }) {
                 <div>
                   <div className="b16-mon"> Departure </div>
                   <div className="text-center">
-                    {Methods.formatDate(hotel.departureDate)}
+                    {Methods.formatLongDate(hotel.departureDate)}
                   </div>
                 </div>
               </div>

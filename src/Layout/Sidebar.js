@@ -28,7 +28,7 @@ function Sidebar({
   const guestSideBar = () => {
     return (
       <>
-        <div className="d-flex flex-grow-1 align-items-end">
+        <div className="d-flex flex-grow-1 align-items-center">
           <ul className="menu">
             <li>
               <Link to="/register" className="nav-link">
@@ -57,8 +57,18 @@ function Sidebar({
   const loggedInSideBar = () => {
     return (
       <>
+        <div className="mt-3">
+          <Link to="/profile">
+            <div className="d-flex justify-content-center" to="/profile">
+              <div className="profile-icon">
+                {userData?.firstName?.slice(0, 1).toUpperCase()}
+              </div>
+            </div>
+          </Link>
+        </div>
+
         <div className="flex-grow-1">
-          <div className="col align-self-center my-3 w-75 mx-auto">
+          <div className="col align-self-center my-3 w-75 mx-auto mt-4 mb-5">
             {TripSelectorMemo}
           </div>
           <ul className="menu mt-2 align-items-center">
@@ -146,13 +156,6 @@ function Sidebar({
         </div>
 
         <div className="align-items-center">
-          <Link to="/profile">
-            <div className="d-flex justify-content-center" to="/profile">
-              <div className="profile-icon">
-                {userData?.firstName?.slice(0, 1).toUpperCase()}
-              </div>
-            </div>
-          </Link>
           {/* <img
             className="logo mt-3"
             src={logo}

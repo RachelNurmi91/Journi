@@ -50,7 +50,7 @@ function Summary({ ...props }) {
                     />
                   </div>
                   <div className="title">
-                    {Methods.formatDate(props.activeTrip?.departureDate)}
+                    {Methods.formatShortDate(props.activeTrip?.departureDate)}
                   </div>
                   <div className="subtitle">Get Ready to Leave</div>
                 </div>
