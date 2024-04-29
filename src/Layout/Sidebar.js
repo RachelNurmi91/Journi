@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import logo from "../Media/Images/logo.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +22,7 @@ function Sidebar({
 
   const TripSelectorMemo = useMemo(
     () => <TripSelector closeSideNav={closeSideNav} />,
-    []
+    [closeSideNav]
   );
 
   const guestSideBar = () => {
