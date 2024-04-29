@@ -11,7 +11,6 @@ import Header from "../../Shared/UI/Header";
 import AccountRequests from "../../Requests/AccountRequests";
 import Loader from "../../Shared/UI/Loader";
 
-
 const DEFAULT_FORM_DATA = {
   firstName: null,
   lastName: null,
@@ -141,6 +140,7 @@ function Register({ ...props }) {
               onChange={handleChange}
               placeholder="First Name"
               label="First Name"
+              value={formData.firstName}
             />
           </div>
           <div className="col">
@@ -149,6 +149,7 @@ function Register({ ...props }) {
               onChange={handleChange}
               placeholder="Last Name"
               label="Last Name"
+              value={formData.lastName}
             />
           </div>
           <div className="container">
@@ -158,6 +159,7 @@ function Register({ ...props }) {
                 onChange={handleChange}
                 placeholder="Username"
                 label="Username"
+                value={formData.username}
               />
             </div>
             <div className="row">
@@ -167,12 +169,15 @@ function Register({ ...props }) {
                 placeholder="Password"
                 label="Password"
                 type="password"
+                value={formData.password}
               />
             </div>
 
             <div className="row">
-              
-              <Button label={loading ? <Loader size="10px" /> : "Register"} onClick={onRegister} />
+              <Button
+                label={loading ? <Loader size="10px" /> : "Register"}
+                onClick={onRegister}
+              />
             </div>
             {error ? (
               <div className="row">

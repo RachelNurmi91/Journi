@@ -1,5 +1,5 @@
 import axios from "axios";
-const SERVER = "http://localhost:8080";
+const SERVER = "https://journiserver.onrender.com";
 
 export default class TripRequests {
   addTrip(tripData) {
