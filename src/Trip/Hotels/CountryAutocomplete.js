@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { CountryList } from "../../Shared/Data/CountryList";
 
 const CountryAutocomplete = ({ onChange, value }) => {
-  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const inputRef = useRef(null);
   const [inputWidth, setInputWidth] = useState("auto");
@@ -12,11 +11,11 @@ const CountryAutocomplete = ({ onChange, value }) => {
     if (inputRef.current) {
       setInputWidth(`${inputRef.current.offsetWidth}px`);
     }
-  }, [inputValue]);
+  }, [value]);
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setInputValue(value);
+    onChange(e.target.value);
     if (!value) {
       setSuggestions([]);
       return;
@@ -30,7 +29,6 @@ const CountryAutocomplete = ({ onChange, value }) => {
 
   const handleSelect = (country) => {
     onChange(country);
-    setInputValue(country);
     setSuggestions([]);
   };
 
@@ -50,7 +48,7 @@ const CountryAutocomplete = ({ onChange, value }) => {
         ref={inputRef}
         className="form-control"
         type="text"
-        value={value ? value : inputValue}
+        value={value}
         onChange={handleChange}
         placeholder="Country"
       />

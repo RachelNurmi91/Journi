@@ -356,3 +356,28 @@ button {
   }
 
 };
+
+.react-datepicker {
+ border:  none !important;
+ border-radius: 10px !important;
+
+}
+
+.react-datepicker__header {
+  background-color: $primary-color !important;
+  border:  none !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.react-datepicker__current-month {
+  color: #eeeeee !important
+}
+
+.react-datepicker__navigation--next, .react-datepicker__navigation--previous {
+  height: 40px !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: $primary-color !important;
+  border-radius: 100% !important;
+}

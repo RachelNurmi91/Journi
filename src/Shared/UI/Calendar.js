@@ -6,10 +6,12 @@ function Calendar({ selectedDate, onDateChange }) {
     <DatePicker
       selected={selectedDate}
       onChange={(date) => onDateChange(date)}
+      previousMonthButtonClassName="custom-previous-icon"
+      nextMonthButtonClassName="custom-next-icon"
+      disabledKeyboardNavigation
       className="calendar"
-      readOnly
+      withPortal
     />
   );
 }
-
 export default Calendar;
