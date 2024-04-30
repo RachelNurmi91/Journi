@@ -68,7 +68,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
       .catch((error) => console.error(error));
   };
 
-  // onUpdate is for editing exiting flightss
+  // onUpdate is for editing exiting flights
   const updateFlight = () => {
     tripRequest
       .updateFlight(formData)

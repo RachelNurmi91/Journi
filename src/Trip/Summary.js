@@ -1,15 +1,8 @@
-import { useState } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Methods from "../Shared/Methods";
 
 function Summary({ ...props }) {
-  const [setShowSideBar] = useState(false);
-
-  const toggleSideNav = () => {
-    setShowSideBar((prevState) => !prevState);
-  };
-
   const loggedInSummary = () => {
     if (props.userData.trips.length) {
       return (
