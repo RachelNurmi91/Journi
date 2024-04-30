@@ -133,7 +133,19 @@ function Sidebar({
               </>
             ) : null}
             <li>
-              <AddTrip closeSideNav={closeSideNav} />
+              <li>
+                <Link
+                  to={"/trips/add"}
+                  className="nav-link"
+                  onClick={() => closeSideNav()}
+                >
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-plus"
+                    style={{ color: "#fff" }}
+                  />
+                  <span className="ms-2">Add Trip</span>
+                </Link>
+              </li>
             </li>
           </ul>
         </div>

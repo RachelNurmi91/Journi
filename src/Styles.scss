@@ -5,6 +5,14 @@ $primary-color: #0BB6C0;
 $error-color: #d65d5d;
 $white: #fff;
 
+
+@mixin font-mon($font:16px, $weight: 700) {
+  font-family: "Montserrat", sans-serif;
+  font-weight: $weight;
+  font-size: $font;
+}
+
+
 .content-body {  
   padding: 25px;
   margin: 60px auto 0;
@@ -98,6 +106,14 @@ a {
   
 }
 
+
+.profile {
+
+  .label {@include font-mon(16px, 700);}
+}
+
+
+
 .profile-icon {
   white-space: nowrap;
   position: relative; /* Set position to relative */
@@ -126,9 +142,6 @@ a {
     z-index: 1;
   }
 }
-
-
-
 
 
 /* Sidebar CSS */
@@ -267,12 +280,6 @@ h4 {
   font-size: 13px;
 }
 
-
-@mixin font-mon($font:16px, $weight: 700) {
-  font-family: "Montserrat", sans-serif;
-  font-weight: $weight;
-  font-size: $font;
-}
 
 .b18-mon {
   font-family: "Montserrat", sans-serif;

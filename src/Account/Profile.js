@@ -55,8 +55,10 @@ function Profile({
           {index === 0 ? null : <hr />}
 
           <div className="row">
-            <div className="col-4 col-lg-1 b16-mon">{program.programName}</div>
-            <div className="col-6 text-center">{program.membershipId}</div>
+            <div className="col-5 col-lg-1 label">{program.programName}</div>
+            <div className="col-5 align-items-start">
+              {program.membershipId}
+            </div>
             <div className="col-2 d-flex align-items-center justify-content-end">
               <Link
                 to={"/profile/programs/edit"}
@@ -84,10 +86,10 @@ function Profile({
         <div key={index}>
           {index === 0 ? null : <hr />}
           <div className="row p-2">
-            <div className="col-9">
+            <div className="col-11">
               <div className="row">
-                <div className="col-6 b16-mon">{trip.tripName}</div>
-                <div className="col-6">
+                <div className="col-6 label">{trip.tripName}</div>
+                <div className="col-6 label">
                   {Methods.formatShortDate(trip.departureDate)}
                 </div>
 
@@ -100,20 +102,20 @@ function Profile({
               </div>
             </div>
 
-            <div className="col-1 d-flex align-items-center">
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                style={{ color: "#0BB6C0" }}
-              />
-            </div>
-            <div className="col-1 d-flex align-items-center">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                onClick={() => {
-                  deleteTrip(trip);
+            <div className="col-1 d-flex align-items-center justify-content-end p-0">
+              <Link
+                to={"/trips/edit"}
+                className="btn-link"
+                state={{
+                  edit: true,
+                  selectedItem: trip,
                 }}
-              />
+              >
+                <FontAwesomeIcon
+                  icon="fa-solid fa-pen-to-square"
+                  style={{ color: "#0BB6C0" }}
+                />
+              </Link>
             </div>
           </div>
         </div>
@@ -122,7 +124,7 @@ function Profile({
   };
 
   return (
-    <div className="content-body">
+    <div className="content-body profile">
       <Header
         title={
           <>
@@ -138,13 +140,13 @@ function Profile({
 
         <div className="container mt-3">
           <div className="row">
-            <div className="col-3 col-lg-1 b16-mon">Name</div>
+            <div className="col-3 col-lg-1 label">Name</div>
             <div className="col">
               {userData?.firstName + " " + userData?.lastName}
             </div>
           </div>
           <div className="row">
-            <div className="col-3 col-lg-1 b16-mon">Email</div>
+            <div className="col-3 col-lg-1 label">Email</div>
             <div className="col">{userData.username}</div>
           </div>
         </div>

@@ -33,7 +33,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const { edit, selectedItem } = location.state || {};
 
-  const setCurrentProgram = useCallback(() => {
+  const setCurrentHotel = useCallback(() => {
     if (selectedItem) {
       if (formData._id !== selectedItem?._id) {
         setFormData((prevFormData) => ({
@@ -46,9 +46,9 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   useEffect(() => {
     if (edit) {
-      setCurrentProgram();
+      setCurrentHotel();
     }
-  }, [edit, setCurrentProgram]);
+  }, [edit, setCurrentHotel]);
 
   const handleChange = (event) => {
     const targetKey = event.target.name;

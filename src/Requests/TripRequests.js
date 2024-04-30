@@ -1,5 +1,6 @@
 import axios from "axios";
 const SERVER = "https://journiserver.onrender.com";
+const LOCALSERVER = "http://localhost:8080";
 
 export default class TripRequests {
   addTrip(tripData) {
@@ -24,7 +25,7 @@ export default class TripRequests {
     const token = localStorage.getItem("token");
 
     return axios
-      .delete(`${SERVER}/trips/${tripId}`, {
+      .delete(`${LOCALSERVER}/trips/${tripId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

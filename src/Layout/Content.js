@@ -7,8 +7,8 @@ import Login from "../Account/AccountAccess/Login";
 import FlightList from "../Trip/Flights/FlightList";
 import Flight from "../Trip/Flights/Flight";
 import Register from "../Account/AccountAccess/Register";
+import Trip from "../Trip/Trips/Trip";
 import TripList from "../Trip/Trips/TripList";
-import AddTrip from "../Trip/Trips/AddTrip";
 import Profile from "../Account/Profile";
 import RewardProgram from "../Account/RewardProgram";
 
@@ -39,8 +39,8 @@ function Content({ ...props }) {
               path="/flights/add"
               element={<Flight navigate={navigate} />}
             />
-            <Route path="/trips" element={<TripList />} />
-            <Route path="/trips/add" element={<AddTrip />} />
+
+            <Route path="/trips/*" element={<Trip />} />
           </>
         )}
       </Routes>
