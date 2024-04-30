@@ -3,50 +3,14 @@ import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
-import TripRequests from "../Requests/TripRequests";
 import { Link } from "react-router-dom";
 import { fetchUpdatedTrips } from "../Redux/Operations/AccountOperations";
 import Header from "../Shared/UI/Header";
 
-function Profile({
-  rewardProgramsData,
-  fetchUpdatedTrips,
-  userData,
-  activeTrip,
-  tripsData,
-  setActiveTrip,
-  navigate,
-}) {
-  const tripRequest = new TripRequests();
-
+function Profile({ rewardProgramsData, userData, tripsData }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const deleteTrip = async (selectedTrip) => {
-    await tripRequest
-      .deleteTrip(selectedTrip?._id)
-      .then(() => {
-        if (selectedTrip._id === activeTrip?._id) {
-          if (tripsData.length > 1) {
-            let updatedTrips = [...tripsData];
-            let index = updatedTrips.findIndex(
-              (x) => x._id === selectedTrip._id
-            );
-            if (index !== -1) {
-              updatedTrips.splice(index, 1);
-            }
-            setActiveTrip(updatedTrips[0]);
-          } else {
-            setActiveTrip(null);
-          }
-        } else {
-          setActiveTrip(tripsData[0]);
-        }
-        fetchUpdatedTrips().then(() => navigate("/profile"));
-      })
-      .catch((error) => console.error("Error: Cannot delete trip: ", error));
-  };
 
   const renderProgramsList = () => {
     return rewardProgramsData?.map((program, index) => {
