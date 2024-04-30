@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import Sidebar from "./Sidebar";
 
-function Navbar({ ...props }) {
+function Navbar() {
   const [showSideBar, setShowSideBar] = useState(false);
 
   let sideRef = useRef();
@@ -15,11 +15,14 @@ function Navbar({ ...props }) {
     const autoClose = (e) => {
       if (!sideRef.current.contains(e.target)) {
         setShowSideBar(false);
-        console.log(sideRef.current);
       }
     };
 
     document.addEventListener("mousedown", autoClose);
+
+    return () => {
+      document.removeEventListener("mousedown", autoClose);
+    };
   });
 
   const location = useLocation();

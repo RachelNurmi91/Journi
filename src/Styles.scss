@@ -98,21 +98,37 @@ a {
   
 }
 
-
 .profile-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 100%;
-  background-color: $white;
-  height: 75px;
-  width: 75px;
-  color: #444;
-  text-align: center;
-  font-size: 40px;
-  font-weight: bold;
-  margin: 5px auto 10px;
+  white-space: nowrap;
+  position: relative; /* Set position to relative */
+
+  .profile-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: #444;
+    height: 75px;
+    width: 75px;
+    color: $white;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 5px auto 10px;
+  }
+    
+  .edit {
+    position: absolute;
+    top: 100%; /* Position at the bottom of .profile-img */
+    right: 39%; /* Position at the center horizontally */
+    transform: translateX(50%); /* Move back half of its width */
+    margin-top: -35px; /* Adjust according to your needs */
+    z-index: 1;
+  }
 }
+
+
+
 
 
 /* Sidebar CSS */
@@ -301,6 +317,7 @@ button {
   border-radius: 0px;
   border-bottom: solid 3px $primary-color;
 }
+
 
 .autocomplete-container {
 

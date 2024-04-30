@@ -31,7 +31,11 @@ function Sidebar({
         <div className="d-flex flex-grow-1 align-items-center">
           <ul className="menu">
             <li>
-              <Link to="/register" className="nav-link">
+              <Link
+                to="/register"
+                className="nav-link"
+                onClick={() => closeSideNav()}
+              >
                 <FontAwesomeIcon
                   icon="fa-solid fa-user-plus"
                   style={{ color: "#fff" }}
@@ -40,7 +44,11 @@ function Sidebar({
               </Link>
             </li>
             <li>
-              <Link to="/login" className="nav-link">
+              <Link
+                to="/login"
+                className="nav-link"
+                onClick={() => closeSideNav()}
+              >
                 <FontAwesomeIcon
                   icon="fa-solid fa-right-to-bracket"
                   style={{ color: "#fff" }}
@@ -57,11 +65,18 @@ function Sidebar({
   const loggedInSideBar = () => {
     return (
       <>
-        <div className="mt-3">
-          <Link to="/profile">
+        <div className="profile-icon">
+          <Link to="/profile" onClick={() => closeSideNav()}>
             <div className="d-flex justify-content-center" to="/profile">
-              <div className="profile-icon">
+              <div className="profile-img">
                 {userData?.firstName?.slice(0, 1).toUpperCase()}
+              </div>
+              <div className="edit">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-user-pen"
+                  style={{ color: "#fff" }}
+                  size="lg"
+                />
               </div>
             </div>
           </Link>
@@ -73,7 +88,7 @@ function Sidebar({
           </div>
           <ul className="menu mt-2 align-items-center">
             <li>
-              <Link to="/" className="nav-link">
+              <Link to="/" className="nav-link" onClick={() => closeSideNav()}>
                 <FontAwesomeIcon
                   icon="fa-solid fa-house"
                   style={{ color: "#fff" }}
@@ -89,6 +104,7 @@ function Sidebar({
                       activeTrip?.hotels?.length > 0 ? "/hotels" : "/hotels/add"
                     }
                     className="nav-link"
+                    onClick={() => closeSideNav()}
                   >
                     <FontAwesomeIcon
                       icon="fa-solid fa-hotel"
@@ -105,6 +121,7 @@ function Sidebar({
                         : "/flights/add"
                     }
                     className="nav-link"
+                    onClick={() => closeSideNav()}
                   >
                     <FontAwesomeIcon
                       icon="fa-solid fa-plane"
@@ -155,14 +172,7 @@ function Sidebar({
           />
         </div>
 
-        <div className="align-items-center">
-          {/* <img
-            className="logo mt-3"
-            src={logo}
-            alt="Journi logo"
-            height="150px"
-          /> */}
-        </div>
+        <div className="align-items-center"></div>
         {userId ? loggedInSideBar() : guestSideBar()}
       </div>
     </div>
