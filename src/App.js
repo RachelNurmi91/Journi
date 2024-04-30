@@ -1,6 +1,7 @@
 import "./Styles.scss";
 import Navbar from "./Layout/Navbar";
 import Content from "./Layout/Content";
+import TokenVerification from "./Shared/Data/TokenVerification";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Navbar />
         <Content />
       </div>
+      <TokenVerification />
     </div>
   );
 }
