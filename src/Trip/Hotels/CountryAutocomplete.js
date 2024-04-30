@@ -7,7 +7,6 @@ const CountryAutocomplete = ({ onChange, value }) => {
   const [inputWidth, setInputWidth] = useState("auto");
 
   useEffect(() => {
-    // Calculate and set the width of the input dynamically
     if (inputRef.current) {
       setInputWidth(`${inputRef.current.offsetWidth}px`);
     }

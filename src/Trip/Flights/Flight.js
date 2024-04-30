@@ -228,7 +228,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   const renderOptionsBox = () => {
     return (
       <>
-        <div className="shadow-box p-4">
+        <div className="outlined-box p-4">
           <div className="row">
             <div className="col d-flex justify-content-end">
               <Radio
@@ -252,11 +252,13 @@ function Flight({ fetchUpdatedTrips, ...props }) {
           <hr />
           <div className="row">
             <div className="col-6 text-center">
-              <FontAwesomeIcon
-                icon="fa-solid fa-plane-departure"
-                style={{ color: "#0bb6c0" }}
-              />
-              <span className="label mx-3">From</span>
+              <div className="mb-1">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-plane-departure"
+                  style={{ color: "#0bb6c0" }}
+                />
+                <span className="label mx-3">From</span>
+              </div>
               <AirportAutocomplete
                 placeholder="Departure city"
                 onChange={handleDepartureAirport}
@@ -264,19 +266,23 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               />
             </div>
             <div className="col-6 text-center">
-              <FontAwesomeIcon
-                icon="fa-solid fa-plane-arrival"
-                style={{ color: "#0bb6c0" }}
-              />
-              <span className="label mx-3">To</span>
+              <div className="mb-1">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-plane-arrival"
+                  style={{ color: "#0bb6c0" }}
+                />
+                <span className="label mx-3">To</span>
+              </div>
+
               <AirportAutocomplete
                 placeholder="Arrival city"
                 onChange={handleReturnAirport}
                 value={formData?.returnFlight?.[0]?.airport}
               />
             </div>
-
-            <div className="col-6 mt-2 text-center">
+          </div>
+          <div className="row mt-3">
+            <div className="col-6 text-center">
               <FontAwesomeIcon
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
@@ -289,7 +295,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
             </div>
 
             {isOneWay ? null : (
-              <div className="col-6 mt-2 text-center">
+              <div className="col-6 text-center">
                 <FontAwesomeIcon
                   icon="fa-solid fa-calendar-days"
                   style={{ color: "#0bb6c0" }}
@@ -309,9 +315,9 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
   const renderRoundtripFields = () => {
     return (
-      <>
+      <div className="roundtrip-inputs">
         <div className="row">
-          <div className="col-12">
+          <div className="col-6">
             <Input
               name="airline"
               onChange={handleInputChange}
@@ -320,39 +326,18 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               value={formData?.airline}
             />
           </div>
-          <div className="col">
+          <div className="col-6">
             <Input
               name="confirmationNo"
               onChange={handleInputChange}
-              placeholder="Confirmation Number"
-              label="Confirmation Number"
+              placeholder="Confirmation #"
+              label="Confirmation"
               value={formData?.confirmationNo}
             />
           </div>
-          <div className="row mt-2">
-            <Checkbox
-              label="Tickets are under a different name."
-              toggleCheckbox={handleShowNameInput}
-            />
-          </div>
-          {displayNewNameInput ? (
-            <div className="row">
-              <Input
-                name="ticketHolder"
-                onChange={handleInputChange}
-                placeholder="Name on Ticket"
-                label="Name on Ticket"
-              />
-            </div>
-          ) : null}
         </div>
-        <div
-          className="primary-color b18-mon light-bg-color mt-4 px-2"
-          style={{ borderRadius: "5px" }}
-        >
-          Departure Flight
-        </div>
-        <div className="row">
+        <div className="header">Departure Flight</div>
+        <div className="row ">
           <div className="col">
             <Input
               name="departureFlightNo"
@@ -372,12 +357,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
             />
           </div>
         </div>
-        <div
-          className="primary-color b18-mon light-bg-color mt-4 px-2"
-          style={{ borderRadius: "5px" }}
-        >
-          Return Flight
-        </div>
+        <div className="header">Return Flight</div>
 
         <div className="row">
           <div className="col">
@@ -399,7 +379,23 @@ function Flight({ fetchUpdatedTrips, ...props }) {
             />
           </div>
         </div>
-      </>
+        <div className="row mt-2">
+          <Checkbox
+            label="Tickets are under a different name."
+            toggleCheckbox={handleShowNameInput}
+          />
+        </div>
+        {displayNewNameInput ? (
+          <div className="row">
+            <Input
+              name="ticketHolder"
+              onChange={handleInputChange}
+              placeholder="Name on Ticket"
+              label="Name on Ticket"
+            />
+          </div>
+        ) : null}
+      </div>
     );
   };
 
@@ -407,7 +403,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
     return (
       <>
         <div className="row">
-          <div className="col-12">
+          <div className="col-6">
             <Input
               name="airline"
               onChange={handleInputChange}
@@ -416,12 +412,12 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               value={formData?.airline}
             />
           </div>
-          <div className="col-12">
+          <div className="col-6">
             <Input
               name="confirmationNo"
               onChange={handleInputChange}
-              placeholder="Confirmation Number"
-              label="Confirmation Number"
+              placeholder="Confirmation #"
+              label="Confirmation"
               value={formData?.confirmationNo}
             />
           </div>

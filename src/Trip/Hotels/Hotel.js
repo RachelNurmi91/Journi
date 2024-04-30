@@ -161,7 +161,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   const renderOptionsBox = () => {
     return (
       <>
-        <div className="shadow-box p-4">
+        <div className="outlined-box p-4">
           <div className="row">
             <div className="col text-center">
               <FontAwesomeIcon

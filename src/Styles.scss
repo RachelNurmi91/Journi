@@ -270,7 +270,7 @@ h4 {
   font-size: 22px;
 }
 
-label {
+label, .label {
   font-family: "Inter", sans-serif;
   font-size: 16px !important;
   font-weight: 600 !important;
@@ -295,8 +295,10 @@ button {
 }
 
 .calendar {
-  width: 100px;
-  border-style: none;
+  text-align: center;
+  width: 105px;
+  border: none;
+  border-radius: 0px;
   border-bottom: solid 3px $primary-color;
 }
 
@@ -310,7 +312,7 @@ button {
     list-style-type: none;
     margin:0;
     padding: 0;
-    max-height: 90px; 
+    max-height: 100px; 
     overflow: scroll;
     scrollbar-width: none;
     background-color: #029ba3;
@@ -380,4 +382,14 @@ button {
 .react-datepicker__day--selected {
   background-color: $primary-color !important;
   border-radius: 100% !important;
+}
+
+.roundtrip-inputs {
+  .header {
+    @include font-mon(20px, 700);
+    color: $primary-color;
+    text-transform: uppercase;
+    margin: 25px 0 0 -10px;
+
+  }
 }
