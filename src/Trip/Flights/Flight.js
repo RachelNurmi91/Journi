@@ -17,8 +17,8 @@ const DEFAULT_FORM_DATA = {
   type: "roundtrip",
   airline: null,
   confirmationNo: null,
-  departureFlight: [],
-  returnFlight: [],
+  departureFlight: { date: new Date() },
+  returnFlight: { date: new Date() },
   ticketHolder: null,
 };
 
@@ -129,11 +129,23 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
   const handleDepartureDate = (date) => {
     let today = new Date().getTime();
+    let returnDate = new Date(formData.returnFlight.date).getTime();
     let selectedDate = new Date(date).getTime();
     let selectedReturnDate = new Date(returnDate).getTime();
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
       return;
+    }
+
+    if (returnDate < selectedDate) {
+      setReturnDate(date);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        returnFlight: {
+          ...prevFormData.returnFlight,
+          date: date,
+        },
+      }));
     }
 
     if (today < selectedDate) {
@@ -160,6 +172,11 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
+      return;
+    }
+
+    if (selectedDate < formData.departureFlight?.date) {
+      console.error("Departure can not occur before the arrival.");
       return;
     }
 

@@ -6,8 +6,7 @@ function Calendar({ selectedDate, onDateChange }) {
     <DatePicker
       selected={selectedDate}
       onChange={(date) => onDateChange(date)}
-      previousMonthButtonClassName="custom-previous-icon"
-      nextMonthButtonClassName="custom-next-icon"
+      minDate={new Date()}
       disabledKeyboardNavigation
       className="calendar"
       withPortal

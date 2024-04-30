@@ -15,8 +15,8 @@ const DEFAULT_FORM_DATA = {
   hotel: null,
   city: null,
   country: null,
-  arrivalDate: null,
-  departureDate: null,
+  arrivalDate: new Date(),
+  departureDate: new Date(),
   confirmationNo: null,
   nameOnReservation: null,
 };
@@ -113,6 +113,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const handleArrivalDate = (date) => {
     let today = new Date().getTime();
+    let returnDate = new Date(formData.departureDate).getTime();
     let selectedDate = new Date(date).getTime();
     let selectedDepartureDate = new Date(departureDate).getTime();
     if (today > selectedDate) {
@@ -125,6 +126,14 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         arrivalDate: date,
+      }));
+    }
+
+    if (returnDate < selectedDate) {
+      setDepartureDate(date);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        departureDate: date,
       }));
     }
 
@@ -141,6 +150,11 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
+      return;
+    }
+
+    if (selectedDate < formData.arrivalDate) {
+      console.error("Departure can not occur before the arrival.");
       return;
     }
 
