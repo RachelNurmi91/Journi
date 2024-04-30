@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
-import AddTrip from "../Trip/Trips/AddTrip";
 import TripSelector from "./TripSelector";
 
 function Sidebar({
