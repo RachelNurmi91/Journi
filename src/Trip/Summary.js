@@ -2,7 +2,6 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Methods from "../Shared/Methods";
-import AddTrip from "./Trips/AddTrip";
 
 function Summary({ ...props }) {
   const [setShowSideBar] = useState(false);
@@ -70,15 +69,7 @@ function Summary({ ...props }) {
                 first trip!
               </h4>
             </div>
-            <div className="row">
-              <div
-                className="primary-bg-color w-50 mx-auto text-center py-2"
-                style={{ borderRadius: "5px", color: "#fff" }}
-                onClick={toggleSideNav}
-              >
-                <AddTrip />
-              </div>
-            </div>
+
             <div className="row">
               <h4 className="mt-4">
                 <span className="primary-color x-bold">Step 2:</span> Add your
