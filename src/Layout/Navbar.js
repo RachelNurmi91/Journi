@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import logo from "../Media/Images/logo-white.png";
 import { useLocation } from "react-router-dom";
@@ -8,6 +8,19 @@ import Sidebar from "./Sidebar";
 
 function Navbar({ ...props }) {
   const [showSideBar, setShowSideBar] = useState(false);
+
+  let sideRef = useRef();
+
+  useEffect(() => {
+    const autoClose = (e) => {
+      if (!sideRef.current.contains(e.target)) {
+        setShowSideBar(false);
+        console.log(sideRef.current);
+      }
+    };
+
+    document.addEventListener("mousedown", autoClose);
+  });
 
   const location = useLocation();
 
@@ -37,11 +50,13 @@ function Navbar({ ...props }) {
           <img className="logo" src={logo} alt="Journi logo" height="25px" />
         </div>
       </nav>
-      <Sidebar
-        showSideBar={showSideBar}
-        closeSideNav={closeSideNav}
-        toggleSideNav={toggleSideNav}
-      />
+      <div ref={sideRef}>
+        <Sidebar
+          showSideBar={showSideBar}
+          closeSideNav={closeSideNav}
+          toggleSideNav={toggleSideNav}
+        />
+      </div>
     </div>
   );
 }
