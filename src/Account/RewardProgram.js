@@ -106,7 +106,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             onChange={handleChange}
             placeholder="Reward Program"
             label="Reward Program"
-            value={edit ? formData.programName : ""}
+            value={formData.programName}
           />
         </div>
         <div className="row">
@@ -115,7 +115,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             onChange={handleChange}
             placeholder="Rewards Number"
             label="Rewards Number"
-            value={edit ? formData.membershipId : ""}
+            value={formData.membershipId}
           />
         </div>
         <div className="row mt-3">
