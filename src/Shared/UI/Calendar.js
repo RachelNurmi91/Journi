@@ -7,7 +7,9 @@ function Calendar({ selectedDate, onDateChange }) {
       selected={selectedDate}
       onChange={(date) => onDateChange(date)}
       className="calendar"
+      readOnly
     />
   );
 }
+
 export default Calendar;

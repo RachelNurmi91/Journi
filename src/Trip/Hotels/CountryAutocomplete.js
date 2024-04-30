@@ -1,10 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { CountryList } from "../../Shared/Data/CountryList";
 
 const CountryAutocomplete = ({ onChange, value }) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const inputRef = useRef(null);
+  const [inputWidth, setInputWidth] = useState("auto");
+
+  useEffect(() => {
+    // Calculate and set the width of the input dynamically
+    if (inputRef.current) {
+      setInputWidth(`${inputRef.current.offsetWidth}px`);
+    }
+  }, [inputValue]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -46,7 +54,7 @@ const CountryAutocomplete = ({ onChange, value }) => {
         onChange={handleChange}
         placeholder="Country"
       />
-      <ul className="autocomplete-input">
+      <ul className="autocomplete-input" style={{ width: inputWidth }}>
         {suggestions.map((country, index) => (
           <li
             className="autocomplete-item"

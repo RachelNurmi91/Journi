@@ -301,7 +301,6 @@ button {
 }
 
 .autocomplete-container {
-  position: relative;
 
   .autocomplete-input {
     position: absolute;
@@ -311,9 +310,12 @@ button {
     list-style-type: none;
     margin:0;
     padding: 0;
-    max-height: 100px; 
+    max-height: 90px; 
     overflow: scroll;
     scrollbar-width: none;
+    background-color: #029ba3;
+    color: $white;
+    border-radius: 5px;
 
     .autocomplete-item {
       padding: 10px;
