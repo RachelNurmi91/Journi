@@ -9,7 +9,7 @@ import Button from "../../Shared/UI/Button";
 import Input from "../../Shared/UI/Input";
 import Header from "../../Shared/UI/Header";
 import AccountRequests from "../../Requests/AccountRequests";
-import Loader from "../../Shared/UI/Loader";
+import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   firstName: null,
@@ -174,10 +174,7 @@ function Register({ ...props }) {
             </div>
 
             <div className="row">
-              <Button
-                label={loading ? <Loader size="10px" /> : "Register"}
-                onClick={onRegister}
-              />
+              <Button label="Register" onClick={onRegister} />
             </div>
             {error ? (
               <div className="row">
@@ -189,6 +186,7 @@ function Register({ ...props }) {
           </div>
         </div>
       </div>
+      <Loading loading={loading} />
     </div>
   );
 }

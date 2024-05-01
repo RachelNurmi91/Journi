@@ -1,12 +1,9 @@
+import { jellyTriangle } from "ldrs";
+
 function Loader() {
+  jellyTriangle.register();
   return (
-    <div
-      className="spinner-grow"
-      role="status"
-      style={{ width: "15px", height: "15px", color: "#fff" }}
-    >
-      <span className="sr-only">Loading...</span>
-    </div>
+    <l-jelly-triangle size="50" speed="1.75" color="#0BB6C0"></l-jelly-triangle>
   );
 }
 

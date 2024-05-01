@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Shared/UI/Input";
@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
-import Loader from "../../Shared/UI/Loader";
+
+import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   hotel: null,
@@ -62,17 +63,21 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
       formData.nameOnReservation =
         props.userData?.firstName + " " + props.userData?.lastName;
     }
-    console.log(formData.nameOnReservation);
+
     formData.tripId = props.activeTripId;
     tripRequest
       .addHotel(formData)
       .then(() => {
         fetchUpdatedTrips().then(() => props.navigate("/hotels"));
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
       })
       .catch((error) => {
         console.error(error);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
       });
   };
 
@@ -253,13 +258,11 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button
-              label={loading ? <Loader size="10px" /> : "Save"}
-              onClick={saveHotel}
-            />
+            <Button label="Save" onClick={saveHotel} />
           </div>
         </div>
       </div>
+      <Loading loading={loading} />
     </div>
   );
 }

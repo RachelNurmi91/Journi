@@ -11,6 +11,7 @@ import {
 import Header from "../Shared/UI/Header";
 import TripRequests from "../Requests/TripRequests";
 import AccountRequests from "../Requests/AccountRequests";
+import Loading from "../Shared/UI/Loading";
 
 function Profile({
   fetchUpdatedTrips,
@@ -213,6 +214,7 @@ function Profile({
             : "Add your reward programs!"}
         </div>
       </div>
+      <Loading loading={loading} />
     </div>
   );
 }

@@ -8,8 +8,8 @@ import {
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Input from "../../Shared/UI/Input";
-import Loader from "../../Shared/UI/Loader";
 import AccountRequests from "../../Requests/AccountRequests";
+import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   username: null,
@@ -126,10 +126,7 @@ function Login({ ...props }) {
           />
         </div>
         <div className="row">
-          <Button
-            label={loading ? <Loader size="10px" /> : "Login"}
-            onClick={onLogin}
-          />
+          <Button label="Login" onClick={onLogin} />
         </div>
         {error ? (
           <div className="row">
@@ -139,6 +136,7 @@ function Login({ ...props }) {
           </div>
         ) : null}
       </div>
+      <Loading loading={loading} />
     </div>
   );
 }

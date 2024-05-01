@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Button from "../Shared/UI/Button";
 import Header from "../Shared/UI/Header";
 import Input from "../Shared/UI/Input";
-import Loader from "../Shared/UI/Loader";
+import Loading from "../Shared/UI/Loading";
 import AccountRequests from "../Requests/AccountRequests";
 import {
   fetchUpdatedTrips,
@@ -78,10 +78,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button
-              label={loading ? <Loader size="10px" /> : "Save"}
-              onClick={onSave}
-            />
+            <Button label="Save" onClick={onSave} />
           </div>
         </div>
         {error ? (
@@ -92,6 +89,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
           </div>
         ) : null}
       </div>
+      <Loading loading={loading} />
     </div>
   );
 }

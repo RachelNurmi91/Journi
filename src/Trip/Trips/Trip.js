@@ -12,6 +12,7 @@ import Header from "../../Shared/UI/Header";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
+import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
@@ -27,6 +28,7 @@ function Trip({
 }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [departureDate, setDepartureDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
 
@@ -58,6 +60,7 @@ function Trip({
   };
 
   const saveTrip = async () => {
+    setLoading(true);
     const newTrip = {
       tripName: formData.tripName,
       departureDate: formData.departureDate,
@@ -76,10 +79,14 @@ function Trip({
           );
 
           props.setActiveTrip(activeTrip);
+          setLoading(false);
           props.navigate("/summary");
         });
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   // onUpdate is for editing exiting hotels
@@ -150,6 +157,7 @@ function Trip({
           </div>
         </div>
       </div>
+      <Loading loading={loading} />
     </div>
   );
 }

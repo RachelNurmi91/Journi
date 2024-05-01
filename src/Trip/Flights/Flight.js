@@ -12,7 +12,7 @@ import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import { useLocation } from "react-router-dom";
-import Loader from "../../Shared/UI/Loader";
+import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   type: "roundtrip",
@@ -335,7 +335,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
       </>
     );
   };
-  console.log(formData?.departureFlight);
+
   const renderRoundtripFields = () => {
     return (
       <div className="roundtrip-inputs">
@@ -504,13 +504,11 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button
-              label={loading ? <Loader size="10px" /> : "Save"}
-              onClick={saveFlight}
-            />
+            <Button label="Save" onClick={saveFlight} />
           </div>
         </div>
       </div>
+      <Loading loading={loading} />
     </div>
   );
 }

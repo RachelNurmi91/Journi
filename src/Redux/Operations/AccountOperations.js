@@ -29,7 +29,7 @@ export const fetchUpdatedTrips = () => (dispatch, getState) => {
         let updatedActiveTrip = updatedTrips.find(
           (trip) => trip._id?.toString() === activeTripId?.toString()
         );
-        console.log(updatedTrips);
+
         dispatch(setActiveTrip(updatedActiveTrip));
       } else {
         throw new Error("Unable to parse user account.");

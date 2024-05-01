@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
+import Loading from "../../Shared/UI/Loading";
 
 function HotelList({
   fetchUpdatedTrips,
@@ -153,12 +154,15 @@ function HotelList({
   };
 
   return (
-    <div className="content-body hotel-list">
-      <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
-      {hotelListData.length
-        ? displayHotels()
-        : "Girly pop, add your first hotel!"}
-    </div>
+    <>
+      <div className="content-body hotel-list">
+        <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
+        {hotelListData.length
+          ? displayHotels()
+          : "Girly pop, add your first hotel!"}
+      </div>
+      <Loading loading={loading} />
+    </>
   );
 }
 

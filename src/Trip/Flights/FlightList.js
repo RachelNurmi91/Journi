@@ -6,6 +6,7 @@ import TripRequests from "../../Requests/TripRequests";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
+import Loading from "../../Shared/UI/Loading";
 
 function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
   const [sortedFlights, setSortedFlights] = useState([]);
@@ -316,6 +317,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
           ? displayFlights()
           : "Girly pop, add your first flight!"}
       </div>
+      <Loading loading={loading} />
     </>
   );
 }
