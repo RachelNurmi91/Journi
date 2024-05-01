@@ -99,9 +99,7 @@ function Sidebar({
               <>
                 <li>
                   <Link
-                    to={
-                      activeTrip?.hotels?.length > 0 ? "/hotels" : "/hotels/add"
-                    }
+                    to={"/hotels"}
                     className="nav-link"
                     onClick={() => closeSideNav()}
                   >
@@ -114,11 +112,7 @@ function Sidebar({
                 </li>
                 <li>
                   <Link
-                    to={
-                      activeTrip?.flights?.length > 0
-                        ? "/flights"
-                        : "/flights/add"
-                    }
+                    to={"/flights"}
                     className="nav-link"
                     onClick={() => closeSideNav()}
                   >

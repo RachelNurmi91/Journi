@@ -3,11 +3,22 @@ import { connect } from "react-redux";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
+import TripRequests from "../../Requests/TripRequests";
+import { deleteTripData } from "../../Redux/Actions/AccountActions";
 
-function HotelList({ ...props }) {
+function HotelList({
+  fetchUpdatedTrips,
+  hotelListData,
+  deleteTripData,
+
+  ...props
+}) {
   const [hotelList, setHotelList] = useState(null);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const tripRequest = new TripRequests();
 
   const toggleOpen = () => {
     setOpen((prevState) => !prevState);
@@ -16,7 +27,7 @@ function HotelList({ ...props }) {
   const sortByDate = useCallback(() => {
     let sortedHotels;
 
-    let hotels = props.hotelListData;
+    let hotels = hotelListData;
 
     if (hotels && hotels.length > 10) {
       sortedHotels = hotels.sort((a, b) => {
@@ -29,15 +40,30 @@ function HotelList({ ...props }) {
     }
 
     setHotelList(sortedHotels);
-  }, [props.hotelListData]);
+  }, [hotelListData]);
 
   useEffect(() => {
     sortByDate();
-  }, [props.hotelListData, sortByDate]);
+  }, [hotelListData, sortByDate]);
 
   useEffect(() => {
     sortByDate();
-  }, [props.hotelListData, sortByDate]);
+  }, [hotelListData, sortByDate]);
+
+  const deleteHotel = (id) => {
+    setLoading(true);
+    tripRequest
+      .deleteHotel(id)
+      .then(() => {
+        fetchUpdatedTrips().then(() => {
+          setLoading(false);
+        });
+      })
+      .catch((error) => {
+        console.error("Error: Cannot delete trip: ", error);
+        setLoading(false);
+      });
+  };
 
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
@@ -45,19 +71,11 @@ function HotelList({ ...props }) {
         <div className="shadow-box" key={index}>
           <div className="row d-flex justify-content-end mx-1">
             <div className="col-1">
-              <Link
-                to={"/hotels/edit"}
-                className="btn-link"
-                state={{
-                  edit: true,
-                  selectedItem: hotelList?.[index],
-                }}
-              >
-                <FontAwesomeIcon
-                  icon="fa-solid fa-pen-to-square"
-                  style={{ color: "#0BB6C0" }}
-                />
-              </Link>
+              <FontAwesomeIcon
+                icon="fa-solid fa-trash"
+                style={{ color: "#d65d5d" }}
+                onClick={() => deleteHotel(hotel._id)}
+              />
             </div>
           </div>
           <div
@@ -137,9 +155,9 @@ function HotelList({ ...props }) {
   return (
     <div className="content-body hotel-list">
       <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
-      {props.hotelListData
+      {hotelListData.length
         ? displayHotels()
-        : "Girly pop, add your first flight!"}
+        : "Girly pop, add your first hotel!"}
     </div>
   );
 }
@@ -150,6 +168,6 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { fetchUpdatedTrips, deleteTripData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HotelList);

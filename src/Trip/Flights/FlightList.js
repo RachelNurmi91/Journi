@@ -1,13 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
+import TripRequests from "../../Requests/TripRequests";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
-import { Link } from "react-router-dom";
 
-function FlightList({ flightListData }) {
+function FlightList({ flightListData, ...props }) {
   const [sortedFlights, setSortedFlights] = useState([]);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const tripRequest = new TripRequests();
 
   const toggleOpen = () => {
     setOpen((prevState) => !prevState);
@@ -26,6 +30,21 @@ function FlightList({ flightListData }) {
 
     setSortedFlights([...flights]);
   }, [flightListData]);
+
+  const deleteFlight = (id) => {
+    setLoading(true);
+    tripRequest
+      .deleteFlight(id)
+      .then(() => {
+        fetchUpdatedTrips().then(() => {
+          setLoading(false);
+        });
+      })
+      .catch((error) => {
+        console.error("Error: Cannot delete trip: ", error);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     sortByDate();
@@ -49,19 +68,11 @@ function FlightList({ flightListData }) {
       <div className="shadow-box mb-4" key={index}>
         <div className="row d-flex justify-content-end mx-1">
           <div className="col-1">
-            <Link
-              to={"/flights/edit"}
-              className="btn-link"
-              state={{
-                edit: true,
-                selectedItem: flight,
-              }}
-            >
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                style={{ color: "#0BB6C0" }}
-              />
-            </Link>
+            <FontAwesomeIcon
+              icon="fa-solid fa-trash"
+              style={{ color: "#d65d5d" }}
+              onClick={() => deleteFlight(flight._id)}
+            />
           </div>
         </div>
         <div
@@ -157,19 +168,11 @@ function FlightList({ flightListData }) {
       <div className="shadow-box" key={index}>
         <div className="row d-flex justify-content-end mx-1">
           <div className="col-1">
-            <Link
-              to={"/flights/edit"}
-              className="btn-link"
-              state={{
-                edit: true,
-                selectedItem: flight,
-              }}
-            >
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                style={{ color: "#0BB6C0" }}
-              />
-            </Link>
+            <FontAwesomeIcon
+              icon="fa-solid fa-trash"
+              style={{ color: "#d65d5d" }}
+              onClick={() => deleteFlight(flight._id)}
+            />
           </div>
         </div>
 
@@ -308,7 +311,7 @@ function FlightList({ flightListData }) {
       <div className="content-body flight-list">
         <Header title="Flights" rightIcon="add" destination={"/flights/add"} />
 
-        {flightListData
+        {flightListData.length
           ? displayFlights()
           : "Girly pop, add your first flight!"}
       </div>

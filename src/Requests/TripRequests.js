@@ -1,12 +1,13 @@
 import axios from "axios";
 const SERVER = "https://journiserver.onrender.com";
+const LOCALSERVER = "http://localhost:8080";
 
 export default class TripRequests {
   addTrip(tripData) {
     const token = localStorage.getItem("token");
 
     return axios
-      .post(`${SERVER}/trips/add`, tripData, {
+      .post(`${LOCALSERVER}/trips/add`, tripData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -24,7 +25,7 @@ export default class TripRequests {
     const token = localStorage.getItem("token");
 
     return axios
-      .delete(`${SERVER}/trips/${tripId}`, {
+      .delete(`${LOCALSERVER}/trips/${tripId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -41,7 +42,7 @@ export default class TripRequests {
   addHotel(hotelData) {
     const token = localStorage.getItem("token");
     return axios
-      .post(`${SERVER}/hotels/add`, hotelData, {
+      .post(`${LOCALSERVER}/hotels/add`, hotelData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,7 +59,7 @@ export default class TripRequests {
   updateHotel(data) {
     const token = localStorage.getItem("token");
     return axios
-      .put(`${SERVER}/hotels/${data._id}`, data, {
+      .put(`${LOCALSERVER}/hotels/${data._id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,9 +74,10 @@ export default class TripRequests {
   }
 
   deleteHotel(id) {
+    console.log(id);
     const token = localStorage.getItem("token");
     return axios
-      .delete(`${SERVER}/hotels/${id}`, {
+      .delete(`${LOCALSERVER}/hotels/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -92,7 +94,7 @@ export default class TripRequests {
   addFlight(flightData) {
     const token = localStorage.getItem("token");
     return axios
-      .post(`${SERVER}/flights/add`, flightData, {
+      .post(`${LOCALSERVER}/flights/add`, flightData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -109,7 +111,7 @@ export default class TripRequests {
   updateFlight(data) {
     const token = localStorage.getItem("token");
     return axios
-      .put(`${SERVER}/flights/${data._id}`, data, {
+      .put(`${LOCALSERVER}/flights/${data._id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -124,9 +126,10 @@ export default class TripRequests {
   }
 
   deleteFlight(id) {
+    console.log(id);
     const token = localStorage.getItem("token");
     return axios
-      .delete(`${SERVER}/flights/${id}`, {
+      .delete(`${LOCALSERVER}/flights/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

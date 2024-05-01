@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Shared/UI/Input";
@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
-import { useLocation } from "react-router-dom";
 import Loader from "../../Shared/UI/Loader";
 
 const DEFAULT_FORM_DATA = {
@@ -31,27 +30,6 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const tripRequest = new TripRequests();
 
-  const location = useLocation();
-
-  const { edit, selectedItem } = location.state || {};
-
-  const setCurrentHotel = useCallback(() => {
-    if (selectedItem) {
-      if (formData._id !== selectedItem?._id) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          ...selectedItem,
-        }));
-      }
-    }
-  }, [selectedItem, formData._id]);
-
-  useEffect(() => {
-    if (edit) {
-      setCurrentHotel();
-    }
-  }, [edit, setCurrentHotel]);
-
   const handleChange = (event) => {
     const targetKey = event.target.name;
     const newValue = event.target.value;
@@ -67,12 +45,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   };
 
   const handleReservationName = (event) => {
-    let name;
-    if (displayNewNameInput) {
-      name = event.target.value;
-    } else {
-      name = props.userData?.firstName + " " + props.userData?.lastName;
-    }
+    let name = event.target.value;
 
     setFormData((prevState) => ({ ...prevState, nameOnReservation: name }));
   };
@@ -83,41 +56,37 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   // onSave is for new hotels
   const saveHotel = async () => {
-    setLoading(true)
+    setLoading(true);
+
+    if (!formData.nameOnReservation) {
+      formData.nameOnReservation =
+        props.userData?.firstName + " " + props.userData?.lastName;
+    }
+    console.log(formData.nameOnReservation);
     formData.tripId = props.activeTripId;
     tripRequest
       .addHotel(formData)
       .then(() => {
         fetchUpdatedTrips().then(() => props.navigate("/hotels"));
-        setLoading(false)
+        setLoading(false);
       })
-      .catch((error) => {console.error(error); setLoading(false)});
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   // onUpdate is for editing exiting hotels
-  const updateHotel = () => {
-    setLoading(true)
-    tripRequest
-      .updateHotel(formData)
-      .then(() => {
-        fetchUpdatedTrips().then(() => {props.navigate("/hotels")
-        setLoading(false)});
-      })
-      .catch((error) => {console.error(error); setLoading(false)});
-  };
-
-  const deleteHotel = (id) => {
-    setLoading(true)
-    tripRequest
-      .deleteHotel(id)
-      .then(() => {
-        fetchUpdatedTrips().then(() => {
-          props.navigate("/hotels");
-          setLoading(false)
-        });
-      })
-      .catch((error) => {console.error("Error: Cannot delete trip: ", error); setLoading(false)});
-  };
+  // const updateHotel = () => {
+  //   setLoading(true)
+  //   tripRequest
+  //     .updateHotel(formData)
+  //     .then(() => {
+  //       fetchUpdatedTrips().then(() => {props.navigate("/hotels")
+  //       setLoading(false)});
+  //     })
+  //     .catch((error) => {console.error(error); setLoading(false)});
+  // };
 
   const handleArrivalDate = (date) => {
     let today = new Date().getTime();
@@ -216,7 +185,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title={edit ? "Update Hotel" : "Add Hotel"}
+        title="Add Hotel"
         leftIcon={!!props.activeTrip.hotels.length ? true : false}
         destination={"/hotels"}
         props={{
@@ -260,19 +229,6 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
               </div>
             </div>
           </div>
-
-          {/* <div className="form-check my-2">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="checkReservationSelf"
-              onClick={handleReservationName}
-            />
-            <label className="form-check-label" htmlFor="checkReservationSelf">
-              The reservation is under my name
-            </label>
-          </div> */}
           <div className="form-check mx-3 mt-2">
             <input
               className="form-check-input"
@@ -291,29 +247,17 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
               onChange={handleReservationName}
               placeholder="Name on Reservation"
               label="Name on Reservation"
+              value={formData.nameOnReservation}
             />
           ) : null}
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button
-              label={edit ? loading ? <Loader size="10px" /> : "Update" : loading ? <Loader size="10px" /> : "Save"}
-              onClick={edit ? updateHotel : saveHotel}
+              label={loading ? <Loader size="10px" /> : "Save"}
+              onClick={saveHotel}
             />
           </div>
-
-          {edit ? (
-            <div className="col-1 d-flex align-self-center p-2">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                size="lg"
-                onClick={() => {
-                  deleteHotel(formData?._id);
-                }}
-              />
-            </div>
-          ) : null}
         </div>
       </div>
     </div>

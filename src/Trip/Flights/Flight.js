@@ -90,22 +90,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
       });
   };
 
-  const deleteFlight = (id) => {
-    setLoading(true);
-    tripRequest
-      .deleteFlight(id)
-      .then(() => {
-        fetchUpdatedTrips().then(() => {
-          setLoading(false);
-          props.navigate("/flights");
-        });
-      })
-      .catch((error) => {
-        console.error("Error: Cannot delete trip: ", error);
-        setLoading(false);
-      });
-  };
-
   const handleRadioCheck = (event) => {
     const typeId = event.target.id;
 
@@ -531,19 +515,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onClick={edit ? updateFlight : saveFlight}
             />
           </div>
-
-          {edit ? (
-            <div className="col-1 d-flex align-self-center p-2">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                size="lg"
-                onClick={() => {
-                  deleteFlight(formData?._id);
-                }}
-              />
-            </div>
-          ) : null}
         </div>
       </div>
     </div>
