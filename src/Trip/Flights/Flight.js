@@ -81,19 +81,19 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   };
 
   // onUpdate is for editing exiting flights
-  const updateFlight = () => {
-    setLoading(true);
-    tripRequest
-      .updateFlight(formData)
-      .then(() => {
-        setLoading(false);
-        fetchUpdatedTrips().then(() => props.navigate("/flights"));
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  };
+  // const updateFlight = () => {
+  //   setLoading(true);
+  //   tripRequest
+  //     .updateFlight(formData)
+  //     .then(() => {
+  //       setLoading(false);
+  //       fetchUpdatedTrips().then(() => props.navigate("/flights"));
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setLoading(false);
+  //     });
+  // };
 
   const handleRadioCheck = (event) => {
     const typeId = event.target.id;
@@ -489,7 +489,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title={edit ? "Update Flight" : "Add Flight"}
+        title="Add Flight"
         leftIcon={!!props.activeTrip.flights.length ? true : false}
         destination={"/flights"}
         props={{
@@ -505,20 +505,8 @@ function Flight({ fetchUpdatedTrips, ...props }) {
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button
-              label={
-                edit ? (
-                  loading ? (
-                    <Loader size="10px" />
-                  ) : (
-                    "Update"
-                  )
-                ) : loading ? (
-                  <Loader size="10px" />
-                ) : (
-                  "Save"
-                )
-              }
-              onClick={edit ? updateFlight : saveFlight}
+              label={loading ? <Loader size="10px" /> : "Save"}
+              onClick={saveFlight}
             />
           </div>
         </div>
