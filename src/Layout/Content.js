@@ -25,7 +25,7 @@ function Content({ ...props }) {
             <Route path="/profile" element={<Profile navigate={navigate} />} />
 
             <Route
-              path="/profile/programs/*"
+              path="/profile/reward-programs"
               element={<RewardProgram navigate={navigate} />}
             />
 

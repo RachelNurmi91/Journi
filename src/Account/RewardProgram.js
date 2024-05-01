@@ -1,16 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import Button from "../Shared/UI/Button";
 import Header from "../Shared/UI/Header";
 import Input from "../Shared/UI/Input";
 import Loader from "../Shared/UI/Loader";
 import AccountRequests from "../Requests/AccountRequests";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   fetchUpdatedTrips,
   fetchUpdatedAccount,
 } from "../Redux/Operations/AccountOperations";
-import { useLocation } from "react-router-dom";
 
 const DEFAULT_FORM_DATA = {
   programName: null,
@@ -24,33 +22,6 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
   const [loading, setLoading] = useState(false);
 
   const accountRequest = new AccountRequests();
-
-  const location = useLocation();
-
-  const { addNew, edit, selectedItem } = location.state || {};
-
-  const setCurrentProgram = useCallback(() => {
-    if (selectedItem) {
-      if (formData.id !== selectedItem?._id) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          programName: selectedItem?.programName,
-          membershipId: selectedItem?.membershipId,
-          id: selectedItem?._id,
-        }));
-      }
-    }
-  }, [selectedItem, formData.id]);
-
-  useEffect(() => {
-    if (!addNew && !edit) {
-      props.navigate("/profile");
-    }
-
-    if (edit) {
-      setCurrentProgram();
-    }
-  }, [addNew, edit, props, setCurrentProgram]);
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -83,22 +54,9 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
       .catch((error) => console.error(error));
   };
 
-  const deleteRewardProgram = (id) => {
-    accountRequest
-      .deleteRewardProgram(id)
-      .then(() => {
-        fetchUpdatedAccount().then(() => props.navigate("/profile"));
-      })
-      .catch((error) => console.error("Error: Cannot delete trip: ", error));
-  };
-
   return (
     <div className="content-body">
-      <Header
-        title={edit ? "Edit Reward Program" : "Add Reward Program"}
-        leftIcon
-        destination={"/profile"}
-      />
+      <Header title="Add Reward Program" leftIcon destination={"/profile"} />
       <div className="container">
         <div className="row">
           <Input
@@ -121,24 +79,10 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button
-              label={
-                loading ? <Loader size="10px" /> : edit ? "Update" : "Save"
-              }
+              label={loading ? <Loader size="10px" /> : "Save"}
               onClick={onSave}
             />
           </div>
-          {edit ? (
-            <div className="col-2 d-flex align-self-center p-2">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                size="lg"
-                onClick={() => {
-                  deleteRewardProgram(formData?.id);
-                }}
-              />
-            </div>
-          ) : null}
         </div>
         {error ? (
           <div className="row">

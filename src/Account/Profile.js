@@ -1,16 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 import { Link } from "react-router-dom";
-import { fetchUpdatedTrips } from "../Redux/Operations/AccountOperations";
+import {
+  fetchUpdatedTrips,
+  fetchUpdatedAccount,
+} from "../Redux/Operations/AccountOperations";
 import Header from "../Shared/UI/Header";
+import AccountRequests from "../Requests/AccountRequests";
 
-function Profile({ rewardProgramsData, userData, tripsData }) {
+function Profile({
+  fetchUpdatedTrips,
+  fetchUpdatedAccount,
+  rewardProgramsData,
+  userData,
+  tripsData,
+}) {
+  const [loading, setLoading] = useState(false);
+
+  const accountRequest = new AccountRequests();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const deleteRewardProgram = (id) => {
+    setLoading(true);
+    accountRequest
+      .deleteRewardProgram(id)
+      .then(() => {
+        fetchUpdatedAccount().then(() => setLoading(false));
+      })
+      .catch((error) => {
+        console.error("Error: Cannot delete trip: ", error);
+        setLoading(false);
+      });
+  };
 
   const renderProgramsList = () => {
     return rewardProgramsData?.map((program, index) => {
@@ -24,19 +51,11 @@ function Profile({ rewardProgramsData, userData, tripsData }) {
               {program.membershipId}
             </div>
             <div className="col-2 d-flex align-items-center justify-content-end">
-              <Link
-                to={"/profile/programs/edit"}
-                className="btn-link"
-                state={{
-                  edit: true,
-                  selectedItem: rewardProgramsData?.[index],
-                }}
-              >
-                <FontAwesomeIcon
-                  icon="fa-solid fa-pen-to-square"
-                  style={{ color: "#0BB6C0" }}
-                />
-              </Link>
+              <FontAwesomeIcon
+                icon="fa-solid fa-trash"
+                style={{ color: "#d65d5d" }}
+                onClick={() => deleteRewardProgram(program._id)}
+              />
             </div>
           </div>
         </div>
@@ -67,14 +86,7 @@ function Profile({ rewardProgramsData, userData, tripsData }) {
             </div>
 
             <div className="col-1 d-flex align-items-center justify-content-end p-0">
-              <Link
-                to={"/trips/edit"}
-                className="btn-link"
-                state={{
-                  edit: true,
-                  selectedItem: trip,
-                }}
-              >
+              <Link to={"/trips/edit"}>
                 <FontAwesomeIcon
                   icon="fa-solid fa-pen-to-square"
                   style={{ color: "#0BB6C0" }}
@@ -131,13 +143,7 @@ function Profile({ rewardProgramsData, userData, tripsData }) {
             <h3 className="float-right">Reward Programs</h3>
           </div>
           <div className="col-2 d-flex justify-content-end">
-            <Link
-              to={"/profile/programs/add"}
-              className="btn-link"
-              state={{
-                addNew: true,
-              }}
-            >
+            <Link to="/profile/reward-programs" className="nav-link">
               <FontAwesomeIcon
                 icon="fa-solid fa-plus"
                 size="lg"
@@ -166,6 +172,11 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = { deleteTripData, setActiveTrip, fetchUpdatedTrips };
+const mapDispatchToProps = {
+  deleteTripData,
+  setActiveTrip,
+  fetchUpdatedTrips,
+  fetchUpdatedAccount,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
