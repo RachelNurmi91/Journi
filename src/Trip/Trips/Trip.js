@@ -34,8 +34,6 @@ function Trip({
   const tripRequest = new TripRequests();
 
   const { edit, id } = useParams();
-  const location = useLocation();
-  console.log(history);
 
   const setCurrentTrip = useCallback(() => {
     if (id) {
