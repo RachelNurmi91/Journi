@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
-  departureDate: null,
+  departureDate: { date: new Date() },
 };
 
 function Trip({
@@ -118,6 +118,31 @@ function Trip({
       .catch((error) => console.error("Error: Cannot delete trip: ", error));
   };
 
+  const handleDepartureDate = (date) => {
+    let today = new Date().getTime();
+    let selectedDate = new Date(date).getTime();
+    let selectedReturnDate = new Date(returnDate).getTime();
+    if (today > selectedDate) {
+      console.error("Cannot select date in the past.");
+      return;
+    }
+
+    if (today < selectedDate) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        departureFlight: {
+          ...prevFormData.departureFlight,
+          date: date,
+        },
+      }));
+    }
+
+    if (selectedReturnDate && selectedReturnDate < selectedDate) {
+      console.error("Departure date cannot be after return date.");
+      return;
+    }
+  };
+
   return (
     <div className="content-body">
       <div className="container">
@@ -139,13 +164,17 @@ function Trip({
           />
         </div>
         <div className="row">
-          <Input
-            name="departureDate"
-            onChange={handleChange}
-            label="Departure Date"
-            placeholder="MM/DD/YYYY"
-            value={formData.departureDate}
-          />
+
+              <FontAwesomeIcon
+                icon="fa-solid fa-calendar-days"
+                style={{ color: "#0bb6c0" }}
+              />
+              <span className="label mx-3">Depart</span>
+              <Calendar
+                selectedDate={formData.departureDate}
+                onDateChange={handleDepartureDate}
+              />
+    
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
