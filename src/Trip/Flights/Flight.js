@@ -61,8 +61,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
         props.userData?.firstName + " " + props.userData?.lastName;
     }
 
-    console.log(formData.ticketHolder);
-
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
