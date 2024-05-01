@@ -5,8 +5,9 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
+import { deleteTripData } from "../../Redux/Actions/AccountActions";
 
-function FlightList({ flightListData, ...props }) {
+function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
   const [sortedFlights, setSortedFlights] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -325,4 +326,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(FlightList);
+const mapDispatchToProps = { fetchUpdatedTrips, deleteTripData };
+
+export default connect(mapStateToProps, mapDispatchToProps)(FlightList);
