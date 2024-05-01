@@ -56,6 +56,13 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
   const saveFlight = () => {
     setLoading(true);
+    if (!formData.ticketHolder) {
+      formData.ticketHolder =
+        props.userData?.firstName + " " + props.userData?.lastName;
+    }
+
+    console.log(formData.ticketHolder);
+
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
@@ -410,6 +417,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Name on Ticket"
               label="Name on Ticket"
+              value={formData.ticketHolder}
             />
           </div>
         ) : null}
