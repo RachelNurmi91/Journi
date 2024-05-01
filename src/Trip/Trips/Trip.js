@@ -13,7 +13,6 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import Loading from "../../Shared/UI/Loading";
-import { useLocation } from "react-router-dom";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
