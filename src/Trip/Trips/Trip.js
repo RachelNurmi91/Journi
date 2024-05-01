@@ -16,7 +16,7 @@ import Calendar from "../../Shared/UI/Calendar";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
-  departureDate: { date: new Date() },
+  departureDate: new Date(),
 };
 
 function Trip({
@@ -27,6 +27,8 @@ function Trip({
   ...props
 }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+  const [departureDate, setDepartureDate] = useState(new Date());
+
   const tripRequest = new TripRequests();
 
   const location = useLocation();
@@ -94,46 +96,20 @@ function Trip({
       .catch((error) => console.error(error));
   };
 
-  const deleteTrip = async (selectedTrip) => {
-    await tripRequest
-      .deleteTrip(selectedTrip)
-      .then(() => {
-        if (selectedTrip._id === activeTrip?._id) {
-          if (tripsData.length > 1) {
-            let updatedTrips = [...tripsData];
-            let index = updatedTrips.findIndex(
-              (x) => x._id === selectedTrip._id
-            );
-            if (index !== -1) {
-              updatedTrips.splice(index, 1);
-            }
-            setActiveTrip(updatedTrips[0]);
-          } else {
-            setActiveTrip(null);
-          }
-        } else {
-          setActiveTrip(tripsData[0]);
-        }
-        fetchUpdatedTrips().then(() => navigate("/profile"));
-      })
-      .catch((error) => console.error("Error: Cannot delete trip: ", error));
-  };
-
   const handleDepartureDate = (date) => {
     let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
+
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
       return;
     }
 
     if (today < selectedDate) {
+      setDepartureDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        departureFlight: {
-          ...prevFormData.departureFlight,
-          date: date,
-        },
+        departureDate: date,
       }));
     }
   };
@@ -159,17 +135,15 @@ function Trip({
           />
         </div>
         <div className="row">
-
-              <FontAwesomeIcon
-                icon="fa-solid fa-calendar-days"
-                style={{ color: "#0bb6c0" }}
-              />
-              <span className="label mx-3">Depart</span>
-              <Calendar
-                selectedDate={formData.departureDate}
-                onDateChange={handleDepartureDate}
-              />
-    
+          <FontAwesomeIcon
+            icon="fa-solid fa-calendar-days"
+            style={{ color: "#0bb6c0" }}
+          />
+          <span className="label mx-3">Depart</span>
+          <Calendar
+            selectedDate={departureDate}
+            onDateChange={handleDepartureDate}
+          />
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
@@ -178,19 +152,6 @@ function Trip({
               onClick={edit ? updateTrip : saveTrip}
             />
           </div>
-
-          {edit ? (
-            <div className="col-1 d-flex align-self-center p-2">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                size="lg"
-                onClick={() => {
-                  deleteTrip(formData?._id);
-                }}
-              />
-            </div>
-          ) : null}
         </div>
       </div>
     </div>

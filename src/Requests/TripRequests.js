@@ -4,6 +4,7 @@ const LOCALSERVER = "http://localhost:8080";
 
 export default class TripRequests {
   addTrip(tripData) {
+    console.log(tripData);
     const token = localStorage.getItem("token");
 
     return axios
