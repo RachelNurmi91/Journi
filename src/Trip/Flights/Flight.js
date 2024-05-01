@@ -55,7 +55,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   }, [edit, setCurrentProgram]);
 
   const saveFlight = () => {
-    setLoading(true)
+    setLoading(true);
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
@@ -66,35 +66,44 @@ function Flight({ fetchUpdatedTrips, ...props }) {
     tripRequest
       .addFlight(formData)
       .then(() => {
-        setLoading(false)
+        setLoading(false);
         fetchUpdatedTrips().then(() => props.navigate("/flights"));
       })
-      .catch((error) => {console.error(error); setLoading(false)});
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   // onUpdate is for editing exiting flights
   const updateFlight = () => {
-    setLoading(true)
+    setLoading(true);
     tripRequest
       .updateFlight(formData)
       .then(() => {
-        setLoading(false)
+        setLoading(false);
         fetchUpdatedTrips().then(() => props.navigate("/flights"));
       })
-      .catch((error) => {console.error(error); setLoading(false)});
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   const deleteFlight = (id) => {
-    setLoading(true)
+    setLoading(true);
     tripRequest
       .deleteFlight(id)
       .then(() => {
         fetchUpdatedTrips().then(() => {
-          setLoading(false)
+          setLoading(false);
           props.navigate("/flights");
         });
       })
-      .catch((error) => {console.error("Error: Cannot delete trip: ", error); setLoading(false)});
+      .catch((error) => {
+        console.error("Error: Cannot delete trip: ", error);
+        setLoading(false);
+      });
   };
 
   const handleRadioCheck = (event) => {
@@ -337,7 +346,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
       </>
     );
   };
-
+  console.log(formData?.departureFlight);
   const renderRoundtripFields = () => {
     return (
       <div className="roundtrip-inputs">
@@ -369,7 +378,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Flight Number"
               label="Flight Number"
-              value={formData?.departureFlight?.[0]?.flightNo}
+              value={formData?.departureFlight?.flightNo}
             />
           </div>
           <div className="col">
@@ -378,7 +387,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Seat"
               label="Seat"
-              value={formData?.departureFlight?.[0]?.seat}
+              value={formData?.departureFlight?.seat}
             />
           </div>
         </div>
@@ -391,7 +400,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Flight Number"
               label="Flight Number"
-              value={formData?.returnFlight?.[0]?.flightNo}
+              value={formData?.returnFlight?.flightNo}
             />
           </div>
           <div className="col">
@@ -400,7 +409,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Seat"
               label="Seat"
-              value={formData?.returnFlight?.[0]?.seat}
+              value={formData?.returnFlight?.seat}
             />
           </div>
         </div>
@@ -454,7 +463,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Flight Number"
               label="Flight Number"
-              value={formData?.departureFlight?.[0]?.flightNo}
+              value={formData?.departureFlight?.flightNo}
             />
           </div>
           <div className="col">
@@ -463,7 +472,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Seat"
               label="Seat"
-              value={formData?.departureFlight?.[0]?.seat}
+              value={formData?.departureFlight?.seat}
             />
           </div>
         </div>
@@ -506,8 +515,19 @@ function Flight({ fetchUpdatedTrips, ...props }) {
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button
-              label={edit ? loading ? <Loader size="10px" /> : "Update" : loading ? <Loader size="10px" /> : "Save"}
-
+              label={
+                edit ? (
+                  loading ? (
+                    <Loader size="10px" />
+                  ) : (
+                    "Update"
+                  )
+                ) : loading ? (
+                  <Loader size="10px" />
+                ) : (
+                  "Save"
+                )
+              }
               onClick={edit ? updateFlight : saveFlight}
             />
           </div>
