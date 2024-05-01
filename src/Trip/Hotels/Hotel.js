@@ -10,6 +10,7 @@ import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import { useLocation } from "react-router-dom";
+import Loader from "../../Shared/UI/Loader";
 
 const DEFAULT_FORM_DATA = {
   hotel: null,
@@ -26,6 +27,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [arrivalDate, setArrivalDate] = useState(new Date());
   const [departureDate, setDepartureDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
 
@@ -81,34 +83,40 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   // onSave is for new hotels
   const saveHotel = async () => {
+    setLoading(true)
     formData.tripId = props.activeTripId;
     tripRequest
       .addHotel(formData)
       .then(() => {
         fetchUpdatedTrips().then(() => props.navigate("/hotels"));
+        setLoading(false)
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {console.error(error); setLoading(false)});
   };
 
   // onUpdate is for editing exiting hotels
   const updateHotel = () => {
+    setLoading(true)
     tripRequest
       .updateHotel(formData)
       .then(() => {
-        fetchUpdatedTrips().then(() => props.navigate("/hotels"));
+        fetchUpdatedTrips().then(() => {props.navigate("/hotels")
+        setLoading(false)});
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {console.error(error); setLoading(false)});
   };
 
   const deleteHotel = (id) => {
+    setLoading(true)
     tripRequest
       .deleteHotel(id)
       .then(() => {
         fetchUpdatedTrips().then(() => {
           props.navigate("/hotels");
+          setLoading(false)
         });
       })
-      .catch((error) => console.error("Error: Cannot delete trip: ", error));
+      .catch((error) => {console.error("Error: Cannot delete trip: ", error); setLoading(false)});
   };
 
   const handleArrivalDate = (date) => {
@@ -289,7 +297,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button
-              label={edit ? "Update" : "Save"}
+              label={edit ? loading ? <Loader size="10px" /> : "Update" : loading ? <Loader size="10px" /> : "Save"}
               onClick={edit ? updateHotel : saveHotel}
             />
           </div>

@@ -12,6 +12,7 @@ import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import { useLocation } from "react-router-dom";
+import Loader from "../../Shared/UI/Loader";
 
 const DEFAULT_FORM_DATA = {
   type: "roundtrip",
@@ -28,6 +29,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   const [isOneWay, setIsOneWay] = useState(false);
   const [departureDate, setDepartureDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
 
@@ -53,6 +55,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   }, [edit, setCurrentProgram]);
 
   const saveFlight = () => {
+    setLoading(true)
     formData.tripId = props.activeTripId;
     if (!formData.ticketHolder)
       formData.ticketHolder =
@@ -63,30 +66,35 @@ function Flight({ fetchUpdatedTrips, ...props }) {
     tripRequest
       .addFlight(formData)
       .then(() => {
+        setLoading(false)
         fetchUpdatedTrips().then(() => props.navigate("/flights"));
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {console.error(error); setLoading(false)});
   };
 
   // onUpdate is for editing exiting flights
   const updateFlight = () => {
+    setLoading(true)
     tripRequest
       .updateFlight(formData)
       .then(() => {
+        setLoading(false)
         fetchUpdatedTrips().then(() => props.navigate("/flights"));
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {console.error(error); setLoading(false)});
   };
 
   const deleteFlight = (id) => {
+    setLoading(true)
     tripRequest
       .deleteFlight(id)
       .then(() => {
         fetchUpdatedTrips().then(() => {
+          setLoading(false)
           props.navigate("/flights");
         });
       })
-      .catch((error) => console.error("Error: Cannot delete trip: ", error));
+      .catch((error) => {console.error("Error: Cannot delete trip: ", error); setLoading(false)});
   };
 
   const handleRadioCheck = (event) => {
@@ -498,7 +506,8 @@ function Flight({ fetchUpdatedTrips, ...props }) {
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button
-              label={edit ? "Update" : "Save"}
+              label={edit ? loading ? <Loader size="10px" /> : "Update" : loading ? <Loader size="10px" /> : "Save"}
+
               onClick={edit ? updateFlight : saveFlight}
             />
           </div>
