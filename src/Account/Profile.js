@@ -19,6 +19,7 @@ function Profile({
   userData,
   tripsData,
   activeTrip,
+  ...props
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -71,6 +72,10 @@ function Profile({
       });
   };
 
+  const navigateToEditTrips = (id) => {
+    props.navigate(`/trips/edit/${id}`);
+  };
+
   const renderProgramsList = () => {
     return rewardProgramsData?.map((program, index) => {
       return (
@@ -118,12 +123,11 @@ function Profile({
             </div>
 
             <div className="col-1 d-flex align-items-center justify-content-end p-0">
-              <Link to="/trips/edit" className="nav-link">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-pen-to-square"
-                  style={{ color: "#0BB6C0" }}
-                />
-              </Link>
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                style={{ color: "#0BB6C0" }}
+                onClick={() => navigateToEditTrips(trip._id)}
+              />
             </div>
             <div className="col-1 d-flex align-items-center justify-content-end p-0">
               <FontAwesomeIcon

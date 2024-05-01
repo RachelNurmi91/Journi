@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import Input from "../../Shared/UI/Input";
 import { connect } from "react-redux";
 import {
@@ -10,7 +9,7 @@ import Button from "../../Shared/UI/Button";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Header from "../../Shared/UI/Header";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 
@@ -23,7 +22,7 @@ function Trip({
   fetchUpdatedTrips,
   closeSideNav,
   activeTrip,
-  tripsData,
+  tripsListData,
   ...props
 }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
@@ -31,22 +30,19 @@ function Trip({
 
   const tripRequest = new TripRequests();
 
-  const location = useLocation();
-
-  const { edit, selectedItem } = location.state || {};
-
-  const navigate = useNavigate();
+  const { edit, id } = useParams();
 
   const setCurrentTrip = useCallback(() => {
-    if (selectedItem) {
-      if (formData._id !== selectedItem?._id) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          ...selectedItem,
-        }));
+    if (id) {
+      if (formData._id !== id) {
+        let trip = tripsListData.find(
+          (trip) => trip._id?.toString() === id?.toString()
+        );
+        setDepartureDate(trip.departureDate);
+        setFormData(trip);
       }
     }
-  }, [selectedItem, formData._id]);
+  }, [id, formData._id, tripsListData]);
 
   useEffect(() => {
     if (edit) {
@@ -80,7 +76,7 @@ function Trip({
           );
 
           props.setActiveTrip(activeTrip);
-          navigate("/summary");
+          props.navigate("/summary");
         });
       })
       .catch((error) => console.error(error));
@@ -161,7 +157,7 @@ function Trip({
 function mapStateToProps(state) {
   return {
     userData: state.account?.userAccount,
-    tripsData: state.account?.userAccount?.trips,
+    tripsListData: state.account?.userAccount?.trips,
     activeTrip: state.account?.activeTrip,
   };
 }

@@ -22,6 +22,23 @@ export default class TripRequests {
       });
   }
 
+  updateTrip(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${LOCALSERVER}/trips/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
   deleteTrip(tripId) {
     const token = localStorage.getItem("token");
 
