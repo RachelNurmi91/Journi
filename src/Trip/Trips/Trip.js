@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import Loading from "../../Shared/UI/Loading";
+import { useLocation } from "react-router-dom";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
@@ -33,6 +34,8 @@ function Trip({
   const tripRequest = new TripRequests();
 
   const { edit, id } = useParams();
+  const location = useLocation();
+  console.log(history);
 
   const setCurrentTrip = useCallback(() => {
     if (id) {
@@ -78,8 +81,8 @@ function Trip({
             (trips) => trips._id?.toString() === newTrip._id?.toString()
           );
 
-          props.setActiveTrip(activeTrip);
           setLoading(false);
+          props.setActiveTrip(activeTrip);
           props.navigate("/summary");
         });
       })
