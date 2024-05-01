@@ -12,6 +12,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Header from "../../Shared/UI/Header";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Calendar from "../../Shared/UI/Calendar";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
@@ -121,7 +122,6 @@ function Trip({
   const handleDepartureDate = (date) => {
     let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
-    let selectedReturnDate = new Date(returnDate).getTime();
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
       return;
@@ -135,11 +135,6 @@ function Trip({
           date: date,
         },
       }));
-    }
-
-    if (selectedReturnDate && selectedReturnDate < selectedDate) {
-      console.error("Departure date cannot be after return date.");
-      return;
     }
   };
 
