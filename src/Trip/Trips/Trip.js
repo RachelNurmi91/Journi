@@ -119,16 +119,17 @@ function Trip({
 
   return (
     <div className="content-body">
+      <Header
+        title={edit ? "Update Trip" : "Add Trip"}
+        leftIcon={edit ? true : false}
+        destination={"/profile"}
+        props={{
+          addNew: true,
+        }}
+      />
+      <div className="row"></div>
       <div className="container">
-        <Header
-          title={edit ? "Update Trip" : "Add Trip"}
-          leftIcon={edit ? true : false}
-          destination={"/profile"}
-          props={{
-            addNew: true,
-          }}
-        />
-        <div className="row">
+        <div className="row mt-2">
           <Input
             name="tripName"
             onChange={handleChange}
@@ -137,16 +138,18 @@ function Trip({
             value={formData.tripName}
           />
         </div>
-        <div className="row">
-          <FontAwesomeIcon
-            icon="fa-solid fa-calendar-days"
-            style={{ color: "#0bb6c0" }}
-          />
-          <span className="label mx-3">Depart</span>
-          <Calendar
-            selectedDate={departureDate}
-            onDateChange={handleDepartureDate}
-          />
+        <div className="outlined-box px-4 py-3 mt-2">
+          <div className="text-center">
+            <FontAwesomeIcon
+              icon="fa-solid fa-calendar-days"
+              style={{ color: "#0bb6c0" }}
+            />
+            <span className="label mx-3">Departure</span>
+            <Calendar
+              selectedDate={departureDate}
+              onDateChange={handleDepartureDate}
+            />
+          </div>
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">

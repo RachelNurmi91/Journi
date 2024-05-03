@@ -85,7 +85,7 @@ function Profile({
 
           <div className="row">
             <div className="col-5 col-lg-1 label">{program.programName}</div>
-            <div className="col-5 align-items-start">
+            <div className="col-5 d-flex align-items-center justify-content-end">
               {program.membershipId}
             </div>
             <div className="col-2 d-flex align-items-center justify-content-end">
