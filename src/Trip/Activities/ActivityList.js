@@ -10,9 +10,9 @@ import Loading from "../../Shared/UI/Loading";
 
 function ActivityList({
   fetchUpdatedTrips,
-  hotelListData: activityListData,
+  activityListData,
   deleteTripData,
-
+  trip,
   ...props
 }) {
   const [activityList, setActivityList] = useState(null);
@@ -67,7 +67,7 @@ function ActivityList({
   };
 
   const displayActivities = () => {
-    return activityList?.map((hotel, index) => {
+    return activityList?.map((activity, index) => {
       return (
         <div className="shadow-box" key={index}>
           <div className="row d-flex justify-content-end mx-1">
@@ -75,7 +75,7 @@ function ActivityList({
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"
                 style={{ color: "#d65d5d" }}
-                onClick={() => deleteActivity(hotel._id)}
+                onClick={() => deleteActivity(activity._id)}
               />
             </div>
           </div>
@@ -88,12 +88,14 @@ function ActivityList({
           >
             <div className="row">
               <span className="b22-mon primary-color text-center">
-                Okinawa Tea Ceremony
+                {activity?.activityName}
               </span>
             </div>
 
             <div className="row">
-              <div className="text-center b13-mon">April 3, 2025</div>
+              <div className="text-center b13-mon">
+                {Methods.formatShortDate(activity.activityDate)}
+              </div>
             </div>
 
             <div className="row my-3">
@@ -102,7 +104,7 @@ function ActivityList({
                 className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
                 style={{ borderRadius: "5px" }}
               >
-                {hotel.confirmationNo}
+                {activity.confirmationNo}
               </div>
             </div>
 
@@ -111,7 +113,7 @@ function ActivityList({
                 <div>
                   <div className="b16-mon"> Arrival </div>
                   <div className="text-center">
-                    {Methods.formatLongDate(hotel.arrivalDate)}
+                    {Methods.formatLongDate(activity.arrivalDate)}
                   </div>
                 </div>
               </div>
@@ -119,7 +121,7 @@ function ActivityList({
                 <div>
                   <div className="b16-mon"> Departure </div>
                   <div className="text-center">
-                    {Methods.formatLongDate(hotel.departureDate)}
+                    {Methods.formatLongDate(activity.departureDate)}
                   </div>
                 </div>
               </div>
@@ -151,6 +153,8 @@ function ActivityList({
     });
   };
 
+  console.log(activityListData, trip);
+
   return (
     <>
       <div className="content-body activity-list">
@@ -169,7 +173,8 @@ function ActivityList({
 
 function mapStateToProps(state) {
   return {
-    activityListData: state.account?.activeTrip?.hotels,
+    activityListData: state.account?.activeTrip?.activities,
+    trip: state.account?.activeTrip,
   };
 }
 

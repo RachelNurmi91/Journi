@@ -19,6 +19,7 @@ const initialState = {
     username: null,
     rewardPrograms: [],
     trips: [],
+    activities: [],
   },
   activeTrip: null,
 };
