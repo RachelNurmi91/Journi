@@ -11,20 +11,25 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Checkbox from "../../Shared/UI/Checkbox";
 import ImageUploading from "react-images-uploading";
 import Loading from "../../Shared/UI/Loading";
+import Textarea from "../../Shared/UI/Textarea";
 
 const DEFAULT_FORM_DATA = {
   activityName: null,
   location: null,
-  ticketed: false,
-  tickets: new Date(),
   activityDate: new Date(),
   activityTime: new Date(),
+  addOns: {
+    addedComments: false,
+    comment: null,
+    addedTickets: false,
+    ticketNo: null,
+    ticketUploads: [],
+  },
 };
 
 function Activity({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
-  const [uploads, setUploads] = useState([]);
 
   const tripRequest = new TripRequests();
 
@@ -61,10 +66,23 @@ function Activity({ fetchUpdatedTrips, ...props }) {
       });
   };
 
-  const toggleTickedActivity = () => {
+  const toggleTickets = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      ticketed: !prevFormData.ticketed,
+      addOns: {
+        ...prevFormData.addOns,
+        addedTickets: !prevFormData.addOns.addedTickets,
+      },
+    }));
+  };
+
+  const toggleComments = () => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      addOns: {
+        ...prevFormData.addOns,
+        addedComments: !prevFormData.addOns.addedComments,
+      },
     }));
   };
 
@@ -93,9 +111,13 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   };
 
   const handleTicketUpload = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setUploads(imageList);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      addOns: {
+        ...prevFormData.addOns,
+        ticketUploads: imageList,
+      },
+    }));
   };
 
   const renderOptionsBox = () => {
@@ -137,7 +159,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
         title="Add Activity"
         leftIcon={true}
         destination={"/activities"}
-        subtitle="Add any activity, event, adventure or excursion."
+        subtitle="Add any activity, event or excursion."
         props={{
           addNew: true,
         }}
@@ -164,62 +186,84 @@ function Activity({ fetchUpdatedTrips, ...props }) {
         </div>
         <div className="ticketed row mt-2">
           <Checkbox
-            label="Upload tickets for this event."
-            toggleCheckbox={toggleTickedActivity}
+            label="Add ticket information"
+            toggleCheckbox={toggleTickets}
           />
-          {formData.ticketed ? (
-            <ImageUploading
-              multiple
-              value={uploads}
-              onChange={handleTicketUpload}
-              maxNumber={12}
-              dataURLKey="data_url"
-              acceptType={["jpg", "png"]}
-            >
-              {({
-                imageList,
-                onImageUpload,
-                onImageRemove,
-                isDragging,
-                dragProps,
-              }) => (
-                <div className="upload__image-wrapper mt-3">
-                  <div className="w-50">
-                    <Button
-                      label="Select File"
-                      style={isDragging ? { color: "red" } : null}
-                      onClick={onImageUpload}
-                      {...dragProps}
-                    />
-                  </div>
-                  <div className="b13-mon mt-1">
-                    * Only 'PNG' or 'JPG' image files are allowed.
-                  </div>
+          {formData.addOns.addedTickets ? (
+            <>
+              <Input
+                name="ticketNo"
+                onChange={handleChange}
+                placeholder="Confirmation Number"
+                label="Ticket/Reservation Confirmation"
+                value={formData.ticketNo}
+              />
 
-                  <div className="container">
-                    <div className="row">
-                      {imageList.map((image, index) => (
-                        <div key={index} className="col-4 mt-2 p-1">
-                          <div className="d-flex flex-column align-items-start image-item">
-                            <img
-                              src={image.data_url}
-                              alt=""
-                              className="cropped-ticket"
-                            />
-                            <div
-                              className="mx-2 error-color b13-mon"
-                              onClick={() => onImageRemove(index)}
-                            >
-                              Remove
+              <ImageUploading
+                multiple
+                value={formData?.addOns?.ticketUploads}
+                onChange={handleTicketUpload}
+                maxNumber={12}
+                dataURLKey="data_url"
+                acceptType={[]}
+              >
+                {({
+                  imageList,
+                  onImageUpload,
+                  onImageRemove,
+                  isDragging,
+                  dragProps,
+                }) => (
+                  <div className="upload__image-wrapper my-3">
+                    <div className="mx-auto w-50">
+                      <Button
+                        label="Select File"
+                        style={isDragging ? { color: "red" } : null}
+                        onClick={onImageUpload}
+                        {...dragProps}
+                      />
+                    </div>
+
+                    <div className="container">
+                      <div className="row">
+                        {imageList.map((image, index) => (
+                          <div key={index} className="col-4 mt-2 p-1">
+                            <div className="d-flex flex-column align-items-start image-item">
+                              <img
+                                src={image.data_url}
+                                alt=""
+                                className="cropped-ticket"
+                              />
+                              <div
+                                className="mx-2 error-color b13-mon"
+                                onClick={() => onImageRemove(index)}
+                              >
+                                Remove
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </ImageUploading>
+                )}
+              </ImageUploading>
+            </>
+          ) : null}
+        </div>
+        <div className="row">
+          <Checkbox
+            label="Add additional comments"
+            toggleCheckbox={toggleComments}
+          />
+          {formData.addOns.addedComments ? (
+            <Textarea
+              name="comments"
+              // onChange={handleComments}
+              placeholder="Add additional information..."
+              label="Comments"
+              // value
+            />
           ) : null}
         </div>
         <div className="row mt-3">
