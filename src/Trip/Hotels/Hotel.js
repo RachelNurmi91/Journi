@@ -191,7 +191,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Hotel"
-        leftIcon={!!props.activeTrip.hotels.length ? true : false}
+        leftIcon={true}
         destination={"/hotels"}
         props={{
           addNew: true,

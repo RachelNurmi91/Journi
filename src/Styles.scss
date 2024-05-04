@@ -326,10 +326,30 @@ button {
     font-family: "Sora", sans-serif;
     color: $white;
     text-decoration: none;
+
+    
+      &:link {
+        text-decoration: none;
+        color: $white;
+      }
+      &:visited {
+        text-decoration: none;
+        color: $white;
+      }
+      &:hover {
+        text-decoration: none;
+        color: $white;
+      }
+      &:active {
+        text-decoration: none;
+        color: $white;
+      }
+    
   }
+  
 }
 
-.calendar {
+.date-time {
   text-align: center;
   width: 105px;
   border: none;
@@ -428,4 +448,19 @@ button {
     margin: 25px 0 0 -10px;
 
   }
+}
+
+.activity {
+  .cropped-ticket {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 100%;
+  }
+  .ticketed {
+    button {
+      background-color: #bcc8c9;
+    }
+  }
+  
 }

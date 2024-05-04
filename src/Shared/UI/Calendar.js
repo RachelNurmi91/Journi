@@ -8,7 +8,7 @@ function Calendar({ selectedDate, onDateChange }) {
       onChange={(date) => onDateChange(date)}
       minDate={new Date()}
       disabledKeyboardNavigation
-      className="calendar"
+      className="date-time"
       withPortal
     />
   );

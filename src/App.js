@@ -1,6 +1,6 @@
 import "./Styles.scss";
 import Navbar from "./Layout/Navbar";
-import Content from "./Layout/Content";
+import Routes from "./Layout/Routes";
 import TokenVerification from "./Shared/Data/TokenVerification";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div>
       <div className="content-position">
         <Navbar />
-        <Content />
+        <Routes />
       </div>
       <TokenVerification />
     </div>

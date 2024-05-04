@@ -122,6 +122,19 @@ function Sidebar({
                     />
                     <span className="ms-2">Flights</span>
                   </Link>
+                </li>{" "}
+                <li>
+                  <Link
+                    to={"/activities"}
+                    className="nav-link"
+                    onClick={() => closeSideNav()}
+                  >
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-hotel"
+                      style={{ color: "#fff" }}
+                    />
+                    <span className="ms-2">Activities</span>
+                  </Link>
                 </li>
               </>
             ) : null}

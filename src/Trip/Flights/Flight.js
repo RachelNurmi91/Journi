@@ -490,7 +490,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Flight"
-        leftIcon={!!props.activeTrip.flights.length ? true : false}
+        leftIcon={true}
         destination={"/flights"}
         props={{
           addNew: true,

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 
-function Header({ title, rightIcon, leftIcon, destination, props }) {
+function Header({ title, rightIcon, leftIcon, destination, props, subtitle }) {
   let navigate = useNavigate();
 
   const renderRightIcon = (icon) => {
@@ -38,12 +38,11 @@ function Header({ title, rightIcon, leftIcon, destination, props }) {
   return (
     <div className="row mt-2 mb-3">
       {leftIcon ? (
-        <div className="col-1 d-flex align-items-center">
-          {renderLeftIcon(leftIcon)}
-        </div>
+        <div className="col-1 mt-1">{renderLeftIcon(leftIcon)}</div>
       ) : null}
       <div className={`${rightIcon || leftIcon ? "col-11" : "col-12"}`}>
         <h2 className=" mb-0">{title}</h2>
+        <div className="b13-mon my-2">{subtitle}</div>
       </div>
       {rightIcon ? (
         <div className="col-1 d-flex justify-content-end">
