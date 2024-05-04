@@ -44,11 +44,6 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   const saveActivity = async () => {
     setLoading(true);
 
-    if (!formData.nameOnReservation) {
-      formData.nameOnReservation =
-        props.userData?.firstName + " " + props.userData?.lastName;
-    }
-
     formData.tripId = props.activeTripId;
     tripRequest
       .addActivity(formData)
@@ -94,6 +89,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   };
 
   const handleActivityDate = (date) => {
+    debugger;
     let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
 
@@ -105,7 +101,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
     if (today < selectedDate) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        departureDate: date,
+        activityDate: date,
       }));
     }
   };
@@ -169,11 +165,11 @@ function Activity({ fetchUpdatedTrips, ...props }) {
         <div className="row"> {renderOptionsBox()}</div>
         <div className="row mt-2">
           <Input
-            name="activity"
+            name="activityName"
             onChange={handleChange}
             placeholder="Activity"
-            label="Name of Activity "
-            value={formData.name}
+            label="Activity"
+            value={formData.activityName}
           />
 
           <Input
