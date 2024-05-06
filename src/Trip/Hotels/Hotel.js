@@ -50,8 +50,6 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   // onSave is for new hotels
   const saveHotel = async () => {
     setLoading(true);
-    console.log(formData);
-    debugger;
     if (!formData.nameOnReservation) {
       formData.nameOnReservation =
         props.userData?.firstName + " " + props.userData?.lastName;
@@ -87,61 +85,39 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   // };
 
   const handleArrivalDate = (date) => {
-    let today = new Date().getTime();
-    let returnDate = new Date(formData.arrivalDate).getTime();
     let selectedDate = new Date(date).getTime();
-    let selectedDepartureDate = new Date(formData.departureDate).getTime();
-    if (today > selectedDate) {
-      console.error("Cannot select date in the past.");
-      return;
+    let departureDate = new Date(formData.arrivalDate).getTime();
+
+    if (departureDate && departureDate < selectedDate) {
+      handleDepartureDate(date);
     }
 
-    if (today < selectedDate) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        arrivalDate: date,
-      }));
-    }
-
-    if (returnDate < selectedDate) {
+    if (departureDate < selectedDate) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         departureDate: date,
       }));
     }
 
-    if (selectedDepartureDate && selectedDepartureDate < selectedDate) {
-      console.error("Arrival date cannot be after departure date.");
-      return;
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      arrivalDate: selectedDate,
+    }));
   };
 
   const handleDepartureDate = (date) => {
-    let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
-    let selectedArrivalDate = new Date(formData.arrivalDate).getTime();
+    let arrivalDate = new Date(formData.arrivalDate).getTime();
 
-    if (today > selectedDate) {
-      console.error("Cannot select date in the past.");
-      return;
-    }
-
-    if (selectedDate < formData.arrivalDate) {
+    if (selectedDate < arrivalDate) {
       console.error("Departure can not occur before the arrival.");
       return;
     }
 
-    if (today < selectedDate) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        departureDate: date,
-      }));
-    }
-
-    if (selectedArrivalDate && selectedArrivalDate > selectedDate) {
-      console.error("Departure date cannot be before arrival date.");
-      return;
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      departureDate: selectedDate,
+    }));
   };
 
   const renderOptionsBox = () => {

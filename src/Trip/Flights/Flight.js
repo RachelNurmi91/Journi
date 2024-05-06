@@ -133,16 +133,8 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   };
 
   const handleDepartureDate = (date) => {
-    let today = new Date().getTime();
-    let returnDate = formData.returnFlight
-      ? new Date(formData.returnFlight.date).getTime()
-      : null;
+    let returnDate = new Date(formData.returnFlight?.date).getTime();
     let selectedDate = new Date(date).getTime();
-
-    if (today > selectedDate) {
-      console.error("Cannot select date in the past.");
-      return;
-    }
 
     if (returnDate < selectedDate) {
       setFormData((prevFormData) => ({
@@ -154,51 +146,40 @@ function Flight({ fetchUpdatedTrips, ...props }) {
       }));
     }
 
-    if (today < selectedDate) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        departureFlight: {
-          ...prevFormData.departureFlight,
-          date: date,
-        },
-      }));
+    if (returnDate && returnDate < selectedDate) {
+      handleReturnDate(date);
     }
 
-    if (returnDate && returnDate < selectedDate) {
-      console.error("Departure date cannot be after return date.");
-      return;
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      departureFlight: {
+        ...prevFormData.departureFlight,
+        date: date,
+      },
+    }));
   };
 
   const handleReturnDate = (date) => {
-    let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
     let selectedDepartDate = new Date(formData.departureDate).getTime();
-
-    if (today > selectedDate) {
-      console.error("Cannot select date in the past.");
-      return;
-    }
 
     if (selectedDate < formData.departureFlight?.date) {
       console.error("Departure can not occur before the arrival.");
       return;
     }
 
-    if (today < selectedDate) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        returnFlight: {
-          ...prevFormData.returnFlight,
-          date: date,
-        },
-      }));
-    }
-
     if (selectedDepartDate && selectedDepartDate > selectedDate) {
       console.error("Return date cannot be before departure date.");
       return;
     }
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      returnFlight: {
+        ...prevFormData.returnFlight,
+        date: date,
+      },
+    }));
   };
 
   const handleInputChange = (event) => {
