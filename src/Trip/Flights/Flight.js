@@ -397,7 +397,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Name on Ticket"
               label="Name on Ticket"
-              value={formData.ticketHolder}
+              value={formData?.ticketHolder}
             />
           </div>
         ) : null}
@@ -461,6 +461,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               onChange={handleInputChange}
               placeholder="Name on Ticket"
               label="Name on Ticket"
+              value={formData?.ticketHolder}
             />
           </div>
         ) : null}

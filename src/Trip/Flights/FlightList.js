@@ -103,44 +103,49 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
               </div>
             </div>
           </div>
-          <div className="row mt-2">
+          <div className="row mt-3">
             <div className="text-center b13-mon">
               {Methods.formatLongDate(departureFlight?.date)}
             </div>
           </div>
           <div className="row mt-3">
-            <div className="col-6">
+            <div className="col-6 mt-2">
               <div>
                 <div className="input-title"> Airline </div>
                 <div>{flight?.airline}</div>
               </div>
             </div>
-            <div className="col-6">
-              <div className="input-title">Flight No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {departureFlight?.flightNo}
+            {departureFlight?.flightNo ? (
+              <div className="col-6 mt-2">
+                <div className="input-title">Flight No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {departureFlight?.flightNo}
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-6">
-              <div>
-                <div className="input-title"> Seat </div>
-                <div>{departureFlight?.seat}</div>
+            ) : null}
+
+            {departureFlight.seat ? (
+              <div className="col-6 mt-2">
+                <div>
+                  <div className="input-title"> Seat </div>
+                  <div>{departureFlight?.seat}</div>
+                </div>
               </div>
-            </div>
-            <div className="col-6">
-              <div className="input-title">Confirm. No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {flight.confirmationNo}
+            ) : null}
+            {flight.confirmationNo ? (
+              <div className="col-6 mt-2">
+                <div className="input-title">Confirm. No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {flight.confirmationNo}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
         <div className="text-center mt-2">

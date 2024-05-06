@@ -100,21 +100,11 @@ function Trip({
   };
 
   const handleDepartureDate = (date) => {
-    let today = new Date().getTime();
-    let selectedDate = new Date(date).getTime();
-
-    if (today > selectedDate) {
-      console.error("Cannot select date in the past.");
-      return;
-    }
-
-    if (today < selectedDate) {
-      setDepartureDate(date);
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        departureDate: date,
-      }));
-    }
+    setDepartureDate(date);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      departureDate: date,
+    }));
   };
 
   return (

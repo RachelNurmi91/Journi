@@ -98,21 +98,22 @@ function HotelList({
                 {hotel.city}, {hotel.country}
               </div>
             </div>
-
-            <div className="row my-3">
-              <div className="b16-mon">Confirmation No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {hotel.confirmationNo}
+            {hotel.confirmationNo ? (
+              <div className="row mt-3">
+                <div className="b16-mon">Confirmation No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {hotel.confirmationNo}
+                </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className="row">
+            <div className="row mt-3">
               <div className="col-6 d-flex justify-content-start">
                 <div>
-                  <div className="b16-mon"> Arrival </div>
+                  <div className="b16-mon label"> Arrival </div>
                   <div className="text-center">
                     {Methods.formatLongDate(hotel.arrivalDate)}
                   </div>
@@ -120,7 +121,7 @@ function HotelList({
               </div>
               <div className="col-6 d-flex justify-content-end">
                 <div>
-                  <div className="b16-mon"> Departure </div>
+                  <div className="b16-mon label"> Departure </div>
                   <div className="text-center">
                     {Methods.formatLongDate(hotel.departureDate)}
                   </div>
@@ -130,7 +131,7 @@ function HotelList({
             <hr />
             <div className="row">
               <div className="text-center b13-mon">
-                Reserved by {hotel.nameOnReservation}
+                Reserved under "{hotel.nameOnReservation}"
               </div>
             </div>
           </div>

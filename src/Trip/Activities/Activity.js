@@ -102,11 +102,9 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   };
 
   const handleActivityDate = (date) => {
-    let selectedDate = new Date(date).getTime();
-
     setFormData((prevFormData) => ({
       ...prevFormData,
-      activityDate: selectedDate,
+      activityDate: date,
     }));
   };
 
