@@ -1,7 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function Time({ selectedDate, onDateChange }) {
+function Time({ selectedDate, onDateChange, placeholder }) {
   return (
     <DatePicker
       selected={selectedDate}
@@ -14,6 +14,7 @@ function Time({ selectedDate, onDateChange }) {
       timeCaption="Time"
       dateFormat="h:mm aa"
       className="date-time"
+      placeholderText={placeholder}
     />
   );
 }

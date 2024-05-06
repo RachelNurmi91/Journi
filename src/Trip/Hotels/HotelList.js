@@ -69,7 +69,7 @@ function HotelList({
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
       return (
-        <div className="shadow-box" key={index}>
+        <div className="shadow-box mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
             <div className="col-1">
               <FontAwesomeIcon

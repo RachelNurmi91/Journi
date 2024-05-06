@@ -130,7 +130,7 @@ function Sidebar({
                     onClick={() => closeSideNav()}
                   >
                     <FontAwesomeIcon
-                      icon="fa-solid fa-hotel"
+                      icon="fa-solid fa-mountain-city"
                       style={{ color: "#fff" }}
                     />
                     <span className="ms-2">Activities</span>

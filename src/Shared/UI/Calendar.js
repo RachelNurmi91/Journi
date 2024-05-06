@@ -1,7 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function Calendar({ selectedDate, onDateChange }) {
+function Calendar({ selectedDate, onDateChange, placeholder }) {
   return (
     <DatePicker
       selected={selectedDate}
@@ -10,6 +10,7 @@ function Calendar({ selectedDate, onDateChange }) {
       disabledKeyboardNavigation
       className="date-time"
       withPortal
+      placeholderText={placeholder}
     />
   );
 }

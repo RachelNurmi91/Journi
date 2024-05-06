@@ -66,10 +66,21 @@ function ActivityList({
       });
   };
 
+  const renderTickets = (tickets) => {
+    return tickets.map((ticket, index) => (
+      <div key={index} className="col-4 mt-2 p-1">
+        <div className="d-flex flex-column align-items-start image-item">
+          <img src={ticket?.data_url} alt="" className="cropped-ticket" />
+        </div>
+      </div>
+    ));
+  };
+
   const displayActivities = () => {
     return activityList?.map((activity, index) => {
+      let tickets = activity?.addOns?.ticketUploads;
       return (
-        <div className="shadow-box" key={index}>
+        <div className="shadow-box  mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
             <div className="col-1">
               <FontAwesomeIcon
@@ -92,44 +103,47 @@ function ActivityList({
               </span>
             </div>
 
-            <div className="row">
+            <div className="row mt-2">
               <div className="text-center b13-mon">
-                {Methods.formatShortDate(activity.activityDate)}
+                {Methods.formatLongDate(activity?.activityDate)}
+
+                {activity?.activityTime ? (
+                  <>
+                    <div className="d-inline mx-2">
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-clock"
+                        style={{ color: "#0BB6C0" }}
+                      />
+                    </div>
+
+                    {Methods.formatTime(activity?.activityTime)}
+                  </>
+                ) : null}
               </div>
             </div>
 
-            <div className="row my-3">
-              <div className="b16-mon">Confirmation No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {activity.confirmationNo}
+            {activity.addOns.ticketNo ? (
+              <div className="row my-3">
+                <div className="b16-mon label">Ticket/Confirmation No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {activity?.addOns?.ticketNo}
+                </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className="row">
-              <div className="col-6 d-flex justify-content-start">
-                <div>
-                  <div className="b16-mon"> Arrival </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(activity.arrivalDate)}
-                  </div>
-                </div>
+            {activity.addOns.comments ? (
+              <div className="row my-3">
+                <div className="b16-mon label">Comments</div>
+                <div className="mx-2">{activity?.addOns?.comments}</div>
               </div>
-              <div className="col-6 d-flex justify-content-end">
-                <div>
-                  <div className="b16-mon"> Departure </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(activity.departureDate)}
-                  </div>
-                </div>
-              </div>
-            </div>
+            ) : null}
             <hr />
             <div className="row">
               <div className="text-center b13-mon">
-                Reserved by Rachel Nurmi
+                {renderTickets(tickets)}
               </div>
             </div>
           </div>
@@ -163,8 +177,9 @@ function ActivityList({
           rightIcon="add"
           destination={"/activity/add"}
         />
-        {activityListData?.length ? displayActivities() : displayActivities()}
-        {/*  : "Girly pop, add your first activity!"} */}
+        {activityListData?.length
+          ? displayActivities()
+          : "Girly pop, add your first activity!"}
       </div>
       <Loading loading={loading} />
     </>

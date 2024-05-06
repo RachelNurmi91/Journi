@@ -16,8 +16,8 @@ const DEFAULT_FORM_DATA = {
   hotel: null,
   city: null,
   country: null,
-  arrivalDate: new Date(),
-  departureDate: new Date(),
+  arrivalDate: null,
+  departureDate: null,
   confirmationNo: null,
   nameOnReservation: null,
 };
@@ -25,8 +25,6 @@ const DEFAULT_FORM_DATA = {
 function Hotel({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
-  const [arrivalDate, setArrivalDate] = useState(new Date());
-  const [departureDate, setDepartureDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
@@ -95,16 +93,15 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
 
   const handleArrivalDate = (date) => {
     let today = new Date().getTime();
-    let returnDate = new Date(formData.departureDate).getTime();
+    let returnDate = new Date(formData.arrivalDate).getTime();
     let selectedDate = new Date(date).getTime();
-    let selectedDepartureDate = new Date(departureDate).getTime();
+    let selectedDepartureDate = new Date(formData.departureDate).getTime();
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
       return;
     }
 
     if (today < selectedDate) {
-      setArrivalDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
         arrivalDate: date,
@@ -112,7 +109,6 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     }
 
     if (returnDate < selectedDate) {
-      setDepartureDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
         departureDate: date,
@@ -128,7 +124,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   const handleDepartureDate = (date) => {
     let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
-    let selectedArrivalDate = new Date(arrivalDate).getTime();
+    let selectedArrivalDate = new Date(formData.arrivalDate).getTime();
 
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
@@ -141,7 +137,6 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     }
 
     if (today < selectedDate) {
-      setDepartureDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
         departureDate: date,
@@ -166,8 +161,9 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Arrival</span>
               <Calendar
-                selectedDate={arrivalDate}
+                selectedDate={formData.arrivalDate}
                 onDateChange={handleArrivalDate}
+                placeholder="Select Date"
               />
             </div>
             <div className="col text-center">
@@ -177,8 +173,9 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Departure</span>
               <Calendar
-                selectedDate={departureDate}
+                selectedDate={formData.departureDate}
                 onDateChange={handleDepartureDate}
+                placeholder="Select Date"
               />
             </div>
           </div>

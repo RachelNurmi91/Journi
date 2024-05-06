@@ -84,6 +84,7 @@ function Login({ ...props }) {
               username: account.data.username,
               rewardPrograms: account.data.rewardPrograms,
               trips: account.data.trips,
+              activities: account.data.activities,
             };
 
             props.setLoggedInUserData(accountData);

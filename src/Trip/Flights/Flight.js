@@ -18,8 +18,8 @@ const DEFAULT_FORM_DATA = {
   type: "roundtrip",
   airline: null,
   confirmationNo: null,
-  departureFlight: { date: new Date() },
-  returnFlight: { date: new Date() },
+  departureFlight: null,
+  returnFlight: null,
   ticketHolder: null,
 };
 
@@ -27,8 +27,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [isOneWay, setIsOneWay] = useState(false);
-  const [departureDate, setDepartureDate] = useState(new Date());
-  const [returnDate, setReturnDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
@@ -135,16 +133,17 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
   const handleDepartureDate = (date) => {
     let today = new Date().getTime();
-    let returnDate = new Date(formData.returnFlight.date).getTime();
+    let returnDate = formData.returnFlight
+      ? new Date(formData.returnFlight.date).getTime()
+      : null;
     let selectedDate = new Date(date).getTime();
-    let selectedReturnDate = new Date(returnDate).getTime();
+
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
       return;
     }
 
     if (returnDate < selectedDate) {
-      setReturnDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
         returnFlight: {
@@ -155,7 +154,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
     }
 
     if (today < selectedDate) {
-      setDepartureDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
         departureFlight: {
@@ -165,7 +163,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
       }));
     }
 
-    if (selectedReturnDate && selectedReturnDate < selectedDate) {
+    if (returnDate && returnDate < selectedDate) {
       console.error("Departure date cannot be after return date.");
       return;
     }
@@ -174,7 +172,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
   const handleReturnDate = (date) => {
     let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
-    let selectedDepartDate = new Date(departureDate).getTime();
+    let selectedDepartDate = new Date(formData.departureDate).getTime();
 
     if (today > selectedDate) {
       console.error("Cannot select date in the past.");
@@ -187,7 +185,6 @@ function Flight({ fetchUpdatedTrips, ...props }) {
     }
 
     if (today < selectedDate) {
-      setReturnDate(date);
       setFormData((prevFormData) => ({
         ...prevFormData,
         returnFlight: {
@@ -311,9 +308,11 @@ function Flight({ fetchUpdatedTrips, ...props }) {
                 style={{ color: "#0bb6c0" }}
               />
               <span className="label mx-3">Depart</span>
+              {console.log(formData)}
               <Calendar
-                selectedDate={departureDate}
+                selectedDate={formData.departureFlight.date}
                 onDateChange={handleDepartureDate}
+                placeholder="Select Date"
               />
             </div>
 
@@ -325,8 +324,9 @@ function Flight({ fetchUpdatedTrips, ...props }) {
                 />
                 <span className="label mx-3">Return</span>
                 <Calendar
-                  selectedDate={returnDate}
+                  selectedDate={formData.returnFlight.date}
                   onDateChange={handleReturnDate}
+                  placeholder="Select Date"
                 />
               </div>
             )}

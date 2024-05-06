@@ -16,11 +16,11 @@ import Textarea from "../../Shared/UI/Textarea";
 const DEFAULT_FORM_DATA = {
   activityName: null,
   location: null,
-  activityDate: new Date(),
-  activityTime: new Date(),
+  activityDate: null,
+  activityTime: null,
   addOns: {
     addedComments: false,
-    comment: null,
+    comments: null,
     addedTickets: false,
     ticketNo: null,
     ticketUploads: [],
@@ -33,18 +33,12 @@ function Activity({ fetchUpdatedTrips, ...props }) {
 
   const tripRequest = new TripRequests();
 
-  const handleChange = (event) => {
-    const targetKey = event.target.name;
-    const newValue = event.target.value;
-
-    setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
-  };
-
   // onSave is for new activities
   const saveActivity = async () => {
     setLoading(true);
 
     formData.tripId = props.activeTripId;
+    console.log(formData);
     tripRequest
       .addActivity(formData)
       .then(() => {
@@ -81,6 +75,26 @@ function Activity({ fetchUpdatedTrips, ...props }) {
     }));
   };
 
+  const handleChange = (event) => {
+    const targetKey = event.target.name;
+    const newValue = event.target.value;
+
+    setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
+  };
+
+  const handleAddOnChange = (event) => {
+    const targetKey = event.target.name;
+    const newValue = event.target.value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      addOns: {
+        ...prevFormData.addOns,
+        [targetKey]: newValue,
+      },
+    }));
+  };
+
   const handleActivityTime = (time) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -89,7 +103,6 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   };
 
   const handleActivityDate = (date) => {
-    debugger;
     let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
 
@@ -128,8 +141,9 @@ function Activity({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Date</span>
               <Calendar
-                selectedDate={formData.activityTime}
+                selectedDate={formData.activityDate}
                 onDateChange={handleActivityDate}
+                placeholder="Select Date"
               />
             </div>
             <div className="col text-center">
@@ -141,6 +155,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
               <Time
                 selectedDate={formData.activityTime}
                 onDateChange={handleActivityTime}
+                placeholder="Select Time"
               />
             </div>
           </div>
@@ -189,10 +204,10 @@ function Activity({ fetchUpdatedTrips, ...props }) {
             <>
               <Input
                 name="ticketNo"
-                onChange={handleChange}
+                onChange={handleAddOnChange}
                 placeholder="Confirmation Number"
                 label="Ticket/Reservation Confirmation"
-                value={formData.ticketNo}
+                value={formData.addOns.ticketNo}
               />
 
               <ImageUploading
@@ -255,7 +270,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
           {formData.addOns.addedComments ? (
             <Textarea
               name="comments"
-              // onChange={handleComments}
+              onChange={handleAddOnChange}
               placeholder="Add additional information..."
               label="Comments"
               // value

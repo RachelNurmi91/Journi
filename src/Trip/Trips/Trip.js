@@ -16,7 +16,7 @@ import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   tripName: null,
-  departureDate: new Date(),
+  departureDate: null,
 };
 
 function Trip({
@@ -148,6 +148,7 @@ function Trip({
             <Calendar
               selectedDate={departureDate}
               onDateChange={handleDepartureDate}
+              placeholder="Select Date"
             />
           </div>
         </div>

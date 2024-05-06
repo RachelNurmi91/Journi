@@ -49,4 +49,25 @@ export default class Methods {
 
     return formattedDate;
   };
+
+  static formatTime = (unformattedTime) => {
+    const time = new Date(unformattedTime);
+    let timeOfDay;
+    let hour = time.getHours();
+
+    let minute = time.getMinutes().toString().padStart(2, "0");
+
+    if (hour >= 12) {
+      timeOfDay = "PM";
+
+      if (hour > 12) {
+        hour -= 12;
+      }
+    } else {
+      timeOfDay = "AM";
+    }
+
+    const formattedTime = `${hour}:${minute} ${timeOfDay}`;
+    return formattedTime;
+  };
 }
