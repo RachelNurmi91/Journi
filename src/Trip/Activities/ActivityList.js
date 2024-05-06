@@ -7,6 +7,8 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import Modal from "react-bootstrap/Modal";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function ActivityList({
   fetchUpdatedTrips,
@@ -18,11 +20,18 @@ function ActivityList({
   const [activityList, setActivityList] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showTicketModal, setShowTicketModal] = useState(false);
+  const [activeTicketImg, setActiveTicketImg] = useState(false);
 
   const tripRequest = new TripRequests();
 
   const toggleOpen = () => {
     setOpen((prevState) => !prevState);
+  };
+
+  const toggleTicketModal = (ticketImg) => {
+    setActiveTicketImg(ticketImg);
+    setShowTicketModal((prevState) => !prevState);
   };
 
   const sortByDate = useCallback(() => {
@@ -70,7 +79,12 @@ function ActivityList({
     return tickets.map((ticket, index) => (
       <div key={index} className="col-4 mt-2 p-1">
         <div className="d-flex flex-column align-items-start image-item">
-          <img src={ticket?.data_url} alt="" className="cropped-ticket" />
+          <img
+            src={ticket?.data_url}
+            alt=""
+            className="thumbnail"
+            onClick={() => toggleTicketModal(ticket?.data_url)}
+          />
         </div>
       </div>
     ));
@@ -182,6 +196,20 @@ function ActivityList({
           : "Girly pop, add your first activity!"}
       </div>
       <Loading loading={loading} />
+      <Modal show={showTicketModal}>
+        <div style={{ position: "relative" }}>
+          <div className="close" onClick={toggleTicketModal}>
+            <FontAwesomeIcon
+              icon="fa-solid fa-xmark"
+              style={{ color: "#0BB6C0" }}
+              size="lg"
+            />
+          </div>
+          <div>
+            <img src={activeTicketImg} alt="Ticket" className="ticket" />
+          </div>
+        </div>
+      </Modal>
     </>
   );
 }

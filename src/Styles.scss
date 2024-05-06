@@ -451,12 +451,6 @@ button {
 }
 
 .activity {
-  .cropped-ticket {
-    width: 75px;
-    height: 75px;
-    object-fit: cover;
-    border-radius: 100%;
-  }
   .ticketed {
     button {
       background-color: #bcc8c9;
@@ -464,3 +458,32 @@ button {
   }
   
 }
+
+.thumbnail {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.modal-dialog {
+  .modal-content {
+    overflow: hidden;
+    padding: 0px 5px 5px;
+ 
+
+    .close{
+      display: flex;
+      justify-content: end;
+padding: 10px;
+
+    }
+    .ticket {
+      width: 100%;
+    }
+  }
+}
+
+
+
+
