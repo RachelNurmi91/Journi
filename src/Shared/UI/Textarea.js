@@ -3,15 +3,17 @@ import { useRef } from "react";
 function Textarea({ name, onChange, placeholder, label, value }) {
   const textRef = useRef(null);
 
+  console.log(name);
+
   return (
     <div className="form-group my-2">
-      <label htmlFor={name} className="mb-2">
+      <label htmlFor="textareaId" className="mb-2">
         {label}
       </label>
       <textarea
         placeholder={placeholder}
         name={name}
-        id={name}
+        id="textareaId"
         onChange={onChange}
         value={value}
         ref={textRef}

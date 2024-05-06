@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import logo from "../Media/Images/logo-white.png";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import Sidebar from "./Sidebar";
 
 function Navbar() {
@@ -73,6 +72,4 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = { removeLoggedInUserData };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps)(Navbar);

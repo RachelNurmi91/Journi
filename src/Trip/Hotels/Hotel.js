@@ -43,12 +43,6 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     }));
   };
 
-  const handleReservationName = (event) => {
-    let name = event.target.value;
-
-    setFormData((prevState) => ({ ...prevState, nameOnReservation: name }));
-  };
-
   const newNameInputToggle = () => {
     setDisplayNewNameInput(!displayNewNameInput);
   };
@@ -56,7 +50,8 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   // onSave is for new hotels
   const saveHotel = async () => {
     setLoading(true);
-
+    console.log(formData);
+    debugger;
     if (!formData.nameOnReservation) {
       formData.nameOnReservation =
         props.userData?.firstName + " " + props.userData?.lastName;
@@ -246,7 +241,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
           {displayNewNameInput ? (
             <Input
               name="nameOnReservation"
-              onChange={handleReservationName}
+              onChange={handleChange}
               placeholder="Name on Reservation"
               label="Name on Reservation"
               value={formData.nameOnReservation}

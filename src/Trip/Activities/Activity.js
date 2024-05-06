@@ -38,7 +38,6 @@ function Activity({ fetchUpdatedTrips, ...props }) {
     setLoading(true);
 
     formData.tripId = props.activeTripId;
-    console.log(formData);
     tripRequest
       .addActivity(formData)
       .then(() => {
@@ -103,20 +102,12 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   };
 
   const handleActivityDate = (date) => {
-    let today = new Date().getTime();
     let selectedDate = new Date(date).getTime();
 
-    if (today > selectedDate) {
-      console.error("Cannot select date in the past.");
-      return;
-    }
-
-    if (today < selectedDate) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        activityDate: date,
-      }));
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      activityDate: selectedDate,
+    }));
   };
 
   const handleTicketUpload = (imageList, addUpdateIndex) => {
@@ -195,7 +186,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
             value={formData.location}
           />
         </div>
-        <div className="ticketed row mt-2">
+        <div className="ticketed row my-2">
           <Checkbox
             label="Add ticket information"
             toggleCheckbox={toggleTickets}
@@ -262,7 +253,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
             </>
           ) : null}
         </div>
-        <div className="row">
+        <div>
           <Checkbox
             label="Add additional comments"
             toggleCheckbox={toggleComments}
@@ -273,7 +264,6 @@ function Activity({ fetchUpdatedTrips, ...props }) {
               onChange={handleAddOnChange}
               placeholder="Add additional information..."
               label="Comments"
-              // value
             />
           ) : null}
         </div>

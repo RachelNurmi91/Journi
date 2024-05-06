@@ -10,7 +10,7 @@ import Header from "../../Shared/UI/Header";
 import Input from "../../Shared/UI/Input";
 import AccountRequests from "../../Requests/AccountRequests";
 import Loading from "../../Shared/UI/Loading";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const DEFAULT_FORM_DATA = {
   username: null,
   password: null,
@@ -36,7 +36,7 @@ function Login({ ...props }) {
     // Account for all possible missing data error checks before attempting login.
     if (!formData.username && !formData.password) {
       console.error("Login failed: Username and password missing.");
-      setErrorStatus("Please provide both username and password.");
+      setErrorStatus("Please provide username and password.");
       setLoading(false);
       return;
     } else if (!formData.username) {
@@ -126,13 +126,17 @@ function Login({ ...props }) {
             value={formData.password}
           />
         </div>
-        <div className="row">
+        <div className="row mt-3">
           <Button label="Login" onClick={onLogin} />
         </div>
         {error ? (
           <div className="row">
-            <div className="b13-mon text-center error-color py-2 px-3 mt-3">
-              {error}
+            <div className="b13-mon text-center error-color py-2 px-3 mt-2">
+              <FontAwesomeIcon
+                icon="fa-solid fa-circle-exclamation"
+                style={{ color: "#d65d5d" }}
+              />
+              <span className="mx-1"> {error}</span>
             </div>
           </div>
         ) : null}

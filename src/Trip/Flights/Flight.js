@@ -54,6 +54,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
 
   const saveFlight = () => {
     setLoading(true);
+
     if (!formData.ticketHolder) {
       formData.ticketHolder =
         props.userData?.firstName + " " + props.userData?.lastName;
@@ -310,7 +311,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
               <span className="label mx-3">Depart</span>
               {console.log(formData)}
               <Calendar
-                selectedDate={formData.departureFlight.date}
+                selectedDate={formData?.departureFlight?.date}
                 onDateChange={handleDepartureDate}
                 placeholder="Select Date"
               />
@@ -324,7 +325,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
                 />
                 <span className="label mx-3">Return</span>
                 <Calendar
-                  selectedDate={formData.returnFlight.date}
+                  selectedDate={formData?.returnFlight?.date}
                   onDateChange={handleReturnDate}
                   placeholder="Select Date"
                 />

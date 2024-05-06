@@ -10,10 +10,10 @@ function Checkbox({ label, toggleCheckbox }) {
         className="form-check-input"
         type="checkbox"
         value=""
-        id="flexCheckDefault"
+        id="checkBoxId"
         onClick={toggleCheckbox}
       />
-      <label className="form-check-label px-2" htmlFor="flexCheckDefault">
+      <label className="form-check-label px-2" htmlFor="checkBoxId">
         {label}
       </label>
     </div>

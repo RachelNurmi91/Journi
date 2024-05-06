@@ -68,6 +68,7 @@ function HotelList({
 
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
+      console.log(hotel);
       return (
         <div className="shadow-box mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
@@ -129,7 +130,7 @@ function HotelList({
             <hr />
             <div className="row">
               <div className="text-center b13-mon">
-                Reserved by Rachel Nurmi
+                Reserved by {hotel.nameOnReservation}
               </div>
             </div>
           </div>

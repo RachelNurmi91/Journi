@@ -2,23 +2,17 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 import TripSelector from "./TripSelector";
+import Methods from "../Shared/Methods";
 
 function Sidebar({
   closeSideNav,
-  removeLoggedInUserData,
   activeTrip,
   userId,
   showSideBar,
   userData,
   toggleSideNav,
 }) {
-  const logout = () => {
-    localStorage.clear();
-    removeLoggedInUserData();
-  };
-
   const TripSelectorMemo = useMemo(
     () => <TripSelector closeSideNav={closeSideNav} />,
     [closeSideNav]
@@ -138,7 +132,7 @@ function Sidebar({
                 </li>
               </>
             ) : null}
-            <li>
+            <li className="mt-4">
               <li>
                 <Link
                   to={"/trips/add"}
@@ -158,7 +152,7 @@ function Sidebar({
         <div className="flex-shrink-1 align-items-end">
           <ul className="menu">
             <li>
-              <div className="nav-link" onClick={() => logout()}>
+              <div className="nav-link" onClick={() => Methods.logout()}>
                 <FontAwesomeIcon
                   icon="fa-solid fa-arrow-right-from-bracket"
                   style={{ color: "#fff" }}
@@ -206,8 +200,4 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = {
-  removeLoggedInUserData,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps)(Sidebar);
