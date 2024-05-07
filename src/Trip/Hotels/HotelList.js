@@ -100,7 +100,7 @@ function HotelList({
             </div>
             {hotel.confirmationNo ? (
               <div className="row mt-3">
-                <div className="b16-mon">Confirmation No.</div>
+                <div className="b16-mon label">Confirmation No.</div>
                 <div
                   className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
                   style={{ borderRadius: "5px" }}
