@@ -217,38 +217,46 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
           </div>
 
           <div className="row mt-3">
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Airline </div>
-                <div>{flight?.airline}</div>
+            {flight?.airline ? (
+              <div className="col-6">
+                <div>
+                  <div className="b16-mon mt-2 label"> Airline </div>
+                  <div>{flight?.airline}</div>
+                </div>
               </div>
-            </div>
-            <div className="col-6">
-              <div className="b16-mon">Flight No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {departureFlight?.flightNo}
+            ) : null}
+            {departureFlight?.flightNo ? (
+              <div className="col-6">
+                <div className="b16-mon mt-2 label">Flight No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {departureFlight?.flightNo}
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-6">
-              <div>
-                <div className="b16-mon"> Seat </div>
-                <div>{departureFlight?.seat}</div>
+            ) : null}
+
+            {departureFlight?.seat ? (
+              <div className="col-6 mt-2">
+                <div>
+                  <div className="b16-mon label"> Seat </div>
+                  <div>{departureFlight?.seat}</div>
+                </div>
               </div>
-            </div>
-            <div className="col-6">
-              <div className="b16-mon">Confirm. No.</div>
-              <div
-                className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                style={{ borderRadius: "5px" }}
-              >
-                {flight.confirmationNo}
+            ) : null}
+
+            {flight.confirmationNo ? (
+              <div className="col-6 mt-2">
+                <div className="b16-mon label">Confirm. No.</div>
+                <div
+                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                  style={{ borderRadius: "5px" }}
+                >
+                  {flight.confirmationNo}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
 
           <div className="separator">
@@ -257,41 +265,48 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
             </span>
           </div>
           <div className="container ">
-            <div className="row"></div>
-
             <div className="row">
-              <div className="col-6">
-                <div>
-                  <div className="b16-mon"> Airline </div>
-                  <div>{flight?.airline}</div>
+              {flight?.airline ? (
+                <div className="col-6 mt-2">
+                  <div>
+                    <div className="b16-mon label"> Airline </div>
+                    <div>{flight?.airline}</div>
+                  </div>
                 </div>
-              </div>
-              <div className="col-6">
-                <div className="b16-mon">Flight No.</div>
-                <div
-                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                  style={{ borderRadius: "5px" }}
-                >
-                  {returnFlight?.flightNo}
+              ) : null}
+
+              {returnFlight?.flightNo ? (
+                <div className="col-6">
+                  <div className="b16-mon mt-2 label">Flight No.</div>
+                  <div
+                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                    style={{ borderRadius: "5px" }}
+                  >
+                    {returnFlight?.flightNo}
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-6">
-                <div>
-                  <div className="b16-mon"> Seat </div>
-                  <div>{returnFlight?.seat}</div>
+              ) : null}
+
+              {returnFlight?.seat ? (
+                <div className="col-6">
+                  <div>
+                    <div className="b16-mon mt-2 label"> Seat </div>
+                    <div>{returnFlight?.seat}</div>
+                  </div>
                 </div>
-              </div>
-              <div className="col-6">
-                <div className="b16-mon">Confirm. No.</div>
-                <div
-                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                  style={{ borderRadius: "5px" }}
-                >
-                  {flight.confirmationNo}
+              ) : null}
+
+              {flight.confirmationNo ? (
+                <div className="col-6 mt-2">
+                  <div className="b16-mon label">Confirm. No.</div>
+                  <div
+                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                    style={{ borderRadius: "5px" }}
+                  >
+                    {flight.confirmationNo}
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
