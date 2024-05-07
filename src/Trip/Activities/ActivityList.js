@@ -154,12 +154,17 @@ function ActivityList({
                 <div className="mx-2">{activity?.addOns?.comments}</div>
               </div>
             ) : null}
-            <hr />
-            <div className="row">
-              <div className="text-center b13-mon">
-                {renderTickets(tickets)}
-              </div>
-            </div>
+
+            {activity.addOns.ticketUploads.length ? (
+              <>
+                <hr />
+                <div className="row">
+                  <div className="text-center b13-mon">
+                    {renderTickets(tickets)}
+                  </div>
+                </div>
+              </>
+            ) : null}
           </div>
           <div className="text-center">
             {open ? (
