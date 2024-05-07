@@ -26,6 +26,9 @@ function Profile({
   const [loading, setLoading] = useState(false);
   const [rewardProgramsList, setRewardProgramsList] = useState(null);
   const [tripsList, setTripsList] = useState(null);
+  const [openTrips, setOpenTrips] = useState(false);
+  const [openPrograms, setOpenPrograms] = useState(false);
+
   // const [showImgModal, setShowImgModal] = useState(false);
 
   const accountRequest = new AccountRequests();
@@ -38,6 +41,14 @@ function Profile({
   // const toggleImgModal = (ticketImg) => {
   //   setShowImgModal((prevState) => !prevState);
   // };
+
+  const toggleOpenTrips = () => {
+    setOpenTrips((prevState) => !prevState);
+  };
+
+  const toggleOpenPrograms = () => {
+    setOpenPrograms((prevState) => !prevState);
+  };
 
   const sortTripsByDate = useCallback(() => {
     let sortedTrips;
@@ -132,7 +143,7 @@ function Profile({
         <div key={index}>
           {index === 0 ? null : <hr />}
 
-          <div className="row">
+          <div className="row pt-2">
             <div className="col-5 col-lg-1 label">{program.programName}</div>
             <div className="col-5 d-flex align-items-center justify-content-end">
               {program.membershipId}
@@ -217,7 +228,7 @@ function Profile({
         </div>
       </div>
 
-      <div className="outlined-box mt-3 p-4">
+      <div className="outlined-box mt-3 p-4  mb-4">
         <div className="row">
           <h3 className="float-right">User Details</h3>
         </div>
@@ -236,7 +247,7 @@ function Profile({
         </div>
       </div>
 
-      <div className="outlined-box mt-3 p-4">
+      <div className="outlined-box mb-4">
         <div className="row">
           <div className="col-10">
             <h3 className="float-right">Trips</h3>
@@ -251,12 +262,33 @@ function Profile({
             </Link>
           </div>
         </div>
-        <div className="container mt-3">
+        <div
+          className="container collapsible mt-2"
+          style={{
+            height: openTrips ? "" : "50px",
+            transition: "height 0.10s ease",
+          }}
+        >
           {tripsData.length ? renderTripList() : "Friend, you need a vacation."}
+        </div>
+        <div className="text-center mt-2">
+          {openPrograms ? (
+            <FontAwesomeIcon
+              icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
+              style={{ color: "#0BB6C0" }}
+              onClick={toggleOpenTrips}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
+              style={{ color: "#0BB6C0" }}
+              onClick={toggleOpenTrips}
+            />
+          )}
         </div>
       </div>
 
-      <div className="outlined-box mt-3 p-4">
+      <div className="outlined-box  mb-4">
         <div className="row">
           <div className="col-10">
             <h3 className="float-right">Reward Programs</h3>
@@ -271,11 +303,31 @@ function Profile({
             </Link>
           </div>
         </div>
-
-        <div className="container mt-3">
+        <div
+          className="container collapsible mt-2"
+          style={{
+            height: openPrograms ? "" : "50px",
+            transition: "height 0.10s ease",
+          }}
+        >
           {rewardProgramsData?.length
             ? renderProgramsList()
             : "Add your reward programs!"}
+        </div>
+        <div className="text-center mt-2">
+          {openPrograms ? (
+            <FontAwesomeIcon
+              icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
+              style={{ color: "#0BB6C0" }}
+              onClick={toggleOpenPrograms}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
+              style={{ color: "#0BB6C0" }}
+              onClick={toggleOpenPrograms}
+            />
+          )}
         </div>
       </div>
       <Loading loading={loading} />

@@ -12,6 +12,12 @@ $white: #fff;
   font-size: $font;
 }
 
+@mixin box($padding:20px) {
+  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  padding: $padding;
+}
+
 .loading-screen {
   position: fixed;
   top: 0;
@@ -121,6 +127,10 @@ a {
 
 .profile {
   .label {@include font-mon(16px, 700);}
+
+  .outlined-box {
+    @include box(25px 25px 10px);
+  }
 }
 
 
@@ -201,16 +211,14 @@ a {
 
 
 
+
+
 /* Box styles */
 
-@mixin box($padding:20px) {
-  font-family: 'Inter', sans-serif;
-  border-radius: 10px;
-  padding: $padding;
-}
+
 
 .outlined-box {
-  @include box(25px );
+  @include box(25px);
   border: 1px solid #c0c0c0;
 
   h3 {
