@@ -16,6 +16,7 @@ function Sidebar({
 }) {
   const logout = () => {
     removeLoggedInUserData();
+    closeSideNav();
   };
   const TripSelectorMemo = useMemo(
     () => <TripSelector closeSideNav={closeSideNav} />,
