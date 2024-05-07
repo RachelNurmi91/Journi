@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +23,8 @@ function Profile({
   ...props
 }) {
   const [loading, setLoading] = useState(false);
+  const [rewardProgramsList, setRewardProgramsList] = useState(null);
+  const [tripsList, setTripsList] = useState(null);
 
   const accountRequest = new AccountRequests();
   const tripRequest = new TripRequests();
@@ -30,6 +32,47 @@ function Profile({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const sortTripsByDate = useCallback(() => {
+    let sortedTrips;
+
+    let trips = [...tripsData];
+
+    if (trips && trips?.length > 1) {
+      sortedTrips = trips.sort((a, b) => {
+        if (a.departureDate > b.departureDate) return 1;
+        if (a.departureDate < b.departureDate) return -1;
+        return 0;
+      });
+    } else {
+      sortedTrips = trips;
+    }
+
+    setTripsList(sortedTrips);
+  }, [tripsData]);
+
+  const sortRewardProgramsByName = useCallback(() => {
+    let sortedRewardPrograms;
+
+    let rewardPrograms = [...rewardProgramsData];
+
+    if (rewardPrograms && rewardPrograms?.length > 1) {
+      sortedRewardPrograms = rewardPrograms.sort((a, b) => {
+        if (a.programName > b.programName) return 1;
+        if (a.programName < b.programName) return -1;
+        return 0;
+      });
+    } else {
+      sortedRewardPrograms = rewardPrograms;
+    }
+
+    setRewardProgramsList(sortedRewardPrograms);
+  }, [rewardProgramsData]);
+
+  useEffect(() => {
+    sortRewardProgramsByName();
+    sortTripsByDate();
+  }, [sortTripsByDate, sortRewardProgramsByName]);
 
   const deleteTrip = async (selectedTrip) => {
     setLoading(true);
@@ -78,7 +121,7 @@ function Profile({
   };
 
   const renderProgramsList = () => {
-    return rewardProgramsData?.map((program, index) => {
+    return rewardProgramsList?.map((program, index) => {
       return (
         <div key={index}>
           {index === 0 ? null : <hr />}
@@ -102,7 +145,7 @@ function Profile({
   };
 
   const renderTripList = () => {
-    return tripsData?.map((trip, index) => {
+    return tripsList?.map((trip, index) => {
       return (
         <div key={index}>
           {index === 0 ? null : <hr />}
@@ -115,10 +158,10 @@ function Profile({
                 </div>
 
                 <div className="col-6">
-                  {trip.hotels?.length ? trip.hotels.length : "0"} Hotels
+                  ({trip.hotels?.length ? trip.hotels.length : "0"}) Hotels
                 </div>
                 <div className="col-6">
-                  {trip.flights?.length ? trip.flights.length : "0"} Flights
+                  ({trip.flights?.length ? trip.flights.length : "0"}) Flights
                 </div>
               </div>
             </div>
