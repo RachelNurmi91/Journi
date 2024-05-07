@@ -19,9 +19,7 @@ const DEFAULT_FORM_DATA = {
   activityDate: null,
   activityTime: null,
   addOns: {
-    addedComments: false,
     comments: null,
-    addedTickets: false,
     ticketNo: null,
     ticketUploads: [],
   },
@@ -30,6 +28,8 @@ const DEFAULT_FORM_DATA = {
 function Activity({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [showTickets, setShowTickets] = useState(false);
 
   const tripRequest = new TripRequests();
 
@@ -55,23 +55,11 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   };
 
   const toggleTickets = () => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      addOns: {
-        ...prevFormData.addOns,
-        addedTickets: !prevFormData.addOns.addedTickets,
-      },
-    }));
+    setShowTickets(!showTickets);
   };
 
   const toggleComments = () => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      addOns: {
-        ...prevFormData.addOns,
-        addedComments: !prevFormData.addOns.addedComments,
-      },
-    }));
+    setShowComments(!showComments);
   };
 
   const handleChange = (event) => {
@@ -189,7 +177,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
             label="Add ticket information"
             toggleCheckbox={toggleTickets}
           />
-          {formData.addOns.addedTickets ? (
+          {showTickets ? (
             <>
               <Input
                 name="ticketNo"
@@ -256,7 +244,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
             label="Add additional comments"
             toggleCheckbox={toggleComments}
           />
-          {formData.addOns.addedComments ? (
+          {showComments ? (
             <Textarea
               name="comments"
               onChange={handleAddOnChange}

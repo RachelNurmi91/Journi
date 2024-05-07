@@ -15,7 +15,6 @@ function ActivityList({
   activityListData,
   deleteTripData,
   trip,
-  ...props
 }) {
   const [activityList, setActivityList] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -73,6 +72,17 @@ function ActivityList({
         console.error("Error: Cannot delete activity: ", error);
         setLoading(false);
       });
+  };
+
+  const allowExpand = (activity) => {
+    const addOns = activity.addOns;
+    if (
+      !!activity.location ||
+      !!addOns.comments ||
+      !!addOns.ticketNo ||
+      !!addOns.ticketUploads.length
+    )
+      return true;
   };
 
   const renderTickets = (tickets) => {
@@ -136,7 +146,12 @@ function ActivityList({
                 ) : null}
               </div>
             </div>
-
+            {activity.location ? (
+              <div className="row my-3">
+                <div className="b16-mon label">Location</div>
+                <div className="mx-2">{activity?.location}</div>
+              </div>
+            ) : null}
             {activity.addOns.ticketNo ? (
               <div className="row my-3">
                 <div className="b16-mon label">Ticket/Confirmation No.</div>
@@ -167,21 +182,23 @@ function ActivityList({
               </>
             ) : null}
           </div>
-          <div className="text-center">
-            {isOpen ? (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-up"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(activity._id)}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-down"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(activity._id)}
-              />
-            )}
-          </div>
+          {allowExpand(activity) ? (
+            <div className="text-center">
+              {isOpen ? (
+                <FontAwesomeIcon
+                  icon="fa-solid fa-angle-up"
+                  style={{ color: "#0BB6C0" }}
+                  onClick={() => toggleOpen(activity._id)}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon="fa-solid fa-angle-down"
+                  style={{ color: "#0BB6C0" }}
+                  onClick={() => toggleOpen(activity._id)}
+                />
+              )}
+            </div>
+          ) : null}
         </div>
       );
     });
