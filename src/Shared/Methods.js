@@ -1,9 +1,4 @@
-import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 export default class Methods {
-  static logout = () => {
-    localStorage.clear();
-    removeLoggedInUserData();
-  };
   static formatShortDate = (unformattedDate) => {
     const date = new Date(unformattedDate);
 

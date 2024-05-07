@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TripSelector from "./TripSelector";
-import Methods from "../Shared/Methods";
+import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 
 function Sidebar({
   closeSideNav,
@@ -12,7 +12,11 @@ function Sidebar({
   showSideBar,
   userData,
   toggleSideNav,
+  removeLoggedInUserData,
 }) {
+  const logout = () => {
+    removeLoggedInUserData();
+  };
   const TripSelectorMemo = useMemo(
     () => <TripSelector closeSideNav={closeSideNav} />,
     [closeSideNav]
@@ -152,7 +156,7 @@ function Sidebar({
         <div className="flex-shrink-1 align-items-end">
           <ul className="menu">
             <li>
-              <div className="nav-link" onClick={() => Methods.logout()}>
+              <div className="nav-link" onClick={logout}>
                 <FontAwesomeIcon
                   icon="fa-solid fa-arrow-right-from-bracket"
                   style={{ color: "#fff" }}
@@ -200,4 +204,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Sidebar);
+const mapDispatchToProps = {
+  removeLoggedInUserData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

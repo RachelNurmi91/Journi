@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Methods from "../Methods";
+import { connect } from "react-redux";
+import { removeLoggedInUserData } from "../../Redux/Actions/AccountActions";
 
 const parseJwt = (token) => {
   try {
@@ -29,7 +30,7 @@ const TokenVerification = () => {
       if (user) {
         const decodedJwt = parseJwt(user.accessToken);
         if (decodedJwt.exp * 1000 < Date.now()) {
-          Methods.logout();
+          removeLoggedInUserData();
           navigate("/login"); // Redirect to login page after logout
         }
       }
@@ -43,4 +44,10 @@ const TokenVerification = () => {
   return null;
 };
 
-export default TokenVerification;
+function mapStateToProps(state) {}
+
+const mapDispatchToProps = {
+  removeLoggedInUserData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TokenVerification);

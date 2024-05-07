@@ -23,6 +23,7 @@ export function updateUserData(data) {
 }
 
 export function removeLoggedInUserData() {
+  console.log("hit");
   return {
     type: REMOVE_LOGGED_IN_USER_DATA,
   };
