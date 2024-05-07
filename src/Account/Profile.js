@@ -8,10 +8,11 @@ import {
   fetchUpdatedTrips,
   fetchUpdatedAccount,
 } from "../Redux/Operations/AccountOperations";
-import Header from "../Shared/UI/Header";
+// import Modal from "react-bootstrap/Modal";
 import TripRequests from "../Requests/TripRequests";
 import AccountRequests from "../Requests/AccountRequests";
 import Loading from "../Shared/UI/Loading";
+// import ImageUploading from "react-images-uploading";
 
 function Profile({
   fetchUpdatedTrips,
@@ -25,6 +26,7 @@ function Profile({
   const [loading, setLoading] = useState(false);
   const [rewardProgramsList, setRewardProgramsList] = useState(null);
   const [tripsList, setTripsList] = useState(null);
+  // const [showImgModal, setShowImgModal] = useState(false);
 
   const accountRequest = new AccountRequests();
   const tripRequest = new TripRequests();
@@ -32,6 +34,10 @@ function Profile({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // const toggleImgModal = (ticketImg) => {
+  //   setShowImgModal((prevState) => !prevState);
+  // };
 
   const sortTripsByDate = useCallback(() => {
     let sortedTrips;
@@ -152,16 +158,11 @@ function Profile({
           <div className="row p-2">
             <div className="col-10">
               <div className="row">
-                <div className="col-6 label">{trip.tripName}</div>
-                <div className="col-6 label d-flex align-items-end">
+                <div className="label">{trip.tripName}</div>
+              </div>
+              <div className="row">
+                <div className="col-6d-flex align-items-end">
                   {Methods.formatShortDate(trip.departureDate)}
-                </div>
-
-                <div className="col-6">
-                  ({trip.hotels?.length ? trip.hotels.length : "0"}) Hotels
-                </div>
-                <div className="col-6">
-                  ({trip.flights?.length ? trip.flights.length : "0"}) Flights
                 </div>
               </div>
             </div>
@@ -188,14 +189,34 @@ function Profile({
 
   return (
     <div className="content-body profile">
-      <Header
-        title={
-          <>
+      <div className="row">
+        <div className="col-4">
+          <div className="profile-icon">
+            <div className="d-flex justify-content-center" to="/profile">
+              <div className="img-edit">
+                <div className="profile-img">
+                  {userData?.firstName?.slice(0, 1).toUpperCase()}
+                </div>
+                {/* <div className="edit">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-camera"
+                    style={{ color: "#0BB6C0" }}
+                    size="lg"
+                    onClick={toggleImgModal}
+                  />
+                </div> */}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col d-flex align-items-center justify-content-start">
+          <h2>
             Look at you,
             <span className="primary-color"> {userData?.firstName}</span>!
-          </>
-        }
-      />
+          </h2>
+        </div>
+      </div>
+
       <div className="outlined-box mt-3 p-4">
         <div className="row">
           <h3 className="float-right">User Details</h3>
@@ -258,6 +279,18 @@ function Profile({
         </div>
       </div>
       <Loading loading={loading} />
+      {/* <Modal show={showImgModal}>
+        <div style={{ position: "relative" }}>
+          <div className="close" onClick={toggleImgModal}>
+            <FontAwesomeIcon
+              icon="fa-solid fa-xmark"
+              style={{ color: "#0BB6C0" }}
+              size="lg"
+            />
+          </div>
+          <div></div>
+        </div>
+      </Modal> */}
     </div>
   );
 }

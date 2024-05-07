@@ -30,19 +30,6 @@ function Sidebar({
           <ul className="menu">
             <li>
               <Link
-                to="/register"
-                className="nav-link"
-                onClick={() => closeSideNav()}
-              >
-                <FontAwesomeIcon
-                  icon="fa-solid fa-user-plus"
-                  style={{ color: "#fff" }}
-                />
-                <span className="ms-2">Register</span>
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/login"
                 className="nav-link"
                 onClick={() => closeSideNav()}
@@ -51,7 +38,20 @@ function Sidebar({
                   icon="fa-solid fa-right-to-bracket"
                   style={{ color: "#fff" }}
                 />
-                <span className="ms-2">Login</span>
+                <span className="mx-2">Login</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/register"
+                className="nav-link"
+                onClick={() => closeSideNav()}
+              >
+                <FontAwesomeIcon
+                  icon="fa-solid fa-user-plus"
+                  style={{ color: "#fff" }}
+                />
+                <span className="mx-2">Register</span>
               </Link>
             </li>
           </ul>
@@ -66,15 +66,17 @@ function Sidebar({
         <div className="profile-icon">
           <Link to="/profile" onClick={() => closeSideNav()}>
             <div className="d-flex justify-content-center" to="/profile">
-              <div className="profile-img">
-                {userData?.firstName?.slice(0, 1).toUpperCase()}
-              </div>
-              <div className="edit">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-user-pen"
-                  style={{ color: "#fff" }}
-                  size="lg"
-                />
+              <div className="img-edit">
+                <div className="profile-img">
+                  {userData?.firstName?.slice(0, 1).toUpperCase()}
+                </div>
+                <div className="edit">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-user-pen"
+                    style={{ color: "#fff" }}
+                    size="lg"
+                  />
+                </div>
               </div>
             </div>
           </Link>
@@ -91,24 +93,11 @@ function Sidebar({
                   icon="fa-solid fa-house"
                   style={{ color: "#fff" }}
                 />
-                <span className="ms-2">Home</span>
+                <span className="mx-2">Home</span>
               </Link>
             </li>
             {activeTrip ? (
               <>
-                <li>
-                  <Link
-                    to={"/hotels"}
-                    className="nav-link"
-                    onClick={() => closeSideNav()}
-                  >
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-hotel"
-                      style={{ color: "#fff" }}
-                    />
-                    <span className="ms-2">Hotels</span>
-                  </Link>
-                </li>
                 <li>
                   <Link
                     to={"/flights"}
@@ -119,9 +108,23 @@ function Sidebar({
                       icon="fa-solid fa-plane"
                       style={{ color: "#fff" }}
                     />
-                    <span className="ms-2">Flights</span>
+                    <span className="mx-2">Flights</span>
                   </Link>
-                </li>{" "}
+                </li>
+                <li>
+                  <Link
+                    to={"/hotels"}
+                    className="nav-link"
+                    onClick={() => closeSideNav()}
+                  >
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-hotel"
+                      style={{ color: "#fff" }}
+                    />
+                    <span className="mx-2">Hotels</span>
+                  </Link>
+                </li>
+
                 <li>
                   <Link
                     to={"/activities"}
@@ -132,12 +135,12 @@ function Sidebar({
                       icon="fa-solid fa-mountain-city"
                       style={{ color: "#fff" }}
                     />
-                    <span className="ms-2">Activities</span>
+                    <span className="mx-2">Activities</span>
                   </Link>
                 </li>
               </>
             ) : null}
-            <li className="mt-4">
+            <li>
               <li>
                 <Link
                   to={"/trips/add"}
@@ -148,7 +151,7 @@ function Sidebar({
                     icon="fa-solid fa-plus"
                     style={{ color: "#fff" }}
                   />
-                  <span className="ms-2">Add Trip</span>
+                  <span className="mx-2">Add Trip</span>
                 </Link>
               </li>
             </li>
@@ -162,7 +165,7 @@ function Sidebar({
                   icon="fa-solid fa-arrow-right-from-bracket"
                   style={{ color: "#fff" }}
                 />
-                <span className="ms-2">Logout</span>
+                <span className="mx-2">Logout</span>
               </div>
             </li>
           </ul>
