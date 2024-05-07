@@ -173,7 +173,7 @@ function Register({ ...props }) {
               />
             </div>
 
-            <div className="row">
+            <div className="row mt-3">
               <Button label="Register" onClick={onRegister} />
             </div>
             {error ? (
