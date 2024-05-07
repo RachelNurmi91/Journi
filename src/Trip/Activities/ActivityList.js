@@ -10,12 +10,7 @@ import Loading from "../../Shared/UI/Loading";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function ActivityList({
-  fetchUpdatedTrips,
-  activityListData,
-  deleteTripData,
-  trip,
-}) {
+function ActivityList({ fetchUpdatedTrips, activityListData }) {
   const [activityList, setActivityList] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
