@@ -10,13 +10,13 @@ import Loading from "../../Shared/UI/Loading";
 
 function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
   const [sortedFlights, setSortedFlights] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [openFlightId, setOpenFlightId] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
 
-  const toggleOpen = () => {
-    setOpen((prevState) => !prevState);
+  const toggleOpen = (id) => {
+    setOpenFlightId((prevId) => (prevId === id ? null : id));
   };
 
   const sortByDate = useCallback(() => {
@@ -54,15 +54,16 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
 
   const displayFlights = () => {
     return sortedFlights.map((flight, index) => {
+      const isOpen = openFlightId === flight._id;
       if (flight.type === "oneway") {
-        return renderOnewayFlight(flight, index);
+        return renderOnewayFlight(flight, index, isOpen);
       } else {
-        return renderRoundtripFlight(flight, index);
+        return renderRoundtripFlight(flight, index, isOpen);
       }
     });
   };
 
-  const renderOnewayFlight = (flight, index) => {
+  const renderOnewayFlight = (flight, index, isOpen) => {
     const departureFlight = flight?.departureFlight?.[0];
     const returnFlight = flight?.returnFlight?.[0];
 
@@ -80,7 +81,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
         <div
           className="container collapsible mt-2"
           style={{
-            height: `${open ? "" : "50px"}`,
+            height: `${isOpen ? "" : "50px"}`,
             transition: "height 0.10s ease",
           }}
         >
@@ -149,17 +150,17 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
           </div>
         </div>
         <div className="text-center mt-2">
-          {open ? (
+          {isOpen ? (
             <FontAwesomeIcon
               icon="fa-solid fa-angle-up"
               style={{ color: "#0BB6C0" }}
-              onClick={toggleOpen}
+              onClick={() => toggleOpen(flight._id)}
             />
           ) : (
             <FontAwesomeIcon
               icon="fa-solid fa-angle-down"
               style={{ color: "#0BB6C0" }}
-              onClick={toggleOpen}
+              onClick={() => toggleOpen(flight._id)}
             />
           )}
         </div>
@@ -167,7 +168,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
     );
   };
 
-  const renderRoundtripFlight = (flight, index) => {
+  const renderRoundtripFlight = (flight, index, isOpen) => {
     const departureFlight = flight?.departureFlight?.[0];
     const returnFlight = flight?.returnFlight?.[0];
 
@@ -186,7 +187,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
         <div
           className="container collapsible mt-2"
           style={{
-            height: `${open ? "" : "50px"}`,
+            height: `${isOpen ? "" : "50px"}`,
             transition: "height 0.10s ease",
           }}
         >
@@ -295,17 +296,17 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
           </div>
         </div>
         <div className="text-center mt-2">
-          {open ? (
+          {isOpen ? (
             <FontAwesomeIcon
               icon="fa-solid fa-angle-up"
               style={{ color: "#0BB6C0" }}
-              onClick={toggleOpen}
+              onClick={() => toggleOpen(flight._id)}
             />
           ) : (
             <FontAwesomeIcon
               icon="fa-solid fa-angle-down"
               style={{ color: "#0BB6C0" }}
-              onClick={toggleOpen}
+              onClick={() => toggleOpen(flight._id)}
             />
           )}
         </div>

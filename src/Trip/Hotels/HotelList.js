@@ -16,15 +16,14 @@ function HotelList({
   ...props
 }) {
   const [hotelList, setHotelList] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openHotelId, setOpenHotelId] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
 
-  const toggleOpen = () => {
-    setOpen((prevState) => !prevState);
+  const toggleOpen = (id) => {
+    setOpenHotelId((prevId) => (prevId === id ? null : id));
   };
-
   const sortByDate = useCallback(() => {
     let sortedHotels;
 
@@ -69,6 +68,7 @@ function HotelList({
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
       console.log(hotel);
+      const isOpen = openHotelId === hotel._id;
       return (
         <div className="shadow-box mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
@@ -83,7 +83,7 @@ function HotelList({
           <div
             className="container collapsible"
             style={{
-              height: `${open ? "" : "70px"}`,
+              height: `${isOpen ? "" : "70px"}`,
               transition: "height 0.10s ease",
             }}
           >
@@ -136,17 +136,17 @@ function HotelList({
             </div>
           </div>
           <div className="text-center">
-            {open ? (
+            {isOpen ? (
               <FontAwesomeIcon
                 icon="fa-solid fa-angle-up"
                 style={{ color: "#0BB6C0" }}
-                onClick={toggleOpen}
+                onClick={() => toggleOpen(hotel._id)}
               />
             ) : (
               <FontAwesomeIcon
                 icon="fa-solid fa-angle-down"
                 style={{ color: "#0BB6C0" }}
-                onClick={toggleOpen}
+                onClick={() => toggleOpen(hotel._id)}
               />
             )}
           </div>

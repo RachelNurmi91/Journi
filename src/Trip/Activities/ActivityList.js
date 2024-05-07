@@ -18,15 +18,15 @@ function ActivityList({
   ...props
 }) {
   const [activityList, setActivityList] = useState(null);
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [activeTicketImg, setActiveTicketImg] = useState(false);
+  const [openActivityId, setOpenActivityId] = useState(null);
 
   const tripRequest = new TripRequests();
 
-  const toggleOpen = () => {
-    setOpen((prevState) => !prevState);
+  const toggleOpen = (id) => {
+    setOpenActivityId((prevId) => (prevId === id ? null : id));
   };
 
   const toggleTicketModal = (ticketImg) => {
@@ -37,7 +37,7 @@ function ActivityList({
   const sortByDateAndTime = useCallback(() => {
     let sortedActivities;
 
-    let activities = activityListData;
+    let activities = [...activityListData];
 
     if (activities && activities?.length > 1) {
       sortedActivities = activities.sort((a, b) => {
@@ -93,6 +93,7 @@ function ActivityList({
   const displayActivities = () => {
     return activityList?.map((activity, index) => {
       let tickets = activity?.addOns?.ticketUploads;
+      const isOpen = openActivityId === activity._id;
       return (
         <div className="shadow-box  mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
@@ -107,7 +108,7 @@ function ActivityList({
           <div
             className="container collapsible"
             style={{
-              height: `${open ? "" : "70px"}`,
+              height: `${isOpen ? "" : "70px"}`,
               transition: "height 0.10s ease",
             }}
           >
@@ -167,17 +168,17 @@ function ActivityList({
             ) : null}
           </div>
           <div className="text-center">
-            {open ? (
+            {isOpen ? (
               <FontAwesomeIcon
                 icon="fa-solid fa-angle-up"
                 style={{ color: "#0BB6C0" }}
-                onClick={toggleOpen}
+                onClick={() => toggleOpen(activity._id)}
               />
             ) : (
               <FontAwesomeIcon
                 icon="fa-solid fa-angle-down"
                 style={{ color: "#0BB6C0" }}
-                onClick={toggleOpen}
+                onClick={() => toggleOpen(activity._id)}
               />
             )}
           </div>

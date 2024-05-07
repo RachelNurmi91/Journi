@@ -232,7 +232,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
                               <img
                                 src={image.data_url}
                                 alt=""
-                                className="cropped-ticket"
+                                className="thumbnail"
                               />
                               <div
                                 className="mx-2 error-color b13-mon"
