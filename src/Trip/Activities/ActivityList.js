@@ -34,15 +34,19 @@ function ActivityList({
     setShowTicketModal((prevState) => !prevState);
   };
 
-  const sortByDate = useCallback(() => {
+  const sortByDateAndTime = useCallback(() => {
     let sortedActivities;
 
     let activities = activityListData;
 
-    if (activities && activities?.length > 10) {
+    if (activities && activities?.length > 1) {
       sortedActivities = activities.sort((a, b) => {
-        if (a.arrivalDate > b.arrivalDate) return 1;
-        if (a.arrivalDate < b.arrivalDate) return -1;
+        if (a.activityDate > b.activityDate) return 1;
+        if (a.activityDate < b.activityDate) return -1;
+        if (a.activityDate === b.activityDate) {
+          if (a.activityTime > b.activityTime) return 1;
+          if (a.activityTime < b.activityTime) return -1;
+        }
         return 0;
       });
     } else {
@@ -53,12 +57,8 @@ function ActivityList({
   }, [activityListData]);
 
   useEffect(() => {
-    sortByDate();
-  }, [activityListData, sortByDate]);
-
-  useEffect(() => {
-    sortByDate();
-  }, [activityListData, sortByDate]);
+    sortByDateAndTime();
+  }, [activityListData, sortByDateAndTime]);
 
   const deleteActivity = (id) => {
     setLoading(true);
@@ -180,8 +180,6 @@ function ActivityList({
       );
     });
   };
-
-  console.log(activityListData, trip);
 
   return (
     <>
