@@ -67,7 +67,6 @@ function HotelList({
 
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
-      console.log(hotel);
       const isOpen = openHotelId === hotel._id;
       return (
         <div className="shadow-box mb-4" key={index}>

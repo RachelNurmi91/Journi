@@ -211,6 +211,9 @@ function Activity({ fetchUpdatedTrips, ...props }) {
                         {...dragProps}
                       />
                     </div>
+                    <div className="b13-mon text-center mt-1">
+                      *Only PNG, JPG of GIF files allowed.
+                    </div>
 
                     <div className="container">
                       <div className="row">
