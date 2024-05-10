@@ -22,7 +22,6 @@ const DEFAULT_FORM_DATA = {
 
 function Cruise({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-  const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
@@ -34,25 +33,9 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const handleCountrySelect = (country) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      country: country,
-    }));
-  };
-
-  const newNameInputToggle = () => {
-    setDisplayNewNameInput(!displayNewNameInput);
-  };
-
   // onSave is for new cruises
   const saveCruise = async () => {
     setLoading(true);
-    if (!formData.nameOnReservation) {
-      formData.nameOnReservation =
-        props.userData?.firstName + " " + props.userData?.lastName;
-    }
-
     formData.tripId = props.activeTripId;
     tripRequest
       .addCruise(formData)
@@ -82,9 +65,9 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
   //     .catch((error) => {console.error(error); setLoading(false)});
   // };
 
-  const handleArrivalDate = (date) => {
+  const handleReturnDate = (date) => {
     let selectedDate = new Date(date).getTime();
-    let departureDate = new Date(formData.arrivalDate).getTime();
+    let departureDate = new Date(formData.returnDate).getTime();
 
     if (departureDate && departureDate < selectedDate) {
       handleDepartureDate(date);
@@ -99,16 +82,16 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      arrivalDate: selectedDate,
+      returnDate: selectedDate,
     }));
   };
 
   const handleDepartureDate = (date) => {
     let selectedDate = new Date(date).getTime();
-    let arrivalDate = new Date(formData.arrivalDate).getTime();
+    let returnDate = new Date(formData.returnDate).getTime();
 
-    if (selectedDate < arrivalDate) {
-      console.error("Departure can not occur before the arrival.");
+    if (selectedDate < returnDate) {
+      console.error("Departure can not occur before the return.");
       return;
     }
 
@@ -130,8 +113,8 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Departure</span>
               <Calendar
-                selectedDate={formData.arrivalDate}
-                onDateChange={handleArrivalDate}
+                selectedDate={formData.returnDate}
+                onDateChange={handleReturnDate}
                 placeholder="Select Date"
               />
             </div>
@@ -171,14 +154,14 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
             onChange={handleChange}
             placeholder="Cruise Line"
             label="Cruise Line"
-            value={formData.cruise}
+            value={formData.cruiseLine}
           />
           <Input
             name="cruiseShip"
             onChange={handleChange}
             placeholder="Cruise Ship"
             label="Cruise Ship"
-            value={formData.cruise}
+            value={formData.cruiseShip}
           />
 
           <div className="container">
@@ -198,7 +181,7 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
                   onChange={handleChange}
                   placeholder="Cabin #"
                   label="Cabin #"
-                  value={formData.city}
+                  value={formData.cabinNo}
                 />
               </div>
             </div>

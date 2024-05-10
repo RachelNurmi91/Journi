@@ -191,4 +191,107 @@ export default class TripRequests {
         throw error;
       });
   }
+
+  addCruise(cruiseData) {
+    const token = localStorage.getItem("token");
+    return axios
+      .post(`${SERVER}/cruises/add`, cruiseData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
+  // updateCruise(data) {
+  //   const token = localStorage.getItem("token");
+  //   return axios
+  //     .put(`${SERVER}/cruises/${data._id}`, data, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       return response; // Return the response for chaining
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //       throw error; // Re-throw the error to propagate it
+  //     });
+  // }
+
+  deleteCruise(id) {
+    const token = localStorage.getItem("token");
+    return axios
+      .delete(`${SERVER}/cruises/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
+      });
+  }
+
+  addInsurance(insuranceData) {
+    const token = localStorage.getItem("token");
+    return axios
+      .post(`${SERVER}/insurance/add`, insuranceData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
+  // updateInsurance(data) {
+  //   const token = localStorage.getItem("token");
+  //   return axios
+  //     .put(`${SERVER}/insurance/${data._id}`, data, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       return response; // Return the response for chaining
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //       throw error; // Re-throw the error to propagate it
+  //     });
+  // }
+
+  deleteInsurance(id) {
+    const token = localStorage.getItem("token");
+    return axios
+      .delete(`${SERVER}/insurance/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
+      });
+  }
+  l;
 }
