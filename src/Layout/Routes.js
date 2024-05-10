@@ -18,6 +18,8 @@ import Rental from "../Trip/Rental/Rental";
 import RentalList from "../Trip/Rental/RentalList";
 import Insurance from "../Trip/Insurance/Insurance";
 import InsuranceList from "../Trip/Insurance/InsuranceList";
+import Transportation from "../Trip/Transportation/Transportation";
+import TransportationList from "../Trip/Transportation/TransportationList";
 
 function Content({ ...props }) {
   const navigate = useNavigate();
@@ -48,10 +50,17 @@ function Content({ ...props }) {
 
             <Route path="/rentals" element={<RentalList />} />
             <Route path="/rentals/*" element={<Rental navigate={navigate} />} />
+
             <Route path="/insurance" element={<InsuranceList />} />
             <Route
               path="/insurance/*"
               element={<Insurance navigate={navigate} />}
+            />
+
+            <Route path="/transportation" element={<TransportationList />} />
+            <Route
+              path="/transportation/*"
+              element={<Transportation navigate={navigate} />}
             />
 
             <Route path="/activities" element={<ActivityList />} />

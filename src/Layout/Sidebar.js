@@ -147,7 +147,7 @@ function Sidebar({
                 {tripSelections?.transportation ? (
                   <li>
                     <Link
-                      to={"/flights"}
+                      to={"/transportation"}
                       className="nav-link"
                       onClick={() => closeSideNav()}
                     >

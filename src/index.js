@@ -21,6 +21,8 @@ import {
   faArrowRightFromBracket,
   faRightToBracket,
   faTrash,
+  faTrain,
+  faVanShuttle,
   faMap,
   faCar,
   faBus,
@@ -40,6 +42,7 @@ import {
   faAngleDown,
   faAngleUp,
   faUserPlus,
+  faFerry,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -61,6 +64,9 @@ library.add(
   faRightToBracket,
   faMountainCity,
   faTrash,
+  faTrain,
+  faFerry,
+  faVanShuttle,
   faCamera,
   faUserPen,
   faCar,
