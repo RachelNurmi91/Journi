@@ -117,7 +117,7 @@ function Sidebar({
                 {tripSelections?.insurance ? (
                   <li>
                     <Link
-                      to={"/flights"}
+                      to={"/insurance"}
                       className="nav-link"
                       onClick={() => closeSideNav()}
                     >
