@@ -17,8 +17,6 @@ function Navbar({ userData, account, activeTrip, userId }) {
       }
     };
 
-    console.log(account);
-
     document.addEventListener("mousedown", autoClose);
 
     return () => {
@@ -61,13 +59,6 @@ function Navbar({ userData, account, activeTrip, userId }) {
               <div className="img-edit">
                 <div className="profile-img">
                   {userData?.firstName?.slice(0, 1).toUpperCase()}
-                </div>
-                <div className="edit">
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-user-pen"
-                    style={{ color: "#fff" }}
-                    size="lg"
-                  />
                 </div>
               </div>
             </div>

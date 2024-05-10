@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function Select({ options, onChange, value }) {
+function Select({ options, onChange, value, name }) {
   const selectRef = useRef(null);
 
   return (
@@ -10,6 +10,7 @@ function Select({ options, onChange, value }) {
         className="form-select"
         onChange={(event) => onChange(event)}
         value={value}
+        name={name}
       >
         {options()}
       </select>

@@ -334,9 +334,18 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
       <div className="content-body flight-list">
         <Header title="Flights" rightIcon="add" destination={"/flights/add"} />
 
-        {flightListData.length
-          ? displayFlights()
-          : "Girly pop, add your first flight!"}
+        {flightListData.length ? (
+          displayFlights()
+        ) : (
+          <>
+            <FontAwesomeIcon
+              icon="far fa-face-flushed"
+              style={{ color: "#d65d5d" }}
+              size="2x"
+            />
+            Girly pop, add your first flight!
+          </>
+        )}
       </div>
       <Loading loading={loading} />
     </>

@@ -75,6 +75,7 @@ function Trip({
       departureDate: formData.departureDate,
       hotels: [],
       flights: [],
+      selections: formData.selections,
     };
 
     tripRequest
@@ -190,9 +191,11 @@ function Trip({
                 </>
               }
               name="flights"
+              checked={formData.selections.flights}
               toggleCheckbox={onCheck}
             />
           </div>
+
           <div className="item-select">
             <Checkbox
               label={
@@ -204,6 +207,7 @@ function Trip({
                   Hotels
                 </>
               }
+              checked={formData.selections.hotels}
               name="hotels"
               toggleCheckbox={onCheck}
             />
@@ -220,6 +224,7 @@ function Trip({
                 </>
               }
               name="rentalCar"
+              checked={formData.selections.rentalCar}
               toggleCheckbox={onCheck}
             />
           </div>
@@ -235,6 +240,7 @@ function Trip({
                 </>
               }
               name="cruise"
+              checked={formData.selections.cruise}
               toggleCheckbox={onCheck}
             />
           </div>
@@ -251,6 +257,7 @@ function Trip({
                 </>
               }
               name="transportation"
+              checked={formData.selections.transportation}
               toggleCheckbox={onCheck}
             />
           </div>
@@ -266,13 +273,14 @@ function Trip({
                 </>
               }
               name="insurance"
+              checked={formData.selections.insurance}
               toggleCheckbox={onCheck}
             />
           </div>
         </div>
 
         <div className="row">
-          <div className="item-select">
+          <div>
             <Button
               label={edit ? "Update" : "Save"}
               onClick={edit ? updateTrip : saveTrip}

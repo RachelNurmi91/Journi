@@ -10,15 +10,9 @@ function Sidebar({
   activeTrip,
   userId,
   showSideBar,
-  userData,
   tripSelections,
   toggleSideNav,
-  removeLoggedInUserData,
 }) {
-  const logout = () => {
-    removeLoggedInUserData();
-    closeSideNav();
-  };
   const TripSelectorMemo = useMemo(
     () => <TripSelector closeSideNav={closeSideNav} />,
     [closeSideNav]
@@ -65,19 +59,13 @@ function Sidebar({
     return (
       <>
         <div className="flex-grow-1">
-          <div className="col align-self-center my-3 w-75 mx-auto mt-4">
+          <h1 className="white-color text-center">
+            {activeTrip.tripName.toUpperCase()}
+          </h1>
+          <div className="col align-self-center mb-3 w-75 mx-auto">
             {TripSelectorMemo}
           </div>
           <ul className="menu mt-2 align-items-center">
-            {/* <li>
-              <Link to="/" className="nav-link" onClick={() => closeSideNav()}>
-                <FontAwesomeIcon
-                  icon="fa-solid fa-house"
-                  style={{ color: "#fff" }}
-                />
-                <span className="mx-2">Home</span>
-              </Link>
-            </li> */}
             {activeTrip ? (
               <>
                 {tripSelections?.flights ? (
@@ -111,23 +99,10 @@ function Sidebar({
                   </li>
                 ) : null}
 
-                <li>
-                  <Link
-                    to={"/activities"}
-                    className="nav-link"
-                    onClick={() => closeSideNav()}
-                  >
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-mountain-city"
-                      style={{ color: "#fff" }}
-                    />
-                    <span className="mx-2">Activities</span>
-                  </Link>
-                </li>
                 {tripSelections?.rentalCar ? (
                   <li>
                     <Link
-                      to={"/flights"}
+                      to={"/rentals"}
                       className="nav-link"
                       onClick={() => closeSideNav()}
                     >
@@ -157,7 +132,7 @@ function Sidebar({
                 {tripSelections?.cruise ? (
                   <li>
                     <Link
-                      to={"/flights"}
+                      to={"/cruises"}
                       className="nav-link"
                       onClick={() => closeSideNav()}
                     >
@@ -184,7 +159,19 @@ function Sidebar({
                     </Link>
                   </li>
                 ) : null}
-
+                <li>
+                  <Link
+                    to={"/activities"}
+                    className="nav-link"
+                    onClick={() => closeSideNav()}
+                  >
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-map"
+                      style={{ color: "#fff" }}
+                    />
+                    <span className="mx-2">Activities</span>
+                  </Link>
+                </li>
                 <li>
                   <Link
                     to={"/flights"}
@@ -200,36 +187,25 @@ function Sidebar({
                 </li>
               </>
             ) : null}
+          </ul>
+        </div>
+        <div className="flex-shrink-1 align-items-end">
+          <ul className="menu">
             <li>
-              <li>
-                <Link
-                  to={"/trips/add"}
-                  className="nav-link"
-                  onClick={() => closeSideNav()}
-                >
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-plus"
-                    style={{ color: "#fff" }}
-                  />
-                  <span className="mx-2">Add Trip</span>
-                </Link>
-              </li>
+              <Link
+                to={"/trips/add"}
+                className="nav-link"
+                onClick={() => closeSideNav()}
+              >
+                <FontAwesomeIcon
+                  icon="fa-solid fa-plus"
+                  style={{ color: "#fff" }}
+                />
+                <span className="mx-2">Add Trip</span>
+              </Link>
             </li>
           </ul>
         </div>
-        {/* <div className="flex-shrink-1 align-items-end">
-          <ul className="menu">
-            <li>
-              <div className="nav-link" onClick={logout}>
-                <FontAwesomeIcon
-                  icon="fa-solid fa-arrow-right-from-bracket"
-                  style={{ color: "#fff" }}
-                />
-                <span className="mx-2">Logout</span>
-              </div>
-            </li>
-          </ul>
-        </div> */}
       </>
     );
   };

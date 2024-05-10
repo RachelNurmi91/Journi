@@ -9,6 +9,7 @@ import { persistor, store } from "./Redux/Store/configureStore";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
+
 import {
   faSuitcaseRolling,
   faPlaneDeparture,
@@ -20,6 +21,7 @@ import {
   faArrowRightFromBracket,
   faRightToBracket,
   faTrash,
+  faMap,
   faCar,
   faBus,
   faShip,
@@ -41,14 +43,18 @@ import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { faFaceFlushed } from "@fortawesome/free-regular-svg-icons";
+
 library.add(
   faSuitcaseRolling,
+  faFaceFlushed,
   faPlaneDeparture,
   faPlaneArrival,
   faCircleExclamation,
   faPlane,
   faCalendarDays,
   faClock,
+  faMap,
   faPlus,
   faXmark,
   faArrowRightFromBracket,

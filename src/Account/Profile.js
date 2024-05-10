@@ -4,6 +4,7 @@ import Methods from "../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteTripData, setActiveTrip } from "../Redux/Actions/AccountActions";
 import { Link } from "react-router-dom";
+import Button from "../Shared/UI/Button";
 import {
   fetchUpdatedTrips,
   fetchUpdatedAccount,
@@ -12,6 +13,7 @@ import {
 import TripRequests from "../Requests/TripRequests";
 import AccountRequests from "../Requests/AccountRequests";
 import Loading from "../Shared/UI/Loading";
+import { removeLoggedInUserData } from "../Redux/Actions/AccountActions";
 // import ImageUploading from "react-images-uploading";
 
 function Profile({
@@ -21,6 +23,7 @@ function Profile({
   userData,
   tripsData,
   activeTrip,
+  removeLoggedInUserData,
   ...props
 }) {
   const [loading, setLoading] = useState(false);
@@ -137,6 +140,10 @@ function Profile({
 
   const navigateToEditTrips = (id) => {
     props.navigate(`/trips/edit/${id}`);
+  };
+
+  const logout = () => {
+    removeLoggedInUserData();
   };
 
   const renderProgramsList = () => {
@@ -332,6 +339,11 @@ function Profile({
           )}
         </div>
       </div>
+      <div className="row">
+        <div>
+          <Button label="logout" onClick={logout} />
+        </div>
+      </div>
       <Loading loading={loading} />
       {/* <Modal show={showImgModal}>
         <div style={{ position: "relative" }}>
@@ -363,6 +375,7 @@ const mapDispatchToProps = {
   setActiveTrip,
   fetchUpdatedTrips,
   fetchUpdatedAccount,
+  removeLoggedInUserData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

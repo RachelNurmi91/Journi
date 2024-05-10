@@ -125,7 +125,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
             </div>
             <div className="col text-center">
               <FontAwesomeIcon
-                icon="fa-solid fa-calendar-days"
+                icon="fa-solid fa-clock"
                 style={{ color: "#0bb6c0" }}
               />
               <span className="label mx-3">Time</span>

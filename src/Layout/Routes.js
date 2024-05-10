@@ -12,6 +12,10 @@ import Profile from "../Account/Profile";
 import RewardProgram from "../Account/RewardProgram";
 import ActivityList from "../Trip/Activities/ActivityList";
 import Activity from "../Trip/Activities/Activity";
+import CruiseList from "../Trip/Cruise/CruiseList";
+import Cruise from "../Trip/Cruise/Cruise";
+import Rental from "../Trip/Rental/Rental";
+import RentalList from "../Trip/Rental/RentalList";
 
 function Content({ ...props }) {
   const navigate = useNavigate();
@@ -36,6 +40,11 @@ function Content({ ...props }) {
 
             <Route path="/flights" element={<FlightList />} />
             <Route path="/flights/*" element={<Flight navigate={navigate} />} />
+
+            <Route path="/cruises" element={<CruiseList />} />
+            <Route path="/cruises/*" element={<Cruise navigate={navigate} />} />
+            <Route path="/rentals" element={<RentalList />} />
+            <Route path="/rentals/*" element={<Rental navigate={navigate} />} />
 
             <Route path="/activities" element={<ActivityList />} />
             <Route

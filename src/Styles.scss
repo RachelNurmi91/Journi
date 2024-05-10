@@ -136,9 +136,10 @@ a {
         font-size: 25px;
       }
     }
+    
   }
-  
-  
+
+
 }
 
 
@@ -147,6 +148,10 @@ a {
 
   .outlined-box {
     @include box(25px 25px 10px);
+  }
+
+  button {
+    background-color:$error-color;
   }
 }
 
@@ -174,12 +179,12 @@ a {
       margin: 5px auto 10px;
     }
       
-    .edit {
-      position: absolute;
-      right: -1px;
-      top: 70px;
-      z-index: 1;
-    }
+    // .edit {
+    //   position: absolute;
+    //   right: -1px;
+    //   top: 70px;
+    //   z-index: 1;
+    // }
   }
 }
 
@@ -289,6 +294,10 @@ a {
 
 .error-color {
   color: $error-color;
+}
+
+.white-color {
+  color: $white;
 }
 
 h1 {
