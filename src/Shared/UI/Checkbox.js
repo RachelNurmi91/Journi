@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function Checkbox({ label, toggleCheckbox }) {
+function Checkbox({ name, label, toggleCheckbox }) {
   const inputRef = useRef(null);
 
   return (
@@ -12,6 +12,7 @@ function Checkbox({ label, toggleCheckbox }) {
         value=""
         id="checkBoxId"
         onClick={toggleCheckbox}
+        name={name}
       />
       <label className="form-check-label px-2" htmlFor="checkBoxId">
         {label}

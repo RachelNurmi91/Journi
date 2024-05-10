@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import logo from "../Media/Images/logo-white.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "./Sidebar";
 
-function Navbar() {
+function Navbar({ userData, account, activeTrip, userId }) {
   const [showSideBar, setShowSideBar] = useState(false);
 
   let sideRef = useRef();
@@ -16,6 +16,8 @@ function Navbar() {
         setShowSideBar(false);
       }
     };
+
+    console.log(account);
 
     document.addEventListener("mousedown", autoClose);
 
@@ -48,8 +50,28 @@ function Navbar() {
             size="2x"
           />
         </div>
-        <div className="logo-container">
-          <img className="logo" src={logo} alt="Journi logo" height="25px" />
+        <Link to="/" onClick={() => closeSideNav()}>
+          <div className="logo-container">
+            <img className="logo" src={logo} alt="Journi logo" height="25px" />
+          </div>
+        </Link>
+        <div className="profile-icon">
+          <Link to="/profile" onClick={() => closeSideNav()}>
+            <div className="d-flex justify-content-center" to="/profile">
+              <div className="img-edit">
+                <div className="profile-img">
+                  {userData?.firstName?.slice(0, 1).toUpperCase()}
+                </div>
+                <div className="edit">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-user-pen"
+                    style={{ color: "#fff" }}
+                    size="lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </Link>
         </div>
       </nav>
       <div ref={sideRef}>
@@ -68,7 +90,7 @@ function mapStateToProps(state) {
     userData: state.account?.userAccount,
     userId: state.account?.userAccount?.id,
     activeTrip: state.account?.activeTrip,
-    account: state.account,
+    account: state,
   };
 }
 

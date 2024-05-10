@@ -108,7 +108,7 @@ a {
   padding: 0px 15px !important;
 
   .toggle {
-    position: absolute;
+    display: flex;
   }
 
   .logo-container {
@@ -121,6 +121,23 @@ a {
     }
   
   }
+  .profile-icon {
+
+    display: flex; /* Make the profile icon container a flex container */
+
+
+    .img-edit {
+      .profile-img {
+        color: $primary-color;
+        background-color: $white;
+        margin: 0;
+        height: 40px;
+        width: 40px;
+        font-size: 25px;
+      }
+    }
+  }
+  
   
 }
 
@@ -147,10 +164,10 @@ a {
       align-items: center;
       justify-content: center;
       border-radius: 100%;
-      background-color: #444;
+      background-color: $primary-color;
+      color: $white;
       height: 90px;
       width: 90px;
-      color: $white;
       text-align: center;
       font-size: 40px;
       font-weight: bold;
@@ -180,7 +197,6 @@ a {
   /* background-color: #0ccdd7!important; */
   overflow-x: hidden;
   transition: 0.5s;
-  border-radius: 0 20px 20px 0;
   z-index: 99;
 
   .menu {
@@ -215,7 +231,14 @@ a {
 
 /* Box styles */
 
+.form-control {
+  border: solid 1px #c0c0c0 !important;
+}
 
+.form-check-input:checked {
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+}
 
 .outlined-box {
   @include box(25px);
@@ -490,6 +513,15 @@ padding: 10px;
     .ticket {
       width: 100%;
     }
+  }
+}
+
+.trip-selections{
+  margin-left: 15px;
+  .item-select{
+    display: flex;
+    align-items: center;
+    margin: 10px 0
   }
 }
 

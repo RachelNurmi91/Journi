@@ -11,6 +11,7 @@ function Sidebar({
   userId,
   showSideBar,
   userData,
+  tripSelections,
   toggleSideNav,
   removeLoggedInUserData,
 }) {
@@ -63,31 +64,12 @@ function Sidebar({
   const loggedInSideBar = () => {
     return (
       <>
-        <div className="profile-icon">
-          <Link to="/profile" onClick={() => closeSideNav()}>
-            <div className="d-flex justify-content-center" to="/profile">
-              <div className="img-edit">
-                <div className="profile-img">
-                  {userData?.firstName?.slice(0, 1).toUpperCase()}
-                </div>
-                <div className="edit">
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-user-pen"
-                    style={{ color: "#fff" }}
-                    size="lg"
-                  />
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
-
         <div className="flex-grow-1">
-          <div className="col align-self-center my-3 w-75 mx-auto mt-4 mb-5">
+          <div className="col align-self-center my-3 w-75 mx-auto mt-4">
             {TripSelectorMemo}
           </div>
           <ul className="menu mt-2 align-items-center">
-            <li>
+            {/* <li>
               <Link to="/" className="nav-link" onClick={() => closeSideNav()}>
                 <FontAwesomeIcon
                   icon="fa-solid fa-house"
@@ -95,35 +77,39 @@ function Sidebar({
                 />
                 <span className="mx-2">Home</span>
               </Link>
-            </li>
+            </li> */}
             {activeTrip ? (
               <>
-                <li>
-                  <Link
-                    to={"/flights"}
-                    className="nav-link"
-                    onClick={() => closeSideNav()}
-                  >
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-plane"
-                      style={{ color: "#fff" }}
-                    />
-                    <span className="mx-2">Flights</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/hotels"}
-                    className="nav-link"
-                    onClick={() => closeSideNav()}
-                  >
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-hotel"
-                      style={{ color: "#fff" }}
-                    />
-                    <span className="mx-2">Hotels</span>
-                  </Link>
-                </li>
+                {tripSelections?.flights ? (
+                  <li>
+                    <Link
+                      to={"/flights"}
+                      className="nav-link"
+                      onClick={() => closeSideNav()}
+                    >
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-plane"
+                        style={{ color: "#fff" }}
+                      />
+                      <span className="mx-2">Flights</span>
+                    </Link>
+                  </li>
+                ) : null}
+                {tripSelections?.hotels ? (
+                  <li>
+                    <Link
+                      to={"/hotels"}
+                      className="nav-link"
+                      onClick={() => closeSideNav()}
+                    >
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-bed"
+                        style={{ color: "#fff" }}
+                      />
+                      <span className="mx-2">Hotels</span>
+                    </Link>
+                  </li>
+                ) : null}
 
                 <li>
                   <Link
@@ -136,6 +122,80 @@ function Sidebar({
                       style={{ color: "#fff" }}
                     />
                     <span className="mx-2">Activities</span>
+                  </Link>
+                </li>
+                {tripSelections?.rentalCar ? (
+                  <li>
+                    <Link
+                      to={"/flights"}
+                      className="nav-link"
+                      onClick={() => closeSideNav()}
+                    >
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-car"
+                        style={{ color: "#fff" }}
+                      />
+                      <span className="mx-2">Rental Car</span>
+                    </Link>
+                  </li>
+                ) : null}
+                {tripSelections?.insurance ? (
+                  <li>
+                    <Link
+                      to={"/flights"}
+                      className="nav-link"
+                      onClick={() => closeSideNav()}
+                    >
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-shield-halved"
+                        style={{ color: "#fff" }}
+                      />
+                      <span className="mx-2">Insurance</span>
+                    </Link>
+                  </li>
+                ) : null}
+                {tripSelections?.cruise ? (
+                  <li>
+                    <Link
+                      to={"/flights"}
+                      className="nav-link"
+                      onClick={() => closeSideNav()}
+                    >
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-ship"
+                        style={{ color: "#fff" }}
+                      />
+                      <span className="mx-2">Cruise</span>
+                    </Link>
+                  </li>
+                ) : null}
+                {tripSelections?.transportation ? (
+                  <li>
+                    <Link
+                      to={"/flights"}
+                      className="nav-link"
+                      onClick={() => closeSideNav()}
+                    >
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-bus"
+                        style={{ color: "#fff" }}
+                      />
+                      <span className="mx-2">Transportation</span>
+                    </Link>
+                  </li>
+                ) : null}
+
+                <li>
+                  <Link
+                    to={"/flights"}
+                    className="nav-link"
+                    onClick={() => closeSideNav()}
+                  >
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-note-sticky"
+                      style={{ color: "#fff" }}
+                    />
+                    <span className="mx-2">Notes</span>
                   </Link>
                 </li>
               </>
@@ -157,7 +217,7 @@ function Sidebar({
             </li>
           </ul>
         </div>
-        <div className="flex-shrink-1 align-items-end">
+        {/* <div className="flex-shrink-1 align-items-end">
           <ul className="menu">
             <li>
               <div className="nav-link" onClick={logout}>
@@ -169,7 +229,7 @@ function Sidebar({
               </div>
             </li>
           </ul>
-        </div>
+        </div> */}
       </>
     );
   };
@@ -203,6 +263,7 @@ function mapStateToProps(state) {
   return {
     userId: state.account?.userAccount?.id,
     activeTrip: state.account?.activeTrip,
+    tripSelections: state.account?.activeTrip?.selections,
     account: state.account,
     userData: state.account?.userAccount,
   };

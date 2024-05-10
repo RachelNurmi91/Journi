@@ -70,8 +70,10 @@ function Profile({
 
   const sortRewardProgramsByName = useCallback(() => {
     let sortedRewardPrograms;
-
-    let rewardPrograms = [...rewardProgramsData];
+    let rewardPrograms;
+    if (rewardProgramsData) {
+      rewardPrograms = [...rewardProgramsData];
+    }
 
     if (rewardPrograms && rewardPrograms?.length > 1) {
       sortedRewardPrograms = rewardPrograms.sort((a, b) => {
