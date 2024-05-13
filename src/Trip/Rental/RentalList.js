@@ -82,13 +82,13 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
           >
             <div className="row">
               <span className="b22-mon primary-color text-center">
-                {rental.rental}
+                {rental.name}
               </span>
             </div>
 
             <div className="row">
               <div className="text-center b13-mon">
-                {rental.city}, {rental.country}
+                Vehicle Type: {rental.vehicleType}
               </div>
             </div>
             {rental.confirmationNo ? (
@@ -104,27 +104,44 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
             ) : null}
 
             <div className="row mt-3">
-              <div className="col-6 d-flex justify-content-start">
+              <div>
+                <div className="b16-mon label"> Pick-Up </div>
                 <div>
-                  <div className="b16-mon label"> Pick-Up </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(rental.startDate)}
-                  </div>
+                  {Methods.formatLongDate(rental.startDate)}{" "}
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-clock"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {Methods.formatTime(rental.startTime)}
                 </div>
-              </div>
-              <div className="col-6 d-flex justify-content-end">
                 <div>
-                  <div className="b16-mon label"> Return </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(rental.endDate)}
-                  </div>
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-location-dot"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {rental.startLocation}
                 </div>
               </div>
             </div>
             <hr />
-            <div className="row">
-              <div className="text-center b13-mon">
-                Reserved under "{rental.nameOnReservation}"
+            <div className="row mt-3">
+              <div>
+                <div className="b16-mon label"> Drop Off </div>
+                <div>
+                  {Methods.formatLongDate(rental.endDate)}{" "}
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-clock"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {Methods.formatTime(rental.endTime)}
+                </div>
+                <div>
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-location-dot"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {rental.endLocation}
+                </div>
               </div>
             </div>
           </div>

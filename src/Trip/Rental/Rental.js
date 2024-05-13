@@ -10,7 +10,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Time from "../../Shared/UI/Time";
 import { vehicleTypes } from "./VehicleTypes";
 import Select from "../../Shared/UI/Select";
-
+import Checkbox from "../../Shared/UI/Checkbox";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
@@ -28,6 +28,7 @@ const DEFAULT_FORM_DATA = {
 function Rental({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
+  const [showReturnLocation, setShowReturnLocation] = useState(false);
 
   const tripRequest = new TripRequests();
 
@@ -39,6 +40,10 @@ function Rental({ fetchUpdatedTrips, ...props }) {
         </option>
       );
     });
+  };
+
+  const toggleReturnLocation = () => {
+    setShowReturnLocation(!showReturnLocation);
   };
 
   const handleChange = (event) => {
@@ -167,7 +172,7 @@ function Rental({ fetchUpdatedTrips, ...props }) {
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
               />
-              <span className="label mx-3">Return</span>
+              <span className="label mx-3">Drop Off</span>
               <Calendar
                 selectedDate={formData.endDate}
                 onDateChange={handleEndDate}
@@ -212,6 +217,29 @@ function Rental({ fetchUpdatedTrips, ...props }) {
             label="Rental Agency"
             value={formData.name}
           />
+          <Input
+            name="startLocation"
+            onChange={handleChange}
+            placeholder="Pickup Location"
+            label="Pickup Location"
+            value={formData.startLocation}
+          />
+          <div>
+            <Checkbox
+              label="Set different drop off location"
+              toggleCheckbox={toggleReturnLocation}
+            />
+            {showReturnLocation ? (
+              <Input
+                name="endLocation"
+                onChange={handleChange}
+                placeholder="Drop Off Location"
+                label="Drop Off Location"
+                value={formData.endLocation}
+              />
+            ) : null}
+          </div>
+
           <div className="container">
             <div className="row">
               <div className="col-6">
