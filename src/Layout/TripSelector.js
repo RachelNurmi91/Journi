@@ -12,8 +12,8 @@ function TripSelector({
   const generateOptions = useCallback(() => {
     return tripListData.map((trip, i) => {
       return (
-        <option value={trip.tripName} data-id={trip._id} key={i + 1}>
-          {trip.tripName}
+        <option value={trip.name} data-id={trip._id} key={i + 1}>
+          {trip.name}
         </option>
       );
     });
@@ -21,14 +21,13 @@ function TripSelector({
 
   const handleChange = (event) => {
     const selectedTrip = event.target.selectedOptions[0];
-    const tripName = selectedTrip.value;
+    const name = selectedTrip.value;
     const tripId = selectedTrip.getAttribute("data-id");
 
     // Match the selected trip id & name to the corresponding trip to return the correct data.
     let trip = tripListData.find(
       (trip) =>
-        trip._id?.toString() === tripId?.toString() &&
-        trip.tripName === tripName
+        trip._id?.toString() === tripId?.toString() && trip.name === name
     );
     closeSideNav();
     setActiveTrip(trip);
@@ -38,7 +37,7 @@ function TripSelector({
     <>
       {tripListData?.length >= 2 ? (
         <Select
-          value={activeTrip?.tripName}
+          value={activeTrip?.name}
           options={generateOptions}
           onChange={handleChange}
         />

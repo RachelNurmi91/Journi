@@ -60,7 +60,7 @@ function Sidebar({
       <>
         <div className="flex-grow-1">
           <h1 className="white-color text-center">
-            {activeTrip?.tripName.toUpperCase()}
+            {activeTrip?.name?.toUpperCase()}
           </h1>
           <div className="col align-self-center mb-3 w-75 mx-auto">
             {TripSelectorMemo}

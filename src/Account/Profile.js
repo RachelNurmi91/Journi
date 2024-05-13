@@ -178,7 +178,7 @@ function Profile({
           <div className="row p-2">
             <div className="col-10">
               <div className="row">
-                <div className="label">{trip.tripName}</div>
+                <div className="label">{trip.name}</div>
               </div>
               <div className="row">
                 <div className="col-6d-flex align-items-end">
