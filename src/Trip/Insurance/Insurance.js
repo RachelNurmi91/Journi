@@ -11,7 +11,7 @@ import Textarea from "../../Shared/UI/Textarea";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
-  insuranceProvider: null,
+  name: null,
   policyNo: null,
   comments: null,
 };
@@ -80,11 +80,11 @@ function Insurance({ fetchUpdatedTrips, ...props }) {
       <div className="container">
         <div className="row">
           <Input
-            name="insuranceProvider"
+            name="name"
             onChange={handleChange}
             placeholder="Insurance Provider"
             label="Insurance Provider"
-            value={formData.insuranceProvider}
+            value={formData.name}
           />
           <Input
             name="policyNo"

@@ -116,17 +116,24 @@ function Register({ ...props }) {
     };
     await accountRequest
       .registerAccount(registrationData)
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         loginAfterRegister();
       })
       .catch((err) => {
         console.error(err);
-        console.error("Register failed: Server login error.");
-        setErrorStatus("Register unsuccessful.");
+        if (err.response?.data?.err?.name === "UserExistsError") {
+          setErrorStatus("Username already exists.");
+        } else {
+          console.error(err);
+          console.error("Register failed: Server login error.");
+          setErrorStatus("Register unsuccessful.");
+        }
+
         setLoading(false);
       });
 
-    props.navigate("/");
+    // props.navigate("/");
   };
 
   return (

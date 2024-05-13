@@ -11,7 +11,7 @@ import {
 } from "../Redux/Operations/AccountOperations";
 
 const DEFAULT_FORM_DATA = {
-  programName: null,
+  name: null,
   membershipId: null,
   id: null,
 };
@@ -34,7 +34,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
     setLoading(true);
     setErrorStatus(false);
 
-    if (!formData.programName) {
+    if (!formData.name) {
       console.error("Save failed: Program name missing.");
       setErrorStatus("Please provide the program name.");
       setLoading(false);
@@ -60,11 +60,11 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
       <div className="container">
         <div className="row">
           <Input
-            name="programName"
+            name="name"
             onChange={handleChange}
             placeholder="Reward Program"
             label="Reward Program"
-            value={formData.programName}
+            value={formData.name}
           />
         </div>
         <div className="row">
