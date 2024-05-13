@@ -182,7 +182,7 @@ function Profile({
               </div>
               <div className="row">
                 <div className="col-6d-flex align-items-end">
-                  {Methods.formatShortDate(trip.departureDate)}
+                  {Methods.formatShortDate(trip.startDate)}
                 </div>
               </div>
             </div>

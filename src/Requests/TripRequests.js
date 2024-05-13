@@ -293,5 +293,55 @@ export default class TripRequests {
         throw error;
       });
   }
-  l;
+
+  addTransportation(transportationData) {
+    const token = localStorage.getItem("token");
+    return axios
+      .post(`${SERVER}/transportation/add`, transportationData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
+  // updateInsurance(data) {
+  //   const token = localStorage.getItem("token");
+  //   return axios
+  //     .put(`${SERVER}/insurance/${data._id}`, data, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       return response; // Return the response for chaining
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //       throw error; // Re-throw the error to propagate it
+  //     });
+  // }
+
+  deleteTransportation(id) {
+    const token = localStorage.getItem("token");
+    return axios
+      .delete(`${SERVER}/transportation/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
+      });
+  }
 }

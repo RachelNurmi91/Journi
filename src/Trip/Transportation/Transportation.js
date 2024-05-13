@@ -66,7 +66,7 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
   //     .catch((error) => {console.error(error); setLoading(false)});
   // };
 
-  const handlePickupDate = (date) => {
+  const handleStartDate = (date) => {
     let selectedDate = new Date(date).getTime();
     let departureDate = new Date(formData.arrivalDate).getTime();
 
@@ -79,14 +79,14 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      pickupDate: selectedDate,
+      startDate: selectedDate,
     }));
   };
 
-  const handlePickupTime = (time) => {
+  const handleStartTime = (time) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      pickupTime: time,
+      startTime: time,
     }));
   };
 
@@ -131,8 +131,8 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Pickup</span>
               <Calendar
-                selectedDate={formData.pickupDate}
-                onDateChange={handlePickupDate}
+                selectedDate={formData.startDate}
+                onDateChange={handleStartDate}
                 placeholder="Select Date"
               />
             </div>
@@ -143,8 +143,8 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Time</span>
               <Time
-                selectedDate={formData.pickupTime}
-                onDateChange={handlePickupTime}
+                selectedDate={formData.startTime}
+                onDateChange={handleStartTime}
                 placeholder="Select Time"
               />
             </div>
@@ -254,11 +254,11 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
         <div className="row mt-4">
           {formData.type ? (
             <Input
-              name="companyName"
+              name="name"
               onChange={handleChange}
               placeholder="Company"
               label="Company"
-              value={formData.companyName}
+              value={formData.name}
             />
           ) : null}
 
