@@ -16,6 +16,8 @@ const DEFAULT_FORM_DATA = {
   name: null,
   startTime: null,
   confirmationNo: null,
+  ticketNo: null,
+  location: null,
   typeSelected: false,
   type: null,
 };

@@ -82,13 +82,13 @@ function TransportationList({ fetchUpdatedTrips, transportationListData }) {
           >
             <div className="row">
               <span className="b22-mon primary-color text-center">
-                {transportation.transportation}
+                {transportation.name}
               </span>
             </div>
 
             <div className="row">
               <div className="text-center b13-mon">
-                {transportation.city}, {transportation.country}
+                {Methods.formatLongDate(transportation.startDate)}
               </div>
             </div>
             {transportation.confirmationNo ? (
@@ -102,30 +102,18 @@ function TransportationList({ fetchUpdatedTrips, transportationListData }) {
                 </div>
               </div>
             ) : null}
+            {transportation.ticketNo ? (
+              <div className="row mt-3">
+                <div className="b16-mon label">Ticket No.</div>
+                <div className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10">
+                  {transportation.ticketNo}
+                </div>
+              </div>
+            ) : null}
 
             <div className="row mt-3">
-              <div className="col-6 d-flex justify-content-start">
-                <div>
-                  <div className="b16-mon label"> Pick-Up </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(transportation.arrivalDate)}
-                  </div>
-                </div>
-              </div>
-              <div className="col-6 d-flex justify-content-end">
-                <div>
-                  <div className="b16-mon label"> Return </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(transportation.departureDate)}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr />
-            <div className="row">
-              <div className="text-center b13-mon">
-                Reserved under "{transportation.nameOnReservation}"
-              </div>
+              <div className="b16-mon label"> Pick-Up Location</div>
+              <div>{transportation.location}</div>
             </div>
           </div>
           <div className="text-center">
