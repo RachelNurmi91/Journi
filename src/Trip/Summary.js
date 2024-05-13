@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Methods from "../Shared/Methods";
+import TodaysItinerary from "./TodaysItinerary";
 
 function Summary({ ...props }) {
   const loggedInSummary = () => {
@@ -27,7 +28,7 @@ function Summary({ ...props }) {
                       size="4x"
                     />
                   </div>
-                  <div className="title">{props.activeTrip?.tripName}</div>
+                  <div className="title">{props.activeTrip?.name}</div>
                   <div className="subtitle"></div>
                   Your Next Trip
                 </div>
@@ -42,7 +43,7 @@ function Summary({ ...props }) {
                     />
                   </div>
                   <div className="title">
-                    {Methods.formatShortDate(props.activeTrip?.departureDate)}
+                    {Methods.formatShortDate(props.activeTrip?.startDate)}
                   </div>
                   <div className="subtitle">Get Ready to Leave</div>
                 </div>
@@ -103,7 +104,9 @@ function Summary({ ...props }) {
     );
   };
 
-  return <>{props.userId ? loggedInSummary() : guestWelcome()}</>;
+  return <TodaysItinerary />;
+
+  // return <>{props.userId ? loggedInSummary() : guestWelcome()}</>;
 }
 
 function mapStateToProps(state) {

@@ -14,13 +14,13 @@ import Select from "../../Shared/UI/Select";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
-  rentalAgency: null,
+  name: null,
   vehicleType: null,
   confirmationNo: null,
-  pickupDate: null,
-  pickupTime: null,
-  returnDate: null,
-  returnTime: null,
+  startDate: null,
+  startTime: null,
+  endDate: null,
+  endTime: null,
 };
 
 function Rental({ fetchUpdatedTrips, ...props }) {
@@ -79,35 +79,35 @@ function Rental({ fetchUpdatedTrips, ...props }) {
   //     .catch((error) => {console.error(error); setLoading(false)});
   // };
 
-  const handlePickupDate = (date) => {
+  const handleStartDate = (date) => {
     let selectedDate = new Date(date).getTime();
-    let departureDate = new Date(formData.arrivalDate).getTime();
+    let endDate = new Date(formData.arrivalDate).getTime();
 
-    if (departureDate && departureDate < selectedDate) {
-      handleReturnDate(date);
+    if (endDate && endDate < selectedDate) {
+      handleEndDate(date);
     }
 
-    if (departureDate < selectedDate) {
+    if (endDate < selectedDate) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        departureDate: date,
+        endDate: date,
       }));
     }
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      pickupDate: selectedDate,
+      startDate: selectedDate,
     }));
   };
 
-  const handlePickupTime = (time) => {
+  const handleStartTime = (time) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      pickupTime: time,
+      startTime: time,
     }));
   };
 
-  const handleReturnDate = (date) => {
+  const handleEndDate = (date) => {
     let selectedDate = new Date(date).getTime();
     let arrivalDate = new Date(formData.arrivalDate).getTime();
 
@@ -118,14 +118,14 @@ function Rental({ fetchUpdatedTrips, ...props }) {
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      returnDate: selectedDate,
+      endDate: selectedDate,
     }));
   };
 
-  const handleReturnTime = (time) => {
+  const handleEndTime = (time) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      returnTime: time,
+      endTime: time,
     }));
   };
 
@@ -141,8 +141,8 @@ function Rental({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Pickup</span>
               <Calendar
-                selectedDate={formData.pickupDate}
-                onDateChange={handlePickupDate}
+                selectedDate={formData.startDate}
+                onDateChange={handleStartDate}
                 placeholder="Select Date"
               />
             </div>
@@ -153,8 +153,8 @@ function Rental({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Time</span>
               <Time
-                selectedDate={formData.pickupTime}
-                onDateChange={handlePickupTime}
+                selectedDate={formData.startTime}
+                onDateChange={handleStartTime}
                 placeholder="Select Time"
               />
             </div>
@@ -167,8 +167,8 @@ function Rental({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Return</span>
               <Calendar
-                selectedDate={formData.returnDate}
-                onDateChange={handleReturnDate}
+                selectedDate={formData.endDate}
+                onDateChange={handleEndDate}
                 placeholder="Select Date"
               />
             </div>
@@ -179,8 +179,8 @@ function Rental({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Time</span>
               <Time
-                selectedDate={formData.returnTime}
-                onDateChange={handleReturnTime}
+                selectedDate={formData.endTime}
+                onDateChange={handleEndTime}
                 placeholder="Select Time"
               />
             </div>
@@ -204,11 +204,11 @@ function Rental({ fetchUpdatedTrips, ...props }) {
         <div className="row"> {renderOptionsBox()}</div>
         <div className="row mt-2">
           <Input
-            name="rentalAgency"
+            name="name"
             onChange={handleChange}
             placeholder="Rental Agency"
             label="Rental Agency"
-            value={formData.rentalAgency}
+            value={formData.name}
           />
           <div className="container">
             <div className="row">

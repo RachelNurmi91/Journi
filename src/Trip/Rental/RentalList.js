@@ -108,7 +108,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
                 <div>
                   <div className="b16-mon label"> Pick-Up </div>
                   <div className="text-center">
-                    {Methods.formatLongDate(rental.arrivalDate)}
+                    {Methods.formatLongDate(rental.startDate)}
                   </div>
                 </div>
               </div>
@@ -116,7 +116,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
                 <div>
                   <div className="b16-mon label"> Return </div>
                   <div className="text-center">
-                    {Methods.formatLongDate(rental.departureDate)}
+                    {Methods.formatLongDate(rental.endDate)}
                   </div>
                 </div>
               </div>

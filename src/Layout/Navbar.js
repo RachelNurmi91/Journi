@@ -48,6 +48,7 @@ function Navbar({ userData, account, activeTrip, userId }) {
             size="2x"
           />
         </div>
+
         <Link to="/" onClick={() => closeSideNav()}>
           <div className="logo-container">
             <img className="logo" src={logo} alt="Journi logo" height="25px" />

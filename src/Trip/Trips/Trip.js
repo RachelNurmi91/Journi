@@ -16,8 +16,8 @@ import Loading from "../../Shared/UI/Loading";
 import Checkbox from "../../Shared/UI/Checkbox";
 
 const DEFAULT_FORM_DATA = {
-  tripName: null,
-  departureDate: null,
+  name: null,
+  startDate: null,
   selections: {
     flights: false,
     hotels: false,
@@ -36,7 +36,7 @@ function Trip({
   ...props
 }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-  const [departureDate, setDepartureDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
@@ -49,7 +49,7 @@ function Trip({
         let trip = tripsListData.find(
           (trip) => trip._id?.toString() === id?.toString()
         );
-        setDepartureDate(trip.departureDate);
+        setStartDate(trip.startDate);
         setFormData(trip);
       }
     }
@@ -71,10 +71,14 @@ function Trip({
   const saveTrip = async () => {
     setLoading(true);
     const newTrip = {
-      tripName: formData.tripName,
-      departureDate: formData.departureDate,
+      name: formData.name,
+      startDate: formData.startDate,
       hotels: [],
       flights: [],
+      transportation: [],
+      rentals: [],
+      cruises: [],
+      insurance: null,
       selections: formData.selections,
     };
 
@@ -109,11 +113,11 @@ function Trip({
       .catch((error) => console.error(error));
   };
 
-  const handleDepartureDate = (date) => {
-    setDepartureDate(date);
+  const handleStartDate = (date) => {
+    setStartDate(date);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      departureDate: date,
+      startDate: date,
     }));
   };
 
@@ -143,11 +147,11 @@ function Trip({
       <div className="container">
         <div className="row" style={{ marginBottom: "35px" }}>
           <Input
-            name="tripName"
+            name="name"
             onChange={handleChange}
             label={<h4 className="primary-color">Where are you going?</h4>}
             placeholder="Unique Trip Name"
-            value={formData.tripName}
+            value={formData.name}
             inputStyles={{ margin: 0, padding: 0 }}
           />
         </div>
@@ -163,8 +167,8 @@ function Trip({
             />
             <span className="label mx-3">Departure</span>
             <Calendar
-              selectedDate={departureDate}
-              onDateChange={handleDepartureDate}
+              selectedDate={startDate}
+              onDateChange={handleStartDate}
               placeholder="Select Date"
             />
           </div>

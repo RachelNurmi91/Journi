@@ -116,7 +116,7 @@ function CruiseList({ fetchUpdatedTrips, cruiseListData, deleteTripData }) {
                 <div>
                   <div className="b16-mon label"> Departure </div>
                   <div className="text-center">
-                    {Methods.formatLongDate(cruise.departureDate)}
+                    {Methods.formatLongDate(cruise.startDate)}
                   </div>
                 </div>
               </div>

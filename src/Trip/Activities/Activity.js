@@ -14,10 +14,10 @@ import Loading from "../../Shared/UI/Loading";
 import Textarea from "../../Shared/UI/Textarea";
 
 const DEFAULT_FORM_DATA = {
-  activityName: null,
+  name: null,
   location: null,
-  activityDate: null,
-  activityTime: null,
+  startDate: null,
+  startTime: null,
   addOns: {
     comments: null,
     ticketNo: null,
@@ -85,14 +85,14 @@ function Activity({ fetchUpdatedTrips, ...props }) {
   const handleActivityTime = (time) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      activityTime: time,
+      startTime: time,
     }));
   };
 
-  const handleActivityDate = (date) => {
+  const handleStartDate = (date) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      activityDate: date,
+      startDate: date,
     }));
   };
 
@@ -118,8 +118,8 @@ function Activity({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Date</span>
               <Calendar
-                selectedDate={formData.activityDate}
-                onDateChange={handleActivityDate}
+                selectedDate={formData.startDate}
+                onDateChange={handleStartDate}
                 placeholder="Select Date"
               />
             </div>
@@ -130,7 +130,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Time</span>
               <Time
-                selectedDate={formData.activityTime}
+                selectedDate={formData.startTime}
                 onDateChange={handleActivityTime}
                 placeholder="Select Time"
               />
@@ -157,11 +157,11 @@ function Activity({ fetchUpdatedTrips, ...props }) {
         <div className="row"> {renderOptionsBox()}</div>
         <div className="row mt-2">
           <Input
-            name="activityName"
+            name="name"
             onChange={handleChange}
             placeholder="Activity"
             label="Activity"
-            value={formData.activityName}
+            value={formData.name}
           />
 
           <Input

@@ -31,8 +31,8 @@ function HotelList({
 
     if (hotels && hotels.length > 10) {
       sortedHotels = hotels.sort((a, b) => {
-        if (a.arrivalDate > b.arrivalDate) return 1;
-        if (a.arrivalDate < b.arrivalDate) return -1;
+        if (a.startDate > b.startDate) return 1;
+        if (a.startDate < b.startDate) return -1;
         return 0;
       });
     } else {
@@ -88,7 +88,7 @@ function HotelList({
           >
             <div className="row">
               <span className="b22-mon primary-color text-center">
-                {hotel.hotel}
+                {hotel.name}
               </span>
             </div>
 
@@ -114,7 +114,7 @@ function HotelList({
                 <div>
                   <div className="b16-mon label"> Arrival </div>
                   <div className="text-center">
-                    {Methods.formatLongDate(hotel.arrivalDate)}
+                    {Methods.formatLongDate(hotel.startDate)}
                   </div>
                 </div>
               </div>
@@ -122,7 +122,7 @@ function HotelList({
                 <div>
                   <div className="b16-mon label"> Departure </div>
                   <div className="text-center">
-                    {Methods.formatLongDate(hotel.departureDate)}
+                    {Methods.formatLongDate(hotel.endDate)}
                   </div>
                 </div>
               </div>

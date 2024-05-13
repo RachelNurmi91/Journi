@@ -13,11 +13,11 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
-  hotel: null,
+  name: null,
   city: null,
   country: null,
-  arrivalDate: null,
-  departureDate: null,
+  startDate: null,
+  endDate: null,
   confirmationNo: null,
   nameOnReservation: null,
 };
@@ -84,39 +84,39 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
   //     .catch((error) => {console.error(error); setLoading(false)});
   // };
 
-  const handleArrivalDate = (date) => {
+  const handleStartDate = (date) => {
     let selectedDate = new Date(date).getTime();
-    let departureDate = new Date(formData.arrivalDate).getTime();
+    let endDate = new Date(formData.startDate).getTime();
 
-    if (departureDate && departureDate < selectedDate) {
-      handleDepartureDate(date);
+    if (endDate && endDate < selectedDate) {
+      handleEndDate(date);
     }
 
-    if (departureDate < selectedDate) {
+    if (endDate < selectedDate) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        departureDate: date,
+        endDate: date,
       }));
     }
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      arrivalDate: selectedDate,
+      startDate: selectedDate,
     }));
   };
 
-  const handleDepartureDate = (date) => {
+  const handleEndDate = (date) => {
     let selectedDate = new Date(date).getTime();
-    let arrivalDate = new Date(formData.arrivalDate).getTime();
+    let startDate = new Date(formData.startDate).getTime();
 
-    if (selectedDate < arrivalDate) {
+    if (selectedDate < startDate) {
       console.error("Departure can not occur before the arrival.");
       return;
     }
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      departureDate: selectedDate,
+      endDate: selectedDate,
     }));
   };
 
@@ -132,8 +132,8 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Arrival</span>
               <Calendar
-                selectedDate={formData.arrivalDate}
-                onDateChange={handleArrivalDate}
+                selectedDate={formData.startDate}
+                onDateChange={handleStartDate}
                 placeholder="Select Date"
               />
             </div>
@@ -144,8 +144,8 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Departure</span>
               <Calendar
-                selectedDate={formData.departureDate}
-                onDateChange={handleDepartureDate}
+                selectedDate={formData.endDate}
+                onDateChange={handleEndDate}
                 placeholder="Select Date"
               />
             </div>
@@ -169,11 +169,11 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
         <div className="row"> {renderOptionsBox()}</div>
         <div className="row mt-2">
           <Input
-            name="hotel"
+            name="name"
             onChange={handleChange}
             placeholder="Hotel"
             label="Hotel"
-            value={formData.hotel}
+            value={formData.name}
           />
 
           <Input

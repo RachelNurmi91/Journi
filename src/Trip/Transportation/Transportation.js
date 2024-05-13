@@ -13,8 +13,8 @@ import Checkbox from "../../Shared/UI/Checkbox";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
-  transportationType: null,
-  vehicleType: null,
+  name: null,
+  startTime: null,
   confirmationNo: null,
   typeSelected: false,
   type: null,

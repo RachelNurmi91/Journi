@@ -35,11 +35,11 @@ function ActivityList({ fetchUpdatedTrips, activityListData }) {
 
     if (activities && activities?.length > 1) {
       sortedActivities = activities.sort((a, b) => {
-        if (a.activityDate > b.activityDate) return 1;
-        if (a.activityDate < b.activityDate) return -1;
-        if (a.activityDate === b.activityDate) {
-          if (a.activityTime > b.activityTime) return 1;
-          if (a.activityTime < b.activityTime) return -1;
+        if (a.startDate > b.startDate) return 1;
+        if (a.startDate < b.startDate) return -1;
+        if (a.startDate === b.startDate) {
+          if (a.startTime > b.startTime) return 1;
+          if (a.startTime < b.startTime) return -1;
         }
         return 0;
       });
@@ -119,15 +119,15 @@ function ActivityList({ fetchUpdatedTrips, activityListData }) {
           >
             <div className="row">
               <span className="b22-mon primary-color text-center">
-                {activity?.activityName}
+                {activity?.name}
               </span>
             </div>
 
             <div className="row mt-2">
               <div className="text-center b13-mon">
-                {Methods.formatLongDate(activity?.activityDate)}
+                {Methods.formatLongDate(activity?.startDate)}
 
-                {activity?.activityTime ? (
+                {activity?.startTime ? (
                   <>
                     <div className="d-inline mx-2">
                       <FontAwesomeIcon
@@ -136,7 +136,7 @@ function ActivityList({ fetchUpdatedTrips, activityListData }) {
                       />
                     </div>
 
-                    {Methods.formatTime(activity?.activityTime)}
+                    {Methods.formatTime(activity?.startTime)}
                   </>
                 ) : null}
               </div>

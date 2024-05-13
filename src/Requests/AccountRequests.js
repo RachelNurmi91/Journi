@@ -1,5 +1,6 @@
 import axios from "axios";
-const SERVER = "https://journiserver.onrender.com";
+// const SERVER = "https://journiserver.onrender.com";
+const SERVER = "http://localhost:8080";
 
 export default class AccountRequests {
   login(loginData) {
