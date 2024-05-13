@@ -65,15 +65,15 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
   //     .catch((error) => {console.error(error); setLoading(false)});
   // };
 
-  const handleEndDate = (date) => {
+  const handleStartDate = (date) => {
     let selectedDate = new Date(date).getTime();
-    let startDate = new Date(formData.endDate).getTime();
+    let endDate = new Date(formData.endDate).getTime();
 
-    if (startDate && startDate < selectedDate) {
+    if (endDate && endDate < selectedDate) {
       handleStartDate(date);
     }
 
-    if (startDate < selectedDate) {
+    if (endDate < selectedDate) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         startDate: date,
@@ -86,18 +86,18 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
     }));
   };
 
-  const handleStartDate = (date) => {
+  const handleEndDate = (date) => {
     let selectedDate = new Date(date).getTime();
-    let endDate = new Date(formData.endDate).getTime();
+    let startDate = new Date(formData.startDate).getTime();
 
-    if (selectedDate < endDate) {
+    if (selectedDate < startDate) {
       console.error("Departure can not occur before the return.");
       return;
     }
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      startDate: selectedDate,
+      endDate: selectedDate,
     }));
   };
 
@@ -113,8 +113,8 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Departure</span>
               <Calendar
-                selectedDate={formData.endDate}
-                onDateChange={handleEndDate}
+                selectedDate={formData.startDate}
+                onDateChange={handleStartDate}
                 placeholder="Select Date"
               />
             </div>
@@ -125,8 +125,8 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
               />
               <span className="label mx-3">Return</span>
               <Calendar
-                selectedDate={formData.startDate}
-                onDateChange={handleStartDate}
+                selectedDate={formData.endDate}
+                onDateChange={handleEndDate}
                 placeholder="Select Date"
               />
             </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import Header from "../Shared/UI/Header";
 
 function TodaysItinerary({ userData }) {
   const [todaysItinerary, setTodaysItinerary] = useState(null);
@@ -20,7 +21,7 @@ function TodaysItinerary({ userData }) {
     );
     const rentals = userData?.trips?.flatMap((trip) => trip?.rentals);
 
-    const today = new Date();
+    const today = new Date("2024-05-20T12:00:00.221Z");
     const todaysDate = today.toDateString();
 
     hotels?.forEach((hotel) => {
@@ -115,6 +116,7 @@ function TodaysItinerary({ userData }) {
 
   const renderTodaysItinerary = () => {
     if (todaysItinerary === null) return null;
+    console.log(todaysItinerary);
 
     return todaysItinerary?.map((i, index) => {
       return (
@@ -132,10 +134,12 @@ function TodaysItinerary({ userData }) {
   };
 
   return (
-    <div className="App">
-      <div style={{ textAlign: "left" }}>
-        <h1>Scheduled Itinerary</h1>
-        <ul>{renderTodaysItinerary()}</ul>
+    <div className="content-body">
+      <div className="itinerary">
+        <div style={{ textAlign: "left" }}>
+          <h1>Scheduled Itinerary</h1>
+          <ul>{renderTodaysItinerary()}</ul>
+        </div>
       </div>
     </div>
   );

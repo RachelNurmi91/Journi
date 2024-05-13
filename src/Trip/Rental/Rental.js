@@ -15,10 +15,12 @@ import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   name: null,
-  vehicleType: null,
+  vehicleType: "Economy",
   confirmationNo: null,
+  startLocation: null,
   startDate: null,
   startTime: null,
+  endLocation: null,
   endDate: null,
   endTime: null,
 };

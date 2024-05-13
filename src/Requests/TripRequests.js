@@ -297,7 +297,7 @@ export default class TripRequests {
   addRental(rentalData) {
     const token = localStorage.getItem("token");
     return axios
-      .post(`${SERVER}/rental/add`, rentalData, {
+      .post(`${SERVER}/rentals/add`, rentalData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -314,7 +314,7 @@ export default class TripRequests {
   deleteRental(id) {
     const token = localStorage.getItem("token");
     return axios
-      .delete(`${SERVER}/rental/${id}`, {
+      .delete(`${SERVER}/rentals/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
