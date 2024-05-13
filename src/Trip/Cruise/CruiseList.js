@@ -82,49 +82,52 @@ function CruiseList({ fetchUpdatedTrips, cruiseListData, deleteTripData }) {
           >
             <div className="row">
               <span className="b22-mon primary-color text-center">
-                {cruise.cruise}
+                {cruise.name}
               </span>
             </div>
-
             <div className="row">
-              <div className="text-center b13-mon">
-                {cruise.city}, {cruise.country}
-              </div>
-            </div>
-            {cruise.confirmationNo ? (
-              <div className="row mt-3">
-                <div className="b16-mon label">Confirmation No.</div>
-                <div
-                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                  style={{ borderRadius: "5px" }}
-                >
-                  {cruise.confirmationNo}
+              <div className="text-center b13-mon">{cruise.ship}</div>
+            </div>{" "}
+            <div className="row mt-3">
+              {cruise.confirmationNo ? (
+                <div className="col">
+                  <div className="b16-mon label">Confirmation</div>
+                  <div
+                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                    style={{ borderRadius: "5px" }}
+                  >
+                    {cruise.confirmationNo}
+                  </div>
                 </div>
-              </div>
-            ) : null}
-
+              ) : null}{" "}
+              {cruise.cabinNo ? (
+                <div className="col">
+                  <div className="b16-mon label">Cabin No.</div>
+                  <div
+                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                    style={{ borderRadius: "5px" }}
+                  >
+                    {cruise.cabinNo}
+                  </div>
+                </div>
+              ) : null}
+            </div>
             <div className="row mt-3">
               <div className="col-6 d-flex justify-content-start">
                 <div>
-                  <div className="b16-mon label"> Arrival </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(cruise.arrivalDate)}
-                  </div>
-                </div>
-              </div>
-              <div className="col-6 d-flex justify-content-end">
-                <div>
-                  <div className="b16-mon label"> Departure </div>
+                  <div className="b16-mon label"> Sailing Date </div>
                   <div className="text-center">
                     {Methods.formatLongDate(cruise.startDate)}
                   </div>
                 </div>
               </div>
-            </div>
-            <hr />
-            <div className="row">
-              <div className="text-center b13-mon">
-                Reserved under "{cruise.nameOnReservation}"
+              <div className="col-6 d-flex justify-content-end">
+                <div>
+                  <div className="b16-mon label"> Return Date </div>
+                  <div className="text-center">
+                    {Methods.formatLongDate(cruise.endDate)}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
