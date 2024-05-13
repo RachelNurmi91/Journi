@@ -209,23 +209,6 @@ export default class TripRequests {
       });
   }
 
-  // updateCruise(data) {
-  //   const token = localStorage.getItem("token");
-  //   return axios
-  //     .put(`${SERVER}/cruises/${data._id}`, data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       return response; // Return the response for chaining
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //       throw error; // Re-throw the error to propagate it
-  //     });
-  // }
-
   deleteCruise(id) {
     const token = localStorage.getItem("token");
     return axios
@@ -260,23 +243,6 @@ export default class TripRequests {
       });
   }
 
-  // updateInsurance(data) {
-  //   const token = localStorage.getItem("token");
-  //   return axios
-  //     .put(`${SERVER}/insurance/${data._id}`, data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       return response; // Return the response for chaining
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //       throw error; // Re-throw the error to propagate it
-  //     });
-  // }
-
   deleteInsurance(id) {
     const token = localStorage.getItem("token");
     return axios
@@ -303,35 +269,52 @@ export default class TripRequests {
         },
       })
       .then(function (response) {
-        return response; // Return the response for chaining
+        return response;
       })
       .catch(function (error) {
         console.error(error);
-        throw error; // Re-throw the error to propagate it
+        throw error;
       });
   }
-
-  // updateInsurance(data) {
-  //   const token = localStorage.getItem("token");
-  //   return axios
-  //     .put(`${SERVER}/insurance/${data._id}`, data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       return response; // Return the response for chaining
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //       throw error; // Re-throw the error to propagate it
-  //     });
-  // }
 
   deleteTransportation(id) {
     const token = localStorage.getItem("token");
     return axios
       .delete(`${SERVER}/transportation/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
+      });
+  }
+
+  addRental(rentalData) {
+    const token = localStorage.getItem("token");
+    return axios
+      .post(`${SERVER}/rental/add`, rentalData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
+      });
+  }
+
+  deleteRental(id) {
+    const token = localStorage.getItem("token");
+    return axios
+      .delete(`${SERVER}/rental/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
