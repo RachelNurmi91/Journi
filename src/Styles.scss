@@ -89,7 +89,7 @@ a {
 }
 
 .light-bg-color {
-  background-color: #ddefef;
+  background-color: #eefafa;
 }
 
 /* Navbar */
@@ -246,7 +246,8 @@ a {
 }
 
 .outlined-box {
-  @include box(25px);
+  // @include box(25px);
+  @include box(15px);
   border: 1px solid #c0c0c0;
 
   h3 {
@@ -540,6 +541,8 @@ padding: 10px;
 .itinerary {
   ul {
     list-style-type: none;
+    padding: 0;
+    margin: auto
   }
 
   li {

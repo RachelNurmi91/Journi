@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Header from "../Shared/UI/Header";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function TodaysItinerary({ userData }) {
   const [todaysItinerary, setTodaysItinerary] = useState(null);
@@ -116,7 +117,6 @@ function TodaysItinerary({ userData }) {
 
   const renderTodaysItinerary = () => {
     if (todaysItinerary === null) return null;
-    console.log(todaysItinerary);
 
     return todaysItinerary?.map((i, index) => {
       return (
@@ -126,18 +126,19 @@ function TodaysItinerary({ userData }) {
               <circle stroke="none" cx="16" cy="16" r="10"></circle>
             </svg>
           </div>
-          {i.name}
-          {i.startTime ? formatTime(i.startTime) : null}
+          {i.name}{" "}
+          {i.startTime ? (
+            <div className="b13-mon">{formatTime(i.startTime)}</div>
+          ) : null}
         </li>
       );
     });
   };
 
   return (
-    <div className="content-body">
+    <div>
       <div className="itinerary">
         <div style={{ textAlign: "left" }}>
-          <h1>Scheduled Itinerary</h1>
           <ul>{renderTodaysItinerary()}</ul>
         </div>
       </div>

@@ -42,7 +42,7 @@ function Header({ title, rightIcon, leftIcon, destination, props, subtitle }) {
       ) : null}
       <div className={`${rightIcon || leftIcon ? "col-11" : "col-12"}`}>
         <h2 className=" mb-0">{title}</h2>
-        <div className="b13-mon my-2">{subtitle}</div>
+        <div className="b13-mon my-2 mx-2">{subtitle}</div>
       </div>
       {rightIcon ? (
         <div className="col-1 d-flex justify-content-end">

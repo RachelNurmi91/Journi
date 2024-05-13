@@ -4,6 +4,32 @@ import Methods from "../Shared/Methods";
 import TodaysItinerary from "./TodaysItinerary";
 
 function Summary({ ...props }) {
+  const vacationStarted = () => {
+    return (
+      <div className="content-body">
+        <div className="container summary">
+          <div className="row text-center">
+            <h1>
+              <span>{props.activeTrip.name}</span> is here !
+            </h1>
+          </div>
+          <div className="row mt-3">
+            <div className="col-12">
+              <h2 className="primary-color">What's going on today?</h2>
+              <p className="b13-mon">
+                For a more exact itinerary add start times to all of your
+                events. Any events without start times will show up on top.
+              </p>
+
+              <div className="outlined-box">
+                <TodaysItinerary />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   const loggedInSummary = () => {
     if (props.userData.trips.length) {
       return (
@@ -104,9 +130,7 @@ function Summary({ ...props }) {
     );
   };
 
-  return <TodaysItinerary />;
-
-  // return <>{props.userId ? loggedInSummary() : guestWelcome()}</>;
+  return <>{props.userId ? loggedInSummary() : guestWelcome()}</>;
 }
 
 function mapStateToProps(state) {
