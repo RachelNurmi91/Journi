@@ -17,7 +17,8 @@ import Checkbox from "../../Shared/UI/Checkbox";
 
 const DEFAULT_FORM_DATA = {
   name: null,
-  startDate: null,
+  startDate: new Date(),
+  endDate: null,
   selections: {
     flights: false,
     hotels: false,
@@ -36,7 +37,6 @@ function Trip({
   ...props
 }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-  const [startDate, setStartDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
@@ -49,7 +49,6 @@ function Trip({
         let trip = tripsListData.find(
           (trip) => trip._id?.toString() === id?.toString()
         );
-        setStartDate(trip.startDate);
         setFormData(trip);
       }
     }
@@ -73,6 +72,7 @@ function Trip({
     const newTrip = {
       name: formData.name,
       startDate: formData.startDate,
+      endDate: formData.endDate,
       hotels: [],
       flights: [],
       transportation: [],
@@ -114,14 +114,43 @@ function Trip({
   };
 
   const handleStartDate = (date) => {
-    setStartDate(date);
+    let selectedDate = new Date(date).getTime();
+    let endDate = new Date(formData.startDate).getTime();
+
+    if (endDate && endDate < selectedDate) {
+      handleEndDate(date);
+    }
+
+    if (endDate < selectedDate) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        endDate: date,
+      }));
+    }
+
     setFormData((prevFormData) => ({
       ...prevFormData,
-      startDate: date,
+      startDate: selectedDate,
     }));
   };
 
-  console.log(formData);
+  const handleEndDate = (date) => {
+    let selectedDate = new Date(date).getTime();
+    let startDate = new Date(formData.startDate).getTime();
+
+    if (selectedDate < startDate) {
+      console.error("Departure can not occur before the arrival.");
+      return;
+    }
+
+    selectedDate = new Date(selectedDate);
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      endDate: selectedDate,
+    }));
+  };
+
   const onCheck = (event) => {
     const targetKey = event.target.name;
 
@@ -155,22 +184,40 @@ function Trip({
             inputStyles={{ margin: 0, padding: 0 }}
           />
         </div>
-        <h4 className="primary-color">When are you leaving?</h4>
+        <h4 className="primary-color">When does your trip take place?</h4>
         <div
           className="outlined-box px-4 py-3 mt-2"
           style={{ marginBottom: "40px" }}
         >
-          <div className="text-center">
-            <FontAwesomeIcon
-              icon="fa-solid fa-calendar-days"
-              style={{ color: "#0bb6c0" }}
-            />
-            <span className="label mx-3">Departure</span>
-            <Calendar
-              selectedDate={startDate}
-              onDateChange={handleStartDate}
-              placeholder="Select Date"
-            />
+          <div className="row">
+            <div className="col">
+              <div className="text-center">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-calendar-days"
+                  style={{ color: "#0bb6c0" }}
+                />
+                <span className="label mx-3">Departure</span>
+                <Calendar
+                  selectedDate={formData.startDate}
+                  onDateChange={handleStartDate}
+                  placeholder="Select Date"
+                />
+              </div>
+            </div>
+            <div className="col">
+              <div className="text-center">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-calendar-days"
+                  style={{ color: "#0bb6c0" }}
+                />
+                <span className="label mx-3">Return</span>
+                <Calendar
+                  selectedDate={formData.endDate}
+                  onDateChange={handleEndDate}
+                  placeholder="Select Date"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <h4 className="primary-color">What do you need?</h4>

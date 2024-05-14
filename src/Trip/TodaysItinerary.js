@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import Header from "../Shared/UI/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function TodaysItinerary({ userData }) {
   const [todaysItinerary, setTodaysItinerary] = useState(null);
 
   useEffect(() => {
-    getTodaysItinerary();
-  }, []);
-
-  const getTodaysItinerary = () => {
     let todaysItinerary = [];
 
     const hotels = userData?.trips?.flatMap((trip) => trip?.hotels);
@@ -22,7 +17,7 @@ function TodaysItinerary({ userData }) {
     );
     const rentals = userData?.trips?.flatMap((trip) => trip?.rentals);
 
-    const today = new Date("2024-05-20T12:00:00.221Z");
+    const today = new Date();
     const todaysDate = today.toDateString();
 
     hotels?.forEach((hotel) => {
@@ -80,7 +75,7 @@ function TodaysItinerary({ userData }) {
     });
 
     sortTodaysItinerary(todaysItinerary);
-  };
+  }, [userData?.trips]);
 
   const sortTodaysItinerary = (todaysItinerary) => {
     todaysItinerary.sort((a, b) => {
@@ -120,16 +115,35 @@ function TodaysItinerary({ userData }) {
 
     return todaysItinerary?.map((i, index) => {
       return (
-        <li key={index}>
+        <li key={index} style={{ paddingBottom: "30px" }}>
           <div className="bullet">
             <svg aria-hidden="true" viewBox="0 0 32 32" focusable="false">
               <circle stroke="none" cx="16" cy="16" r="10"></circle>
             </svg>
           </div>
-          {i.name}{" "}
-          {i.startTime ? (
-            <div className="b13-mon">{formatTime(i.startTime)}</div>
-          ) : null}
+          <div>
+            <span className="label">{i.name}</span>
+            {i.location ? (
+              <div className="b13-mon">
+                {" "}
+                <FontAwesomeIcon
+                  icon="fa-solid fa-location-dot"
+                  style={{ color: "#0bb6c0" }}
+                />{" "}
+                {i.location}
+              </div>
+            ) : null}
+            {i.startTime ? (
+              <div className="b13-mon">
+                {" "}
+                <FontAwesomeIcon
+                  icon="fa-solid fa-clock"
+                  style={{ color: "#0bb6c0" }}
+                />{" "}
+                {formatTime(i.startTime)}
+              </div>
+            ) : null}
+          </div>
         </li>
       );
     });

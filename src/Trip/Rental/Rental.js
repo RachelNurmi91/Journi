@@ -18,7 +18,7 @@ const DEFAULT_FORM_DATA = {
   vehicleType: "Economy",
   confirmationNo: null,
   startLocation: null,
-  startDate: null,
+  startDate: new Date(),
   startTime: null,
   endLocation: null,
   endDate: null,

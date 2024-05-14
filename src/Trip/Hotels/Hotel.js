@@ -16,7 +16,7 @@ const DEFAULT_FORM_DATA = {
   name: null,
   city: null,
   country: null,
-  startDate: null,
+  startDate: new Date(),
   endDate: null,
   confirmationNo: null,
   nameOnReservation: null,

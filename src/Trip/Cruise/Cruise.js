@@ -14,7 +14,7 @@ import Loading from "../../Shared/UI/Loading";
 const DEFAULT_FORM_DATA = {
   name: null,
   ship: null,
-  startDate: null,
+  startDate: new Date(),
   endDate: null,
   confirmationNo: null,
   cabinNo: null,

@@ -16,7 +16,7 @@ import Textarea from "../../Shared/UI/Textarea";
 const DEFAULT_FORM_DATA = {
   name: null,
   location: null,
-  startDate: null,
+  startDate: new Date(),
   startTime: null,
   addOns: {
     comments: null,

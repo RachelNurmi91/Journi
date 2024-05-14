@@ -14,6 +14,7 @@ import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
   name: null,
+  startDate: new Date(),
   startTime: null,
   confirmationNo: null,
   ticketNo: null,
