@@ -174,7 +174,7 @@ function Sidebar({
                 </li>
                 <li>
                   <Link
-                    to={"/flights"}
+                    to={"/notes"}
                     className="nav-link"
                     onClick={() => closeSideNav()}
                   >

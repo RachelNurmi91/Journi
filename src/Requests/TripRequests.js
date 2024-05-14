@@ -327,4 +327,39 @@ export default class TripRequests {
         throw error;
       });
   }
+
+  addNote(noteData) {
+    console.log("Note:", noteData);
+    const token = localStorage.getItem("token");
+    return axios
+      .post(`${SERVER}/notes/add`, noteData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
+      });
+  }
+
+  deleteNote(id) {
+    const token = localStorage.getItem("token");
+    return axios
+      .delete(`${SERVER}/notes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response;
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error;
+      });
+  }
 }

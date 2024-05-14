@@ -43,7 +43,7 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
     tripRequest
       .addTransportation(formData)
       .then(() => {
-        fetchUpdatedTrips().then(() => props.navigate("/transportations"));
+        fetchUpdatedTrips().then(() => props.navigate("/transportation"));
         setTimeout(() => {
           setLoading(false);
         }, 1500);
@@ -107,18 +107,28 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
   };
 
   const getLocationType = () => {
+    let pickupLocation;
     switch (formData?.type) {
       case "shuttle":
-        return "Pickup Location";
+        pickupLocation = "Pickup Location";
+        break;
+      case "privateCar":
+        pickupLocation = "Pickup Location";
+        break;
       case "bus":
-        return "Location or Bus Station";
+        pickupLocation = "Location or Bus Station";
+        break;
       case "train":
-        return "Train Station";
+        pickupLocation = "Train Station";
+        break;
       case "ferry":
-        return "Terminal Name";
+        pickupLocation = "Terminal Name";
+        break;
       default:
         return;
     }
+
+    return pickupLocation;
   };
 
   const renderOptionsBox = () => {
@@ -161,7 +171,7 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
       <Header
         title="Add Transportation"
         leftIcon={true}
-        destination={"/transportations"}
+        destination={"/transportation"}
         props={{
           addNew: true,
         }}
@@ -255,27 +265,24 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
         </div>
         <div className="row mt-4">
           {formData.type ? (
-            <Input
-              name="name"
-              onChange={handleChange}
-              placeholder="Company"
-              label="Company"
-              value={formData.name}
-            />
+            <>
+              <Input
+                name="name"
+                onChange={handleChange}
+                placeholder="Company"
+                label="Company"
+                value={formData.name}
+              />
+              <Input
+                name="location"
+                onChange={handleChange}
+                placeholder={getLocationType()}
+                label={getLocationType()}
+                value={formData.location}
+              />
+            </>
           ) : null}
 
-          {formData.type === "bus" ||
-          formData.type === "train" ||
-          formData.type === "ferry" ||
-          formData.type === "shuttle" ? (
-            <Input
-              name="location"
-              onChange={handleChange}
-              placeholder={getLocationType()}
-              label={getLocationType()}
-              value={formData.location}
-            />
-          ) : null}
           {formData.type === "bus" ||
           formData.type === "train" ||
           formData.type === "ferry" ? (

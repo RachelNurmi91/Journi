@@ -87,9 +87,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
             </div>
 
             <div className="row">
-              <div className="text-center b13-mon">
-                Vehicle Type: {rental.vehicleType}
-              </div>
+              <div className="text-center b13-mon">{rental.vehicleType}</div>
             </div>
             {rental.confirmationNo ? (
               <div className="row mt-3">

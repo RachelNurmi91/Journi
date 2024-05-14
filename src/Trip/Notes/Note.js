@@ -1,31 +1,22 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import Input from "../../Shared/UI/Input";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
-import Checkbox from "../../Shared/UI/Checkbox";
 import Textarea from "../../Shared/UI/Textarea";
 
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
-  name: null,
-  policyNo: null,
-  comments: null,
+  note: null,
 };
 
-function Insurance({ fetchUpdatedTrips, ...props }) {
+function Note({ fetchUpdatedTrips, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
-  const [showComments, setShowComments] = useState(false);
 
   const tripRequest = new TripRequests();
-
-  const toggleComments = () => {
-    setShowComments(!showComments);
-  };
 
   const handleChange = (event) => {
     const targetKey = event.target.name;
@@ -34,15 +25,15 @@ function Insurance({ fetchUpdatedTrips, ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  // onSave is for new insurance
-  const saveInsurance = async () => {
+  // onSave is for new note
+  const saveNote = async () => {
     setLoading(true);
 
     formData.tripId = props.activeTripId;
     tripRequest
-      .addInsurance(formData)
+      .addNote(formData)
       .then(() => {
-        fetchUpdatedTrips().then(() => props.navigate("/insurance"));
+        fetchUpdatedTrips().then(() => props.navigate("/notes"));
         setTimeout(() => {
           setLoading(false);
         }, 1500);
@@ -55,13 +46,13 @@ function Insurance({ fetchUpdatedTrips, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting insurance
-  // const updateInsurance = () => {
+  // onUpdate is for editing exiting note
+  // const updateNote = () => {
   //   setLoading(true)
   //   tripRequest
-  //     .updateInsurance(formData)
+  //     .updateNote(formData)
   //     .then(() => {
-  //       fetchUpdatedTrips().then(() => {props.navigate("/insurances")
+  //       fetchUpdatedTrips().then(() => {props.navigate("/notes")
   //       setLoading(false)});
   //     })
   //     .catch((error) => {console.error(error); setLoading(false)});
@@ -70,47 +61,25 @@ function Insurance({ fetchUpdatedTrips, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title="Add Insurance"
+        title="Add Note"
         leftIcon={true}
-        destination={"/insurance"}
+        destination={"/notes"}
         props={{
           addNew: true,
         }}
       />
       <div className="container">
         <div className="row">
-          <Input
-            name="name"
+          <Textarea
+            name="note"
             onChange={handleChange}
-            placeholder="Insurance Provider"
-            label="Insurance Provider"
-            value={formData.name}
+            placeholder="Add notes about your trip..."
+            label="Add a Note"
           />
-          <Input
-            name="policyNo"
-            onChange={handleChange}
-            placeholder="Policy No."
-            label="Policy No."
-            value={formData.policyNo}
-          />
-          <div>
-            <Checkbox
-              label="Add additional comments"
-              toggleCheckbox={toggleComments}
-            />
-            {showComments ? (
-              <Textarea
-                name="comments"
-                onChange={handleChange}
-                placeholder="Add additional information..."
-                label="Comments"
-              />
-            ) : null}
-          </div>
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveInsurance} />
+            <Button label="Save" onClick={saveNote} />
           </div>
         </div>
       </div>
@@ -131,4 +100,4 @@ const mapDispatchToProps = {
   fetchUpdatedTrips,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Insurance);
+export default connect(mapStateToProps, mapDispatchToProps)(Note);

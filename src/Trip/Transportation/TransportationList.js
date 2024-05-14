@@ -59,6 +59,22 @@ function TransportationList({ fetchUpdatedTrips, transportationListData }) {
       });
   };
 
+  const formatType = (type) => {
+    let formattedType;
+    switch (type) {
+      case "bus":
+        formattedType = "Bus";
+        break;
+      case "privateCar":
+        formattedType = "Private Car Pickup";
+        break;
+      default:
+        return;
+    }
+
+    return formattedType;
+  };
+
   const displayTransportation = () => {
     return transportationList?.map((transportation, index) => {
       const isOpen = openTransportationId === transportation._id;
@@ -88,7 +104,7 @@ function TransportationList({ fetchUpdatedTrips, transportationListData }) {
 
             <div className="row">
               <div className="text-center b13-mon">
-                {Methods.formatLongDate(transportation.startDate)}
+                {formatType(transportation.type)}
               </div>
             </div>
             {transportation.confirmationNo ? (
@@ -112,8 +128,22 @@ function TransportationList({ fetchUpdatedTrips, transportationListData }) {
             ) : null}
 
             <div className="row mt-3">
-              <div className="b16-mon label"> Pick-Up Location</div>
-              <div>{transportation.location}</div>
+              <div className="col">
+                <div className="b16-mon label"> Pick-Up</div>
+                <div>{Methods.formatLongDate(transportation.startDate)}</div>
+                <div>
+                  {" "}
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-clock"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {Methods.formatTime(transportation.startTime)}
+                </div>
+              </div>
+              <div className="col">
+                <div className="b16-mon label"> Pick-Up Location</div>
+                <div>{transportation.location}</div>
+              </div>
             </div>
           </div>
           <div className="text-center">

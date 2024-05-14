@@ -115,18 +115,16 @@ function CruiseList({ fetchUpdatedTrips, cruiseListData, deleteTripData }) {
             <div className="row mt-3">
               <div className="col-6 d-flex justify-content-start">
                 <div>
-                  <div className="b16-mon label"> Sailing Date </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(cruise.startDate)}
-                  </div>
+                  <div className="b16-mon label"> Embarkation</div>
+
+                  {Methods.formatLongDate(cruise.startDate)}
                 </div>
               </div>
-              <div className="col-6 d-flex justify-content-end">
+              <div className="col-6 d-flex justify-content-start">
                 <div>
-                  <div className="b16-mon label"> Return Date </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(cruise.endDate)}
-                  </div>
+                  <div className="b16-mon label"> Debarkation </div>
+
+                  {Methods.formatLongDate(cruise.endDate)}
                 </div>
               </div>
             </div>

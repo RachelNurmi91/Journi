@@ -1,0 +1,87 @@
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import Header from "../../Shared/UI/Header";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
+import TripRequests from "../../Requests/TripRequests";
+import { deleteTripData } from "../../Redux/Actions/AccountActions";
+import Loading from "../../Shared/UI/Loading";
+
+function NoteList({ fetchUpdatedTrips, noteListData }) {
+  const [loading, setLoading] = useState(false);
+  const [sortedNotes, setSortedNotes] = useState(null);
+
+  const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    const notes = [...noteListData];
+
+    const sortNotes = notes?.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    setSortedNotes(sortNotes);
+  }, [noteListData]);
+
+  const deleteNote = (id) => {
+    setLoading(true);
+    tripRequest
+      .deleteNote(id)
+      .then(() => {
+        fetchUpdatedTrips().then(() => {
+          setLoading(false);
+        });
+      })
+      .catch((error) => {
+        console.error("Error: Cannot delete trip: ", error);
+        setLoading(false);
+      });
+  };
+
+  const displayNotes = () => {
+    return sortedNotes?.map((note, index) => {
+      return (
+        <div className="shadow-box mb-4">
+          <div className="row">
+            <div className="col">
+              <li>{note.note}</li>
+            </div>
+            <div className="col-1 mx-3 d-flex align-items-center">
+              <FontAwesomeIcon
+                icon="fa-solid fa-trash"
+                style={{ color: "#d65d5d" }}
+                onClick={() => deleteNote(note._id)}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  return (
+    <>
+      <div className="content-body note-list">
+        <Header title="Trip Notes" rightIcon="add" destination={"/notes/add"} />
+        {noteListData?.length ? (
+          <div>
+            <ul>{displayNotes()}</ul>
+          </div>
+        ) : (
+          "Girly pop, add your first note!"
+        )}
+      </div>
+      <Loading loading={loading} />
+    </>
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    noteListData: state.account?.activeTrip?.notes,
+  };
+}
+
+const mapDispatchToProps = { fetchUpdatedTrips, deleteTripData };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteList);

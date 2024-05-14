@@ -20,6 +20,8 @@ import Insurance from "../Trip/Insurance/Insurance";
 import InsuranceList from "../Trip/Insurance/InsuranceList";
 import Transportation from "../Trip/Transportation/Transportation";
 import TransportationList from "../Trip/Transportation/TransportationList";
+import Note from "../Trip/Notes/Note";
+import NoteList from "../Trip/Notes/NoteList";
 
 function Content({ ...props }) {
   const navigate = useNavigate();
@@ -68,6 +70,9 @@ function Content({ ...props }) {
               path="/activity/*"
               element={<Activity navigate={navigate} />}
             />
+
+            <Route path="/notes" element={<NoteList />} />
+            <Route path="/notes/*" element={<Note navigate={navigate} />} />
 
             <Route path="/trips" element={<Trip navigate={navigate} />} />
             <Route
