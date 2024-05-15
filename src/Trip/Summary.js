@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Methods from "../Shared/Methods";
 import TodaysItinerary from "./TodaysItinerary";
+import Button from "../Shared/UI/Button";
 
 function Summary({ userData, activeTrip }) {
   const USER_ID = userData.id;
@@ -45,8 +46,13 @@ function Summary({ userData, activeTrip }) {
   const guestSummary = () => {
     return (
       <div className="content-body text-center">
-        <h1>Your Journi Awaits</h1>
-        <p>Login or register to start planning</p>
+        <h1 className="mt-3">Your Journi Awaits</h1>
+        <FontAwesomeIcon
+          icon="fa-solid fa-umbrella-beach"
+          style={{ color: "#0bb6c0", padding: "25px 0px 40px" }}
+          size="5x"
+        />
+        <p>Login or register to start planning.</p>
       </div>
     );
   };
@@ -55,30 +61,57 @@ function Summary({ userData, activeTrip }) {
     return (
       <div className="content-body">
         <h1 className="text-center">Let's get started!</h1>
+        <div className="text-center mt-3">
+          <FontAwesomeIcon
+            icon="fa-solid fa-passport"
+            style={{ color: "#0bb6c0" }}
+            size="5x"
+          />
+        </div>
+
         <div className="container">
           <div className="row">
             <h4 className="mt-4">
-              <span className="primary-color x-bold">Step 1:</span> Add your
-              first trip!
+              <span className="primary-color" style={{ fontWeight: "900" }}>
+                Step 1:
+              </span>{" "}
+              Add your first trip!
             </h4>
+            <div className="mx-auto mt-2 w-75">
+              <Button
+                label={
+                  <>
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-plus"
+                      style={{ color: "#fff" }}
+                    />
+                    <span className="mx-2">Let's Add It!</span>
+                  </>
+                }
+                destination={"/trips"}
+              />
+            </div>
           </div>
 
           <div className="row">
             <h4 className="mt-4">
-              <span className="primary-color x-bold">Step 2:</span> Add your
-              travel plans
+              <span className="primary-color" style={{ fontWeight: "900" }}>
+                Step 2:
+              </span>{" "}
+              Add your travel plans
             </h4>
           </div>
           <div className="row">
             <p className="px-4">
-              Under the navigation you'll find areas to add your tickets,
-              reservations, itinerary, and more.
+              You can add your tickets, reservations, itinerary, and more.
             </p>
           </div>
           <div className="row">
             <h4 className="mt-4">
-              <span className="primary-color x-bold">Step 3:</span> Update your
-              profile
+              <span className="primary-color" style={{ fontWeight: "900" }}>
+                Step 3:
+              </span>{" "}
+              Update your profile
             </h4>
             <p className="px-4">
               Add your rewards and membership numbers to your profile for easy
@@ -86,7 +119,7 @@ function Summary({ userData, activeTrip }) {
             </p>
           </div>
           <div className="row mt-3 text-center">
-            <h2 className="primary-color x-bold">Happy Travels!</h2>
+            <h3>Happy Travels, Girly Pop!</h3>
           </div>
         </div>
       </div>

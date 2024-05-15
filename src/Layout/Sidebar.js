@@ -26,7 +26,7 @@ function Sidebar({
             <li>
               <Link
                 to="/login"
-                className="nav-link"
+                className="nav-link pt-0"
                 onClick={() => closeSideNav()}
               >
                 <FontAwesomeIcon
@@ -58,7 +58,7 @@ function Sidebar({
   const loggedInSideBar = () => {
     return (
       <>
-        <div className="flex-grow-1 mt-2">
+        <div className={activeTrip ? "flex-grow-1 mt-2" : ""}>
           <h1 className="white-color text-center">
             {activeTrip?.name?.toUpperCase()}
           </h1>
@@ -217,12 +217,19 @@ function Sidebar({
             </ul>
           </div>
         </div>
-        <div className="flex-shrink-1 align-items-end">
+
+        <div
+          className={
+            activeTrip
+              ? "flex-shrink-1 align-items-end"
+              : "flex-grow-1 d-flex justify-content-center align-items-center"
+          }
+        >
           <ul className="menu">
             <li>
               <Link
                 to={"/trips/add"}
-                className="nav-link"
+                className={activeTrip ? "nav-link" : "nav-link pt-0"}
                 onClick={() => closeSideNav()}
               >
                 <FontAwesomeIcon
