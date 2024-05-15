@@ -22,7 +22,7 @@ const DEFAULT_FORM_DATA = {
   nameOnReservation: null,
 };
 
-function Hotel({ fetchUpdatedTrips, ...props }) {
+function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -159,7 +159,7 @@ function Hotel({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Hotel"
-        leftIcon={true}
+        leftIcon={activeTrip?.hotels?.length ? true : false}
         destination={"/hotels"}
         props={{
           addNew: true,

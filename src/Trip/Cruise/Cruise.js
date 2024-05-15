@@ -20,7 +20,7 @@ const DEFAULT_FORM_DATA = {
   cabinNo: null,
 };
 
-function Cruise({ fetchUpdatedTrips, ...props }) {
+function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
 
@@ -140,7 +140,7 @@ function Cruise({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Cruise"
-        leftIcon={true}
+        leftIcon={activeTrip?.cruises?.length ? true : false}
         destination={"/cruises"}
         props={{
           addNew: true,

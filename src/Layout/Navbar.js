@@ -46,6 +46,7 @@ function Navbar({ userData, account, activeTrip, userId }) {
             icon="fa-solid fa-bars"
             style={{ color: "#fff" }}
             size="2x"
+            cursor="pointer"
           />
         </div>
 
@@ -54,17 +55,23 @@ function Navbar({ userData, account, activeTrip, userId }) {
             <img className="logo" src={logo} alt="Journi logo" height="25px" />
           </div>
         </Link>
-        <div className="profile-icon">
-          <Link to="/profile" onClick={() => closeSideNav()}>
-            <div className="d-flex justify-content-center" to="/profile">
-              <div className="img-edit">
-                <div className="profile-img">
-                  {userData?.firstName?.slice(0, 1).toUpperCase()}
+        {userId ? (
+          <>
+            <div className="profile-icon">
+              <Link to="/profile" onClick={() => closeSideNav()}>
+                <div className="d-flex justify-content-center" to="/profile">
+                  <div className="img-edit">
+                    <div className="profile-img">
+                      {userData?.firstName?.slice(0, 1).toUpperCase()}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
-          </Link>
-        </div>
+          </>
+        ) : (
+          <div></div>
+        )}
       </nav>
       <div ref={sideRef}>
         <Sidebar

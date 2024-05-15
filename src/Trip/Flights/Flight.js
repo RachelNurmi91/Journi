@@ -23,7 +23,7 @@ const DEFAULT_FORM_DATA = {
   ticketHolder: null,
 };
 
-function Flight({ fetchUpdatedTrips, ...props }) {
+function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [isOneWay, setIsOneWay] = useState(false);
@@ -473,7 +473,7 @@ function Flight({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Flight"
-        leftIcon={true}
+        leftIcon={activeTrip?.flights?.length ? true : false}
         destination={"/flights"}
         props={{
           addNew: true,

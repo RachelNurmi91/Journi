@@ -72,7 +72,11 @@ function Sidebar({
                   {tripSelections?.flights ? (
                     <li>
                       <Link
-                        to={"/flights"}
+                        to={
+                          activeTrip?.flights?.length
+                            ? "/flights"
+                            : "/flights/add"
+                        }
                         className="nav-link"
                         onClick={() => closeSideNav()}
                       >
@@ -87,7 +91,9 @@ function Sidebar({
                   {tripSelections?.hotels ? (
                     <li>
                       <Link
-                        to={"/hotels"}
+                        to={
+                          activeTrip?.hotels?.length ? "/hotels" : "/hotels/add"
+                        }
                         className="nav-link"
                         onClick={() => closeSideNav()}
                       >
@@ -103,7 +109,11 @@ function Sidebar({
                   {tripSelections?.rentalCar ? (
                     <li>
                       <Link
-                        to={"/rentals"}
+                        to={
+                          activeTrip?.rentals?.length
+                            ? "/rentals"
+                            : "/rentals/add"
+                        }
                         className="nav-link"
                         onClick={() => closeSideNav()}
                       >
@@ -118,7 +128,11 @@ function Sidebar({
                   {tripSelections?.insurance ? (
                     <li>
                       <Link
-                        to={"/insurance"}
+                        to={
+                          activeTrip?.insurance?.length
+                            ? "/insurance"
+                            : "/insurance/add"
+                        }
                         className="nav-link"
                         onClick={() => closeSideNav()}
                       >
@@ -133,7 +147,11 @@ function Sidebar({
                   {tripSelections?.cruise ? (
                     <li>
                       <Link
-                        to={"/cruises"}
+                        to={
+                          activeTrip?.cruises?.length
+                            ? "/cruises"
+                            : "/cruises/add"
+                        }
                         className="nav-link"
                         onClick={() => closeSideNav()}
                       >
@@ -148,7 +166,11 @@ function Sidebar({
                   {tripSelections?.transportation ? (
                     <li>
                       <Link
-                        to={"/transportation"}
+                        to={
+                          activeTrip?.transportation?.length
+                            ? "/transportation"
+                            : "/transportation/add"
+                        }
                         className="nav-link"
                         onClick={() => closeSideNav()}
                       >
@@ -162,7 +184,11 @@ function Sidebar({
                   ) : null}
                   <li>
                     <Link
-                      to={"/activities"}
+                      to={
+                        activeTrip?.activities?.length
+                          ? "/activities"
+                          : "/activities/add"
+                      }
                       className="nav-link"
                       onClick={() => closeSideNav()}
                     >
@@ -175,7 +201,7 @@ function Sidebar({
                   </li>
                   <li>
                     <Link
-                      to={"/notes"}
+                      to={activeTrip?.notes?.length ? "/notes" : "/notes/add"}
                       className="nav-link"
                       onClick={() => closeSideNav()}
                     >
@@ -227,6 +253,7 @@ function Sidebar({
             style={{ color: "#fff" }}
             size="2x"
             onClick={toggleSideNav}
+            cursor="pointer"
           />
         </div>
 

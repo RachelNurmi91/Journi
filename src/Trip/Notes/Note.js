@@ -12,7 +12,7 @@ const DEFAULT_FORM_DATA = {
   note: null,
 };
 
-function Note({ fetchUpdatedTrips, ...props }) {
+function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
 
@@ -62,7 +62,7 @@ function Note({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Note"
-        leftIcon={true}
+        leftIcon={activeTrip?.notes?.length ? true : false}
         destination={"/notes"}
         props={{
           addNew: true,

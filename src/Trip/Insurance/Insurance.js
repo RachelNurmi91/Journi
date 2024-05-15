@@ -16,7 +16,7 @@ const DEFAULT_FORM_DATA = {
   comments: null,
 };
 
-function Insurance({ fetchUpdatedTrips, ...props }) {
+function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -71,7 +71,7 @@ function Insurance({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Insurance"
-        leftIcon={true}
+        leftIcon={activeTrip?.insurance?.length ? true : false}
         destination={"/insurance"}
         props={{
           addNew: true,

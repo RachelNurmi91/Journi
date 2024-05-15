@@ -25,7 +25,7 @@ const DEFAULT_FORM_DATA = {
   },
 };
 
-function Activity({ fetchUpdatedTrips, ...props }) {
+function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -145,7 +145,7 @@ function Activity({ fetchUpdatedTrips, ...props }) {
     <div className="content-body activity">
       <Header
         title="Add Activity"
-        leftIcon={true}
+        leftIcon={activeTrip?.activities?.length ? true : false}
         destination={"/activities"}
         subtitle="Add any activity, event or excursion."
         props={{

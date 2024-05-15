@@ -11,10 +11,17 @@ function Summary({ userData, activeTrip }) {
     return (
       <div className="content-body">
         <div className="container summary">
-          <div className="row text-center">
-            <h1>
-              <span>{activeTrip?.name}</span> is here !
-            </h1>
+          <div className="outlined-box text-center">
+            <div>
+              <FontAwesomeIcon
+                icon="fa-solid fa-suitcase-rolling"
+                style={{ color: "#0bb6c0" }}
+                size="4x"
+              />
+            </div>
+            <div className="title">{activeTrip?.name}</div>
+            <div className="subtitle"></div>
+            Let the fun begin!
           </div>
           <div className="row mt-3">
             <div className="col-12">

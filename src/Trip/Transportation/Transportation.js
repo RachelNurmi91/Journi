@@ -23,7 +23,7 @@ const DEFAULT_FORM_DATA = {
   type: null,
 };
 
-function Transportation({ fetchUpdatedTrips, ...props }) {
+function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
 
@@ -171,7 +171,7 @@ function Transportation({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Transportation"
-        leftIcon={true}
+        leftIcon={activeTrip?.transportation?.length ? true : false}
         destination={"/transportation"}
         props={{
           addNew: true,

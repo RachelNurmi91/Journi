@@ -205,7 +205,7 @@ function ActivityList({ fetchUpdatedTrips, activityListData }) {
         <Header
           title="Activities"
           rightIcon="add"
-          destination={"/activity/add"}
+          destination={"/activities/add"}
         />
         {activityListData?.length
           ? displayActivities()

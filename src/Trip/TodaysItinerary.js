@@ -111,7 +111,25 @@ function TodaysItinerary({ userData }) {
   };
 
   const renderTodaysItinerary = () => {
-    if (todaysItinerary === null) return null;
+    if (!todaysItinerary?.length) {
+      return (
+        <div className="row py-4">
+          <div className="col-3 d-flex align-items-center">
+            <FontAwesomeIcon
+              icon="fa-solid fa-umbrella-beach"
+              style={{ color: "#0bb6c0" }}
+              size="3x"
+            />
+          </div>
+          <div className="col" style={{ paddingLeft: "25px" }}>
+            Looks like you have nothing planned today.{" "}
+            <span className="primary-color" style={{ fontWeight: "700" }}>
+              Enjoy it!
+            </span>
+          </div>
+        </div>
+      );
+    }
 
     return todaysItinerary?.map((i, index) => {
       return (

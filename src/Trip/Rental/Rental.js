@@ -25,7 +25,7 @@ const DEFAULT_FORM_DATA = {
   endTime: null,
 };
 
-function Rental({ fetchUpdatedTrips, ...props }) {
+function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [showReturnLocation, setShowReturnLocation] = useState(false);
@@ -201,7 +201,7 @@ function Rental({ fetchUpdatedTrips, ...props }) {
     <div className="content-body">
       <Header
         title="Add Rental Car"
-        leftIcon={true}
+        leftIcon={activeTrip?.rentals?.length ? true : false}
         destination={"/rentals"}
         props={{
           addNew: true,

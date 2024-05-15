@@ -67,7 +67,7 @@ function Content({ ...props }) {
 
             <Route path="/activities" element={<ActivityList />} />
             <Route
-              path="/activity/*"
+              path="/activities/*"
               element={<Activity navigate={navigate} />}
             />
 
