@@ -153,7 +153,7 @@ function Profile({
           {index === 0 ? null : <hr />}
 
           <div className="row pt-2">
-            <div className="col-5 col-lg-1 label">{program.programName}</div>
+            <div className="col-5 col-lg-1 label">{program.name}</div>
             <div className="col-5 d-flex align-items-center justify-content-end">
               {program.membershipId}
             </div>
@@ -230,19 +230,15 @@ function Profile({
           </div>
         </div>
         <div className="col d-flex align-items-center justify-content-start">
-          <h2>
-            Look at you,
-            <span className="primary-color"> {userData?.firstName}</span>!
-          </h2>
+          <h2>Look at you, {userData?.firstName}!</h2>
         </div>
       </div>
 
-      <div className="outlined-box mt-3 p-4  mb-4">
-        <div className="row">
-          <h3 className="float-right">User Details</h3>
-        </div>
-
-        <div className="container mt-3">
+      <div className="mt-3">
+        <h3 className="float-right primary-color">User Details</h3>
+      </div>
+      <div className="outlined-box p-4 mb-4">
+        <div className="container">
           <div className="row">
             <div className="col-3 col-lg-1 label">Name</div>
             <div className="col">
@@ -256,25 +252,25 @@ function Profile({
         </div>
       </div>
 
-      <div className="outlined-box mb-4">
-        <div className="row">
-          <div className="col-10">
-            <h3 className="float-right">Trips</h3>
-          </div>
-          <div className="col-2 d-flex justify-content-end">
-            <Link to="/trips/add" className="nav-link">
-              <FontAwesomeIcon
-                icon="fa-solid fa-plus"
-                size="lg"
-                style={{ color: "#0BB6C0" }}
-              />
-            </Link>
-          </div>
+      <div className="row">
+        <div className="col-10">
+          <h3 className="float-right primary-color">Trips</h3>
         </div>
+        <div className="col-2 d-flex justify-content-end">
+          <Link to="/trips/add" className="nav-link">
+            <FontAwesomeIcon
+              icon="fa-solid fa-plus"
+              size="lg"
+              style={{ color: "#0BB6C0" }}
+            />
+          </Link>
+        </div>
+      </div>
+      <div className="outlined-box mb-4">
         <div
-          className="container collapsible mt-2"
+          className="container collapsible"
           style={{
-            height: openTrips ? "" : "50px",
+            height: openTrips ? "" : "75px",
             transition: "height 0.10s ease",
           }}
         >
@@ -299,23 +295,23 @@ function Profile({
         ) : null}
       </div>
 
-      <div className="outlined-box  mb-4">
-        <div className="row">
-          <div className="col-10">
-            <h3 className="float-right">Reward Programs</h3>
-          </div>
-          <div className="col-2 d-flex justify-content-end">
-            <Link to="/profile/reward-programs" className="nav-link">
-              <FontAwesomeIcon
-                icon="fa-solid fa-plus"
-                size="lg"
-                style={{ color: "#0BB6C0" }}
-              />
-            </Link>
-          </div>
+      <div className="row">
+        <div className="col-10">
+          <h3 className="float-right primary-color">Reward Programs</h3>
         </div>
+        <div className="col-2 d-flex justify-content-end">
+          <Link to="/profile/reward-programs" className="nav-link">
+            <FontAwesomeIcon
+              icon="fa-solid fa-plus"
+              size="lg"
+              style={{ color: "#0BB6C0" }}
+            />
+          </Link>
+        </div>
+      </div>
+      <div className="outlined-box mb-4">
         <div
-          className="container collapsible mt-2"
+          className="container collapsible"
           style={{
             height: openPrograms ? "" : "50px",
             transition: "height 0.10s ease",
