@@ -1,11 +1,14 @@
 import { useRef } from "react";
 
-function Textarea({ name, onChange, placeholder, label, value }) {
+function Textarea({ name, onChange, placeholder, label, value, inputError }) {
   const textRef = useRef(null);
 
   return (
     <div className="form-group my-2">
-      <label htmlFor="textareaId" className="mb-2">
+      <label
+        htmlFor="textareaId"
+        className={inputError?.includes(name) ? "error-color mb-2" : "mb-2"}
+      >
         {label}
       </label>
       <textarea

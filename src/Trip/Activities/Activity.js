@@ -16,7 +16,7 @@ import Textarea from "../../Shared/UI/Textarea";
 const DEFAULT_FORM_DATA = {
   name: null,
   location: null,
-  startDate: new Date(),
+  startDate: null,
   startTime: null,
   addOns: {
     comments: null,
@@ -30,12 +30,32 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [loading, setLoading] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [showTickets, setShowTickets] = useState(false);
+  const [inputError, setInputError] = useState([]);
 
   const tripRequest = new TripRequests();
 
   // onSave is for new activities
   const saveActivity = async () => {
     setLoading(true);
+
+    // Account for all possible missing data error checks before attempting save.
+    let errors = [];
+
+    if (!formData.startDate) {
+      console.error("Save failed: Start date missing.");
+      errors.push("startDate");
+    }
+
+    if (!formData.name) {
+      console.error("Save failed: Rental agency name missing.");
+      errors.push("name");
+    }
+
+    if (errors.length) {
+      setInputError(errors);
+      setLoading(false);
+      return;
+    }
 
     formData.tripId = props.activeTripId;
     tripRequest
@@ -63,6 +83,15 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   const handleChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -90,6 +119,15 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   const handleStartDate = (date) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes("startDate")) {
+        let updateError = inputError.filter((err) => err !== "startDate");
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       startDate: date,
@@ -116,7 +154,15 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
               />
-              <span className="label mx-3">Date</span>
+              <span
+                className={
+                  inputError?.includes("startDate")
+                    ? "label error-color mx-3"
+                    : "label mx-3"
+                }
+              >
+                Date
+              </span>
               <Calendar
                 selectedDate={formData.startDate}
                 onDateChange={handleStartDate}
@@ -162,6 +208,7 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
             placeholder="Activity"
             label="Activity"
             value={formData.name}
+            inputError={inputError}
           />
 
           <Input
@@ -261,6 +308,16 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
             <Button label="Save" onClick={saveActivity} />
           </div>
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
       </div>
       <Loading loading={loading} />
     </div>

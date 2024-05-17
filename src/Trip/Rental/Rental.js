@@ -18,7 +18,7 @@ const DEFAULT_FORM_DATA = {
   vehicleType: "Economy",
   confirmationNo: null,
   startLocation: null,
-  startDate: new Date(),
+  startDate: null,
   startTime: null,
   endLocation: null,
   endDate: null,
@@ -29,6 +29,7 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [showReturnLocation, setShowReturnLocation] = useState(false);
+  const [inputError, setInputError] = useState([]);
 
   const tripRequest = new TripRequests();
 
@@ -47,6 +48,15 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   const handleChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -56,6 +66,35 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   // onSave is for new rental cars
   const saveRental = async () => {
     setLoading(true);
+
+    // Account for all possible missing data error checks before attempting save.
+    let errors = [];
+
+    if (!formData.startDate) {
+      console.error("Save failed: Start date missing.");
+      errors.push("startDate");
+    }
+
+    if (!formData.endDate) {
+      console.error("Save failed: End date missing.");
+      errors.push("endDate");
+    }
+    if (!formData.name) {
+      console.error("Save failed: Rental agency name missing.");
+      errors.push("name");
+    }
+
+    if (errors.length) {
+      setInputError(errors);
+      setLoading(false);
+      return;
+    }
+
+    if (errors.length) {
+      setInputError(errors);
+      setLoading(false);
+      return;
+    }
 
     formData.tripId = props.activeTripId;
     tripRequest
@@ -87,6 +126,14 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   // };
 
   const handleStartDate = (date) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes("startDate")) {
+        let updateError = inputError.filter((err) => err !== "startDate");
+        setInputError(updateError);
+      }
+    }
+
     let selectedDate = new Date(date).getTime();
     let endDate = new Date(formData.arrivalDate).getTime();
 
@@ -115,6 +162,14 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   const handleEndDate = (date) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes("endDate")) {
+        let updateError = inputError.filter((err) => err !== "endDate");
+        setInputError(updateError);
+      }
+    }
+
     let selectedDate = new Date(date).getTime();
     let arrivalDate = new Date(formData.arrivalDate).getTime();
 
@@ -146,7 +201,15 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
               />
-              <span className="label mx-3">Pickup</span>
+              <span
+                className={
+                  inputError?.includes("startDate")
+                    ? "label error-color mx-3"
+                    : "label mx-3"
+                }
+              >
+                Pickup
+              </span>
               <Calendar
                 selectedDate={formData.startDate}
                 onDateChange={handleStartDate}
@@ -172,7 +235,15 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
               />
-              <span className="label mx-3">Drop Off</span>
+              <span
+                className={
+                  inputError?.includes("endDate")
+                    ? "label error-color mx-3"
+                    : "label mx-3"
+                }
+              >
+                Drop Off
+              </span>
               <Calendar
                 selectedDate={formData.endDate}
                 onDateChange={handleEndDate}
@@ -216,6 +287,7 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
             placeholder="Rental Agency"
             label="Rental Agency"
             value={formData.name}
+            inputError={inputError}
           />
           <Input
             name="startLocation"
@@ -267,6 +339,16 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
             <Button label="Save" onClick={saveRental} />
           </div>
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
       </div>
       <Loading loading={loading} />
     </div>

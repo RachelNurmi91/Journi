@@ -17,7 +17,7 @@ import Checkbox from "../../Shared/UI/Checkbox";
 
 const DEFAULT_FORM_DATA = {
   name: null,
-  startDate: new Date(),
+  startDate: null,
   endDate: null,
   selections: {
     flights: false,
@@ -38,6 +38,7 @@ function Trip({
 }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
+  const [inputError, setInputError] = useState([]);
 
   const tripRequest = new TripRequests();
 
@@ -61,6 +62,15 @@ function Trip({
   }, [edit, setCurrentTrip]);
 
   const handleChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -69,6 +79,38 @@ function Trip({
 
   const saveTrip = async () => {
     setLoading(true);
+
+    // Account for all possible missing data error checks before attempting save.
+    let errors = [];
+
+    if (!formData.startDate) {
+      console.error("Save failed: Start date missing.");
+      errors.push("startDate");
+    }
+
+    if (!formData.name) {
+      console.error("Save failed: Trip name missing.");
+      errors.push("name");
+    }
+
+    if (
+      !formData.selections.flights &&
+      !formData.selections.hotels &&
+      !formData.selections.rentalCar &&
+      !formData.selections.cruise &&
+      !formData.selections.transportation &&
+      !formData.selections.insurance
+    ) {
+      console.error("Save failed: Selection missing.");
+      errors.push("selection");
+    }
+
+    if (errors.length) {
+      setInputError(errors);
+      setLoading(false);
+      return;
+    }
+
     const newTrip = {
       name: formData.name,
       startDate: formData.startDate,
@@ -114,6 +156,14 @@ function Trip({
   };
 
   const handleStartDate = (date) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes("startDate")) {
+        let updateError = inputError.filter((err) => err !== "startDate");
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
     let selectedDate = new Date(date).getTime();
     let endDate = new Date(formData.startDate).getTime();
 
@@ -135,6 +185,15 @@ function Trip({
   };
 
   const handleEndDate = (date) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes("endDate")) {
+        let updateError = inputError.filter((err) => err !== "endDate");
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     let selectedDate = new Date(date).getTime();
     let startDate = new Date(formData.startDate).getTime();
 
@@ -152,6 +211,15 @@ function Trip({
   };
 
   const onCheck = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes("selection")) {
+        let updateError = inputError.filter((err) => err !== "selection");
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
 
     setFormData((prevState) => ({
@@ -174,17 +242,33 @@ function Trip({
       />
       <div className="row"></div>
       <div className="container">
-        <div className="row" style={{ marginBottom: "35px" }}>
+        <h4
+          className={
+            inputError?.includes("name") ? "error-color" : "primary-color"
+          }
+        >
+          Where are you going?
+        </h4>
+        <div
+          className="row"
+          style={{ marginBottom: "35px", marginTop: "-30px" }}
+        >
           <Input
             name="name"
             onChange={handleChange}
-            label={<h4 className="primary-color">Where are you going?</h4>}
             placeholder="Unique Trip Name"
             value={formData.name}
             inputStyles={{ margin: 0, padding: 0 }}
           />
         </div>
-        <h4 className="primary-color">When does your trip take place?</h4>
+        <h4
+          className={
+            inputError?.includes("startDate") ? "error-color" : "primary-color"
+          }
+        >
+          When does your trip take place?
+        </h4>
+
         <div
           className="outlined-box px-4 py-3 mt-2"
           style={{ marginBottom: "40px" }}
@@ -210,7 +294,7 @@ function Trip({
                   icon="fa-solid fa-calendar-days"
                   style={{ color: "#0bb6c0" }}
                 />
-                <span className="label mx-3">Return</span>
+                <div className="label mx-3">Return</div>
                 <Calendar
                   selectedDate={formData.endDate}
                   onDateChange={handleEndDate}
@@ -220,8 +304,14 @@ function Trip({
             </div>
           </div>
         </div>
-        <h4 className="primary-color">What do you need?</h4>
-        {/* <h4 className="mx-2">What do you need for this trip?</h4> */}
+        <h4
+          className={
+            inputError?.includes("selection") ? "error-color" : "primary-color"
+          }
+        >
+          What do you need?
+        </h4>
+
         <div className="b13-mon mb-3 mx-2">
           {" "}
           {edit

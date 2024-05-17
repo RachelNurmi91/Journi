@@ -14,7 +14,7 @@ import Loading from "../../Shared/UI/Loading";
 const DEFAULT_FORM_DATA = {
   name: null,
   ship: null,
-  startDate: new Date(),
+  startDate: null,
   endDate: null,
   confirmationNo: null,
   cabinNo: null,
@@ -23,10 +23,20 @@ const DEFAULT_FORM_DATA = {
 function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
+  const [inputError, setInputError] = useState([]);
 
   const tripRequest = new TripRequests();
 
   const handleChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -36,6 +46,36 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
   // onSave is for new cruises
   const saveCruise = async () => {
     setLoading(true);
+
+    // Account for all possible missing data error checks before attempting save.
+    let errors = [];
+
+    if (!formData.startDate) {
+      console.error("Save failed: Start date missing.");
+      errors.push("startDate");
+    }
+
+    if (!formData.endDate) {
+      console.error("Save failed: End date missing.");
+      errors.push("endDate");
+    }
+
+    if (!formData.name) {
+      console.error("Save failed: Cruise line missing.");
+      errors.push("name");
+    }
+
+    if (!formData.ship) {
+      console.error("Save failed: Cruise ship missing.");
+      errors.push("ship");
+    }
+
+    if (errors.length) {
+      setInputError(errors);
+      setLoading(false);
+      return;
+    }
+
     formData.tripId = props.activeTripId;
     tripRequest
       .addCruise(formData)
@@ -111,7 +151,15 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
               />
-              <span className="label mx-3">Departure</span>
+              <span
+                className={
+                  inputError?.includes("startDate")
+                    ? "label error-color mx-3"
+                    : "label mx-3"
+                }
+              >
+                Departure
+              </span>
               <Calendar
                 selectedDate={formData.startDate}
                 onDateChange={handleStartDate}
@@ -123,7 +171,15 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
                 icon="fa-solid fa-calendar-days"
                 style={{ color: "#0bb6c0" }}
               />
-              <span className="label mx-3">Return</span>
+              <span
+                className={
+                  inputError?.includes("endDate")
+                    ? "label error-color mx-3"
+                    : "label mx-3"
+                }
+              >
+                Return
+              </span>
               <Calendar
                 selectedDate={formData.endDate}
                 onDateChange={handleEndDate}
@@ -155,6 +211,7 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
             placeholder="Cruise Line"
             label="Cruise Line"
             value={formData.name}
+            inputError={inputError}
           />
           <Input
             name="ship"
@@ -162,6 +219,7 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
             placeholder="Cruise Ship"
             label="Cruise Ship"
             value={formData.ship}
+            inputError={inputError}
           />
 
           <div className="container">
@@ -192,6 +250,16 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
             <Button label="Save" onClick={saveCruise} />
           </div>
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
       </div>
       <Loading loading={loading} />
     </div>

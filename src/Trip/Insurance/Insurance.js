@@ -20,6 +20,7 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [inputError, setInputError] = useState([]);
 
   const tripRequest = new TripRequests();
 
@@ -28,6 +29,13 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   const handleChange = (event) => {
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -37,6 +45,26 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
   // onSave is for new insurance
   const saveInsurance = async () => {
     setLoading(true);
+
+    let errors = [];
+
+    // Account for all possible missing data error checks before attempting login.
+    if (!formData.name) {
+      console.error("Save failed: Insurance name missing.");
+      errors.push("name");
+      setLoading(false);
+    }
+
+    if (!formData.policyNo) {
+      console.error("Save failed: Policy number missing.");
+      errors.push("policyNo");
+      setLoading(false);
+    }
+
+    if (errors.length) {
+      setInputError(errors);
+      return;
+    }
 
     formData.tripId = props.activeTripId;
     tripRequest
@@ -85,6 +113,7 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
             placeholder="Insurance Provider"
             label="Insurance Provider"
             value={formData.name}
+            inputError={inputError}
           />
           <Input
             name="policyNo"
@@ -92,6 +121,7 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
             placeholder="Policy No."
             label="Policy No."
             value={formData.policyNo}
+            inputError={inputError}
           />
           <div>
             <Checkbox
@@ -113,6 +143,16 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
             <Button label="Save" onClick={saveInsurance} />
           </div>
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
       </div>
       <Loading loading={loading} />
     </div>

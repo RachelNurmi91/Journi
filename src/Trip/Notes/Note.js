@@ -15,10 +15,20 @@ const DEFAULT_FORM_DATA = {
 function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
+  const [inputError, setInputError] = useState([]);
 
   const tripRequest = new TripRequests();
 
   const handleChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -28,6 +38,20 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
   // onSave is for new note
   const saveNote = async () => {
     setLoading(true);
+
+    // Account for all possible missing data error checks before attempting save.
+    let errors = [];
+
+    if (!formData.note) {
+      console.error("Save failed: Note missing.");
+      errors.push("note");
+    }
+
+    if (errors.length) {
+      setInputError(errors);
+      setLoading(false);
+      return;
+    }
 
     formData.tripId = props.activeTripId;
     tripRequest
@@ -75,6 +99,7 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
             onChange={handleChange}
             placeholder="Add notes about your trip..."
             label="Add a Note"
+            inputError={inputError}
           />
         </div>
         <div className="row mt-3">
@@ -82,6 +107,16 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
             <Button label="Save" onClick={saveNote} />
           </div>
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
       </div>
       <Loading loading={loading} />
     </div>

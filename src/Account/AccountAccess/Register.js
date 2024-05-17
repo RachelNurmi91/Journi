@@ -20,12 +20,20 @@ const DEFAULT_FORM_DATA = {
 
 function Register({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-  const [error, setErrorStatus] = useState(null);
+  const [inputError, setInputError] = useState([]);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const accountRequest = new AccountRequests();
 
   const handleChange = (event) => {
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -41,7 +49,7 @@ function Register({ ...props }) {
         // If there is no token don't attempt to fetch the account.
         if (!token) {
           console.error("Register failed: No token returned.");
-          setErrorStatus("Register unsuccessful.");
+          setError("Register unsuccessful.");
           setLoading(false);
           return;
         }
@@ -52,7 +60,7 @@ function Register({ ...props }) {
           .then((account) => {
             if (!account) {
               console.error("Login failed: No account found.");
-              setErrorStatus("Login unsuccessful.");
+              setError("Login unsuccessful.");
               setLoading(false);
               return;
             }
@@ -76,35 +84,43 @@ function Register({ ...props }) {
       .catch((err) => {
         console.error(err);
         console.error("Login failed: Server login error.");
-        setErrorStatus("Login unsuccessful.");
+        setError("Login unsuccessful.");
         setLoading(false);
       });
   };
 
   const onRegister = async () => {
     setLoading(true);
-    setErrorStatus(false);
+    setError(null);
+
+    let errors = [];
 
     // Account for all possible missing data error checks before attempting login.
     if (!formData.firstName) {
       console.error("Registration failed: First name missing.");
-      setErrorStatus("Please provide your first name.");
+      errors.push("firstName");
       setLoading(false);
-      return;
-    } else if (!formData.lastName) {
+    }
+
+    if (!formData.lastName) {
       console.error("Registration failed: Last name missing.");
-      setErrorStatus("Please provide your last name.");
+      errors.push("lastName");
       setLoading(false);
-      return;
-    } else if (!formData.username) {
+    }
+    if (!formData.username) {
       console.error("Registration failed: Username missing.");
-      setErrorStatus("Please provide a username.");
+      errors.push("username");
       setLoading(false);
-      return;
-    } else if (!formData.password) {
+    }
+
+    if (!formData.password) {
       console.error("Registration failed: Password missing.");
-      setErrorStatus("Please provide a password.");
+      errors.push("password");
       setLoading(false);
+    }
+
+    if (errors.length) {
+      setInputError(errors);
       return;
     }
 
@@ -123,11 +139,11 @@ function Register({ ...props }) {
       .catch((err) => {
         console.error(err);
         if (err.response?.data?.err?.name === "UserExistsError") {
-          setErrorStatus("Username already exists.");
+          setError("Username already exists.");
         } else {
           console.error(err);
           console.error("Register failed: Server login error.");
-          setErrorStatus("Register unsuccessful.");
+          setError("Register unsuccessful.");
         }
 
         setLoading(false);
@@ -148,6 +164,7 @@ function Register({ ...props }) {
               placeholder="First Name"
               label="First Name"
               value={formData.firstName}
+              inputError={inputError}
             />
           </div>
           <div className="col">
@@ -157,6 +174,7 @@ function Register({ ...props }) {
               placeholder="Last Name"
               label="Last Name"
               value={formData.lastName}
+              inputError={inputError}
             />
           </div>
           <div className="container">
@@ -164,9 +182,10 @@ function Register({ ...props }) {
               <Input
                 name="username"
                 onChange={handleChange}
-                placeholder="Username"
-                label="Username"
+                placeholder="Email Address"
+                label="Email Address"
                 value={formData.username}
+                inputError={inputError}
               />
             </div>
             <div className="row">
@@ -177,15 +196,30 @@ function Register({ ...props }) {
                 label="Password"
                 type="password"
                 value={formData.password}
+                inputError={inputError}
               />
             </div>
 
             <div className="row mt-3">
               <Button label="Register" onClick={onRegister} />
             </div>
+            {inputError.length ? (
+              <div className="row">
+                <div
+                  className="b13-mon text-center error-color py-2 px-3"
+                  style={{ fontWeight: "700" }}
+                >
+                  * Please fill out all required fields
+                </div>
+              </div>
+            ) : null}
+
             {error ? (
               <div className="row">
-                <div className="b13-mon text-center error-color py-2 px-3 mt-3">
+                <div
+                  className="b13-mon text-center error-color py-2 px-3 mt-3"
+                  style={{ fontWeight: "700" }}
+                >
                   {error}
                 </div>
               </div>
