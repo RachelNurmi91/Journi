@@ -280,21 +280,23 @@ function Profile({
         >
           {tripsData.length ? renderTripList() : "Friend, you need a vacation."}
         </div>
-        <div className="text-center mt-2">
-          {openPrograms ? (
-            <FontAwesomeIcon
-              icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
-              style={{ color: "#0BB6C0" }}
-              onClick={toggleOpenTrips}
-            />
-          ) : (
-            <FontAwesomeIcon
-              icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
-              style={{ color: "#0BB6C0" }}
-              onClick={toggleOpenTrips}
-            />
-          )}
-        </div>
+        {tripsData.length > 1 ? (
+          <div className="text-center mt-2">
+            {openPrograms ? (
+              <FontAwesomeIcon
+                icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpenTrips}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpenTrips}
+              />
+            )}
+          </div>
+        ) : null}
       </div>
 
       <div className="outlined-box  mb-4">
@@ -323,21 +325,23 @@ function Profile({
             ? renderProgramsList()
             : "Add your reward programs!"}
         </div>
-        <div className="text-center mt-2">
-          {openPrograms ? (
-            <FontAwesomeIcon
-              icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
-              style={{ color: "#0BB6C0" }}
-              onClick={toggleOpenPrograms}
-            />
-          ) : (
-            <FontAwesomeIcon
-              icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
-              style={{ color: "#0BB6C0" }}
-              onClick={toggleOpenPrograms}
-            />
-          )}
-        </div>
+        {rewardProgramsData?.length > 1 ? (
+          <div className="text-center mt-2">
+            {openPrograms ? (
+              <FontAwesomeIcon
+                icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpenPrograms}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpenPrograms}
+              />
+            )}
+          </div>
+        ) : null}
       </div>
       <div className="row">
         <div>

@@ -129,42 +129,67 @@ function TodaysItinerary({ userData }) {
           </div>
         </div>
       );
-    }
-
-    return todaysItinerary?.map((i, index) => {
+    } else if (todaysItinerary?.length === 1) {
       return (
-        <li key={index} style={{ paddingBottom: "30px" }}>
-          <div className="bullet">
-            <svg aria-hidden="true" viewBox="0 0 32 32" focusable="false">
-              <circle stroke="none" cx="16" cy="16" r="10"></circle>
-            </svg>
-          </div>
-          <div>
-            <span className="label">{i.name}</span>
-            {i.location ? (
-              <div className="b13-mon">
-                {" "}
-                <FontAwesomeIcon
-                  icon="fa-solid fa-location-dot"
-                  style={{ color: "#0bb6c0" }}
-                />{" "}
-                {i.location}
-              </div>
-            ) : null}
-            {i.startTime ? (
-              <div className="b13-mon">
-                {" "}
-                <FontAwesomeIcon
-                  icon="fa-solid fa-clock"
-                  style={{ color: "#0bb6c0" }}
-                />{" "}
-                {formatTime(i.startTime)}
-              </div>
-            ) : null}
-          </div>
-        </li>
+        <div style={{ marginLeft: "10px" }}>
+          <span className="label">{todaysItinerary?.[0]?.name}</span>
+          {todaysItinerary?.[0]?.location ? (
+            <div className="b13-mon">
+              {" "}
+              <FontAwesomeIcon
+                icon="fa-solid fa-location-dot"
+                style={{ color: "#0bb6c0" }}
+              />{" "}
+              {todaysItinerary?.[0]?.location}
+            </div>
+          ) : null}
+          {todaysItinerary?.[0]?.startTime ? (
+            <div className="b13-mon">
+              {" "}
+              <FontAwesomeIcon
+                icon="fa-solid fa-clock"
+                style={{ color: "#0bb6c0" }}
+              />{" "}
+              {formatTime(todaysItinerary?.[0]?.startTime)}
+            </div>
+          ) : null}
+        </div>
       );
-    });
+    } else {
+      return todaysItinerary?.map((i, index) => {
+        const isLastItem = index === todaysItinerary.length - 1;
+        return (
+          <li key={index} style={{ paddingBottom: isLastItem ? "0" : "30px" }}>
+            <div className="bullet">
+              <svg aria-hidden="true" viewBox="0 0 32 32" focusable="false">
+                <circle stroke="none" cx="16" cy="16" r="10"></circle>
+              </svg>
+            </div>
+            <div>
+              <span className="label">{i.name}</span>
+              {i.location ? (
+                <div className="b13-mon">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-location-dot"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {i.location}
+                </div>
+              ) : null}
+              {i.startTime ? (
+                <div className="b13-mon">
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-clock"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {formatTime(i.startTime)}
+                </div>
+              ) : null}
+            </div>
+          </li>
+        );
+      });
+    }
   };
 
   return (

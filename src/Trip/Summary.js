@@ -8,32 +8,80 @@ import Button from "../Shared/UI/Button";
 function Summary({ userData, activeTrip }) {
   const USER_ID = userData.id;
 
+  const formatTodaysDate = () => {
+    const date = new Date();
+
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    // Get the components of the date
+    const day = date.getDate();
+    const monthIndex = date.getMonth(); // Zero-based month index
+    const month = months[monthIndex];
+
+    // Function to get the ordinal suffix
+    const getOrdinalSuffix = (n) => {
+      if (n > 3 && n < 21) return "th"; // 11th, 12th, 13th, etc.
+      switch (n % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    };
+
+    const formattedDate = `${month} ${day}${getOrdinalSuffix(day)}`;
+
+    return formattedDate;
+  };
+
+  console.log(formatTodaysDate()); // Example usage
+
   const vacationStarted = useCallback(() => {
     return (
       <div className="content-body">
         <div className="container summary">
-          <div className="outlined-box text-center">
-            <div>
-              <FontAwesomeIcon
-                icon="fa-solid fa-suitcase-rolling"
-                style={{ color: "#0bb6c0" }}
-                size="4x"
-              />
+          <div className="text-center">
+            <div className="text-uppercase" style={{ fontWeight: "900" }}>
+              Let the fun begin!
             </div>
-            <div className="title">{activeTrip?.name}</div>
-            <div className="subtitle"></div>
-            Let the fun begin!
+            <h1 className="title primary-color mb-0">{activeTrip?.name}</h1>
+            <div className="b13-mon">
+              {Methods.formatLongDate(activeTrip?.startDate)} -{" "}
+              {Methods.formatLongDate(activeTrip?.endDate)}
+            </div>
           </div>
+          <hr className="my-4" />
           <div className="row mt-3">
             <div className="col-12">
               <h2 className="primary-color">Today's Itinerary</h2>
+
               <p className="b13-mon light-bg-color p-3">
-                <span style={{ fontWeight: "700" }}>Hint:</span> For a more
-                exact itinerary add start times. Anything without start times
-                will show up on top.
+                <span style={{ fontWeight: "700" }}>Tip:</span> Add start times
+                for a more precise itinerary.
               </p>
 
-              <div className="timeline">
+              <div className="mx-2">
+                Your plans for {formatTodaysDate(new Date())}!
+              </div>
+
+              <div className="outlined-box timeline">
                 <TodaysItinerary />
               </div>
             </div>
@@ -41,7 +89,7 @@ function Summary({ userData, activeTrip }) {
         </div>
       </div>
     );
-  }, [activeTrip?.name]);
+  }, [activeTrip?.endDate, activeTrip?.name, activeTrip?.startDate]);
 
   const guestSummary = () => {
     return (
