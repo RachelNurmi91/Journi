@@ -428,6 +428,16 @@ function Trip({
             />
           </div>
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
       </div>
       <Loading loading={loading} />
     </div>

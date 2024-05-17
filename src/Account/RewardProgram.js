@@ -18,12 +18,21 @@ const DEFAULT_FORM_DATA = {
 
 function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-  const [error, setErrorStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [inputError, setInputError] = useState([]);
 
   const accountRequest = new AccountRequests();
 
   const handleChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -32,17 +41,24 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
 
   const onSave = async () => {
     setLoading(true);
-    setErrorStatus(false);
 
+    let errors = [];
+
+    // Account for all possible missing data error checks before attempting login.
     if (!formData.name) {
-      console.error("Save failed: Program name missing.");
-      setErrorStatus("Please provide the program name.");
+      console.error("Save failed: Reward program name missing.");
+      errors.push("name");
       setLoading(false);
-      return;
-    } else if (!formData.membershipId) {
-      console.error("Save failed: Membership id missing.");
-      setErrorStatus("Please provide the membership id.");
+    }
+
+    if (!formData.membershipId) {
+      console.error("Save failed: Membership ID missing.");
+      errors.push("membershipId");
       setLoading(false);
+    }
+
+    if (errors.length) {
+      setInputError(errors);
       return;
     }
 
@@ -65,6 +81,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             placeholder="Reward Program"
             label="Reward Program"
             value={formData.name}
+            inputError={inputError}
           />
         </div>
         <div className="row">
@@ -74,6 +91,7 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             placeholder="Rewards Number"
             label="Rewards Number"
             value={formData.membershipId}
+            inputError={inputError}
           />
         </div>
         <div className="row mt-3">
@@ -81,10 +99,13 @@ function RewardProgram({ fetchUpdatedTrips, fetchUpdatedAccount, ...props }) {
             <Button label="Save" onClick={onSave} />
           </div>
         </div>
-        {error ? (
+        {inputError.length ? (
           <div className="row">
-            <div className="b13-mon text-center error-color py-2 px-3 mt-3">
-              {error}
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
             </div>
           </div>
         ) : null}

@@ -10,7 +10,7 @@ import Header from "../../Shared/UI/Header";
 import Input from "../../Shared/UI/Input";
 import AccountRequests from "../../Requests/AccountRequests";
 import Loading from "../../Shared/UI/Loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const DEFAULT_FORM_DATA = {
   username: null,
   password: null,
@@ -18,11 +18,22 @@ const DEFAULT_FORM_DATA = {
 
 function Login({ ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-  const [error, setErrorStatus] = useState(null);
+  const [inputError, setInputError] = useState([]);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const accountRequest = new AccountRequests();
 
   const handleChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.log(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -31,23 +42,26 @@ function Login({ ...props }) {
 
   const onLogin = async () => {
     setLoading(true);
-    setErrorStatus(false);
+    setError(false);
+
+    let errors = [];
 
     // Account for all possible missing data error checks before attempting login.
-    if (!formData.username && !formData.password) {
-      console.error("Login failed: Username and password missing.");
-      setErrorStatus("Please provide username and password.");
+
+    if (!formData.username) {
+      console.error("Registration failed: Username missing.");
+      errors.push("username");
       setLoading(false);
-      return;
-    } else if (!formData.username) {
-      console.error("Login failed: Username missing.");
-      setErrorStatus("Please provide your username.");
+    }
+
+    if (!formData.password) {
+      console.error("Registration failed: Password missing.");
+      errors.push("password");
       setLoading(false);
-      return;
-    } else if (!formData.password) {
-      console.error("Login failed: Password missing.");
-      setErrorStatus("Please provide your password.");
-      setLoading(false);
+    }
+
+    if (errors.length) {
+      setInputError(errors);
       return;
     }
 
@@ -60,7 +74,7 @@ function Login({ ...props }) {
         // If there is no token don't attempt to fetch the account.
         if (!token) {
           console.error("Login failed: No token returned.");
-          setErrorStatus("Login unsuccessful.");
+          setError("Login unsuccessful.");
           setLoading(false);
           return;
         }
@@ -70,7 +84,7 @@ function Login({ ...props }) {
           .then((account) => {
             if (!account) {
               console.error("Login failed: No account found.");
-              setErrorStatus("Login unsuccessful.");
+              setError("Login unsuccessful.");
               setLoading(false);
               return;
             }
@@ -98,7 +112,7 @@ function Login({ ...props }) {
       .catch((err) => {
         console.error(err);
         console.error("Login failed: Server login error.");
-        setErrorStatus("Login unsuccessful.");
+        setError("Login unsuccessful.");
         setLoading(false);
       });
   };
@@ -114,6 +128,7 @@ function Login({ ...props }) {
             placeholder="Username/Email"
             label="Username/Email"
             value={formData.username}
+            inputError={inputError}
           />
         </div>
         <div className="row">
@@ -124,19 +139,30 @@ function Login({ ...props }) {
             label="Password"
             type="password"
             value={formData.password}
+            inputError={inputError}
           />
         </div>
         <div className="row mt-3">
           <Button label="Login" onClick={onLogin} />
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
+
         {error ? (
           <div className="row">
-            <div className="b13-mon text-center error-color py-2 px-3 mt-2">
-              <FontAwesomeIcon
-                icon="fa-solid fa-circle-exclamation"
-                style={{ color: "#d65d5d" }}
-              />
-              <span className="mx-1"> {error}</span>
+            <div
+              className="b13-mon text-center error-color py-2 px-3 mt-3"
+              style={{ fontWeight: "700" }}
+            >
+              {error}
             </div>
           </div>
         ) : null}
