@@ -5,13 +5,11 @@ import Methods from "../../Shared/Methods";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
-import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 
 function HotelList({
   fetchUpdatedTrips,
   hotelListData,
-  deleteTripData,
   ...props
 }) {
   const [hotelList, setHotelList] = useState(null);
@@ -183,6 +181,6 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = { fetchUpdatedTrips, deleteTripData };
+const mapDispatchToProps = { fetchUpdatedTrips };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HotelList);

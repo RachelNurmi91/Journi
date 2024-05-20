@@ -37,6 +37,8 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
         (insurance) => insurance._id?.toString() === id
       );
 
+      if (selectedInsurance.comments) setShowComments(true);
+
       setFormData(selectedInsurance);
     }
   }, [activeTrip.insurance, location.pathname]);
@@ -141,6 +143,7 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
             <Checkbox
               label="Add additional comments"
               toggleCheckbox={toggleComments}
+              checked={showComments}
             />
             {showComments ? (
               <Textarea
@@ -148,6 +151,7 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
                 onChange={handleChange}
                 placeholder="Add additional information..."
                 label="Comments"
+                value={formData?.comments}
               />
             ) : null}
           </div>

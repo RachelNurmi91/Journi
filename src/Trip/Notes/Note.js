@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Textarea from "../../Shared/UI/Textarea";
-
+import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
@@ -16,8 +16,25 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState([]);
+  const [updating, setUpdating] = useState(false);
 
+  const location = useLocation();
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedNote = activeTrip.notes.find(
+        (note) => note._id?.toString() === id
+      );
+
+      setFormData(selectedNote);
+    }
+  }, [activeTrip.notes, location.pathname]);
 
   const handleChange = (event) => {
     //If theres an error and user updates field remove error.
@@ -70,22 +87,19 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting note
-  // const updateNote = () => {
-  //   setLoading(true)
-  //   tripRequest
-  //     .updateNote(formData)
-  //     .then(() => {
-  //       fetchUpdatedTrips().then(() => {props.navigate("/notes")
-  //       setLoading(false)});
-  //     })
-  //     .catch((error) => {console.error(error); setLoading(false)});
-  // };
+  const updateNote = () => {
+    tripRequest
+      .updateNote(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/notes"));
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="content-body">
       <Header
-        title="Add Note"
+        title={updating ? "Update Note" : "Add Note"}
         leftIcon={activeTrip?.notes?.length ? true : false}
         destination={"/notes"}
         props={{
@@ -100,11 +114,16 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
             placeholder="Add notes about your trip..."
             label="Add a Note"
             inputError={inputError}
+            value={formData?.note}
           />
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveNote} />
+            {updating ? (
+              <Button label="Update" onClick={updateNote} />
+            ) : (
+              <Button label="Save" onClick={saveNote} />
+            )}
           </div>
         </div>
         {inputError.length ? (

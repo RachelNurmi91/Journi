@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../Shared/UI/Input";
 import Button from "../../Shared/UI/Button";
@@ -9,7 +9,7 @@ import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Time from "../../Shared/UI/Time";
 import Checkbox from "../../Shared/UI/Checkbox";
-
+import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
@@ -17,7 +17,6 @@ const DEFAULT_FORM_DATA = {
   startDate: null,
   startTime: null,
   confirmationNo: null,
-  ticketNo: null,
   location: null,
   typeSelected: false,
   type: null,
@@ -27,8 +26,25 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState([]);
+  const [updating, setUpdating] = useState(false);
 
+  const location = useLocation();
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedTransportation = activeTrip.transportation.find(
+        (transport) => transport._id?.toString() === id
+      );
+
+      setFormData(selectedTransportation);
+    }
+  }, [activeTrip.transportation, location.pathname]);
 
   const handleChange = (event) => {
     //If theres an error and user updates field remove error.
@@ -85,17 +101,14 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting transportation
-  // const updateTransportation = () => {
-  //   setLoading(true)
-  //   tripRequest
-  //     .updateTransportation(formData)
-  //     .then(() => {
-  //       fetchUpdatedTrips().then(() => {props.navigate("/transportations")
-  //       setLoading(false)});
-  //     })
-  //     .catch((error) => {console.error(error); setLoading(false)});
-  // };
+  const updateTransportation = () => {
+    tripRequest
+      .updateTransportation(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/transportation"));
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleStartDate = (date) => {
     //If theres an error and user updates field remove error.
@@ -215,7 +228,7 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title="Add Transportation"
+        title={updating ? "Update Transportation" : "Add Transportation"}
         leftIcon={activeTrip?.transportation?.length ? true : false}
         destination={"/transportation"}
         props={{
@@ -334,11 +347,11 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
           formData.type === "train" ||
           formData.type === "ferry" ? (
             <Input
-              name="ticketNo"
+              name="confirmationNo"
               onChange={handleChange}
               placeholder="Ticket No."
               label="Ticket No."
-              value={formData.ticketNo}
+              value={formData.confirmationNo}
             />
           ) : null}
           {formData.type === "privateCar" || formData.type === "shuttle" ? (
@@ -353,7 +366,11 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveTransportation} />
+            {updating ? (
+              <Button label="Update" onClick={updateTransportation} />
+            ) : (
+              <Button label="Save" onClick={saveTransportation} />
+            )}
           </div>
         </div>
         {inputError.length ? (

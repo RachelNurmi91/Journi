@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../Shared/UI/Input";
 import Button from "../../Shared/UI/Button";
@@ -12,6 +12,7 @@ import Checkbox from "../../Shared/UI/Checkbox";
 import ImageUploading from "react-images-uploading";
 import Loading from "../../Shared/UI/Loading";
 import Textarea from "../../Shared/UI/Textarea";
+import { useLocation } from "react-router-dom";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -31,8 +32,32 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [showComments, setShowComments] = useState(false);
   const [showTickets, setShowTickets] = useState(false);
   const [inputError, setInputError] = useState([]);
+  const [updating, setUpdating] = useState(false);
 
+  const location = useLocation();
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedActivity = activeTrip.activities.find(
+        (activity) => activity._id?.toString() === id
+      );
+
+      if (selectedActivity.addOns.comments) setShowComments(true);
+      if (
+        selectedActivity.addOns.ticketNo ||
+        selectedActivity.addOns.ticketUploads
+      )
+        setShowTickets(true);
+
+      setFormData(selectedActivity);
+    }
+  }, [activeTrip.activities, location.pathname]);
 
   // onSave is for new activities
   const saveActivity = async () => {
@@ -72,6 +97,15 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
           setLoading(false);
         }, 1500);
       });
+  };
+
+  const updateActivity = () => {
+    tripRequest
+      .updateActivity(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/activities"));
+      })
+      .catch((error) => console.error(error));
   };
 
   const toggleTickets = () => {
@@ -190,7 +224,7 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
   return (
     <div className="content-body activity">
       <Header
-        title="Add Activity"
+        title={updating ? "Update Activity" : "Add Activity"}
         leftIcon={activeTrip?.activities?.length ? true : false}
         destination={"/activities"}
         subtitle="Add any activity, event or excursion."
@@ -223,6 +257,7 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
           <Checkbox
             label="Add ticket information"
             toggleCheckbox={toggleTickets}
+            checked={showTickets}
           />
           {showTickets ? (
             <>
@@ -293,6 +328,7 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
           <Checkbox
             label="Add additional comments"
             toggleCheckbox={toggleComments}
+            checked={showComments}
           />
           {showComments ? (
             <Textarea
@@ -300,12 +336,17 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
               onChange={handleAddOnChange}
               placeholder="Add additional information..."
               label="Comments"
+              value={formData?.addOns?.comments}
             />
           ) : null}
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveActivity} />
+            {updating ? (
+              <Button label="Update" onClick={updateActivity} />
+            ) : (
+              <Button label="Save" onClick={saveActivity} />
+            )}
           </div>
         </div>
         {inputError.length ? (

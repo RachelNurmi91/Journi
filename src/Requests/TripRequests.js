@@ -175,6 +175,23 @@ export default class TripRequests {
       });
   }
 
+  updateActivity(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/activities/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
   deleteActivity(id) {
     const token = localStorage.getItem("token");
     return axios
@@ -311,6 +328,23 @@ export default class TripRequests {
       });
   }
 
+  updateTransportation(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/transportation/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
   deleteTransportation(id) {
     const token = localStorage.getItem("token");
     return axios
@@ -394,6 +428,23 @@ export default class TripRequests {
       .catch(function (error) {
         console.error(error);
         throw error;
+      });
+  }
+
+  updateNote(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/notes/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
       });
   }
 

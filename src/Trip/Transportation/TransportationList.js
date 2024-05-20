@@ -8,7 +8,11 @@ import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 
-function TransportationList({ fetchUpdatedTrips, transportationListData }) {
+function TransportationList({
+  fetchUpdatedTrips,
+  transportationListData,
+  ...props
+}) {
   const [transportationList, setTransportationList] = useState(null);
   const [openTransportationId, setOpenTransportationId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -75,12 +79,23 @@ function TransportationList({ fetchUpdatedTrips, transportationListData }) {
     return formattedType;
   };
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/transportation/update/${id}`);
+  };
+
   const displayTransportation = () => {
     return transportationList?.map((transportation, index) => {
       const isOpen = openTransportationId === transportation._id;
       return (
         <div className="shadow-box mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
+            <div className="col-1">
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                className="primary-color"
+                onClick={() => navigateToUpdate(transportation._id)}
+              />
+            </div>
             <div className="col-1">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"

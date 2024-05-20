@@ -7,7 +7,7 @@ import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 
-function NoteList({ fetchUpdatedTrips, noteListData }) {
+function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
   const [loading, setLoading] = useState(false);
   const [sortedNotes, setSortedNotes] = useState(null);
 
@@ -38,6 +38,10 @@ function NoteList({ fetchUpdatedTrips, noteListData }) {
       });
   };
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/notes/update/${id}`);
+  };
+
   const displayNotes = () => {
     return sortedNotes?.map((note, index) => {
       return (
@@ -45,6 +49,13 @@ function NoteList({ fetchUpdatedTrips, noteListData }) {
           <div className="row">
             <div className="col">
               <li>{note.note}</li>
+            </div>
+            <div className="col-1">
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                className="primary-color"
+                onClick={() => navigateToUpdate(note._id)}
+              />
             </div>
             <div className="col-1 mx-3 d-flex align-items-center">
               <FontAwesomeIcon

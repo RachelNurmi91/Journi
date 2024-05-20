@@ -10,7 +10,7 @@ import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import { useLocation } from "react-router-dom";
-
+import Checkbox from "../../Shared/UI/Checkbox";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
@@ -43,6 +43,8 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
       let selectedHotel = activeTrip.hotels.find(
         (hotel) => hotel._id?.toString() === id
       );
+
+      if (selectedHotel.name) setDisplayNewNameInput(true);
 
       setFormData(selectedHotel);
     }
@@ -286,27 +288,23 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
               </div>
             </div>
           </div>
-          <div className="form-check mx-3 mt-2">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="checkReservationOther"
-              onClick={newNameInputToggle}
+
+          <div>
+            <Checkbox
+              label="Reservation is under another name"
+              toggleCheckbox={newNameInputToggle}
+              checked={displayNewNameInput}
             />
-            <label className="form-check-label" htmlFor="checkReservationOther">
-              The reservation is under another name
-            </label>
+            {displayNewNameInput ? (
+              <Input
+                name="nameOnReservation"
+                onChange={handleChange}
+                placeholder="Name on Reservation"
+                label="Name on Reservation"
+                value={formData.nameOnReservation}
+              />
+            ) : null}
           </div>
-          {displayNewNameInput ? (
-            <Input
-              name="nameOnReservation"
-              onChange={handleChange}
-              placeholder="Name on Reservation"
-              label="Name on Reservation"
-              value={formData.nameOnReservation}
-            />
-          ) : null}
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">

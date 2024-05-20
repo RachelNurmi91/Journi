@@ -10,7 +10,7 @@ import Loading from "../../Shared/UI/Loading";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function ActivityList({ fetchUpdatedTrips, activityListData }) {
+function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
   const [activityList, setActivityList] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
@@ -95,6 +95,10 @@ function ActivityList({ fetchUpdatedTrips, activityListData }) {
     ));
   };
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/activities/update/${id}`);
+  };
+
   const displayActivities = () => {
     return activityList?.map((activity, index) => {
       let tickets = activity?.addOns?.ticketUploads;
@@ -102,6 +106,13 @@ function ActivityList({ fetchUpdatedTrips, activityListData }) {
       return (
         <div className="shadow-box  mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
+            <div className="col-1">
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                className="primary-color"
+                onClick={() => navigateToUpdate(activity._id)}
+              />
+            </div>
             <div className="col-1">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"

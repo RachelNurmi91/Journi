@@ -87,20 +87,38 @@ function Content({ ...props }) {
               element={<Insurance navigate={navigate} />}
             />
 
-            <Route path="/transportation" element={<TransportationList />} />
+            <Route
+              path="/transportation"
+              element={<TransportationList navigate={navigate} />}
+            />
+            <Route
+              path="/transportation/update/*"
+              element={<Transportation navigate={navigate} />}
+            />
             <Route
               path="/transportation/*"
               element={<Transportation navigate={navigate} />}
             />
 
-            <Route path="/activities" element={<ActivityList />} />
+            <Route
+              path="/activities"
+              element={<ActivityList navigate={navigate} />}
+            />
+            <Route
+              path="/activities/update/*"
+              element={<Activity navigate={navigate} />}
+            />
             <Route
               path="/activities/*"
               element={<Activity navigate={navigate} />}
             />
 
-            <Route path="/notes" element={<NoteList />} />
-            <Route path="/notes/*" element={<Note navigate={navigate} />} />
+            <Route path="/notes" element={<NoteList navigate={navigate} />} />
+            <Route
+              path="/notes/update*"
+              element={<Note navigate={navigate} />}
+            />
+            <Route path="/notes/add" element={<Note navigate={navigate} />} />
 
             <Route path="/trips" element={<Trip navigate={navigate} />} />
             <Route

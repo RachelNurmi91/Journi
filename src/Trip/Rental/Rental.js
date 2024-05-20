@@ -47,6 +47,8 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
         (rental) => rental._id?.toString() === id
       );
 
+      if (selectedRental.endLocation) setShowReturnLocation(true);
+
       setFormData(selectedRental);
     }
   }, [activeTrip.rentals, location.pathname]);
@@ -315,6 +317,7 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
             <Checkbox
               label="Set different drop off location"
               toggleCheckbox={toggleReturnLocation}
+              checked={showReturnLocation}
             />
             {showReturnLocation ? (
               <Input
