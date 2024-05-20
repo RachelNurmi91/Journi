@@ -209,6 +209,23 @@ export default class TripRequests {
       });
   }
 
+  updateCruise(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/cruises/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
   deleteCruise(id) {
     const token = localStorage.getItem("token");
     return axios
@@ -230,6 +247,23 @@ export default class TripRequests {
     const token = localStorage.getItem("token");
     return axios
       .post(`${SERVER}/insurance/add`, insuranceData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
+
+  updateInsurance(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/insurance/${data._id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

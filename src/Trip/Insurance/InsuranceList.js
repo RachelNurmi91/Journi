@@ -7,7 +7,7 @@ import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 
-function InsuranceList({ fetchUpdatedTrips, insuranceListData }) {
+function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
   const [insuranceList, setInsuranceList] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -54,11 +54,22 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData }) {
       });
   };
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/insurance/update/${id}`);
+  };
+
   const displayInsurance = () => {
     return insuranceList?.map((insurance, index) => {
       return (
         <div className="shadow-box mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
+            <div className="col-1">
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                className="primary-color"
+                onClick={() => navigateToUpdate(insurance._id)}
+              />
+            </div>
             <div className="col-1">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"
@@ -80,11 +91,12 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData }) {
                 {insurance.policyNo}
               </div>
             </div>
-
-            <div className="row mt-3">
-              <div className="b16-mon label">Comments</div>
-              <div>{insurance.comments}</div>
-            </div>
+            {insurance.comments ? (
+              <div className="row mt-3">
+                <div className="b16-mon label">Comments</div>
+                <div>{insurance.comments}</div>
+              </div>
+            ) : null}
           </div>
         </div>
       );

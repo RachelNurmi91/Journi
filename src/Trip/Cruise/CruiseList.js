@@ -8,7 +8,12 @@ import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 
-function CruiseList({ fetchUpdatedTrips, cruiseListData, deleteTripData }) {
+function CruiseList({
+  fetchUpdatedTrips,
+  cruiseListData,
+  deleteTripData,
+  ...props
+}) {
   const [cruiseList, setCruiseList] = useState(null);
   const [openCruiseId, setOpenCruiseId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -59,12 +64,23 @@ function CruiseList({ fetchUpdatedTrips, cruiseListData, deleteTripData }) {
       });
   };
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/cruises/update/${id}`);
+  };
+
   const displayCruises = () => {
     return cruiseList?.map((cruise, index) => {
       const isOpen = openCruiseId === cruise._id;
       return (
         <div className="shadow-box mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
+            <div className="col-1">
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                className="primary-color"
+                onClick={() => navigateToUpdate(cruise._id)}
+              />
+            </div>
             <div className="col-1">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"

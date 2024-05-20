@@ -51,7 +51,14 @@ function Content({ ...props }) {
             <Route path="/flights" element={<FlightList />} />
             <Route path="/flights/*" element={<Flight navigate={navigate} />} />
 
-            <Route path="/cruises" element={<CruiseList />} />
+            <Route
+              path="/cruises"
+              element={<CruiseList navigate={navigate} />}
+            />
+            <Route
+              path="/cruises/update/*"
+              element={<Cruise navigate={navigate} />}
+            />
             <Route path="/cruises/*" element={<Cruise navigate={navigate} />} />
 
             <Route
@@ -67,9 +74,16 @@ function Content({ ...props }) {
               element={<Rental navigate={navigate} />}
             />
 
-            <Route path="/insurance" element={<InsuranceList />} />
             <Route
-              path="/insurance/*"
+              path="/insurance"
+              element={<InsuranceList navigate={navigate} />}
+            />
+            <Route
+              path="/insurance/update/*"
+              element={<Insurance navigate={navigate} />}
+            />
+            <Route
+              path="/insurance/add"
               element={<Insurance navigate={navigate} />}
             />
 

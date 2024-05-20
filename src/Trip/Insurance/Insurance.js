@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../Shared/UI/Input";
 import Button from "../../Shared/UI/Button";
@@ -7,7 +7,7 @@ import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Checkbox from "../../Shared/UI/Checkbox";
 import Textarea from "../../Shared/UI/Textarea";
-
+import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
 
 const DEFAULT_FORM_DATA = {
@@ -21,8 +21,25 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [loading, setLoading] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [inputError, setInputError] = useState([]);
+  const [updating, setUpdating] = useState(false);
 
+  const location = useLocation();
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedInsurance = activeTrip.insurance.find(
+        (insurance) => insurance._id?.toString() === id
+      );
+
+      setFormData(selectedInsurance);
+    }
+  }, [activeTrip.insurance, location.pathname]);
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -83,22 +100,19 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting insurance
-  // const updateInsurance = () => {
-  //   setLoading(true)
-  //   tripRequest
-  //     .updateInsurance(formData)
-  //     .then(() => {
-  //       fetchUpdatedTrips().then(() => {props.navigate("/insurances")
-  //       setLoading(false)});
-  //     })
-  //     .catch((error) => {console.error(error); setLoading(false)});
-  // };
+  const updateInsurance = () => {
+    tripRequest
+      .updateInsurance(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/insurance"));
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="content-body">
       <Header
-        title="Add Insurance"
+        title={updating ? "Update Insurance" : "Add Insurance"}
         leftIcon={activeTrip?.insurance?.length ? true : false}
         destination={"/insurance"}
         props={{
@@ -140,7 +154,11 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveInsurance} />
+            {updating ? (
+              <Button label="Update" onClick={updateInsurance} />
+            ) : (
+              <Button label="Save" onClick={saveInsurance} />
+            )}
           </div>
         </div>
         {inputError.length ? (

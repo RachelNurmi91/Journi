@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // import { addNewCruiseData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Shared/UI/Input";
@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
+import { useLocation } from "react-router-dom";
 
 import Loading from "../../Shared/UI/Loading";
 
@@ -24,8 +25,25 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState([]);
+  const [updating, setUpdating] = useState(false);
 
+  const location = useLocation();
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedCruise = activeTrip.cruises.find(
+        (cruise) => cruise._id?.toString() === id
+      );
+
+      setFormData(selectedCruise);
+    }
+  }, [activeTrip.cruises, location.pathname]);
 
   const handleChange = (event) => {
     //If theres an error and user updates field remove error.
@@ -93,17 +111,14 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting cruises
-  // const updateCruise = () => {
-  //   setLoading(true)
-  //   tripRequest
-  //     .updateCruise(formData)
-  //     .then(() => {
-  //       fetchUpdatedTrips().then(() => {props.navigate("/cruises")
-  //       setLoading(false)});
-  //     })
-  //     .catch((error) => {console.error(error); setLoading(false)});
-  // };
+  const updateCruise = () => {
+    tripRequest
+      .updateCruise(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/cruises"));
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleStartDate = (date) => {
     let selectedDate = new Date(date).getTime();
@@ -195,7 +210,7 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title="Add Cruise"
+        title={updating ? "Update Cruise" : "Add Cruise"}
         leftIcon={activeTrip?.cruises?.length ? true : false}
         destination={"/cruises"}
         props={{
@@ -247,7 +262,11 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveCruise} />
+            {updating ? (
+              <Button label="Update" onClick={updateCruise} />
+            ) : (
+              <Button label="Save" onClick={saveCruise} />
+            )}
           </div>
         </div>
         {inputError.length ? (
