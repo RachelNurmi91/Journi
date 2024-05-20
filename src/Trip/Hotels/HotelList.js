@@ -12,7 +12,6 @@ function HotelList({
   fetchUpdatedTrips,
   hotelListData,
   deleteTripData,
-
   ...props
 }) {
   const [hotelList, setHotelList] = useState(null);
@@ -65,6 +64,10 @@ function HotelList({
       });
   };
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/hotels/update/${id}`);
+  };
+
   const displayHotels = () => {
     return hotelList?.map((hotel, index) => {
       const isOpen = openHotelId === hotel._id;
@@ -73,8 +76,15 @@ function HotelList({
           <div className="row d-flex justify-content-end mx-1">
             <div className="col-1">
               <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                className="primary-color"
+                onClick={() => navigateToUpdate(hotel._id)}
+              />
+            </div>
+            <div className="col-1">
+              <FontAwesomeIcon
                 icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
+                className="error-color"
                 onClick={() => deleteHotel(hotel._id)}
               />
             </div>

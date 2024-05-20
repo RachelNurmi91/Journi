@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { addNewHotelData } from "../../Redux/Actions/AccountActions";
 import Input from "../../Shared/UI/Input";
@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
+import { useLocation } from "react-router-dom";
 
 import Loading from "../../Shared/UI/Loading";
 
@@ -27,8 +28,25 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState([]);
+  const [updating, setUpdating] = useState(false);
 
+  const location = useLocation();
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedHotel = activeTrip.hotels.find(
+        (hotel) => hotel._id?.toString() === id
+      );
+
+      setFormData(selectedHotel);
+    }
+  }, [activeTrip.hotels, location.pathname]);
 
   const handleChange = (event) => {
     //If theres an error and user updates field remove error.
@@ -106,17 +124,14 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting hotels
-  // const updateHotel = () => {
-  //   setLoading(true)
-  //   tripRequest
-  //     .updateHotel(formData)
-  //     .then(() => {
-  //       fetchUpdatedTrips().then(() => {props.navigate("/hotels")
-  //       setLoading(false)});
-  //     })
-  //     .catch((error) => {console.error(error); setLoading(false)});
-  // };
+  const updateHotel = () => {
+    tripRequest
+      .updateHotel(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/hotels"));
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleStartDate = (date) => {
     //If theres an error and user updates field remove error.
@@ -226,7 +241,7 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title="Add Hotel"
+        title={updating ? "Update Hotel" : "Add Hotel"}
         leftIcon={activeTrip?.hotels?.length ? true : false}
         destination={"/hotels"}
         props={{
@@ -295,7 +310,11 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveHotel} />
+            {updating ? (
+              <Button label="Update" onClick={updateHotel} />
+            ) : (
+              <Button label="Save" onClick={saveHotel} />
+            )}
           </div>
         </div>
         {inputError.length ? (

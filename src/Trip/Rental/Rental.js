@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../Shared/UI/Input";
 import Button from "../../Shared/UI/Button";
@@ -12,6 +12,7 @@ import { vehicleTypes } from "./VehicleTypes";
 import Select from "../../Shared/UI/Select";
 import Checkbox from "../../Shared/UI/Checkbox";
 import Loading from "../../Shared/UI/Loading";
+import { useLocation } from "react-router-dom";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -30,8 +31,25 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [loading, setLoading] = useState(false);
   const [showReturnLocation, setShowReturnLocation] = useState(false);
   const [inputError, setInputError] = useState([]);
+  const [updating, setUpdating] = useState(false);
 
+  const location = useLocation();
   const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedRental = activeTrip.rentals.find(
+        (rental) => rental._id?.toString() === id
+      );
+
+      setFormData(selectedRental);
+    }
+  }, [activeTrip.rentals, location.pathname]);
 
   const generateOptions = () => {
     return vehicleTypes.map((type, i) => {
@@ -113,17 +131,14 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting rental cars
-  // const updateRental = () => {
-  //   setLoading(true)
-  //   tripRequest
-  //     .updateRental(formData)
-  //     .then(() => {
-  //       fetchUpdatedTrips().then(() => {props.navigate("/rentals")
-  //       setLoading(false)});
-  //     })
-  //     .catch((error) => {console.error(error); setLoading(false)});
-  // };
+  const updateRental = () => {
+    tripRequest
+      .updateRental(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/rentals"));
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleStartDate = (date) => {
     //If theres an error and user updates field remove error.
@@ -271,7 +286,7 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title="Add Rental Car"
+        title={updating ? "Update Rental Car" : "Add Rental Car"}
         leftIcon={activeTrip?.rentals?.length ? true : false}
         destination={"/rentals"}
         props={{
@@ -336,7 +351,11 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
         </div>
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveRental} />
+            {updating ? (
+              <Button label="Update" onClick={updateRental} />
+            ) : (
+              <Button label="Save" onClick={saveRental} />
+            )}
           </div>
         </div>
         {inputError.length ? (

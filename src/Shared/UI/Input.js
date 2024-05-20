@@ -10,7 +10,6 @@ function Input({
   inputError,
 }) {
   const inputRef = useRef(null);
-  console.log(inputError);
   return (
     <div className="form-group my-2">
       <label

@@ -73,22 +73,22 @@ export default class TripRequests {
       });
   }
 
-  // updateHotel(data) {
-  //   const token = localStorage.getItem("token");
-  //   return axios
-  //     .put(`${SERVER}/hotels/${data._id}`, data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       return response; // Return the response for chaining
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //       throw error; // Re-throw the error to propagate it
-  //     });
-  // }
+  updateHotel(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/hotels/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
 
   deleteHotel(id) {
     const token = localStorage.getItem("token");
@@ -308,6 +308,23 @@ export default class TripRequests {
       .catch(function (error) {
         console.error(error);
         throw error;
+      });
+  }
+
+  updateRental(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/rentals/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
       });
   }
 

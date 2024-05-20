@@ -21,13 +21,11 @@ function TripSelector({
 
   const handleChange = (event) => {
     const selectedTrip = event.target.selectedOptions[0];
-    const name = selectedTrip.value;
     const tripId = selectedTrip.getAttribute("data-id");
 
     // Match the selected trip id & name to the corresponding trip to return the correct data.
     let trip = tripListData.find(
-      (trip) =>
-        trip._id?.toString() === tripId?.toString() && trip.name === name
+      (trip) => trip._id?.toString() === tripId?.toString()
     );
     closeSideNav();
     setActiveTrip(trip);

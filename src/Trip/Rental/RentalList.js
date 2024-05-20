@@ -8,7 +8,7 @@ import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 
-function RentalList({ fetchUpdatedTrips, rentalListData }) {
+function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
   const [rentalList, setRentalList] = useState(null);
   const [openRentalId, setOpenRentalId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -59,12 +59,23 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
       });
   };
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/rentals/update/${id}`);
+  };
+
   const displayRentals = () => {
     return rentalList?.map((rental, index) => {
       const isOpen = openRentalId === rental._id;
       return (
         <div className="shadow-box mb-4" key={index}>
           <div className="row d-flex justify-content-end mx-1">
+            <div className="col-1">
+              <FontAwesomeIcon
+                icon="fa-solid fa-pen-to-square"
+                className="primary-color"
+                onClick={() => navigateToUpdate(rental._id)}
+              />
+            </div>
             <div className="col-1">
               <FontAwesomeIcon
                 icon="fa-solid fa-trash"
@@ -112,13 +123,15 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
                   />{" "}
                   {Methods.formatTime(rental.startTime)}
                 </div>
-                <div>
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-location-dot"
-                    style={{ color: "#0bb6c0" }}
-                  />{" "}
-                  {rental.startLocation}
-                </div>
+                {rental.startLocation ? (
+                  <div>
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-location-dot"
+                      style={{ color: "#0bb6c0" }}
+                    />{" "}
+                    {rental.startLocation}
+                  </div>
+                ) : null}
               </div>
             </div>
             <hr />
@@ -133,13 +146,15 @@ function RentalList({ fetchUpdatedTrips, rentalListData }) {
                   />{" "}
                   {Methods.formatTime(rental.endTime)}
                 </div>
-                <div>
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-location-dot"
-                    style={{ color: "#0bb6c0" }}
-                  />{" "}
-                  {rental.endLocation}
-                </div>
+                {rental.endLocation ? (
+                  <div>
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-location-dot"
+                      style={{ color: "#0bb6c0" }}
+                    />{" "}
+                    {rental.endLocation}
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

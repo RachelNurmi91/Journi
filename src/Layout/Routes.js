@@ -41,8 +41,12 @@ function Content({ ...props }) {
               element={<RewardProgram navigate={navigate} />}
             />
 
-            <Route path="/hotels" element={<HotelList />} />
-            <Route path="/hotels/*" element={<Hotel navigate={navigate} />} />
+            <Route path="/hotels" element={<HotelList navigate={navigate} />} />
+            <Route
+              path="/hotels/update/*"
+              element={<Hotel navigate={navigate} />}
+            />
+            <Route path="/hotels/add" element={<Hotel navigate={navigate} />} />
 
             <Route path="/flights" element={<FlightList />} />
             <Route path="/flights/*" element={<Flight navigate={navigate} />} />
@@ -50,8 +54,18 @@ function Content({ ...props }) {
             <Route path="/cruises" element={<CruiseList />} />
             <Route path="/cruises/*" element={<Cruise navigate={navigate} />} />
 
-            <Route path="/rentals" element={<RentalList />} />
-            <Route path="/rentals/*" element={<Rental navigate={navigate} />} />
+            <Route
+              path="/rentals"
+              element={<RentalList navigate={navigate} />}
+            />
+            <Route
+              path="/rentals/update/*"
+              element={<Rental navigate={navigate} />}
+            />
+            <Route
+              path="/rentals/add"
+              element={<Rental navigate={navigate} />}
+            />
 
             <Route path="/insurance" element={<InsuranceList />} />
             <Route
