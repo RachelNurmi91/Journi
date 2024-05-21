@@ -396,9 +396,7 @@ button {
         text-decoration: none;
         color: $white;
       }
-    
   }
-  
 }
 
 .date-time {
@@ -407,6 +405,66 @@ button {
   border: none;
   border-radius: 0px;
   border-bottom: solid 3px $primary-color;
+}
+
+//Override changes for Date Container
+.react-datepicker {
+  border:  none !important;
+  border-radius: 10px !important;
+
+  .react-datepicker__year-read-view--down-arrow, 
+  .react-datepicker__month-read-view--down-arrow, 
+  .react-datepicker__month-year-read-view--down-arrow, 
+  .react-datepicker__navigation-icon::before {
+    border-color: $white!important;
+  } 
+
+  .react-datepicker__header {
+    background-color: $primary-color !important;
+    border:  none !important;
+    border-radius: 10px 10px 0 0 !important;
+    
+    .react-datepicker__current-month {
+
+      color:$white !important;
+      padding: 5px 0 10px !important;
+    }
+
+    .react-datepicker__day-names {
+    background-color: #ededed;
+
+      .react-datepicker__day-name{
+        font-weight: 700;
+      }
+    }
+  }
+ 
+  .react-datepicker__navigation--next, .react-datepicker__navigation--previous {
+    height: 50px !important;
+  }
+ 
+  .react-datepicker__day--selected {
+    background-color: $primary-color !important;
+    border-radius: 100% !important;
+  }
+}
+ 
+//Override changes for Time Container
+.react-datepicker__time{
+  border-radius: 10px !important;
+}
+.react-datepicker__time-container {
+  width: 225px !important;
+
+  
+  .react-datepicker-time__header{
+    color: $white !important;
+  }
+
+  .react-datepicker__time-box{
+    width: 225px !important;
+    font-size: 15px !important;
+  }
 }
 
 
@@ -467,30 +525,6 @@ button {
 
 };
 
-.react-datepicker {
- border:  none !important;
- border-radius: 10px !important;
-
-}
-
-.react-datepicker__header {
-  background-color: $primary-color !important;
-  border:  none !important;
-  border-radius: 10px 10px 0 0 !important;
-}
-
-.react-datepicker__current-month {
-  color: #eeeeee !important
-}
-
-.react-datepicker__navigation--next, .react-datepicker__navigation--previous {
-  height: 40px !important;
-}
-
-.react-datepicker__day--selected {
-  background-color: $primary-color !important;
-  border-radius: 100% !important;
-}
 
 .roundtrip-inputs {
   .header {

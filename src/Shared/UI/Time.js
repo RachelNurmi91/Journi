@@ -2,9 +2,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Time({ selectedDate, onDateChange, placeholder }) {
+  const parsedDate =
+    typeof selectedDate === "string" ? new Date(selectedDate) : selectedDate;
+
   return (
     <DatePicker
-      selected={selectedDate}
+      selected={parsedDate}
       onChange={(time) => onDateChange(time)}
       disabledKeyboardNavigation
       withPortal
