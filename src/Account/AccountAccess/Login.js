@@ -125,8 +125,8 @@ function Login({ ...props }) {
           <Input
             name="username"
             onChange={handleChange}
-            placeholder="Username/Email"
-            label="Username/Email"
+            placeholder="Username"
+            label="Username"
             value={formData.username}
             inputError={inputError}
           />

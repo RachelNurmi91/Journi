@@ -1,32 +1,48 @@
 import { useState, useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { addNewFlightData } from "../../Redux/Actions/AccountActions";
-import Input from "../../Shared/UI/Input";
 import AirportAutocomplete from "./AirportAutocomplete";
 import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Radio from "../../Shared/UI/Radio";
-import Checkbox from "../../Shared/UI/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Calendar from "../../Shared/UI/Calendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
+import RoundTrip from "./RoundTrip";
+import OneWay from "./OneWay";
+import Time from "../../Shared/UI/Time";
 
 const DEFAULT_FORM_DATA = {
+  isRoundTrip: true,
   type: "roundtrip",
-  airline: null,
-  confirmationNo: null,
-  departureFlight: null,
-  returnFlight: null,
-  ticketHolder: null,
+  nameOnReservation: null,
+  departureFlight: {
+    name: null,
+    date: null,
+    time: null,
+    confirmationNo: null,
+    flightNo: null,
+    seat: null,
+  },
+  returnFlight: {
+    name: null,
+    date: null,
+    time: null,
+    confirmationNo: null,
+    flightNo: null,
+    seat: null,
+  },
 };
 
 function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-  const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
-  const [isOneWay, setIsOneWay] = useState(false);
+  // const [displayNewNameInput, setDisplayNewNameInput] = useState(false);
+  const [displayAirlineInput, setDisplayAirlineInput] = useState(false);
+  const [displayConfirmationInput, setDisplayConfirmationInput] =
+    useState(false);
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
@@ -55,17 +71,24 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
   const saveFlight = () => {
     setLoading(true);
 
-    if (!formData.ticketHolder) {
-      formData.ticketHolder =
+    formData.tripId = props.activeTripId;
+
+    // In the future we will allow a name change on the reservation
+    if (!formData.nameOnReservation) {
+      formData.nameOnReservation =
         props.userData?.firstName + " " + props.userData?.lastName;
     }
 
-    formData.tripId = props.activeTripId;
-    if (!formData.ticketHolder)
-      formData.ticketHolder =
-        props.userData?.firstName + " " + props.userData?.lastName;
-    if (!formData.departureFlight.date)
-      formData.departureFlight.date = new Date();
+    if (formData.isRoundTrip) {
+      if (!formData.returnFlight.name) {
+        formData.returnFlight.name = formData.departureFlight.name;
+      }
+
+      if (!formData.returnFlight.confirmationNo) {
+        formData.returnFlight.confirmationNo =
+          formData.departureFlight.confirmationNo;
+      }
+    }
 
     tripRequest
       .addFlight(formData)
@@ -79,31 +102,14 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
       });
   };
 
-  // onUpdate is for editing exiting flights
-  // const updateFlight = () => {
-  //   setLoading(true);
-  //   tripRequest
-  //     .updateFlight(formData)
-  //     .then(() => {
-  //       setLoading(false);
-  //       fetchUpdatedTrips().then(() => props.navigate("/flights"));
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       setLoading(false);
-  //     });
-  // };
-
   const handleRadioCheck = (event) => {
-    const typeId = event.target.id;
+    let roundTrip = true;
 
-    if (typeId === "oneway") {
-      setIsOneWay((prevState) => true);
-    } else {
-      setIsOneWay((prevState) => false);
+    if (event.target.id === "oneway") {
+      roundTrip = false;
     }
 
-    setFormData((prevState) => ({ ...prevState, type: typeId }));
+    setFormData((prevState) => ({ ...prevState, isRoundTrip: roundTrip }));
   };
 
   const handleDepartureAirport = (name, code, city, country) => {
@@ -120,34 +126,49 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   const handleReturnAirport = (name, code, city, country) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      returnFlight: {
-        ...prevFormData.returnFlight,
-        airport: name,
-        code: code,
-        city: city,
-        country: country,
-      },
-    }));
+    if (formData.isRoundTrip) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        returnFlight: {
+          ...prevFormData.returnFlight,
+          airport: name,
+          code: code,
+          city: city,
+          country: country,
+        },
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        departureFlight: {
+          ...prevFormData.departureFlight,
+          destinationAirport: name,
+          destinationCode: code,
+          destinationCity: city,
+          destinationCountry: country,
+        },
+      }));
+    }
   };
 
   const handleDepartureDate = (date) => {
     let returnDate = new Date(formData.returnFlight?.date).getTime();
     let selectedDate = new Date(date).getTime();
 
-    if (returnDate < selectedDate) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        returnFlight: {
-          ...prevFormData.returnFlight,
-          date: date,
-        },
-      }));
-    }
+    if (formData.isRoundTrip) {
+      if (returnDate < selectedDate) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          returnFlight: {
+            ...prevFormData.returnFlight,
+            date: date,
+          },
+        }));
+      }
 
-    if (returnDate && returnDate < selectedDate) {
-      handleReturnDate(date);
+      if (returnDate && returnDate < selectedDate) {
+        handleReturnDate(date);
+      }
     }
 
     setFormData((prevFormData) => ({
@@ -182,49 +203,35 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
     }));
   };
 
-  const handleInputChange = (event) => {
-    const targetKey = event.target.name;
-    const newValue = event.target.value;
+  // const handleShowNameInput = () => {
+  //   setDisplayNewNameInput(!displayNewNameInput);
+  // };
 
-    if (targetKey === "departureFlightNo") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        departureFlight: {
-          ...prevFormData.departureFlight,
-          flightNo: newValue,
-        },
-      }));
-    } else if (targetKey === "departureSeat") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        departureFlight: {
-          ...prevFormData.departureFlight,
-          seat: newValue,
-        },
-      }));
-    } else if (targetKey === "returnFlightNo") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        returnFlight: {
-          ...prevFormData.returnFlight,
-          flightNo: newValue,
-        },
-      }));
-    } else if (targetKey === "returnSeat") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        returnFlight: {
-          ...prevFormData.returnFlight,
-          seat: newValue,
-        },
-      }));
-    } else {
-      setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
-    }
+  const handleDepartureTime = (time) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      departureFlight: {
+        ...prevFormData.departureFlight,
+        time: time,
+      },
+    }));
+  };
+  const handleReturnTime = (time) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      returnFlight: {
+        ...prevFormData.returnFlight,
+        time: time,
+      },
+    }));
   };
 
-  const handleShowNameInput = () => {
-    setDisplayNewNameInput(!displayNewNameInput);
+  const handleShowAirlineInput = () => {
+    setDisplayAirlineInput(!displayAirlineInput);
+  };
+
+  const handleShowConfirmationInput = () => {
+    setDisplayConfirmationInput(!displayConfirmationInput);
   };
 
   const renderOptionsBox = () => {
@@ -238,7 +245,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
                 name="flightType"
                 label="Roundtrip"
                 onChange={handleRadioCheck}
-                checked={!isOneWay}
+                checked={formData.isRoundTrip}
               />
             </div>
             <div className="col d-flex justify-content-start">
@@ -247,7 +254,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
                 name="flightType"
                 label="One Way"
                 onChange={handleRadioCheck}
-                checked={isOneWay}
+                checked={!formData.isRoundTrip}
               />
             </div>
           </div>
@@ -290,181 +297,56 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
                 style={{ color: "#0bb6c0" }}
               />
               <span className="label mx-3">Depart</span>
-              {console.log(formData)}
               <Calendar
                 selectedDate={formData?.departureFlight?.date}
                 onDateChange={handleDepartureDate}
                 placeholder="Select Date"
               />
             </div>
+            <div className="col text-center">
+              <FontAwesomeIcon
+                icon="fa-solid fa-clock"
+                style={{ color: "#0bb6c0" }}
+              />
+              <span className="label mx-3">Time</span>
+              <Time
+                selectedDate={formData?.departureFlight?.time}
+                onChange={handleDepartureTime}
+                placeholder="Select Time"
+              />
+            </div>
+          </div>
 
-            {isOneWay ? null : (
+          {!formData.isRoundTrip ? null : (
+            <div className="row mt-3">
               <div className="col-6 text-center">
                 <FontAwesomeIcon
                   icon="fa-solid fa-calendar-days"
                   style={{ color: "#0bb6c0" }}
                 />
                 <span className="label mx-3">Return</span>
+
                 <Calendar
                   selectedDate={formData?.returnFlight?.date}
                   onDateChange={handleReturnDate}
                   placeholder="Select Date"
                 />
               </div>
-            )}
-          </div>
+              <div className="col text-center">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-clock"
+                  style={{ color: "#0bb6c0" }}
+                />
+                <span className="label mx-3">Time</span>
+                <Time
+                  selectedDate={formData?.returnFlight?.time}
+                  onChange={handleReturnTime}
+                  placeholder="Select Time"
+                />
+              </div>
+            </div>
+          )}
         </div>
-      </>
-    );
-  };
-
-  const renderRoundtripFields = () => {
-    return (
-      <div className="roundtrip-inputs">
-        <div className="row">
-          <div className="col-6">
-            <Input
-              name="airline"
-              onChange={handleInputChange}
-              placeholder="Airline"
-              label="Airline"
-              value={formData?.airline}
-            />
-          </div>
-          <div className="col-6">
-            <Input
-              name="confirmationNo"
-              onChange={handleInputChange}
-              placeholder="Confirmation #"
-              label="Confirmation"
-              value={formData?.confirmationNo}
-            />
-          </div>
-        </div>
-        <div className="header">Departure Flight</div>
-        <div className="row ">
-          <div className="col">
-            <Input
-              name="departureFlightNo"
-              onChange={handleInputChange}
-              placeholder="Flight Number"
-              label="Flight Number"
-              value={formData?.departureFlight?.flightNo}
-            />
-          </div>
-          <div className="col">
-            <Input
-              name="departureSeat"
-              onChange={handleInputChange}
-              placeholder="Seat"
-              label="Seat"
-              value={formData?.departureFlight?.seat}
-            />
-          </div>
-        </div>
-        <div className="header">Return Flight</div>
-
-        <div className="row">
-          <div className="col">
-            <Input
-              name="returnFlightNo"
-              onChange={handleInputChange}
-              placeholder="Flight Number"
-              label="Flight Number"
-              value={formData?.returnFlight?.flightNo}
-            />
-          </div>
-          <div className="col">
-            <Input
-              name="returnSeat"
-              onChange={handleInputChange}
-              placeholder="Seat"
-              label="Seat"
-              value={formData?.returnFlight?.seat}
-            />
-          </div>
-        </div>
-        <div className="row mt-2">
-          <Checkbox
-            label="Tickets are under a different name."
-            toggleCheckbox={handleShowNameInput}
-          />
-        </div>
-        {displayNewNameInput ? (
-          <div className="row">
-            <Input
-              name="ticketHolder"
-              onChange={handleInputChange}
-              placeholder="Name on Ticket"
-              label="Name on Ticket"
-              value={formData?.ticketHolder}
-            />
-          </div>
-        ) : null}
-      </div>
-    );
-  };
-
-  const renderOnewayFields = () => {
-    return (
-      <>
-        <div className="row">
-          <div className="col-6">
-            <Input
-              name="airline"
-              onChange={handleInputChange}
-              placeholder="Airline"
-              label="Airline"
-              value={formData?.airline}
-            />
-          </div>
-          <div className="col-6">
-            <Input
-              name="confirmationNo"
-              onChange={handleInputChange}
-              placeholder="Confirmation #"
-              label="Confirmation"
-              value={formData?.confirmationNo}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col">
-            <Input
-              name="departureFlightNo"
-              onChange={handleInputChange}
-              placeholder="Flight Number"
-              label="Flight Number"
-              value={formData?.departureFlight?.flightNo}
-            />
-          </div>
-          <div className="col">
-            <Input
-              name="departureSeat"
-              onChange={handleInputChange}
-              placeholder="Seat"
-              label="Seat"
-              value={formData?.departureFlight?.seat}
-            />
-          </div>
-        </div>
-        <div className="row mt-2">
-          <Checkbox
-            label="Ticket is under a different name."
-            toggleCheckbox={handleShowNameInput}
-          />
-        </div>
-        {displayNewNameInput ? (
-          <div className="row">
-            <Input
-              name="ticketHolder"
-              onChange={handleInputChange}
-              placeholder="Name on Ticket"
-              label="Name on Ticket"
-              value={formData?.ticketHolder}
-            />
-          </div>
-        ) : null}
       </>
     );
   };
@@ -482,9 +364,36 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
       <div className="container">
         <div className="row">{renderOptionsBox()}</div>
         <div className="mt-2">
-          {isOneWay ? renderOnewayFields() : renderRoundtripFields()}
+          {!formData.isRoundTrip ? (
+            <OneWay formData={formData} setFormData={setFormData} />
+          ) : (
+            <RoundTrip
+              formData={formData}
+              setFormData={setFormData}
+              handleShowAirlineInput={handleShowAirlineInput}
+              handleShowConfirmationInput={handleShowConfirmationInput}
+              displayAirlineInput={displayAirlineInput}
+              displayConfirmationInput={displayConfirmationInput}
+            />
+          )}
         </div>
-
+        {/* <div className="row mt-2">
+          <Checkbox
+            label="Tickets are under a different name."
+            toggleCheckbox={handleShowNameInput}
+          />
+        </div> */}
+        {/* {displayNewNameInput ? (
+          <div className="row">
+            <Input
+              name="nameOnReservation"
+              onChange={handleInputChange}
+              placeholder="Name on Ticket"
+              label="Name on Ticket"
+              value={formData?.nameOnReservation}
+            />
+          </div>
+        ) : null} */}
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
             <Button label="Save" onClick={saveFlight} />

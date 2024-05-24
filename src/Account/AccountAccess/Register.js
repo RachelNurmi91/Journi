@@ -182,8 +182,8 @@ function Register({ ...props }) {
               <Input
                 name="username"
                 onChange={handleChange}
-                placeholder="Email Address"
-                label="Email Address"
+                placeholder="Username"
+                label="Username"
                 value={formData.username}
                 inputError={inputError}
               />

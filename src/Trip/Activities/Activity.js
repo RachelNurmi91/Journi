@@ -211,7 +211,7 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
               <span className="label mx-3">Time</span>
               <Time
                 selectedDate={formData.startTime}
-                onDateChange={handleActivityTime}
+                onChange={handleActivityTime}
                 placeholder="Select Time"
               />
             </div>

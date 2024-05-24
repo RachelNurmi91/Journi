@@ -55,17 +55,17 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
   const displayFlights = () => {
     return sortedFlights.map((flight, index) => {
       const isOpen = openFlightId === flight._id;
-      if (flight.type === "oneway") {
-        return renderOnewayFlight(flight, index, isOpen);
-      } else {
+
+      if (flight?.isRoundTrip) {
         return renderRoundtripFlight(flight, index, isOpen);
+      } else {
+        return renderOnewayFlight(flight, index, isOpen);
       }
     });
   };
 
   const renderOnewayFlight = (flight, index, isOpen) => {
-    const departureFlight = flight?.departureFlight?.[0];
-    const returnFlight = flight?.returnFlight?.[0];
+    const departureFlight = flight?.departureFlight;
 
     return (
       <div className="shadow-box mb-4" key={index}>
@@ -99,8 +99,10 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
                 />
               </div>
               <div className="col-5">
-                <div>{returnFlight?.code}</div>
-                <div className="airport-city">({returnFlight?.city})</div>
+                <div>{departureFlight?.destinationCode}</div>
+                <div className="airport-city">
+                  ({departureFlight?.destinationCity})
+                </div>
               </div>
             </div>
           </div>
@@ -113,7 +115,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
             <div className="col-6 mt-2">
               <div>
                 <div className="input-title"> Airline </div>
-                <div>{flight?.airline}</div>
+                <div>{departureFlight?.name}</div>
               </div>
             </div>
             {departureFlight?.flightNo ? (
@@ -128,7 +130,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
               </div>
             ) : null}
 
-            {departureFlight.seat ? (
+            {departureFlight?.seat ? (
               <div className="col-6 mt-2">
                 <div>
                   <div className="input-title"> Seat </div>
@@ -169,8 +171,8 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
   };
 
   const renderRoundtripFlight = (flight, index, isOpen) => {
-    const departureFlight = flight?.departureFlight?.[0];
-    const returnFlight = flight?.returnFlight?.[0];
+    const departureFlight = flight?.departureFlight;
+    const returnFlight = flight?.returnFlight;
 
     return (
       <div className="shadow-box" key={index}>
@@ -212,16 +214,23 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
           </div>
           <div className="separator">
             <span className="b18-mon primary-color text-center">
-              {Methods.formatLongDate(flight?.departureFlight?.[0]?.date)}
+              {Methods.formatLongDate(flight?.departureFlight?.date)}
+              <span
+                className="p-2"
+                style={{ color: "#444", fontWeight: "500" }}
+              >
+                :
+              </span>
+              {Methods.formatTime(flight?.departureFlight?.time)}
             </span>
           </div>
 
           <div className="row mt-3">
-            {flight?.airline ? (
+            {flight?.name ? (
               <div className="col-6">
                 <div>
                   <div className="b16-mon mt-2 label"> Airline </div>
-                  <div>{flight?.airline}</div>
+                  <div>{flight?.name}</div>
                 </div>
               </div>
             ) : null}
@@ -261,16 +270,23 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
 
           <div className="separator">
             <span className="b18-mon primary-color text-center">
-              {Methods.formatLongDate(flight?.returnFlight?.[0]?.date)}
+              {Methods.formatLongDate(flight?.returnFlight?.date)}
+              <span
+                className="p-2"
+                style={{ color: "#444", fontWeight: "500" }}
+              >
+                :
+              </span>
+              {Methods.formatTime(flight?.returnFlight?.time)}
             </span>
           </div>
           <div className="container ">
             <div className="row">
-              {flight?.airline ? (
+              {flight?.name ? (
                 <div className="col-6 mt-2">
                   <div>
                     <div className="b16-mon label"> Airline </div>
-                    <div>{flight?.airline}</div>
+                    <div>{flight?.name}</div>
                   </div>
                 </div>
               ) : null}

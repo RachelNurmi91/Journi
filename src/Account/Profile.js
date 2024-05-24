@@ -246,7 +246,7 @@ function Profile({
             </div>
           </div>
           <div className="row">
-            <div className="col-3 col-lg-1 label">Email</div>
+            <div className="col-3 col-lg-1 label">User</div>
             <div className="col">{userData.username}</div>
           </div>
         </div>

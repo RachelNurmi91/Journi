@@ -215,7 +215,7 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
               <span className="label mx-3">Time</span>
               <Time
                 selectedDate={formData.startTime}
-                onDateChange={handleStartTime}
+                onChange={handleStartTime}
                 placeholder="Select Time"
               />
             </div>

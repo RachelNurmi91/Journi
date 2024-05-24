@@ -241,7 +241,7 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
               <span className="label mx-3">Time</span>
               <Time
                 selectedDate={formData.startTime}
-                onDateChange={handleStartTime}
+                onChange={handleStartTime}
                 placeholder="Select Time"
               />
             </div>
@@ -275,7 +275,7 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
               <span className="label mx-3">Time</span>
               <Time
                 selectedDate={formData.endTime}
-                onDateChange={handleEndTime}
+                onChange={handleEndTime}
                 placeholder="Select Time"
               />
             </div>
