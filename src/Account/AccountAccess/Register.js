@@ -30,7 +30,7 @@ function Register({ ...props }) {
     if (inputError) {
       if (inputError?.includes(event.target.name)) {
         let updateError = inputError.filter((err) => err !== event.target.name);
-        console.log(updateError);
+        console.error(updateError);
         setInputError(updateError);
       }
     }
@@ -133,7 +133,6 @@ function Register({ ...props }) {
     await accountRequest
       .registerAccount(registrationData)
       .then((response) => {
-        console.log(response);
         loginAfterRegister();
       })
       .catch((err) => {

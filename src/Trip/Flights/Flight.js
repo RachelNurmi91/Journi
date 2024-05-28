@@ -44,10 +44,25 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
   const [displayConfirmationInput, setDisplayConfirmationInput] =
     useState(false);
   const [loading, setLoading] = useState(false);
-
-  const tripRequest = new TripRequests();
+  const [updating, setUpdating] = useState(false);
 
   const location = useLocation();
+  const tripRequest = new TripRequests();
+
+  useEffect(() => {
+    if (location.pathname.includes("update")) {
+      setUpdating(true);
+
+      const pathSegments = location.pathname.split("/");
+      const id = pathSegments[pathSegments.length - 1];
+
+      let selectedFlight = activeTrip.flights.find(
+        (flight) => flight._id?.toString() === id
+      );
+
+      setFormData(selectedFlight);
+    }
+  }, [activeTrip.flights, location.pathname]);
 
   const { edit, selectedItem } = location.state || {};
 
@@ -60,7 +75,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
         }));
       }
     }
-  }, [selectedItem, formData._id]);
+  }, [selectedItem, formData]);
 
   useEffect(() => {
     if (edit) {
@@ -100,6 +115,15 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
         console.error(error);
         setLoading(false);
       });
+  };
+
+  const updateFlight = () => {
+    tripRequest
+      .updateFlight(formData)
+      .then(() => {
+        fetchUpdatedTrips().then(() => props.navigate("/flights"));
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleRadioCheck = (event) => {
@@ -238,26 +262,36 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
     return (
       <>
         <div className="outlined-box p-4">
-          <div className="row">
-            <div className="col d-flex justify-content-end">
-              <Radio
-                id="roundtrip"
-                name="flightType"
-                label="Roundtrip"
-                onChange={handleRadioCheck}
-                checked={formData.isRoundTrip}
-              />
+          {updating ? (
+            <h4
+              className="text-center primary-color"
+              style={{ fontWeight: "900" }}
+            >
+              {formData?.isRoundTrip ? "Round Trip Flight" : "One Way Flight"}
+            </h4>
+          ) : (
+            <div className="row">
+              <div className="col d-flex justify-content-end">
+                <Radio
+                  id="roundtrip"
+                  name="flightType"
+                  label="Roundtrip"
+                  onChange={handleRadioCheck}
+                  checked={formData?.isRoundTrip}
+                />
+              </div>
+              <div className="col d-flex justify-content-start">
+                <Radio
+                  id="oneway"
+                  name="flightType"
+                  label="One Way"
+                  onChange={handleRadioCheck}
+                  checked={!formData?.isRoundTrip}
+                />
+              </div>
             </div>
-            <div className="col d-flex justify-content-start">
-              <Radio
-                id="oneway"
-                name="flightType"
-                label="One Way"
-                onChange={handleRadioCheck}
-                checked={!formData.isRoundTrip}
-              />
-            </div>
-          </div>
+          )}
+
           <hr />
           <div className="row">
             <div className="col-6 text-center">
@@ -271,7 +305,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
               <AirportAutocomplete
                 placeholder="Departure city"
                 onChange={handleDepartureAirport}
-                value={formData?.departureFlight?.[0]?.airport}
+                value={formData?.departureFlight?.airport}
               />
             </div>
             <div className="col-6 text-center">
@@ -282,11 +316,14 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
                 />
                 <span className="label mx-3">To</span>
               </div>
-
               <AirportAutocomplete
                 placeholder="Arrival city"
                 onChange={handleReturnAirport}
-                value={formData?.returnFlight?.[0]?.airport}
+                value={
+                  formData?.isRoundTrip
+                    ? formData?.returnFlight?.airport
+                    : formData?.departureFlight?.destinationAirport
+                }
               />
             </div>
           </div>
@@ -317,7 +354,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
             </div>
           </div>
 
-          {!formData.isRoundTrip ? null : (
+          {!formData?.isRoundTrip ? null : (
             <div className="row mt-3">
               <div className="col-6 text-center">
                 <FontAwesomeIcon
@@ -354,7 +391,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
   return (
     <div className="content-body">
       <Header
-        title="Add Flight"
+        title={updating ? "Update Flight" : "Add Flight"}
         leftIcon={activeTrip?.flights?.length ? true : false}
         destination={"/flights"}
         props={{
@@ -364,7 +401,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
       <div className="container">
         <div className="row">{renderOptionsBox()}</div>
         <div className="mt-2">
-          {!formData.isRoundTrip ? (
+          {!formData?.isRoundTrip ? (
             <OneWay formData={formData} setFormData={setFormData} />
           ) : (
             <RoundTrip
@@ -396,7 +433,11 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
         ) : null} */}
         <div className="row mt-3">
           <div className="col d-flex align-self-center">
-            <Button label="Save" onClick={saveFlight} />
+            {updating ? (
+              <Button label="Update" onClick={updateFlight} />
+            ) : (
+              <Button label="Save" onClick={saveFlight} />
+            )}
           </div>
         </div>
       </div>

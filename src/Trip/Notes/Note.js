@@ -41,7 +41,7 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
     if (inputError) {
       if (inputError?.includes(event.target.name)) {
         let updateError = inputError.filter((err) => err !== event.target.name);
-        console.log(updateError);
+        console.error(updateError);
         setInputError(updateError);
       }
     }

@@ -12,6 +12,11 @@ const AirportAutocomplete = ({ placeholder, onChange, value }) => {
     if (inputRef.current) {
       setInputWidth(`${inputRef.current.offsetWidth}px`);
     }
+
+    // If we are updating we want to set the value we are updating to the local state.
+    if (value) {
+      setInputValue(value);
+    }
   }, [value]);
 
   const handleChange = (e) => {

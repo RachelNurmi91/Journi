@@ -48,7 +48,10 @@ function Content({ ...props }) {
             />
             <Route path="/hotels/add" element={<Hotel navigate={navigate} />} />
 
-            <Route path="/flights" element={<FlightList />} />
+            <Route
+              path="/flights"
+              element={<FlightList navigate={navigate} />}
+            />
             <Route path="/flights/*" element={<Flight navigate={navigate} />} />
 
             <Route

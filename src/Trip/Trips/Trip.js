@@ -66,7 +66,7 @@ function Trip({
     if (inputError) {
       if (inputError?.includes(event.target.name)) {
         let updateError = inputError.filter((err) => err !== event.target.name);
-        console.log(updateError);
+        console.error(updateError);
         setInputError(updateError);
       }
     }
@@ -160,7 +160,7 @@ function Trip({
     if (inputError) {
       if (inputError?.includes("startDate")) {
         let updateError = inputError.filter((err) => err !== "startDate");
-        console.log(updateError);
+        console.error(updateError);
         setInputError(updateError);
       }
     }
@@ -189,7 +189,7 @@ function Trip({
     if (inputError) {
       if (inputError?.includes("endDate")) {
         let updateError = inputError.filter((err) => err !== "endDate");
-        console.log(updateError);
+        console.error(updateError);
         setInputError(updateError);
       }
     }
@@ -215,7 +215,7 @@ function Trip({
     if (inputError) {
       if (inputError?.includes("selection")) {
         let updateError = inputError.filter((err) => err !== "selection");
-        console.log(updateError);
+        console.error(updateError);
         setInputError(updateError);
       }
     }
@@ -280,7 +280,7 @@ function Trip({
                   icon="fa-solid fa-calendar-days"
                   style={{ color: "#0bb6c0" }}
                 />
-                <span className="label mx-3">Departure</span>
+                <div className="label mx-3">Departure</div>
                 <Calendar
                   selectedDate={formData.startDate}
                   onDateChange={handleStartDate}

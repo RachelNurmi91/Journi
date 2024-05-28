@@ -8,7 +8,7 @@ import Methods from "../../Shared/Methods";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 
-function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
+function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
   const [sortedFlights, setSortedFlights] = useState([]);
   const [openFlightId, setOpenFlightId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -52,6 +52,10 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
     sortByDate();
   }, [sortByDate]);
 
+  const navigateToUpdate = (id) => {
+    props.navigate(`/flights/update/${id}`);
+  };
+
   const displayFlights = () => {
     return sortedFlights.map((flight, index) => {
       const isOpen = openFlightId === flight._id;
@@ -66,10 +70,16 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
 
   const renderOnewayFlight = (flight, index, isOpen) => {
     const departureFlight = flight?.departureFlight;
-
     return (
       <div className="shadow-box mb-4" key={index}>
         <div className="row d-flex justify-content-end mx-1">
+          <div className="col-1">
+            <FontAwesomeIcon
+              icon="fa-solid fa-pen-to-square"
+              className="primary-color"
+              onClick={() => navigateToUpdate(flight._id)}
+            />
+          </div>
           <div className="col-1">
             <FontAwesomeIcon
               icon="fa-solid fa-trash"
@@ -179,6 +189,13 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
         <div className="row d-flex justify-content-end mx-1">
           <div className="col-1">
             <FontAwesomeIcon
+              icon="fa-solid fa-pen-to-square"
+              className="primary-color"
+              onClick={() => navigateToUpdate(flight._id)}
+            />
+          </div>
+          <div className="col-1">
+            <FontAwesomeIcon
               icon="fa-solid fa-trash"
               style={{ color: "#d65d5d" }}
               onClick={() => deleteFlight(flight._id)}
@@ -206,6 +223,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, deleteTripData }) {
                   size="sm"
                 />
               </div>
+              {console.log(returnFlight)}
               <div className="col-5">
                 <div>{returnFlight?.code}</div>
                 <div className="airport-city">({returnFlight?.city})</div>

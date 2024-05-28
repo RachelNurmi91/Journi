@@ -51,8 +51,6 @@ function Summary({ userData, activeTrip }) {
     return formattedDate;
   };
 
-  console.log(formatTodaysDate()); // Example usage
-
   const vacationStarted = useCallback(() => {
     return (
       <div className="content-body">

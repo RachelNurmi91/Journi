@@ -1,6 +1,6 @@
 import axios from "axios";
-const SERVER = "https://journiserver.onrender.com";
-// const SERVER = "http://localhost:8080";
+// const SERVER = "https://journiserver.onrender.com";
+const SERVER = "http://localhost:8080";
 
 export default class TripRequests {
   addTrip(tripData) {
@@ -124,22 +124,22 @@ export default class TripRequests {
       });
   }
 
-  // updateFlight(data) {
-  //   const token = localStorage.getItem("token");
-  //   return axios
-  //     .put(`${SERVER}/flights/${data._id}`, data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       return response; // Return the response for chaining
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //       throw error; // Re-throw the error to propagate it
-  //     });
-  // }
+  updateFlight(data) {
+    const token = localStorage.getItem("token");
+    return axios
+      .put(`${SERVER}/flights/${data._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        return response; // Return the response for chaining
+      })
+      .catch(function (error) {
+        console.error(error);
+        throw error; // Re-throw the error to propagate it
+      });
+  }
 
   deleteFlight(id) {
     const token = localStorage.getItem("token");
@@ -414,7 +414,6 @@ export default class TripRequests {
   }
 
   addNote(noteData) {
-    console.log("Note:", noteData);
     const token = localStorage.getItem("token");
     return axios
       .post(`${SERVER}/notes/add`, noteData, {
