@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { CountryList } from "../../Shared/Data/CountryList";
 import { AirportList } from "../../Shared/Data/AirportList";
 
-const AirportAutocomplete = ({ placeholder, onChange, value }) => {
+const AirportAutocomplete = ({ placeholder, onChange, value, name }) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const inputRef = useRef(null);
@@ -63,6 +63,7 @@ const AirportAutocomplete = ({ placeholder, onChange, value }) => {
         value={inputValue}
         onChange={handleChange}
         placeholder={placeholder}
+        name={name}
       />
       <ul className="autocomplete-input" style={{ width: inputWidth }}>
         {suggestions.map((item, index) => (

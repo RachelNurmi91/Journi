@@ -1518,6 +1518,12 @@ export const AirportList = [
     country: "United States",
   },
   {
+    code: "BDL",
+    name: "Bradley International Airport",
+    city: "Hartford",
+    country: "United States",
+  },
+  {
     code: "BDO",
     name: "Husein Sastranegara Airport",
     city: "Bandung",

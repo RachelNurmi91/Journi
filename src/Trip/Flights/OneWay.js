@@ -1,9 +1,18 @@
 import Input from "../../Shared/UI/Input";
 
-const OneWay = ({ formData, setFormData }) => {
+const OneWay = ({ formData, setFormData, inputError, setInputError }) => {
   const flight = formData?.departureFlight;
 
   const handleInputChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.error(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -27,6 +36,7 @@ const OneWay = ({ formData, setFormData }) => {
               placeholder="Airline"
               label="Airline"
               value={flight?.name}
+              inputError={inputError}
             />
           </div>
         </div>

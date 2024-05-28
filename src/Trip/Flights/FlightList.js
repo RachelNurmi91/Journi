@@ -30,6 +30,8 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
       });
     }
 
+    setOpenFlightId(flights?.[0]?._id);
+
     setSortedFlights([...flights]);
   }, [flightListData]);
 
@@ -162,13 +164,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
           </div>
         </div>
         <div className="text-center mt-2">
-          {isOpen ? (
-            <FontAwesomeIcon
-              icon="fa-solid fa-angle-up"
-              style={{ color: "#0BB6C0" }}
-              onClick={() => toggleOpen(flight._id)}
-            />
-          ) : (
+          {isOpen ? null : (
             <FontAwesomeIcon
               icon="fa-solid fa-angle-down"
               style={{ color: "#0BB6C0" }}
@@ -223,7 +219,6 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
                   size="sm"
                 />
               </div>
-              {console.log(returnFlight)}
               <div className="col-5">
                 <div>{returnFlight?.code}</div>
                 <div className="airport-city">({returnFlight?.city})</div>
@@ -298,7 +293,8 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
               {Methods.formatTime(flight?.returnFlight?.time)}
             </span>
           </div>
-          <div className="container ">
+
+          <div className="container">
             <div className="row">
               {flight?.name ? (
                 <div className="col-6 mt-2">
@@ -345,13 +341,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
           </div>
         </div>
         <div className="text-center mt-2">
-          {isOpen ? (
-            <FontAwesomeIcon
-              icon="fa-solid fa-angle-up"
-              style={{ color: "#0BB6C0" }}
-              onClick={() => toggleOpen(flight._id)}
-            />
-          ) : (
+          {isOpen ? null : (
             <FontAwesomeIcon
               icon="fa-solid fa-angle-down"
               style={{ color: "#0BB6C0" }}

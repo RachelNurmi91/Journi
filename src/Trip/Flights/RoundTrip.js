@@ -8,11 +8,21 @@ const RoundTrip = ({
   setFormData,
   displayAirlineInput,
   displayConfirmationInput,
+  inputError,
+  setInputError,
 }) => {
   const departureFlight = formData?.departureFlight;
   const returnFlight = formData?.returnFlight;
 
   const handleDepartureInputChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.error(updateError);
+        setInputError(updateError);
+      }
+    }
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -26,6 +36,15 @@ const RoundTrip = ({
   };
 
   const handleReturnInputChange = (event) => {
+    //If theres an error and user updates field remove error.
+    if (inputError) {
+      if (inputError?.includes(event.target.name)) {
+        let updateError = inputError.filter((err) => err !== event.target.name);
+        console.error(updateError);
+        setInputError(updateError);
+      }
+    }
+
     const targetKey = event.target.name;
     const newValue = event.target.value;
 
@@ -50,6 +69,7 @@ const RoundTrip = ({
             placeholder="Airline"
             label="Airline"
             value={departureFlight?.name}
+            inputError={inputError}
           />{" "}
           <Checkbox
             label="Return airline is different"

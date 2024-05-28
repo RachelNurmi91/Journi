@@ -17,6 +17,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
   const toggleOpen = (id) => {
     setOpenHotelId((prevId) => (prevId === id ? null : id));
   };
+
   const sortByDate = useCallback(() => {
     let sortedHotels;
 
@@ -31,6 +32,8 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
     } else {
       sortedHotels = hotels;
     }
+
+    setOpenHotelId(sortedHotels?.[0]?._id);
 
     setHotelList(sortedHotels);
   }, [hotelListData]);
@@ -139,13 +142,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
             </div>
           </div>
           <div className="text-center">
-            {isOpen ? (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-up"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(hotel._id)}
-              />
-            ) : (
+            {isOpen ? null : (
               <FontAwesomeIcon
                 icon="fa-solid fa-angle-down"
                 style={{ color: "#0BB6C0" }}
