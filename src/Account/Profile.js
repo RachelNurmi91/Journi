@@ -153,8 +153,8 @@ function Profile({
           {index === 0 ? null : <hr />}
 
           <div className="row pt-2">
-            <div className="col-5 col-lg-1 label">{program.name}</div>
-            <div className="col-5 d-flex align-items-center justify-content-end">
+            <div className="col-5 label">{program.name}</div>
+            <div className="col-5 d-flex align-items-center justify-content-start">
               {program.membershipId}
             </div>
             <div className="col-2 d-flex align-items-center justify-content-end">
@@ -212,7 +212,7 @@ function Profile({
       <div className="row">
         <div className="col-4">
           <div className="profile-icon">
-            <div className="d-flex justify-content-center" to="/profile">
+            <div className="d-flex justify-content-start" to="/profile">
               <div className="img-edit">
                 <div className="profile-img">
                   {userData?.firstName?.slice(0, 1).toUpperCase()}
