@@ -222,8 +222,9 @@ function Sidebar({
           className={
             activeTrip
               ? "flex-shrink-1 align-items-end"
-              : "flex-grow-1 d-flex justify-content-center align-items-center"
+              : "flex-grow-1 d-flex align-items-center"
           }
+          style={activeTrip ? {} : { marginTop: "-60px" }}
         >
           <ul className="menu">
             <li>
@@ -236,7 +237,9 @@ function Sidebar({
                   icon="fa-solid fa-plus"
                   style={{ color: "#fff" }}
                 />
-                <span className="mx-2">Add Trip</span>
+                <span className="mx-2" style={{ fontWeight: "700" }}>
+                  ADD NEW TRIP
+                </span>
               </Link>
             </li>
           </ul>
