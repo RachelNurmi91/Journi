@@ -224,6 +224,7 @@ function Sidebar({
               ? "flex-shrink-1 align-items-end"
               : "flex-grow-1 d-flex align-items-center"
           }
+          style={activeTrip ? {} : { marginTop: "-60px" }}
         >
           <ul className="menu">
             <li>
