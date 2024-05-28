@@ -27,6 +27,7 @@ function Navbar({ userData, account, activeTrip, userId }) {
   const location = useLocation();
 
   const toggleSideNav = () => {
+    console.log("HIT");
     setShowSideBar((prevState) => !prevState);
   };
 
