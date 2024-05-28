@@ -220,7 +220,7 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
         />
         {activityListData?.length
           ? displayActivities()
-          : "Girly pop, add your first activity!"}
+          : "Get going! Add your first activity!"}
       </div>
       <Loading loading={loading} />
       <Modal show={showTicketModal}>

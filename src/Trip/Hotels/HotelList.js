@@ -7,11 +7,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import Loading from "../../Shared/UI/Loading";
 
-function HotelList({
-  fetchUpdatedTrips,
-  hotelListData,
-  ...props
-}) {
+function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
   const [hotelList, setHotelList] = useState(null);
   const [openHotelId, setOpenHotelId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -168,7 +164,7 @@ function HotelList({
         <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
         {hotelListData.length
           ? displayHotels()
-          : "Girly pop, add your first hotel!"}
+          : "Sleep is important, so add your first hotel!"}
       </div>
       <Loading loading={loading} />
     </>

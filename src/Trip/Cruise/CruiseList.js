@@ -171,7 +171,7 @@ function CruiseList({
         <Header title="Cruises" rightIcon="add" destination={"/cruises/add"} />
         {cruiseListData?.length
           ? displayCruises()
-          : "Girly pop, add your first cruise!"}
+          : "Cruiser, add your first cruise!"}
       </div>
       <Loading loading={loading} />
     </>

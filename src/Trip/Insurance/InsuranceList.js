@@ -113,7 +113,7 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
         />
         {insuranceListData?.length
           ? displayInsurance()
-          : "Girly pop, add your first insurance!"}
+          : "Shit happens. Add your first insurance!"}
       </div>
       <Loading loading={loading} />
     </>

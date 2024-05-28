@@ -274,7 +274,11 @@ function Profile({
             transition: "height 0.10s ease",
           }}
         >
-          {tripsData.length ? renderTripList() : "Friend, you need a vacation."}
+          {tripsData.length ? (
+            renderTripList()
+          ) : (
+            <div className="mt-3">"Friend, you need a vacation."</div>
+          )}
         </div>
         {tripsData.length > 1 ? (
           <div className="text-center mt-2">
@@ -317,9 +321,11 @@ function Profile({
             transition: "height 0.10s ease",
           }}
         >
-          {rewardProgramsData?.length
-            ? renderProgramsList()
-            : "Add your reward programs!"}
+          {rewardProgramsData?.length ? (
+            renderProgramsList()
+          ) : (
+            <div className="mt-2">"Add your reward programs!"</div>
+          )}
         </div>
         {rewardProgramsData?.length > 1 ? (
           <div className="text-center mt-2">

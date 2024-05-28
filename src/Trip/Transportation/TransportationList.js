@@ -191,7 +191,7 @@ function TransportationList({
         />
         {transportationListData?.length
           ? displayTransportation()
-          : "Girly pop, add your first transportation!"}
+          : "Your too important to drive yourself. Add your first transportation!"}
       </div>
       <Loading loading={loading} />
     </>

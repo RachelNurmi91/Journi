@@ -79,7 +79,7 @@ function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
             <ul>{displayNotes()}</ul>
           </div>
         ) : (
-          "Girly pop, add your first note!"
+          "You'll forget. Add your first note!"
         )}
       </div>
       <Loading loading={loading} />

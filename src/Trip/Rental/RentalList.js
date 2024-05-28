@@ -184,7 +184,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
         <Header title="Rentals" rightIcon="add" destination={"/rentals/add"} />
         {rentalListData?.length
           ? displayRentals()
-          : "Girly pop, add your first rental!"}
+          : "Test drive and add your first rental!"}
       </div>
       <Loading loading={loading} />
     </>

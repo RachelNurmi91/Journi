@@ -165,7 +165,7 @@ function Summary({ userData, activeTrip }) {
             </p>
           </div>
           <div className="row mt-3 text-center">
-            <h3>Happy Travels, Girly Pop!</h3>
+            <h3>Happy Travels, my Friend!</h3>
           </div>
         </div>
       </div>
