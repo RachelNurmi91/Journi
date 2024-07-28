@@ -11,6 +11,7 @@ import Time from "../../Shared/UI/Time";
 import Checkbox from "../../Shared/UI/Checkbox";
 import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -226,166 +227,169 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body">
-      <Header
-        title={updating ? "Update Transportation" : "Add Transportation"}
-        leftIcon={activeTrip?.transportation?.length ? true : false}
-        destination={"/transportation"}
-        props={{
-          addNew: true,
-        }}
-      />
-      <div className="container">
-        <div className="row"> {renderOptionsBox()}</div>
-        <div className="mt-4">
-          <div className="label">What type of transportation is it?</div>
-          <div className="trip-selections">
-            <div className="item-select">
-              <Checkbox
-                label={
-                  <>
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-bus"
-                      style={{ color: "#0BB6C0", marginRight: "10px" }}
-                    />
-                    Bus
-                  </>
-                }
-                name="bus"
-                checked={formData.type === "bus"}
-                toggleCheckbox={onCheck}
-              />
-            </div>
-            <div className="item-select">
-              <Checkbox
-                label={
-                  <>
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-train"
-                      style={{ color: "#0BB6C0", marginRight: "10px" }}
-                    />
-                    Train
-                  </>
-                }
-                name="train"
-                checked={formData.type === "train"}
-                toggleCheckbox={onCheck}
-              />
-            </div>
-            <div className="item-select">
-              <Checkbox
-                label={
-                  <>
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-van-shuttle"
-                      style={{ color: "#0BB6C0", marginRight: "10px" }}
-                    />
-                    Shuttle
-                  </>
-                }
-                name="shuttle"
-                checked={formData.type === "shuttle"}
-                toggleCheckbox={onCheck}
-              />
-            </div>
-            <div className="item-select">
-              <Checkbox
-                label={
-                  <>
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-car"
-                      style={{ color: "#0BB6C0", marginRight: "10px" }}
-                    />
-                    Private Car
-                  </>
-                }
-                name="privateCar"
-                checked={formData.type === "privateCar"}
-                toggleCheckbox={onCheck}
-              />
-            </div>
-            <div className="item-select">
-              <Checkbox
-                label={
-                  <>
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-ferry"
-                      style={{ color: "#0BB6C0", marginRight: "10px" }}
-                    />
-                    Ferry or Boat
-                  </>
-                }
-                name="ferry"
-                checked={formData.type === "ferry"}
-                toggleCheckbox={onCheck}
-              />
+    <>
+      <Breadcrumbs />
+      <div className="content-body">
+        <Header
+          title={updating ? "Update Transportation" : "Add Transportation"}
+          leftIcon={activeTrip?.transportation?.length ? true : false}
+          destination={"/transportation"}
+          props={{
+            addNew: true,
+          }}
+        />
+        <div className="container">
+          <div className="row"> {renderOptionsBox()}</div>
+          <div className="mt-4">
+            <div className="label">What type of transportation is it?</div>
+            <div className="trip-selections">
+              <div className="item-select">
+                <Checkbox
+                  label={
+                    <>
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-bus"
+                        style={{ color: "#0BB6C0", marginRight: "10px" }}
+                      />
+                      Bus
+                    </>
+                  }
+                  name="bus"
+                  checked={formData.type === "bus"}
+                  toggleCheckbox={onCheck}
+                />
+              </div>
+              <div className="item-select">
+                <Checkbox
+                  label={
+                    <>
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-train"
+                        style={{ color: "#0BB6C0", marginRight: "10px" }}
+                      />
+                      Train
+                    </>
+                  }
+                  name="train"
+                  checked={formData.type === "train"}
+                  toggleCheckbox={onCheck}
+                />
+              </div>
+              <div className="item-select">
+                <Checkbox
+                  label={
+                    <>
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-van-shuttle"
+                        style={{ color: "#0BB6C0", marginRight: "10px" }}
+                      />
+                      Shuttle
+                    </>
+                  }
+                  name="shuttle"
+                  checked={formData.type === "shuttle"}
+                  toggleCheckbox={onCheck}
+                />
+              </div>
+              <div className="item-select">
+                <Checkbox
+                  label={
+                    <>
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-car"
+                        style={{ color: "#0BB6C0", marginRight: "10px" }}
+                      />
+                      Private Car
+                    </>
+                  }
+                  name="privateCar"
+                  checked={formData.type === "privateCar"}
+                  toggleCheckbox={onCheck}
+                />
+              </div>
+              <div className="item-select">
+                <Checkbox
+                  label={
+                    <>
+                      <FontAwesomeIcon
+                        icon="fa-solid fa-ferry"
+                        style={{ color: "#0BB6C0", marginRight: "10px" }}
+                      />
+                      Ferry or Boat
+                    </>
+                  }
+                  name="ferry"
+                  checked={formData.type === "ferry"}
+                  toggleCheckbox={onCheck}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-4">
-          {formData.type ? (
-            <>
-              <Input
-                name="name"
-                onChange={handleChange}
-                placeholder="Company"
-                label="Company"
-                value={formData.name}
-                inputError={inputError}
-              />
-              <Input
-                name="location"
-                onChange={handleChange}
-                placeholder={getLocationType()}
-                label={getLocationType()}
-                value={formData.location}
-              />
-            </>
-          ) : null}
+          <div className="row mt-4">
+            {formData.type ? (
+              <>
+                <Input
+                  name="name"
+                  onChange={handleChange}
+                  placeholder="Company"
+                  label="Company"
+                  value={formData.name}
+                  inputError={inputError}
+                />
+                <Input
+                  name="location"
+                  onChange={handleChange}
+                  placeholder={getLocationType()}
+                  label={getLocationType()}
+                  value={formData.location}
+                />
+              </>
+            ) : null}
 
-          {formData.type === "bus" ||
-          formData.type === "train" ||
-          formData.type === "ferry" ? (
-            <Input
-              name="confirmationNo"
-              onChange={handleChange}
-              placeholder="Ticket No."
-              label="Ticket No."
-              value={formData.confirmationNo}
-            />
-          ) : null}
-          {formData.type === "privateCar" || formData.type === "shuttle" ? (
-            <Input
-              name="confirmationNo"
-              onChange={handleChange}
-              placeholder="Confirmation No."
-              label="Confirmation No."
-              value={formData.confirmationNo}
-            />
-          ) : null}
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateTransportation} />
-            ) : (
-              <Button label="Save" onClick={saveTransportation} />
-            )}
+            {formData.type === "bus" ||
+            formData.type === "train" ||
+            formData.type === "ferry" ? (
+              <Input
+                name="confirmationNo"
+                onChange={handleChange}
+                placeholder="Ticket No."
+                label="Ticket No."
+                value={formData.confirmationNo}
+              />
+            ) : null}
+            {formData.type === "privateCar" || formData.type === "shuttle" ? (
+              <Input
+                name="confirmationNo"
+                onChange={handleChange}
+                placeholder="Confirmation No."
+                label="Confirmation No."
+                value={formData.confirmationNo}
+              />
+            ) : null}
           </div>
-        </div>
-        {inputError.length ? (
-          <div className="row">
-            <div
-              className="b13-mon text-center error-color py-2 px-3"
-              style={{ fontWeight: "700" }}
-            >
-              * Please fill out all required fields
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateTransportation} />
+              ) : (
+                <Button label="Save" onClick={saveTransportation} />
+              )}
             </div>
           </div>
-        ) : null}
+          {inputError.length ? (
+            <div className="row">
+              <div
+                className="b13-mon text-center error-color py-2 px-3"
+                style={{ fontWeight: "700" }}
+              >
+                * Please fill out all required fields
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <Loading loading={loading} />
       </div>
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 

@@ -13,6 +13,7 @@ import Select from "../../Shared/UI/Select";
 import Checkbox from "../../Shared/UI/Checkbox";
 import Loading from "../../Shared/UI/Loading";
 import { useLocation } from "react-router-dom";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -286,94 +287,97 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body">
-      <Header
-        title={updating ? "Update Rental Car" : "Add Rental Car"}
-        leftIcon={activeTrip?.rentals?.length ? true : false}
-        destination={"/rentals"}
-        props={{
-          addNew: true,
-        }}
-      />
-      <div className="container">
-        <div className="row"> {renderOptionsBox()}</div>
-        <div className="row mt-2">
-          <Input
-            name="name"
-            onChange={handleChange}
-            placeholder="Rental Agency"
-            label="Rental Agency"
-            value={formData.name}
-            inputError={inputError}
-          />
-          <Input
-            name="startLocation"
-            onChange={handleChange}
-            placeholder="Pickup Location"
-            label="Pickup Location"
-            value={formData.startLocation}
-          />
-          <div>
-            <Checkbox
-              label="Set different drop off location"
-              toggleCheckbox={toggleReturnLocation}
-              checked={showReturnLocation}
+    <>
+      <Breadcrumbs />
+      <div className="content-body">
+        <Header
+          title={updating ? "Update Rental Car" : "Add Rental Car"}
+          leftIcon={activeTrip?.rentals?.length ? true : false}
+          destination={"/rentals"}
+          props={{
+            addNew: true,
+          }}
+        />
+        <div className="container">
+          <div className="row"> {renderOptionsBox()}</div>
+          <div className="row mt-2">
+            <Input
+              name="name"
+              onChange={handleChange}
+              placeholder="Rental Agency"
+              label="Rental Agency"
+              value={formData.name}
+              inputError={inputError}
             />
-            {showReturnLocation ? (
-              <Input
-                name="endLocation"
-                onChange={handleChange}
-                placeholder="Drop Off Location"
-                label="Drop Off Location"
-                value={formData.endLocation}
+            <Input
+              name="startLocation"
+              onChange={handleChange}
+              placeholder="Pickup Location"
+              label="Pickup Location"
+              value={formData.startLocation}
+            />
+            <div>
+              <Checkbox
+                label="Set different drop off location"
+                toggleCheckbox={toggleReturnLocation}
+                checked={showReturnLocation}
               />
-            ) : null}
-          </div>
-
-          <div className="container">
-            <div className="row">
-              <div className="col-6">
-                <div className="label my-2">Vehicle Type</div>
-                <Select
-                  name="vehicleType"
-                  options={generateOptions}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col-6">
+              {showReturnLocation ? (
                 <Input
-                  name="confirmationNo"
+                  name="endLocation"
                   onChange={handleChange}
-                  placeholder="Confirmation #"
-                  label="Confirmation #"
-                  value={formData.confirmationNo}
+                  placeholder="Drop Off Location"
+                  label="Drop Off Location"
+                  value={formData.endLocation}
                 />
+              ) : null}
+            </div>
+
+            <div className="container">
+              <div className="row">
+                <div className="col-6">
+                  <div className="label my-2">Vehicle Type</div>
+                  <Select
+                    name="vehicleType"
+                    options={generateOptions}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-6">
+                  <Input
+                    name="confirmationNo"
+                    onChange={handleChange}
+                    placeholder="Confirmation #"
+                    label="Confirmation #"
+                    value={formData.confirmationNo}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateRental} />
-            ) : (
-              <Button label="Save" onClick={saveRental} />
-            )}
-          </div>
-        </div>
-        {inputError.length ? (
-          <div className="row">
-            <div
-              className="b13-mon text-center error-color py-2 px-3"
-              style={{ fontWeight: "700" }}
-            >
-              * Please fill out all required fields
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateRental} />
+              ) : (
+                <Button label="Save" onClick={saveRental} />
+              )}
             </div>
           </div>
-        ) : null}
+          {inputError.length ? (
+            <div className="row">
+              <div
+                className="b13-mon text-center error-color py-2 px-3"
+                style={{ fontWeight: "700" }}
+              >
+                * Please fill out all required fields
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <Loading loading={loading} />
       </div>
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 

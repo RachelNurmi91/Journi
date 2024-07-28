@@ -13,6 +13,7 @@ import ImageUploading from "react-images-uploading";
 import Loading from "../../Shared/UI/Loading";
 import Textarea from "../../Shared/UI/Textarea";
 import { useLocation } from "react-router-dom";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -222,146 +223,149 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body activity">
-      <Header
-        title={updating ? "Update Activity" : "Add Activity"}
-        leftIcon={activeTrip?.activities?.length ? true : false}
-        destination={"/activities"}
-        subtitle="Add any activity, event or excursion."
-        props={{
-          addNew: true,
-        }}
-      />
+    <>
+      <Breadcrumbs />
+      <div className="content-body activity">
+        <Header
+          title={updating ? "Update Activity" : "Add Activity"}
+          leftIcon={activeTrip?.activities?.length ? true : false}
+          destination={"/activities"}
+          subtitle="Add any activity, event or excursion."
+          props={{
+            addNew: true,
+          }}
+        />
 
-      <div className="container">
-        <div className="row"> {renderOptionsBox()}</div>
-        <div className="row mt-2">
-          <Input
-            name="name"
-            onChange={handleChange}
-            placeholder="Activity"
-            label="Activity"
-            value={formData.name}
-            inputError={inputError}
-          />
+        <div className="container">
+          <div className="row"> {renderOptionsBox()}</div>
+          <div className="row mt-2">
+            <Input
+              name="name"
+              onChange={handleChange}
+              placeholder="Activity"
+              label="Activity"
+              value={formData.name}
+              inputError={inputError}
+            />
 
-          <Input
-            name="location"
-            onChange={handleChange}
-            placeholder="Location"
-            label="Location"
-            value={formData.location}
-          />
-        </div>
-        <div className="ticketed row my-2">
-          <Checkbox
-            label="Add ticket information"
-            toggleCheckbox={toggleTickets}
-            checked={showTickets}
-          />
-          {showTickets ? (
-            <>
-              <Input
-                name="ticketNo"
-                onChange={handleAddOnChange}
-                placeholder="Confirmation Number"
-                label="Ticket/Reservation Confirmation"
-                value={formData.addOns.ticketNo}
-              />
+            <Input
+              name="location"
+              onChange={handleChange}
+              placeholder="Location"
+              label="Location"
+              value={formData.location}
+            />
+          </div>
+          <div className="ticketed row my-2">
+            <Checkbox
+              label="Add ticket information"
+              toggleCheckbox={toggleTickets}
+              checked={showTickets}
+            />
+            {showTickets ? (
+              <>
+                <Input
+                  name="ticketNo"
+                  onChange={handleAddOnChange}
+                  placeholder="Confirmation Number"
+                  label="Ticket/Reservation Confirmation"
+                  value={formData.addOns.ticketNo}
+                />
 
-              <ImageUploading
-                multiple
-                value={formData?.addOns?.ticketUploads}
-                onChange={handleTicketUpload}
-                maxNumber={12}
-                dataURLKey="data_url"
-                acceptType={[]}
-              >
-                {({
-                  imageList,
-                  onImageUpload,
-                  onImageRemove,
-                  isDragging,
-                  dragProps,
-                }) => (
-                  <div className="upload__image-wrapper my-3">
-                    <div className="mx-auto w-50">
-                      <Button
-                        label="Select File"
-                        style={isDragging ? { color: "red" } : null}
-                        onClick={onImageUpload}
-                        {...dragProps}
-                      />
-                    </div>
-                    <div className="b13-mon text-center mt-1">
-                      *Only PNG, JPG of GIF files allowed.
-                    </div>
+                <ImageUploading
+                  multiple
+                  value={formData?.addOns?.ticketUploads}
+                  onChange={handleTicketUpload}
+                  maxNumber={12}
+                  dataURLKey="data_url"
+                  acceptType={[]}
+                >
+                  {({
+                    imageList,
+                    onImageUpload,
+                    onImageRemove,
+                    isDragging,
+                    dragProps,
+                  }) => (
+                    <div className="upload__image-wrapper my-3">
+                      <div className="mx-auto w-50">
+                        <Button
+                          label="Select File"
+                          style={isDragging ? { color: "red" } : null}
+                          onClick={onImageUpload}
+                          {...dragProps}
+                        />
+                      </div>
+                      <div className="b13-mon text-center mt-1">
+                        *Only PNG, JPG of GIF files allowed.
+                      </div>
 
-                    <div className="container">
-                      <div className="row">
-                        {imageList.map((image, index) => (
-                          <div key={index} className="col-4 mt-2 p-1">
-                            <div className="d-flex flex-column align-items-start image-item">
-                              <img
-                                src={image.data_url}
-                                alt=""
-                                className="thumbnail"
-                              />
-                              <div
-                                className="mx-2 error-color b13-mon"
-                                onClick={() => onImageRemove(index)}
-                              >
-                                Remove
+                      <div className="container">
+                        <div className="row">
+                          {imageList.map((image, index) => (
+                            <div key={index} className="col-4 mt-2 p-1">
+                              <div className="d-flex flex-column align-items-start image-item">
+                                <img
+                                  src={image.data_url}
+                                  alt=""
+                                  className="thumbnail"
+                                />
+                                <div
+                                  className="mx-2 error-color b13-mon"
+                                  onClick={() => onImageRemove(index)}
+                                >
+                                  Remove
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-              </ImageUploading>
-            </>
-          ) : null}
-        </div>
-        <div>
-          <Checkbox
-            label="Add additional comments"
-            toggleCheckbox={toggleComments}
-            checked={showComments}
-          />
-          {showComments ? (
-            <Textarea
-              name="comments"
-              onChange={handleAddOnChange}
-              placeholder="Add additional information..."
-              label="Comments"
-              value={formData?.addOns?.comments}
-            />
-          ) : null}
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateActivity} />
-            ) : (
-              <Button label="Save" onClick={saveActivity} />
-            )}
+                  )}
+                </ImageUploading>
+              </>
+            ) : null}
           </div>
-        </div>
-        {inputError.length ? (
-          <div className="row">
-            <div
-              className="b13-mon text-center error-color py-2 px-3"
-              style={{ fontWeight: "700" }}
-            >
-              * Please fill out all required fields
+          <div>
+            <Checkbox
+              label="Add additional comments"
+              toggleCheckbox={toggleComments}
+              checked={showComments}
+            />
+            {showComments ? (
+              <Textarea
+                name="comments"
+                onChange={handleAddOnChange}
+                placeholder="Add additional information..."
+                label="Comments"
+                value={formData?.addOns?.comments}
+              />
+            ) : null}
+          </div>
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateActivity} />
+              ) : (
+                <Button label="Save" onClick={saveActivity} />
+              )}
             </div>
           </div>
-        ) : null}
+          {inputError.length ? (
+            <div className="row">
+              <div
+                className="b13-mon text-center error-color py-2 px-3"
+                style={{ fontWeight: "700" }}
+              >
+                * Please fill out all required fields
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <Loading loading={loading} />
       </div>
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 

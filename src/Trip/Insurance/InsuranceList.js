@@ -6,6 +6,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
   const [insuranceList, setInsuranceList] = useState(null);
@@ -105,6 +106,7 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body insurance-list">
         <Header
           title="Insurance"

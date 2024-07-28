@@ -9,6 +9,8 @@ import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Collapse } from "reactstrap";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
   const [activityList, setActivityList] = useState(null);
@@ -121,73 +123,69 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
               />
             </div>
           </div>
-          <div
-            className="container collapsible"
-            style={{
-              height: `${isOpen ? "" : "70px"}`,
-              transition: "height 0.10s ease",
-            }}
-          >
-            <div className="row">
-              <span className="b22-mon primary-color text-center">
-                {activity?.name}
-              </span>
+
+          <div className="row">
+            <span className="b22-mon primary-color text-center">
+              {activity?.name}
+            </span>
+          </div>
+
+          <div className="row mt-2">
+            <div className="text-center b13-mon">
+              {Methods.formatLongDate(activity?.startDate)}
+
+              {activity?.startTime ? (
+                <>
+                  <div className="d-inline mx-2">
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-clock"
+                      style={{ color: "#0BB6C0" }}
+                    />
+                  </div>
+
+                  {Methods.formatTime(activity?.startTime)}
+                </>
+              ) : null}
             </div>
-
-            <div className="row mt-2">
-              <div className="text-center b13-mon">
-                {Methods.formatLongDate(activity?.startDate)}
-
-                {activity?.startTime ? (
-                  <>
-                    <div className="d-inline mx-2">
-                      <FontAwesomeIcon
-                        icon="fa-solid fa-clock"
-                        style={{ color: "#0BB6C0" }}
-                      />
-                    </div>
-
-                    {Methods.formatTime(activity?.startTime)}
-                  </>
-                ) : null}
-              </div>
-            </div>
-            {activity.location ? (
-              <div className="row my-3">
-                <div className="b16-mon label">Location</div>
-                <div className="mx-2">{activity?.location}</div>
-              </div>
-            ) : null}
-            {activity.addOns.ticketNo ? (
-              <div className="row my-3">
-                <div className="b16-mon label">Ticket/Confirmation No.</div>
-                <div
-                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                  style={{ borderRadius: "5px" }}
-                >
-                  {activity?.addOns?.ticketNo}
+            <Collapse isOpen={isOpen}>
+              {activity.location ? (
+                <div className="row my-3">
+                  <div className="b16-mon label">Location</div>
+                  <div className="mx-2">{activity?.location}</div>
                 </div>
-              </div>
-            ) : null}
-
-            {activity.addOns.comments ? (
-              <div className="row my-3">
-                <div className="b16-mon label">Comments</div>
-                <div className="mx-2">{activity?.addOns?.comments}</div>
-              </div>
-            ) : null}
-
-            {activity.addOns.ticketUploads.length ? (
-              <>
-                <hr />
-                <div className="row">
-                  <div className="text-center b13-mon">
-                    {renderTickets(tickets)}
+              ) : null}
+              {activity.addOns.ticketNo ? (
+                <div className="row my-3">
+                  <div className="b16-mon label">Ticket/Confirmation No.</div>
+                  <div
+                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
+                    style={{ borderRadius: "5px" }}
+                  >
+                    {activity?.addOns?.ticketNo}
                   </div>
                 </div>
-              </>
-            ) : null}
+              ) : null}
+
+              {activity.addOns.comments ? (
+                <div className="row my-3">
+                  <div className="b16-mon label">Comments</div>
+                  <div className="mx-2">{activity?.addOns?.comments}</div>
+                </div>
+              ) : null}
+
+              {activity.addOns.ticketUploads.length ? (
+                <>
+                  <hr />
+                  <div className="row">
+                    <div className="text-center b13-mon">
+                      {renderTickets(tickets)}
+                    </div>
+                  </div>
+                </>
+              ) : null}
+            </Collapse>
           </div>
+
           {allowExpand(activity) ? (
             <div className="text-center">
               {isOpen ? (
@@ -212,6 +210,7 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body activity-list">
         <Header
           title="Activities"

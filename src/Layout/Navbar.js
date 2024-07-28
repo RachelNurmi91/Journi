@@ -4,30 +4,41 @@ import logo from "../Media/Images/logo-white.png";
 import { useLocation, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "./Sidebar";
+import { Sling as Hamburger } from "hamburger-react";
 
 function Navbar({ userData, account, activeTrip, userId }) {
   const [showSideBar, setShowSideBar] = useState(false);
-
-  let sideRef = useRef();
+  const sideRef = useRef();
+  const clickInside = useRef(false);
 
   useEffect(() => {
-    const autoClose = (e) => {
-      if (!sideRef.current.contains(e.target)) {
+    const handleClickOutside = (e) => {
+      if (
+        sideRef.current &&
+        !sideRef.current.contains(e.target) &&
+        !clickInside.current
+      ) {
         setShowSideBar(false);
       }
+      clickInside.current = false;
     };
 
-    document.addEventListener("mousedown", autoClose);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", autoClose);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, []);
 
   const location = useLocation();
 
   const toggleSideNav = () => {
-    setShowSideBar((prevState) => !prevState);
+    clickInside.current = true; // Ignore the next click outside event
+    setShowSideBar((prevState) => {
+      const newState = !prevState;
+
+      return newState;
+    });
   };
 
   const closeSideNav = () => {
@@ -42,43 +53,30 @@ function Navbar({ userData, account, activeTrip, userId }) {
     <div className="row mx-0">
       <nav className="navbar">
         <div className="toggle" onClick={toggleSideNav} style={{ zIndex: 2 }}>
-          <FontAwesomeIcon
-            icon="fa-solid fa-bars"
-            style={{ color: "#fff" }}
-            size="2x"
-            cursor="pointer"
-          />
+          <Hamburger rounded label="Show menu" color="#fff" size={30} />
         </div>
 
-        <Link to="/" onClick={() => closeSideNav()}>
+        <Link to="/" onClick={closeSideNav}>
           <div className="logo-container">
             <img className="logo" src={logo} alt="Journi logo" height="25px" />
           </div>
         </Link>
         {userId ? (
-          <>
-            <div className="profile-icon">
-              <Link to="/profile" onClick={() => closeSideNav()}>
-                <div className="d-flex justify-content-center" to="/profile">
-                  <div className="img-edit">
-                    <div className="profile-img">
-                      {userData?.firstName?.slice(0, 1).toUpperCase()}
-                    </div>
+          <div className="profile-icon">
+            <Link to="/profile" onClick={closeSideNav}>
+              <div className="d-flex justify-content-center">
+                <div className="img-edit">
+                  <div className="profile-img">
+                    {userData?.firstName?.slice(0, 1).toUpperCase()}
                   </div>
                 </div>
-              </Link>
-            </div>
-          </>
-        ) : (
-          <div></div>
-        )}
+              </div>
+            </Link>
+          </div>
+        ) : null}
       </nav>
       <div ref={sideRef}>
-        <Sidebar
-          showSideBar={showSideBar}
-          closeSideNav={closeSideNav}
-          toggleSideNav={toggleSideNav}
-        />
+        <Sidebar showSideBar={showSideBar} closeSideNav={closeSideNav} />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import Textarea from "../../Shared/UI/Textarea";
 import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   note: null,
@@ -97,48 +98,51 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body">
-      <Header
-        title={updating ? "Update Note" : "Add Note"}
-        leftIcon={activeTrip?.notes?.length ? true : false}
-        destination={"/notes"}
-        props={{
-          addNew: true,
-        }}
-      />
-      <div className="container">
-        <div className="row">
-          <Textarea
-            name="note"
-            onChange={handleChange}
-            placeholder="Add notes about your trip..."
-            label="Add a Note"
-            inputError={inputError}
-            value={formData?.note}
-          />
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateNote} />
-            ) : (
-              <Button label="Save" onClick={saveNote} />
-            )}
-          </div>
-        </div>
-        {inputError.length ? (
+    <>
+      <Breadcrumbs />
+      <div className="content-body">
+        <Header
+          title={updating ? "Update Note" : "Add Note"}
+          leftIcon={activeTrip?.notes?.length ? true : false}
+          destination={"/notes"}
+          props={{
+            addNew: true,
+          }}
+        />
+        <div className="container">
           <div className="row">
-            <div
-              className="b13-mon text-center error-color py-2 px-3"
-              style={{ fontWeight: "700" }}
-            >
-              * Please fill out all required fields
+            <Textarea
+              name="note"
+              onChange={handleChange}
+              placeholder="Add notes about your trip..."
+              label="Add a Note"
+              inputError={inputError}
+              value={formData?.note}
+            />
+          </div>
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateNote} />
+              ) : (
+                <Button label="Save" onClick={saveNote} />
+              )}
             </div>
           </div>
-        ) : null}
+          {inputError.length ? (
+            <div className="row">
+              <div
+                className="b13-mon text-center error-color py-2 px-3"
+                style={{ fontWeight: "700" }}
+              >
+                * Please fill out all required fields
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <Loading loading={loading} />
       </div>
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 

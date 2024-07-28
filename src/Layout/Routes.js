@@ -26,7 +26,7 @@ import NoteList from "../Trip/Notes/NoteList";
 function Content({ ...props }) {
   const navigate = useNavigate();
   return (
-    <div>
+    <div style={{ marginTop: "60px" }}>
       <Routes>
         <Route path="/" element={<Summary />} />
         <Route path="*" element={<Summary />} />

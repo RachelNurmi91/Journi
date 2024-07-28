@@ -1,9 +1,11 @@
 /* Basic Layout Structure */
-$primary-color: #0BB6C0;
-// $secondary-color:;
-// $accent-color:;
 $error-color: #d65d5d;
-$white: #fff;
+
+$color-blue: #32AAAA;
+$color-blue-accent: #155472;
+$color-white: #F7F2EB;
+$color-orange: #D87151;
+$color-orange-accent: #EEBC69;
 
 
 @mixin font-mon($font:16px, $weight: 700) {
@@ -16,6 +18,27 @@ $white: #fff;
   font-family: 'Inter', sans-serif;
   border-radius: 10px;
   padding: $padding;
+}
+
+.breadcrumb-container {
+  // background-color: $color-white;
+  padding: 10px 25px;
+  border-bottom: 1px solid $color-white;
+
+  .breadcrumb {
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+
+  a {
+    color:#D87151;
+
+    &:visited {
+      color: #D87151;
+    }
+  }
 }
 
 .loading-screen {
@@ -33,7 +56,7 @@ $white: #fff;
 
 .content-body {  
   padding: 25px;
-  margin: 60px auto 0;
+  margin: 0 auto;
   max-width: 700px;
   overflow: visible;
 }
@@ -41,11 +64,11 @@ $white: #fff;
 a {
   &:link {
     text-decoration: none;
-    color: $primary-color;
+    color: $color-blue;
   }
   &:visited {
     text-decoration: none;
-    color: $primary-color;
+    color: $color-blue;
   }
   &hover {
     text-decoration: none;
@@ -85,7 +108,7 @@ a {
 
 
 .primary-bg-color {
-  background-color: $primary-color;
+  background-color: $color-blue;
 }
 
 .light-bg-color {
@@ -96,16 +119,16 @@ a {
 
 .navbar {
   position: fixed !important;
-  background-color: $primary-color;
+  background-color: $color-blue;
   height: 60px;
   width: 100%; /* Set navbar width to 100% */
   top: 0;
   left: 0;
-  z-index: 99;
+  // z-index: 99;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 15px !important;
+  padding: 0px 15px 0px 7px !important;
 
   .toggle {
     display: flex;
@@ -128,8 +151,8 @@ a {
 
     .img-edit {
       .profile-img {
-        color: $primary-color;
-        background-color: $white;
+        color: $color-orange;
+        background-color: #fff;
         margin: 0;
         height: 40px;
         width: 40px;
@@ -151,7 +174,7 @@ a {
   }
 
   button {
-    background-color:$error-color;
+    background-color: $color-orange;
   }
 }
 
@@ -169,8 +192,8 @@ a {
       align-items: center;
       justify-content: center;
       border-radius: 100%;
-      background-color: $primary-color;
-      color: $white;
+      background-color: $color-orange;
+      color: $color-white;
       height: 90px;
       width: 90px;
       text-align: center;
@@ -193,34 +216,43 @@ a {
 
 
 .sidenav {
-  height: 100%;
+  height: calc(100% - 60px);
   width: 0;
   position: fixed;
-  top: 0;
+  top: 60px;
   left: 0;
-  background-image: linear-gradient(45deg, #0cacb5, #0ec6d3);
+  background-color:#fff;
   overflow-x: hidden;
   transition: 0.5s;
   z-index: 99;
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.05);
+
+
+  h1 {
+    color: $color-white;
+  }
 
   .menu {
     list-style-type: none;
+    padding-left: 0;
 
     li {  
-      color: $white;
       white-space:nowrap;
     }
 
     .nav-link {
       font-family: "Sora", sans-serif;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 24px;
-      color: $white;
-      padding: 12px 16px;
-      border-radius: 10px;
+      color: $color-blue-accent;
+      padding: 20px 12px 15px;
+      // border-radius: 10px;
+      border-bottom: 1px solid #1555727c;
+      // font-weight: 900;
 
       &:hover {
-        font-weight: 900;
+        // font-weight: 900;
+        color: $color-orange-accent
       }
     }
   }
@@ -239,8 +271,8 @@ a {
 }
 
 .form-check-input:checked {
-  background-color: $primary-color !important;
-  border-color: $primary-color !important;
+  background-color: $color-blue !important;
+  border-color: $color-blue !important;
 }
 
 .outlined-box {
@@ -249,7 +281,7 @@ a {
   border: 1px solid #c0c0c0;
 
   h3 {
-    color: $primary-color;
+    color: $color-blue;
   }
 }
 
@@ -261,8 +293,8 @@ a {
 .solid-box {
   @include box(15px);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.0);
-  background-color: $primary-color;
-  color: $white
+  background-color: $color-blue;
+  color: $color-white
 }
 
 .container {
@@ -298,15 +330,15 @@ a {
 
 
 .primary-color {
-  color: $primary-color
+  color: $color-blue
 }
 
 .error-color {
-  color: $error-color;
+  color: $color-orange;
 }
 
 .white-color {
-  color: $white;
+  color: $color-white;
 }
 
 h1 {
@@ -316,6 +348,7 @@ h1 {
 }
 
 h2 {
+  color: $color-blue-accent !important;
   font-family: "Inter", sans-serif;
   font-size: 26px !important;
   font-weight: 700 !important;
@@ -369,30 +402,30 @@ label, .label {
 button {
   border-style: none;
   border-radius: 5px !important;
-  background-color: $primary-color;
+  background-color: $color-blue;
   padding: 10px;
 
   .btn-link {
     font-family: "Sora", sans-serif;
-    color: $white;
+    color: $color-white;
     text-decoration: none;
 
     
       &:link {
         text-decoration: none;
-        color: $white;
+        color: $color-white;
       }
       &:visited {
         text-decoration: none;
-        color: $white;
+        color: $color-white;
       }
       &:hover {
         text-decoration: none;
-        color: $white;
+        color: $color-white;
       }
       &:active {
         text-decoration: none;
-        color: $white;
+        color: $color-white;
       }
   }
 }
@@ -402,7 +435,7 @@ button {
   width: 105px;
   border: none;
   border-radius: 0px;
-  border-bottom: solid 3px $primary-color;
+  border-bottom: solid 3px $color-blue;
 }
 
 //Override changes for Date Container
@@ -414,17 +447,17 @@ button {
   .react-datepicker__month-read-view--down-arrow, 
   .react-datepicker__month-year-read-view--down-arrow, 
   .react-datepicker__navigation-icon::before {
-    border-color: $white!important;
+    border-color: $color-white!important;
   } 
 
   .react-datepicker__header {
-    background-color: $primary-color !important;
+    background-color: $color-blue !important;
     border:  none !important;
     border-radius: 10px 10px 0 0 !important;
     
     .react-datepicker__current-month {
 
-      color:$white !important;
+      color:$color-white !important;
       padding: 5px 0 10px !important;
     }
 
@@ -442,7 +475,7 @@ button {
   }
  
   .react-datepicker__day--selected {
-    background-color: $primary-color !important;
+    background-color: $color-blue !important;
     border-radius: 100% !important;
   }
 }
@@ -456,7 +489,7 @@ button {
 
   
   .react-datepicker-time__header{
-    color: $white !important;
+    color: $color-white !important;
   }
 
   .react-datepicker__time-box{
@@ -480,15 +513,15 @@ button {
     overflow: scroll;
     scrollbar-width: none;
     background-color: #029ba3;
-    color: $white;
+    color: $color-white;
     border-radius: 5px;
 
     .autocomplete-item {
       padding: 10px;
 
       :hover {
-        background-color: $primary-color;
-        color: $white;
+        background-color: $color-blue;
+        color: $color-white;
       }
     }
   }
@@ -502,10 +535,9 @@ button {
   }
  
   .header {
-    // margin-top: 10px;
     text-align: center;
     line-height: 20px;
-    color: $primary-color;
+    color: $color-blue;
     @include font-mon(20px);
 
     .airport-city {
@@ -519,6 +551,7 @@ button {
 
   .input-title {
     @include font-mon(16px, 700);
+    color: $color-blue-accent;
   }
 
 };
@@ -527,7 +560,7 @@ button {
 .roundtrip-inputs {
   .header {
     @include font-mon(20px, 700);
-    color: $primary-color;
+    color: $color-blue;
     text-transform: uppercase;
     margin: 25px 0 0 -10px;
 
@@ -610,7 +643,7 @@ padding: 10px;
   }
 
   li:before {
-    background-color: $primary-color;
+    background-color: $color-blue;
     width: 2px;
     content: '';
     position: absolute;
@@ -626,7 +659,7 @@ padding: 10px;
   li:last-child:before { height: 10px; }
       
 
-  .bullet { margin-left: -24px; width: 20px; fill: $primary-color; float: left }
+  .bullet { margin-left: -24px; width: 20px; fill: $color-blue; float: left }
   .bullet.big { width: 16px; margin-left: -22px; padding-right: 8px }
 };
 

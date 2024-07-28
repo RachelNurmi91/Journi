@@ -11,6 +11,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import { useLocation } from "react-router-dom";
 
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -208,80 +209,83 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body">
-      <Header
-        title={updating ? "Update Cruise" : "Add Cruise"}
-        leftIcon={activeTrip?.cruises?.length ? true : false}
-        destination={"/cruises"}
-        props={{
-          addNew: true,
-        }}
-      />
-      <div className="container">
-        <div className="row"> {renderOptionsBox()}</div>
-        <div className="row mt-2">
-          <Input
-            name="name"
-            onChange={handleChange}
-            placeholder="Cruise Line"
-            label="Cruise Line"
-            value={formData.name}
-            inputError={inputError}
-          />
-          <Input
-            name="ship"
-            onChange={handleChange}
-            placeholder="Cruise Ship"
-            label="Cruise Ship"
-            value={formData.ship}
-            inputError={inputError}
-          />
+    <>
+      <Breadcrumbs />
+      <div className="content-body">
+        <Header
+          title={updating ? "Update Cruise" : "Add Cruise"}
+          leftIcon={activeTrip?.cruises?.length ? true : false}
+          destination={"/cruises"}
+          props={{
+            addNew: true,
+          }}
+        />
+        <div className="container">
+          <div className="row"> {renderOptionsBox()}</div>
+          <div className="row mt-2">
+            <Input
+              name="name"
+              onChange={handleChange}
+              placeholder="Cruise Line"
+              label="Cruise Line"
+              value={formData.name}
+              inputError={inputError}
+            />
+            <Input
+              name="ship"
+              onChange={handleChange}
+              placeholder="Cruise Ship"
+              label="Cruise Ship"
+              value={formData.ship}
+              inputError={inputError}
+            />
 
-          <div className="container">
+            <div className="container">
+              <div className="row">
+                <div className="col-6">
+                  <Input
+                    name="confirmationNo"
+                    onChange={handleChange}
+                    placeholder="Confirmation #"
+                    label="Confirmation #"
+                    value={formData.confirmationNo}
+                  />
+                </div>
+                <div className="col-6">
+                  <Input
+                    name="cabinNo"
+                    onChange={handleChange}
+                    placeholder="Cabin #"
+                    label="Cabin #"
+                    value={formData.cabinNo}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateCruise} />
+              ) : (
+                <Button label="Save" onClick={saveCruise} />
+              )}
+            </div>
+          </div>
+          {inputError.length ? (
             <div className="row">
-              <div className="col-6">
-                <Input
-                  name="confirmationNo"
-                  onChange={handleChange}
-                  placeholder="Confirmation #"
-                  label="Confirmation #"
-                  value={formData.confirmationNo}
-                />
-              </div>
-              <div className="col-6">
-                <Input
-                  name="cabinNo"
-                  onChange={handleChange}
-                  placeholder="Cabin #"
-                  label="Cabin #"
-                  value={formData.cabinNo}
-                />
+              <div
+                className="b13-mon text-center error-color py-2 px-3"
+                style={{ fontWeight: "700" }}
+              >
+                * Please fill out all required fields
               </div>
             </div>
-          </div>
+          ) : null}
         </div>
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateCruise} />
-            ) : (
-              <Button label="Save" onClick={saveCruise} />
-            )}
-          </div>
-        </div>
-        {inputError.length ? (
-          <div className="row">
-            <div
-              className="b13-mon text-center error-color py-2 px-3"
-              style={{ fontWeight: "700" }}
-            >
-              * Please fill out all required fields
-            </div>
-          </div>
-        ) : null}
+        <Loading loading={loading} />
       </div>
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 

@@ -9,6 +9,7 @@ import Checkbox from "../../Shared/UI/Checkbox";
 import Textarea from "../../Shared/UI/Textarea";
 import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -112,72 +113,75 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body">
-      <Header
-        title={updating ? "Update Insurance" : "Add Insurance"}
-        leftIcon={activeTrip?.insurance?.length ? true : false}
-        destination={"/insurance"}
-        props={{
-          addNew: true,
-        }}
-      />
-      <div className="container">
-        <div className="row">
-          <Input
-            name="name"
-            onChange={handleChange}
-            placeholder="Insurance Provider"
-            label="Insurance Provider"
-            value={formData.name}
-            inputError={inputError}
-          />
-          <Input
-            name="policyNo"
-            onChange={handleChange}
-            placeholder="Policy No."
-            label="Policy No."
-            value={formData.policyNo}
-            inputError={inputError}
-          />
-          <div>
-            <Checkbox
-              label="Add additional comments"
-              toggleCheckbox={toggleComments}
-              checked={showComments}
-            />
-            {showComments ? (
-              <Textarea
-                name="comments"
-                onChange={handleChange}
-                placeholder="Add additional information..."
-                label="Comments"
-                value={formData?.comments}
-              />
-            ) : null}
-          </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateInsurance} />
-            ) : (
-              <Button label="Save" onClick={saveInsurance} />
-            )}
-          </div>
-        </div>
-        {inputError.length ? (
+    <>
+      <Breadcrumbs />
+      <div className="content-body">
+        <Header
+          title={updating ? "Update Insurance" : "Add Insurance"}
+          leftIcon={activeTrip?.insurance?.length ? true : false}
+          destination={"/insurance"}
+          props={{
+            addNew: true,
+          }}
+        />
+        <div className="container">
           <div className="row">
-            <div
-              className="b13-mon text-center error-color py-2 px-3"
-              style={{ fontWeight: "700" }}
-            >
-              * Please fill out all required fields
+            <Input
+              name="name"
+              onChange={handleChange}
+              placeholder="Insurance Provider"
+              label="Insurance Provider"
+              value={formData.name}
+              inputError={inputError}
+            />
+            <Input
+              name="policyNo"
+              onChange={handleChange}
+              placeholder="Policy No."
+              label="Policy No."
+              value={formData.policyNo}
+              inputError={inputError}
+            />
+            <div>
+              <Checkbox
+                label="Add additional comments"
+                toggleCheckbox={toggleComments}
+                checked={showComments}
+              />
+              {showComments ? (
+                <Textarea
+                  name="comments"
+                  onChange={handleChange}
+                  placeholder="Add additional information..."
+                  label="Comments"
+                  value={formData?.comments}
+                />
+              ) : null}
             </div>
           </div>
-        ) : null}
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateInsurance} />
+              ) : (
+                <Button label="Save" onClick={saveInsurance} />
+              )}
+            </div>
+          </div>
+          {inputError.length ? (
+            <div className="row">
+              <div
+                className="b13-mon text-center error-color py-2 px-3"
+                style={{ fontWeight: "700" }}
+              >
+                * Please fill out all required fields
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <Loading loading={loading} />
       </div>
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 

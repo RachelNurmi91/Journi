@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import Loading from "../../Shared/UI/Loading";
+import { Collapse } from "reactstrap";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
   const [hotelList, setHotelList] = useState(null);
@@ -37,10 +39,6 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
 
     setHotelList(sortedHotels);
   }, [hotelListData]);
-
-  useEffect(() => {
-    sortByDate();
-  }, [hotelListData, sortByDate]);
 
   useEffect(() => {
     sortByDate();
@@ -86,24 +84,17 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
               />
             </div>
           </div>
-          <div
-            className="container collapsible"
-            style={{
-              height: `${isOpen ? "" : "70px"}`,
-              transition: "height 0.10s ease",
-            }}
-          >
-            <div className="row">
-              <span className="b22-mon primary-color text-center">
-                {hotel.name}
-              </span>
+          <div className="row">
+            <span className="b22-mon primary-color text-center">
+              {hotel.name}
+            </span>
+          </div>
+          <div className="row">
+            <div className="text-center b13-mon">
+              {hotel.city}, {hotel.country}
             </div>
-
-            <div className="row">
-              <div className="text-center b13-mon">
-                {hotel.city}, {hotel.country}
-              </div>
-            </div>
+          </div>
+          <Collapse isOpen={isOpen}>
             {hotel.confirmationNo ? (
               <div className="row mt-3">
                 <div className="b16-mon label">Confirmation No.</div>
@@ -115,7 +106,6 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
                 </div>
               </div>
             ) : null}
-
             <div className="row mt-3">
               <div className="col-6 d-flex justify-content-start">
                 <div>
@@ -140,7 +130,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
                 Reserved under "{hotel.nameOnReservation}"
               </div>
             </div>
-          </div>
+          </Collapse>
           <div className="text-center">
             {isOpen ? null : (
               <FontAwesomeIcon
@@ -157,6 +147,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body hotel-list">
         <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
         {hotelListData.length

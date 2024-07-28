@@ -7,6 +7,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function TransportationList({
   fetchUpdatedTrips,
@@ -183,6 +184,7 @@ function TransportationList({
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body transportation-list">
         <Header
           title="Transportation"

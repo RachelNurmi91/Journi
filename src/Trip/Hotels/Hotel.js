@@ -12,6 +12,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import { useLocation } from "react-router-dom";
 import Checkbox from "../../Shared/UI/Checkbox";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   name: null,
@@ -241,93 +242,96 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body">
-      <Header
-        title={updating ? "Update Hotel" : "Add Hotel"}
-        leftIcon={activeTrip?.hotels?.length ? true : false}
-        destination={"/hotels"}
-        props={{
-          addNew: true,
-        }}
-      />
-      <div className="container">
-        <div className="row"> {renderOptionsBox()}</div>
-        <div className="row mt-2">
-          <Input
-            name="name"
-            onChange={handleChange}
-            placeholder="Hotel"
-            label="Hotel"
-            value={formData.name}
-            inputError={inputError}
-          />
-
-          <Input
-            name="confirmationNo"
-            onChange={handleChange}
-            placeholder="Confirmation #"
-            label="Confirmation #"
-            value={formData.confirmationNo}
-          />
-          <div className="container">
-            <div className="row">
-              <div className="col-6">
-                <Input
-                  name="city"
-                  onChange={handleChange}
-                  placeholder="City"
-                  label="City"
-                  value={formData.city}
-                />
-              </div>
-              <div className="col-6">
-                <CountryAutocomplete
-                  onChange={handleCountrySelect}
-                  value={formData.country}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <Checkbox
-              label="Reservation is under another name"
-              toggleCheckbox={newNameInputToggle}
-              checked={displayNewNameInput}
+    <>
+      <Breadcrumbs />
+      <div className="content-body">
+        <Header
+          title={updating ? "Update Hotel" : "Add Hotel"}
+          leftIcon={activeTrip?.hotels?.length ? true : false}
+          destination={"/hotels"}
+          props={{
+            addNew: true,
+          }}
+        />
+        <div className="container">
+          <div className="row"> {renderOptionsBox()}</div>
+          <div className="row mt-2">
+            <Input
+              name="name"
+              onChange={handleChange}
+              placeholder="Hotel"
+              label="Hotel"
+              value={formData.name}
+              inputError={inputError}
             />
-            {displayNewNameInput ? (
-              <Input
-                name="nameOnReservation"
-                onChange={handleChange}
-                placeholder="Name on Reservation"
-                label="Name on Reservation"
-                value={formData.nameOnReservation}
+
+            <Input
+              name="confirmationNo"
+              onChange={handleChange}
+              placeholder="Confirmation #"
+              label="Confirmation #"
+              value={formData.confirmationNo}
+            />
+            <div className="container">
+              <div className="row">
+                <div className="col-6">
+                  <Input
+                    name="city"
+                    onChange={handleChange}
+                    placeholder="City"
+                    label="City"
+                    value={formData.city}
+                  />
+                </div>
+                <div className="col-6">
+                  <CountryAutocomplete
+                    onChange={handleCountrySelect}
+                    value={formData.country}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <Checkbox
+                label="Reservation is under another name"
+                toggleCheckbox={newNameInputToggle}
+                checked={displayNewNameInput}
               />
-            ) : null}
-          </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateHotel} />
-            ) : (
-              <Button label="Save" onClick={saveHotel} />
-            )}
-          </div>
-        </div>
-        {inputError.length ? (
-          <div className="row">
-            <div
-              className="b13-mon text-center error-color py-2 px-3"
-              style={{ fontWeight: "700" }}
-            >
-              * Please fill out all required fields
+              {displayNewNameInput ? (
+                <Input
+                  name="nameOnReservation"
+                  onChange={handleChange}
+                  placeholder="Name on Reservation"
+                  label="Name on Reservation"
+                  value={formData.nameOnReservation}
+                />
+              ) : null}
             </div>
           </div>
-        ) : null}
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateHotel} />
+              ) : (
+                <Button label="Save" onClick={saveHotel} />
+              )}
+            </div>
+          </div>
+          {inputError.length ? (
+            <div className="row">
+              <div
+                className="b13-mon text-center error-color py-2 px-3"
+                style={{ fontWeight: "700" }}
+              >
+                * Please fill out all required fields
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <Loading loading={loading} />
       </div>
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 

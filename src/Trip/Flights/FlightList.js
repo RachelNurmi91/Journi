@@ -7,6 +7,8 @@ import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import { Collapse } from "reactstrap";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
   const [sortedFlights, setSortedFlights] = useState([]);
@@ -90,34 +92,29 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
             />
           </div>
         </div>
-        <div
-          className="container collapsible mt-2"
-          style={{
-            height: `${isOpen ? "" : "50px"}`,
-            transition: "height 0.10s ease",
-          }}
-        >
-          <div className="row header">
-            <div className="d-flex justify-content-center align-items-center">
-              <div className="col-5">
-                <div>{departureFlight?.code}</div>
-                <div className="airport-city">({departureFlight?.city})</div>
-              </div>
-              <div className="col-2">
-                <FontAwesomeIcon
-                  icon={["fas", "plane"]}
-                  style={{ color: "#0BB6C0" }}
-                  size="sm"
-                />
-              </div>
-              <div className="col-5">
-                <div>{departureFlight?.destinationCode}</div>
-                <div className="airport-city">
-                  ({departureFlight?.destinationCity})
-                </div>
+
+        <div className="row header">
+          <div className="d-flex justify-content-center align-items-center">
+            <div className="col-5">
+              <div>{departureFlight?.code}</div>
+              <div className="airport-city">({departureFlight?.city})</div>
+            </div>
+            <div className="col-2">
+              <FontAwesomeIcon
+                icon={["fas", "plane"]}
+                style={{ color: "#0BB6C0" }}
+                size="sm"
+              />
+            </div>
+            <div className="col-5">
+              <div>{departureFlight?.destinationCode}</div>
+              <div className="airport-city">
+                ({departureFlight?.destinationCity})
               </div>
             </div>
           </div>
+        </div>
+        <Collapse isOpen={isOpen}>
           <div className="row mt-3">
             <div className="text-center b13-mon">
               {Methods.formatLongDate(departureFlight?.date)}
@@ -162,7 +159,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
               </div>
             ) : null}
           </div>
-        </div>
+        </Collapse>
         <div className="text-center mt-2">
           {isOpen ? null : (
             <FontAwesomeIcon
@@ -355,6 +352,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body flight-list">
         <Header title="Flights" rightIcon="add" destination={"/flights/add"} />
 

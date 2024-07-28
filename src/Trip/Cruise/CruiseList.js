@@ -7,6 +7,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function CruiseList({
   fetchUpdatedTrips,
@@ -167,6 +168,7 @@ function CruiseList({
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body cruise-list">
         <Header title="Cruises" rightIcon="add" destination={"/cruises/add"} />
         {cruiseListData?.length

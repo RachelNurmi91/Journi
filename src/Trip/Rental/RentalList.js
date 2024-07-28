@@ -7,6 +7,8 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import { Collapse } from "reactstrap";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
   const [rentalList, setRentalList] = useState(null);
@@ -84,22 +86,17 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
               />
             </div>
           </div>
-          <div
-            className="container collapsible"
-            style={{
-              height: `${isOpen ? "" : "70px"}`,
-              transition: "height 0.10s ease",
-            }}
-          >
-            <div className="row">
-              <span className="b22-mon primary-color text-center">
-                {rental.name}
-              </span>
-            </div>
 
-            <div className="row">
-              <div className="text-center b13-mon">{rental.vehicleType}</div>
-            </div>
+          <div className="row">
+            <span className="b22-mon primary-color text-center">
+              {rental.name}
+            </span>
+          </div>
+
+          <div className="row">
+            <div className="text-center b13-mon">{rental.vehicleType}</div>
+          </div>
+          <Collapse isOpen={isOpen}>
             {rental.confirmationNo ? (
               <div className="row mt-3">
                 <div className="b16-mon label">Confirmation No.</div>
@@ -157,15 +154,9 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
                 ) : null}
               </div>
             </div>
-          </div>
+          </Collapse>
           <div className="text-center">
-            {isOpen ? (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-up"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(rental._id)}
-              />
-            ) : (
+            {isOpen ? null : (
               <FontAwesomeIcon
                 icon="fa-solid fa-angle-down"
                 style={{ color: "#0BB6C0" }}
@@ -180,6 +171,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body rental-list">
         <Header title="Rentals" rightIcon="add" destination={"/rentals/add"} />
         {rentalListData?.length

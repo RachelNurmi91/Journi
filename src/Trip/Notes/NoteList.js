@@ -6,6 +6,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
   const [loading, setLoading] = useState(false);
@@ -72,6 +73,7 @@ function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
 
   return (
     <>
+      <Breadcrumbs />
       <div className="content-body note-list">
         <Header title="Trip Notes" rightIcon="add" destination={"/notes/add"} />
         {noteListData?.length ? (

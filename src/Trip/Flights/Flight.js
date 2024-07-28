@@ -14,6 +14,7 @@ import Loading from "../../Shared/UI/Loading";
 import RoundTrip from "./RoundTrip";
 import OneWay from "./OneWay";
 import Time from "../../Shared/UI/Time";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
   isRoundTrip: true,
@@ -500,45 +501,47 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
   };
 
   return (
-    <div className="content-body">
-      <Header
-        title={updating ? "Update Flight" : "Add Flight"}
-        leftIcon={activeTrip?.flights?.length ? true : false}
-        destination={"/flights"}
-        props={{
-          addNew: true,
-        }}
-      />
-      <div className="container">
-        <div className="row">{renderOptionsBox()}</div>
-        <div className="mt-2">
-          {!formData?.isRoundTrip ? (
-            <OneWay
-              formData={formData}
-              setFormData={setFormData}
-              inputError={inputError}
-              setInputError={setInputError}
-            />
-          ) : (
-            <RoundTrip
-              formData={formData}
-              setFormData={setFormData}
-              handleShowAirlineInput={handleShowAirlineInput}
-              handleShowConfirmationInput={handleShowConfirmationInput}
-              displayAirlineInput={displayAirlineInput}
-              displayConfirmationInput={displayConfirmationInput}
-              inputError={inputError}
-              setInputError={setInputError}
-            />
-          )}
-        </div>
-        {/* <div className="row mt-2">
+    <>
+      <Breadcrumbs />
+      <div className="content-body">
+        <Header
+          title={updating ? "Update Flight" : "Add Flight"}
+          leftIcon={activeTrip?.flights?.length ? true : false}
+          destination={"/flights"}
+          props={{
+            addNew: true,
+          }}
+        />
+        <div className="container">
+          <div className="row">{renderOptionsBox()}</div>
+          <div className="mt-2">
+            {!formData?.isRoundTrip ? (
+              <OneWay
+                formData={formData}
+                setFormData={setFormData}
+                inputError={inputError}
+                setInputError={setInputError}
+              />
+            ) : (
+              <RoundTrip
+                formData={formData}
+                setFormData={setFormData}
+                handleShowAirlineInput={handleShowAirlineInput}
+                handleShowConfirmationInput={handleShowConfirmationInput}
+                displayAirlineInput={displayAirlineInput}
+                displayConfirmationInput={displayConfirmationInput}
+                inputError={inputError}
+                setInputError={setInputError}
+              />
+            )}
+          </div>
+          {/* <div className="row mt-2">
           <Checkbox
             label="Tickets are under a different name."
             toggleCheckbox={handleShowNameInput}
           />
         </div> */}
-        {/* {displayNewNameInput ? (
+          {/* {displayNewNameInput ? (
           <div className="row">
             <Input
               name="nameOnReservation"
@@ -549,28 +552,29 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
             />
           </div>
         ) : null} */}
-        <div className="row mt-3">
-          <div className="col d-flex align-self-center">
-            {updating ? (
-              <Button label="Update" onClick={updateFlight} />
-            ) : (
-              <Button label="Save" onClick={saveFlight} />
-            )}
+          <div className="row mt-3">
+            <div className="col d-flex align-self-center">
+              {updating ? (
+                <Button label="Update" onClick={updateFlight} />
+              ) : (
+                <Button label="Save" onClick={saveFlight} />
+              )}
+            </div>
           </div>
         </div>
+        {inputError.length ? (
+          <div className="row">
+            <div
+              className="b13-mon text-center error-color py-2 px-3"
+              style={{ fontWeight: "700" }}
+            >
+              * Please fill out all required fields
+            </div>
+          </div>
+        ) : null}
+        <Loading loading={loading} />
       </div>
-      {inputError.length ? (
-        <div className="row">
-          <div
-            className="b13-mon text-center error-color py-2 px-3"
-            style={{ fontWeight: "700" }}
-          >
-            * Please fill out all required fields
-          </div>
-        </div>
-      ) : null}
-      <Loading loading={loading} />
-    </div>
+    </>
   );
 }
 
