@@ -69,80 +69,61 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
     return rentalList?.map((rental, index) => {
       const isOpen = openRentalId === rental._id;
       return (
-        <div className="shadow-box mb-4" key={index}>
-          <div className="row d-flex justify-content-end mx-1">
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                className="primary-color"
-                onClick={() => navigateToUpdate(rental._id)}
-              />
-            </div>
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                onClick={() => deleteRental(rental._id)}
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <span className="b22-mon primary-color text-center">
+        <div className="outlined-box p-0 mb-4" key={index}>
+          <div style={{ padding: "25px 20px" }}>
+            <div
+              className="b22-mon  primary-color"
+              style={{ lineHeight: "20px" }}
+            >
               {rental.name}
-            </span>
-          </div>
+            </div>
 
-          <div className="row">
-            <div className="text-center b13-mon">{rental.vehicleType}</div>
-          </div>
-          <Collapse isOpen={isOpen}>
-            {rental.confirmationNo ? (
-              <div className="row mt-3">
-                <div className="b16-mon label">Confirmation No.</div>
-                <div
-                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                  style={{ borderRadius: "5px" }}
-                >
-                  {rental.confirmationNo}
-                </div>
+            {!rental.endLocation ? (
+              <div>
+                <FontAwesomeIcon
+                  icon="fa-solid fa-location-dot"
+                  style={{ color: "#0bb6c0" }}
+                />{" "}
+                {rental.startLocation}
               </div>
             ) : null}
 
-            <div className="row mt-3">
-              <div>
-                <div className="b16-mon label"> Pick-Up </div>
+            <div className="mt-3">
+              <div>{rental.vehicleType} Vehicle</div>
+              {rental.confirmationNo && (
                 <div>
-                  {Methods.formatLongDate(rental.startDate)}{" "}
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-clock"
-                    style={{ color: "#0bb6c0" }}
-                  />{" "}
-                  {Methods.formatTime(rental.startTime)}
+                  <span className="b14-mon primary-color label">
+                    Confirmation{" "}
+                  </span>
+                  {rental.confirmationNo}
                 </div>
-                {rental.startLocation ? (
+              )}
+            </div>
+
+            <hr />
+            <div className="row b13-mon mt-3">
+              <div className="col-6">
+                <div className="b16-mon label primary-color"> Pick Up </div>
+                <div>{Methods.formatLongDate(rental.startDate)} </div>
+                <div>{Methods.formatTime(rental.startTime)}</div>
+                {rental.endLocation ? (
                   <div>
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-location-dot"
-                      style={{ color: "#0bb6c0" }}
-                    />{" "}
-                    {rental.startLocation}
+                    {rental.endLocation ? (
+                      <div>
+                        <FontAwesomeIcon
+                          icon="fa-solid fa-location-dot"
+                          style={{ color: "#0bb6c0" }}
+                        />{" "}
+                        {rental.startLocation}
+                      </div>
+                    ) : null}
                   </div>
                 ) : null}
               </div>
-            </div>
-            <hr />
-            <div className="row mt-3">
-              <div>
-                <div className="b16-mon label"> Drop Off </div>
-                <div>
-                  {Methods.formatLongDate(rental.endDate)}{" "}
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-clock"
-                    style={{ color: "#0bb6c0" }}
-                  />{" "}
-                  {Methods.formatTime(rental.endTime)}
-                </div>
+              <div className="col-6">
+                <div className="b16-mon label primary-color"> Drop Off </div>
+                <div>{Methods.formatLongDate(rental.endDate)} </div>
+                <div>{Methods.formatTime(rental.endTime)}</div>
                 {rental.endLocation ? (
                   <div>
                     <FontAwesomeIcon
@@ -154,15 +135,25 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
                 ) : null}
               </div>
             </div>
-          </Collapse>
-          <div className="text-center">
-            {isOpen ? null : (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-down"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(rental._id)}
-              />
-            )}
+          </div>
+          <div
+            style={{
+              backgroundColor: "#32AAAA",
+              borderRadius: " 0 0 10px 10px",
+              padding: "12px 0",
+            }}
+          >
+            <div className="text-center row link-style">
+              <div
+                className="col-6"
+                onClick={() => navigateToUpdate(rental._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
+              </div>
+              <div className="col-6" onClick={() => deleteRental(rental._id)}>
+                <FontAwesomeIcon icon="fa-solid fa-xmark" /> Delete
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -172,8 +163,12 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
   return (
     <>
       <Breadcrumbs />
-      <div className="content-body rental-list">
-        <Header title="Rentals" rightIcon="add" destination={"/rentals/add"} />
+      <div className="content-body rental-list" style={{ paddingTop: "50px" }}>
+        <Header
+          rightTitle="+ Add Vehicle"
+          // title="Rentals" rightIcon="add"
+          destination={"/rentals/add"}
+        />
         {rentalListData?.length
           ? displayRentals()
           : "Test drive and add your first rental!"}

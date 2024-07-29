@@ -62,42 +62,46 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
   const displayInsurance = () => {
     return insuranceList?.map((insurance, index) => {
       return (
-        <div className="shadow-box mb-4" key={index}>
-          <div className="row d-flex justify-content-end mx-1">
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                className="primary-color"
-                onClick={() => navigateToUpdate(insurance._id)}
-              />
+        <div className="outlined-box p-0 mb-4" key={index}>
+          <div style={{ padding: "25px 20px" }}>
+            <div
+              className="b22-mon  primary-color"
+              // style={{ lineHeight: "20px" }}
+            >
+              {insurance.name}
             </div>
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                onClick={() => deleteInsurance(insurance._id)}
-              />
-            </div>
-          </div>
-          <div className="container collapsible">
-            <div className="row">
-              <span className="b22-mon primary-color text-center">
-                {insurance.name}
-              </span>
-            </div>
+            <span className="b14-mon primary-color label">Policy No. </span>
+            {insurance.policyNo}
 
-            <div className="row mt-3">
-              <div className="b16-mon label">Policy No.</div>
-              <div className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10">
-                {insurance.policyNo}
-              </div>
-            </div>
             {insurance.comments ? (
               <div className="row mt-3">
-                <div className="b16-mon label">Comments</div>
-                <div>{insurance.comments}</div>
+                <div className="b16-mon label primary-color">Comments</div>
+                <div className=" b13-mon ">{insurance.comments}</div>
               </div>
             ) : null}
+          </div>
+
+          <div
+            style={{
+              backgroundColor: "#32AAAA",
+              borderRadius: " 0 0 10px 10px",
+              padding: "12px 0",
+            }}
+          >
+            <div className="text-center row link-style">
+              <div
+                className="col-6"
+                onClick={() => navigateToUpdate(insurance._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
+              </div>
+              <div
+                className="col-6"
+                onClick={() => deleteInsurance(insurance._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-xmark" /> Delete
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -107,12 +111,11 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
   return (
     <>
       <Breadcrumbs />
-      <div className="content-body insurance-list">
-        <Header
-          title="Insurance"
-          rightIcon="add"
-          destination={"/insurance/add"}
-        />
+      <div
+        className="content-body insurance-list"
+        style={{ paddingTop: "50px" }}
+      >
+        <Header rightTitle="+ Add Insurance" destination={"/insurance/add"} />
         {insuranceListData?.length
           ? displayInsurance()
           : "Shit happens. Add your first insurance!"}

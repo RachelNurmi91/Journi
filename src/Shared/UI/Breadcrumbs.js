@@ -2,14 +2,16 @@ import { Link } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { connect } from "react-redux";
 
-function Breadcrumbs({ activeTrip }) {
+function Breadcrumbs({ activeTrip, additionalCrumb }) {
   return (
     <div className="breadcrumb-container">
       <Breadcrumb>
         <BreadcrumbItem>
           <Link to="/profile">All Trips</Link>
         </BreadcrumbItem>
-        <BreadcrumbItem active>{activeTrip?.name}</BreadcrumbItem>
+        <BreadcrumbItem>Active Trip</BreadcrumbItem>
+        <BreadcrumbItem>{activeTrip?.name}</BreadcrumbItem>
+        {additionalCrumb && <BreadcrumbItem>{additionalCrumb}</BreadcrumbItem>}
       </Breadcrumb>
     </div>
   );

@@ -84,13 +84,14 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
 
   const renderTickets = (tickets) => {
     return tickets.map((ticket, index) => (
-      <div key={index} className="col-4 mt-2 p-1">
+      <div key={index} className="col-4 p-1">
         <div className="d-flex flex-column align-items-start image-item">
           <img
             src={ticket?.data_url}
             alt=""
             className="thumbnail"
             onClick={() => toggleTicketModal(ticket?.data_url)}
+            style={{ border: "1px solid #ececec", borderRadius: "0" }}
           />
         </div>
       </div>
@@ -106,103 +107,105 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
       let tickets = activity?.addOns?.ticketUploads;
       const isOpen = openActivityId === activity._id;
       return (
-        <div className="shadow-box  mb-4" key={index}>
-          <div className="row d-flex justify-content-end mx-1">
-            <div className="col-1">
+        <div className="outlined-box p-0 mb-4" key={index}>
+          <div style={{ padding: "25px 20px" }}>
+            <div className="row">
+              <div className="col-12">
+                {Methods.formatLongDate(activity.startDate)}
+
+                <FontAwesomeIcon
+                  icon="fa-solid fa-clock"
+                  style={{ color: "#0BB6C0" }}
+                  className="mx-2"
+                />
+                {Methods.formatTime(activity?.startTime)}
+              </div>
+            </div>
+            <div
+              className={
+                activity?.addOns?.ticketNo ||
+                activity.addOns.ticketUploads.length
+                  ? `my-4`
+                  : `mt-4`
+              }
+            >
+              <div
+                className="b22-mon  primary-color"
+                style={{ lineHeight: "20px" }}
+              >
+                {activity.name}
+              </div>
+
+              {activity.location && (
+                <div>
+                  {" "}
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-location-dot"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {activity.location}
+                </div>
+              )}
+              {/* 
+              {Methods.formatTime(activity?.startTime)}
               <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                className="primary-color"
-                onClick={() => navigateToUpdate(activity._id)}
-              />
+                icon="fa-solid fa-clock"
+                style={{ color: "#0BB6C0" }}
+                className="mx-1"
+              /> */}
             </div>
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                onClick={() => deleteActivity(activity._id)}
-              />
-            </div>
-          </div>
 
-          <div className="row">
-            <span className="b22-mon primary-color text-center">
-              {activity?.name}
-            </span>
-          </div>
+            {activity?.addOns?.ticketNo && (
+              <div className=" align-content-center">
+                <span className="b14-mon primary-color label">
+                  Confirmation{" "}
+                </span>
+                {activity?.addOns?.ticketNo}
+              </div>
+            )}
+            {activity.addOns.ticketUploads.length ? (
+              <>{renderTickets(tickets)}</>
+            ) : null}
+            {activity.addOns.comments && (
+              <div
+                className="link-action label"
+                onClick={() => toggleOpen(activity._id)}
+              >
+                + View Comments
+              </div>
+            )}
 
-          <div className="row mt-2">
-            <div className="text-center b13-mon">
-              {Methods.formatLongDate(activity?.startDate)}
-
-              {activity?.startTime ? (
-                <>
-                  <div className="d-inline mx-2">
-                    <FontAwesomeIcon
-                      icon="fa-solid fa-clock"
-                      style={{ color: "#0BB6C0" }}
-                    />
-                  </div>
-
-                  {Methods.formatTime(activity?.startTime)}
-                </>
-              ) : null}
-            </div>
             <Collapse isOpen={isOpen}>
-              {activity.location ? (
-                <div className="row my-3">
-                  <div className="b16-mon label">Location</div>
-                  <div className="mx-2">{activity?.location}</div>
-                </div>
-              ) : null}
-              {activity.addOns.ticketNo ? (
-                <div className="row my-3">
-                  <div className="b16-mon label">Ticket/Confirmation No.</div>
-                  <div
-                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                    style={{ borderRadius: "5px" }}
-                  >
-                    {activity?.addOns?.ticketNo}
-                  </div>
-                </div>
-              ) : null}
-
               {activity.addOns.comments ? (
-                <div className="row my-3">
-                  <div className="b16-mon label">Comments</div>
-                  <div className="mx-2">{activity?.addOns?.comments}</div>
+                <div className="row mx-2">
+                  <div>{activity?.addOns?.comments}</div>
                 </div>
-              ) : null}
-
-              {activity.addOns.ticketUploads.length ? (
-                <>
-                  <hr />
-                  <div className="row">
-                    <div className="text-center b13-mon">
-                      {renderTickets(tickets)}
-                    </div>
-                  </div>
-                </>
               ) : null}
             </Collapse>
           </div>
 
-          {allowExpand(activity) ? (
-            <div className="text-center">
-              {isOpen ? (
-                <FontAwesomeIcon
-                  icon="fa-solid fa-angle-up"
-                  style={{ color: "#0BB6C0" }}
-                  onClick={() => toggleOpen(activity._id)}
-                />
-              ) : (
-                <FontAwesomeIcon
-                  icon="fa-solid fa-angle-down"
-                  style={{ color: "#0BB6C0" }}
-                  onClick={() => toggleOpen(activity._id)}
-                />
-              )}
+          <div
+            style={{
+              backgroundColor: "#32AAAA",
+              borderRadius: " 0 0 10px 10px",
+              padding: "12px 0",
+            }}
+          >
+            <div className="text-center row link-style">
+              <div
+                className="col-6"
+                onClick={() => navigateToUpdate(activity._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
+              </div>
+              <div
+                className="col-6"
+                onClick={() => deleteActivity(activity._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-xmark" /> Delete
+              </div>
             </div>
-          ) : null}
+          </div>
         </div>
       );
     });
@@ -211,10 +214,13 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
   return (
     <>
       <Breadcrumbs />
-      <div className="content-body activity-list">
+      <div
+        className="content-body activity-list"
+        style={{ paddingTop: "50px" }}
+      >
         <Header
-          title="Activities"
-          rightIcon="add"
+          title="Insurance"
+          rightTitle="+ Add Activity"
           destination={"/activities/add"}
         />
         {activityListData?.length

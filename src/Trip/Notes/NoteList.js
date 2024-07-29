@@ -46,7 +46,7 @@ function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
   const displayNotes = () => {
     return sortedNotes?.map((note, index) => {
       return (
-        <div className="shadow-box mb-4">
+        <div className="outlined-box mb-4">
           <div className="row">
             <div className="col">
               <li>{note.note}</li>
@@ -74,8 +74,12 @@ function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
   return (
     <>
       <Breadcrumbs />
-      <div className="content-body note-list">
-        <Header title="Trip Notes" rightIcon="add" destination={"/notes/add"} />
+      <div className="content-body note-list" style={{ paddingTop: "50px" }}>
+        <Header
+          rightTitle="+ Add Note"
+          // rightIcon="add"
+          destination={"/notes/add"}
+        />
         {noteListData?.length ? (
           <div>
             <ul>{displayNotes()}</ul>

@@ -73,93 +73,60 @@ function CruiseList({
     return cruiseList?.map((cruise, index) => {
       const isOpen = openCruiseId === cruise._id;
       return (
-        <div className="shadow-box mb-4" key={index}>
-          <div className="row d-flex justify-content-end mx-1">
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                className="primary-color"
-                onClick={() => navigateToUpdate(cruise._id)}
-              />
+        <div className="outlined-box p-0 mb-4" key={index}>
+          <div style={{ padding: "25px 20px" }}>
+            <div className="col-12">
+              <div>
+                {Methods.formatLongDate(cruise.startDate)}
+                <FontAwesomeIcon
+                  icon="fa-solid fa-ship"
+                  style={{ color: "#0BB6C0" }}
+                  onClick={() => toggleOpen(cruise._id)}
+                  className="mx-2"
+                />
+                {Methods.formatLongDate(cruise.endDate)}
+              </div>
             </div>
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                onClick={() => deleteCruise(cruise._id)}
-              />
+
+            <div className="my-4">
+              <div
+                className="b22-mon  primary-color"
+                style={{ lineHeight: "20px" }}
+              >
+                {cruise.name}
+              </div>
+
+              {cruise.ship}
+            </div>
+            <div>
+              <span className="b14-mon primary-color label">
+                Confirmation No.{" "}
+              </span>
+              {cruise.confirmationNo}
+            </div>
+            <div>
+              <span className="b14-mon primary-color label">Cabin No. </span>
+              {cruise.cabinNo}
             </div>
           </div>
           <div
-            className="container collapsible"
             style={{
-              height: `${isOpen ? "" : "70px"}`,
-              transition: "height 0.10s ease",
+              backgroundColor: "#32AAAA",
+              borderRadius: " 0 0 10px 10px",
+              padding: "12px 0",
             }}
           >
-            <div className="row">
-              <span className="b22-mon primary-color text-center">
-                {cruise.name}
-              </span>
-            </div>
-            <div className="row">
-              <div className="text-center b13-mon">{cruise.ship}</div>
-            </div>{" "}
-            <div className="row mt-3">
-              {cruise.confirmationNo ? (
-                <div className="col">
-                  <div className="b16-mon label">Confirmation</div>
-                  <div
-                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                    style={{ borderRadius: "5px" }}
-                  >
-                    {cruise.confirmationNo}
-                  </div>
-                </div>
-              ) : null}{" "}
-              {cruise.cabinNo ? (
-                <div className="col">
-                  <div className="b16-mon label">Cabin No.</div>
-                  <div
-                    className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                    style={{ borderRadius: "5px" }}
-                  >
-                    {cruise.cabinNo}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-            <div className="row mt-3">
-              <div className="col-6 d-flex justify-content-start">
-                <div>
-                  <div className="b16-mon label"> Embarkation</div>
-
-                  {Methods.formatLongDate(cruise.startDate)}
-                </div>
+            <div className="text-center row link-style">
+              <div
+                className="col-6"
+                onClick={() => navigateToUpdate(cruise._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
               </div>
-              <div className="col-6 d-flex justify-content-start">
-                <div>
-                  <div className="b16-mon label"> Debarkation </div>
-
-                  {Methods.formatLongDate(cruise.endDate)}
-                </div>
+              <div className="col-6" onClick={() => deleteCruise(cruise._id)}>
+                <FontAwesomeIcon icon="fa-solid fa-xmark" /> Delete
               </div>
             </div>
-          </div>
-          <div className="text-center">
-            {isOpen ? (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-up"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(cruise._id)}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-down"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(cruise._id)}
-              />
-            )}
           </div>
         </div>
       );
@@ -169,8 +136,12 @@ function CruiseList({
   return (
     <>
       <Breadcrumbs />
-      <div className="content-body cruise-list">
-        <Header title="Cruises" rightIcon="add" destination={"/cruises/add"} />
+      <div className="content-body cruise-list" style={{ paddingTop: "50px" }}>
+        <Header
+          rightTitle="+ Add a Reservation"
+          // rightIcon="add"
+          destination={"/cruises/add"}
+        />
         {cruiseListData?.length
           ? displayCruises()
           : "Cruiser, add your first cruise!"}

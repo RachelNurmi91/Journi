@@ -7,6 +7,7 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
+import { Collapse } from "reactstrap";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function TransportationList({
@@ -88,94 +89,69 @@ function TransportationList({
     return transportationList?.map((transportation, index) => {
       const isOpen = openTransportationId === transportation._id;
       return (
-        <div className="shadow-box mb-4" key={index}>
-          <div className="row d-flex justify-content-end mx-1">
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                className="primary-color"
-                onClick={() => navigateToUpdate(transportation._id)}
-              />
-            </div>
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                onClick={() => deleteTransportation(transportation._id)}
-              />
-            </div>
-          </div>
-          <div
-            className="container collapsible"
-            style={{
-              height: `${isOpen ? "" : "70px"}`,
-              transition: "height 0.10s ease",
-            }}
-          >
+        <div className="outlined-box p-0 mb-4" key={index}>
+          <div style={{ padding: "25px 20px" }}>
             <div className="row">
-              <span className="b22-mon primary-color text-center">
+              <div className="col-12">
+                {Methods.formatLongDate(transportation.startDate)}{" "}
+                <FontAwesomeIcon
+                  icon="fa-solid fa-clock"
+                  style={{ color: "#0BB6C0" }}
+                  className="mx-2"
+                />
+                {Methods.formatTime(transportation?.startTime)}
+              </div>
+            </div>
+
+            <div className={transportation.confirmationNo ? `my-4` : `mt-4`}>
+              <div
+                className="b22-mon  primary-color"
+                style={{ lineHeight: "20px" }}
+              >
                 {transportation.name}
-              </span>
-            </div>
-
-            <div className="row">
-              <div className="text-center b13-mon">
-                {formatType(transportation.type)}
               </div>
-            </div>
-            {transportation.confirmationNo ? (
-              <div className="row mt-3">
-                <div className="b16-mon label">Confirmation No.</div>
-                <div
-                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                  style={{ borderRadius: "5px" }}
-                >
-                  {transportation.confirmationNo}
-                </div>
-              </div>
-            ) : null}
-            {transportation.ticketNo ? (
-              <div className="row mt-3">
-                <div className="b16-mon label">Ticket No.</div>
-                <div className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10">
-                  {transportation.ticketNo}
-                </div>
-              </div>
-            ) : null}
-
-            <div className="row mt-3">
-              <div className="col">
-                <div className="b16-mon label"> Pick-Up</div>
-                <div>{Methods.formatLongDate(transportation.startDate)}</div>
+              {transportation.location && (
                 <div>
-                  {" "}
                   <FontAwesomeIcon
-                    icon="fa-solid fa-clock"
+                    icon="fa-solid fa-location-dot"
                     style={{ color: "#0bb6c0" }}
                   />{" "}
-                  {Methods.formatTime(transportation.startTime)}
+                  {transportation.location}
                 </div>
+              )}
+            </div>
+
+            {transportation.confirmationNo && (
+              <div>
+                <span className="b14-mon primary-color label">
+                  Confirmation{" "}
+                </span>
+                {transportation.confirmationNo}
               </div>
-              <div className="col">
-                <div className="b16-mon label"> Pick-Up Location</div>
-                <div>{transportation.location}</div>
+            )}
+          </div>
+
+          <div
+            style={{
+              backgroundColor: "#32AAAA",
+              borderRadius: " 0 0 10px 10px",
+              padding: "12px 0",
+            }}
+          >
+            <div className="text-center row link-style">
+              <div
+                className="col-6"
+                onClick={() => navigateToUpdate(transportation._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
+              </div>
+              <div
+                className="col-6"
+                onClick={() => deleteTransportation(transportation._id)}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-xmark" /> Delete
               </div>
             </div>
-          </div>
-          <div className="text-center">
-            {isOpen ? (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-up"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(transportation._id)}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-down"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(transportation._id)}
-              />
-            )}
           </div>
         </div>
       );
@@ -185,10 +161,12 @@ function TransportationList({
   return (
     <>
       <Breadcrumbs />
-      <div className="content-body transportation-list">
+      <div
+        className="content-body transportation-list"
+        style={{ paddingTop: "50px" }}
+      >
         <Header
-          title="Transportation"
-          rightIcon="add"
+          rightTitle="+ Add Transportation"
           destination={"/transportation/add"}
         />
         {transportationListData?.length

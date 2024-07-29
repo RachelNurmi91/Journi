@@ -225,7 +225,7 @@ function Sidebar({
         // }
         // style={activeTrip ? {} : { marginTop: "-60px" }}
         >
-          <ul className="menu">
+          {/* <ul className="menu">
             <li>
               <Link
                 to={"/trips/add"}
@@ -237,16 +237,13 @@ function Sidebar({
                 style={{ borderBottom: "none" }}
                 onClick={() => closeSideNav()}
               >
-                {/* <FontAwesomeIcon
-                  icon="fa-solid fa-plus"
-                  style={{ color: "#000" }}
-                /> */}
+             
                 <span className="mx-2" style={{ fontWeight: "700" }}>
                   ADD NEW TRIP
                 </span>
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </>
     );

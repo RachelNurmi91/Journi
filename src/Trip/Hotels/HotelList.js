@@ -67,78 +67,62 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
     return hotelList?.map((hotel, index) => {
       const isOpen = openHotelId === hotel._id;
       return (
-        <div className="shadow-box mb-4" key={index}>
-          <div className="row d-flex justify-content-end mx-1">
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                className="primary-color"
+        <div className="outlined-box p-0 mb-4" key={index}>
+          <div style={{ padding: "25px 20px" }}>
+            <div className="col-12">
+              <div>
+                {Methods.formatLongDate(hotel.startDate)}
+                <FontAwesomeIcon
+                  icon="fa-solid fa-moon"
+                  style={{ color: "#0BB6C0" }}
+                  onClick={() => toggleOpen(hotel._id)}
+                  className="mx-2"
+                />
+                {Methods.formatLongDate(hotel.endDate)}
+              </div>
+            </div>
+
+            <div className="my-4">
+              <div
+                className="b22-mon  primary-color"
+                style={{ lineHeight: "20px" }}
+              >
+                {hotel.name}
+              </div>
+
+              {hotel.city || hotel.country ? (
+                <div>
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-location-dot"
+                    style={{ color: "#0bb6c0" }}
+                  />{" "}
+                  {hotel.city}, {hotel.country}
+                </div>
+              ) : null}
+            </div>
+            <div>
+              <span className="b14-mon primary-color label">Confirmation </span>
+              {hotel.confirmationNo}
+            </div>
+          </div>
+          <div
+            style={{
+              backgroundColor: "#32AAAA",
+              borderRadius: " 0 0 10px 10px",
+              padding: "12px 0",
+            }}
+          >
+            <div className="text-center row link-style">
+              <div
+                className="col-6"
                 onClick={() => navigateToUpdate(hotel._id)}
-              />
-            </div>
-            <div className="col-1">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                className="error-color"
-                onClick={() => deleteHotel(hotel._id)}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <span className="b22-mon primary-color text-center">
-              {hotel.name}
-            </span>
-          </div>
-          <div className="row">
-            <div className="text-center b13-mon">
-              {hotel.city}, {hotel.country}
-            </div>
-          </div>
-          <Collapse isOpen={isOpen}>
-            {hotel.confirmationNo ? (
-              <div className="row mt-3">
-                <div className="b16-mon label">Confirmation No.</div>
-                <div
-                  className="primary-color light-bg-color text-center font-weight-bold py-1 b-radius-10"
-                  style={{ borderRadius: "5px" }}
-                >
-                  {hotel.confirmationNo}
-                </div>
+              >
+                <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
               </div>
-            ) : null}
-            <div className="row mt-3">
-              <div className="col-6 d-flex justify-content-start">
-                <div>
-                  <div className="b16-mon label"> Arrival </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(hotel.startDate)}
-                  </div>
-                </div>
-              </div>
-              <div className="col-6 d-flex justify-content-end">
-                <div>
-                  <div className="b16-mon label"> Departure </div>
-                  <div className="text-center">
-                    {Methods.formatLongDate(hotel.endDate)}
-                  </div>
-                </div>
+              <div className="col-6" onClick={() => deleteHotel(hotel._id)}>
+                <FontAwesomeIcon icon="fa-solid fa-xmark" /> Delete
               </div>
             </div>
-            <hr />
-            <div className="row">
-              <div className="text-center b13-mon">
-                Reserved under "{hotel.nameOnReservation}"
-              </div>
-            </div>
-          </Collapse>
-          <div className="text-center">
-            {isOpen ? null : (
-              <FontAwesomeIcon
-                icon="fa-solid fa-angle-down"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => toggleOpen(hotel._id)}
-              />
-            )}
           </div>
         </div>
       );
@@ -147,9 +131,13 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body hotel-list">
-        <Header title="Hotels" rightIcon="add" destination={"/hotels/add"} />
+      <Breadcrumbs additionalCrumb="Hotels" />
+      <div className="content-body hotel-list" style={{ paddingTop: "50px" }}>
+        <Header
+          rightTitle="+ Add a Reservation"
+          // rightIcon="add"
+          destination={"/hotels/add"}
+        />
         {hotelListData.length
           ? displayHotels()
           : "Sleep is important, so add your first hotel!"}

@@ -22,8 +22,13 @@ $color-orange-accent: #EEBC69;
 
 .breadcrumb-container {
   // background-color: $color-white;
+  background-color: #fff;
   padding: 10px 25px;
   border-bottom: 1px solid $color-white;
+  position:fixed;
+  top:60;
+  width:100%;
+  z-index:100;
 
   .breadcrumb {
     font-size: 12px;
@@ -34,9 +39,11 @@ $color-orange-accent: #EEBC69;
 
   a {
     color:#D87151;
+    text-decoration: underline;
 
     &:visited {
       color: #D87151;
+      text-decoration: underline;
     }
   }
 }
@@ -61,6 +68,16 @@ $color-orange-accent: #EEBC69;
   overflow: visible;
 }
 
+.link-style {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+}
+
+.link-action {
+  color: $color-orange
+}
+
 a {
   &:link {
     text-decoration: none;
@@ -79,30 +96,45 @@ a {
   }
 }
 
-.separator {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 30px 0px;
-
-  &::before,
-  &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background-image: repeating-linear-gradient(to right, black 0, black 10%, transparent 0, transparent 20%);
-    background-size: 100px 3px; /* Adjust the width of dashes */
-    background-repeat: repeat-x;
-  }
-
-  &::before {
-    margin-right: .25em;
-  }
-
-  &::after {
-    margin-left: .25em;
-  }
+.dashed-line {
+  border-top: 1px dashed #797979;
+  margin: 30px;
 }
+
+.ticket {
+  position: relative;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  background: white;
+  color: black;
+  display: inline-block;
+  padding: 1em 2em;
+}
+.ticket:before,
+.ticket:after{
+  height:90px;
+  width:45px;
+  content: '';
+  position: absolute;
+  top: 2em;
+  top: calc(100% - 57%);
+  height: 30px;
+  width: 15px;
+  border: 1px solid #dadada;
+  background-color: #fff;
+
+}
+.ticket:before {
+  left: -2px;
+  border-radius: 0 1em 1em 0;
+  border-left-color: white;
+}
+.ticket:after {
+  right: -2px;
+  border-radius: 1em 0 0 1em;
+  border-right-color: white;
+}
+
 
 /* Branding */
 
@@ -211,6 +243,26 @@ a {
   }
 }
 
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #000;
+}
+
+.separator:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: .25em;
+}
 
 /* Sidebar CSS */
 
@@ -219,7 +271,7 @@ a {
   height: calc(100% - 60px);
   width: 0;
   position: fixed;
-  top: 60px;
+  top: 61px;
   left: 0;
   background-color:#fff;
   overflow-x: hidden;
@@ -278,7 +330,7 @@ a {
 .outlined-box {
   // @include box(25px);
   @include box(15px);
-  border: 1px solid #c0c0c0;
+  border: 1px solid #dadada;
 
   h3 {
     color: $color-blue;
@@ -351,7 +403,8 @@ h2 {
   color: $color-blue-accent !important;
   font-family: "Inter", sans-serif;
   font-size: 26px !important;
-  font-weight: 700 !important;
+  // font-weight: 700 !important;
+  text-transform: uppercase;
 }
 
 h3 {
