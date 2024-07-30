@@ -7,7 +7,7 @@ function Breadcrumbs({ activeTrip, additionalCrumb }) {
     <div className="breadcrumb-container">
       <Breadcrumb>
         <BreadcrumbItem>
-          <Link to="/profile">All Trips</Link>
+          <Link to="/trips">All Trips</Link>
         </BreadcrumbItem>
         <BreadcrumbItem>Active Trip</BreadcrumbItem>
         <BreadcrumbItem>{activeTrip?.name}</BreadcrumbItem>

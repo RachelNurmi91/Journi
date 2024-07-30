@@ -107,8 +107,8 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
       let tickets = activity?.addOns?.ticketUploads;
       const isOpen = openActivityId === activity._id;
       return (
-        <div className="outlined-box p-0 mb-4" key={index}>
-          <div style={{ padding: "25px 20px" }}>
+        <div className="ticket p-0 mb-4" key={index}>
+          <div style={{ padding: "25px" }}>
             <div className="row">
               <div className="col-12">
                 {Methods.formatLongDate(activity.startDate)}
@@ -146,13 +146,6 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
                   {activity.location}
                 </div>
               )}
-              {/* 
-              {Methods.formatTime(activity?.startTime)}
-              <FontAwesomeIcon
-                icon="fa-solid fa-clock"
-                style={{ color: "#0BB6C0" }}
-                className="mx-1"
-              /> */}
             </div>
 
             {activity?.addOns?.ticketNo && (
@@ -163,6 +156,8 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
                 {activity?.addOns?.ticketNo}
               </div>
             )}
+            {(activity.addOns.ticketUploads.length ||
+              activity.addOns.comments) && <hr className="dashed-line" />}
             {activity.addOns.ticketUploads.length ? (
               <>{renderTickets(tickets)}</>
             ) : null}
@@ -219,8 +214,8 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
         style={{ paddingTop: "50px" }}
       >
         <Header
-          title="Insurance"
-          rightTitle="+ Add Activity"
+          title="Activities"
+          rightTitle="+ Add New"
           destination={"/activities/add"}
         />
         {activityListData?.length

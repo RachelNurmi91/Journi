@@ -70,7 +70,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
       const isOpen = openRentalId === rental._id;
       return (
         <div className="outlined-box p-0 mb-4" key={index}>
-          <div style={{ padding: "25px 20px" }}>
+          <div style={{ padding: "25px" }}>
             <div
               className="b22-mon  primary-color"
               style={{ lineHeight: "20px" }}
@@ -165,7 +165,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
       <Breadcrumbs />
       <div className="content-body rental-list" style={{ paddingTop: "50px" }}>
         <Header
-          rightTitle="+ Add Vehicle"
+          rightTitle="+ Add New"
           // title="Rentals" rightIcon="add"
           destination={"/rentals/add"}
         />

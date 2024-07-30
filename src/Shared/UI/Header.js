@@ -45,15 +45,15 @@ function Header({
 
   return (
     <div className="row mt-2 mb-3">
-      {/* {leftIcon ? (
+      {leftIcon ? (
         <div className="col-1 mt-1">{renderLeftIcon(leftIcon)}</div>
       ) : null}
-      <div className={`${rightIcon || leftIcon ? "col-11" : "col-12"}`}>
+      <div className={`${rightIcon || leftIcon ? "col-11" : "col-7"}`}>
         <h2 className=" mb-0">{title}</h2>
-        <div className="subtitle my-2 mx-2">{subtitle}</div>
-      </div> */}
+        <div className="subtitle mx-1 b13-mon">{subtitle}</div>
+      </div>
       {rightIcon || rightTitle ? (
-        <div className="col-12 d-flex justify-content-end">
+        <div className="col-5 d-flex justify-content-end align-items-center">
           {renderRightIcon(rightIcon)}
           <span className="link-action label b14-mon mx-2">{rightTitle}</span>
         </div>

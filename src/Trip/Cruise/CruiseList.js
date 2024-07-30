@@ -73,8 +73,8 @@ function CruiseList({
     return cruiseList?.map((cruise, index) => {
       const isOpen = openCruiseId === cruise._id;
       return (
-        <div className="outlined-box p-0 mb-4" key={index}>
-          <div style={{ padding: "25px 20px" }}>
+        <div className="ticket p-0 mb-4" key={index}>
+          <div style={{ padding: "25px" }}>
             <div className="col-12">
               <div>
                 {Methods.formatLongDate(cruise.startDate)}
@@ -138,7 +138,7 @@ function CruiseList({
       <Breadcrumbs />
       <div className="content-body cruise-list" style={{ paddingTop: "50px" }}>
         <Header
-          rightTitle="+ Add a Reservation"
+          rightTitle="+ Add New"
           // rightIcon="add"
           destination={"/cruises/add"}
         />

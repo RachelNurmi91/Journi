@@ -170,43 +170,6 @@ function Profile({
     });
   };
 
-  const renderTripList = () => {
-    return tripsList?.map((trip, index) => {
-      return (
-        <div key={index}>
-          {index === 0 ? null : <hr />}
-          <div className="row p-2">
-            <div className="col-10">
-              <div className="row">
-                <div className="label">{trip.name}</div>
-              </div>
-              <div className="row">
-                <div className="col-6d-flex align-items-end">
-                  {Methods.formatShortDate(trip.startDate)}
-                </div>
-              </div>
-            </div>
-
-            <div className="col-1 d-flex align-items-center justify-content-end p-0">
-              <FontAwesomeIcon
-                icon="fa-solid fa-pen-to-square"
-                style={{ color: "#0BB6C0" }}
-                onClick={() => navigateToEditTrips(trip._id)}
-              />
-            </div>
-            <div className="col-1 d-flex align-items-center justify-content-end p-0">
-              <FontAwesomeIcon
-                icon="fa-solid fa-trash"
-                style={{ color: "#d65d5d" }}
-                onClick={() => deleteTrip(trip._id)}
-              />
-            </div>
-          </div>
-        </div>
-      );
-    });
-  };
-
   return (
     <div className="content-body profile">
       <div className="row">
@@ -234,10 +197,23 @@ function Profile({
         </div>
       </div>
 
-      <div className="mt-3">
-        <h3 className="float-right primary-color">User Details</h3>
-      </div>
-      <div className="outlined-box p-4 mb-4">
+      <div className="my-5">
+        <div className="row">
+          <div className="col-10">
+            <h3 className="float-right primary-color">User Details</h3>
+            <div className="b13-mon">Your Journi account details.</div>
+          </div>
+          <div className="col-2 d-flex justify-content-end align-items-center">
+            <Link to="/trips" className="nav-link">
+              <FontAwesomeIcon
+                icon="fa-solid fa-plus"
+                size="lg"
+                style={{ color: "#0BB6C0" }}
+              />
+            </Link>
+          </div>
+        </div>
+        {/* <div className="outlined-box p-4 mb-4">
         <div className="container">
           <div className="row">
             <div className="col-3 col-lg-1 label">Name</div>
@@ -250,23 +226,26 @@ function Profile({
             <div className="col">{userData.username}</div>
           </div>
         </div>
-      </div>
-
-      <div className="row">
-        <div className="col-10">
-          <h3 className="float-right primary-color">Trips</h3>
+      </div> */}
+        <hr className="mb-4" />
+        <div className="row">
+          <div className="col-10">
+            <h3 className="float-right primary-color">Trips</h3>
+            <div className="b13-mon">
+              Add and manage all of your upcoming trips.
+            </div>
+          </div>
+          <div className="col-2 d-flex justify-content-end align-items-center">
+            <Link to="/trips" className="nav-link">
+              <FontAwesomeIcon
+                icon="fa-solid fa-plus"
+                size="lg"
+                style={{ color: "#0BB6C0" }}
+              />
+            </Link>
+          </div>
         </div>
-        <div className="col-2 d-flex justify-content-end">
-          <Link to="/trips/add" className="nav-link">
-            <FontAwesomeIcon
-              icon="fa-solid fa-plus"
-              size="lg"
-              style={{ color: "#0BB6C0" }}
-            />
-          </Link>
-        </div>
-      </div>
-      <div className="outlined-box mb-4">
+        {/* <div className="outlined-box mb-4">
         <div
           className="container collapsible"
           style={{
@@ -297,23 +276,26 @@ function Profile({
             )}
           </div>
         ) : null}
-      </div>
-
-      <div className="row">
-        <div className="col-10">
-          <h3 className="float-right primary-color">Reward Programs</h3>
+      </div> */}
+        <hr className="mb-4" />
+        <div className="row">
+          <div className="col-10">
+            <h3 className="float-right primary-color">Reward Programs</h3>
+            <div className="b13-mon">
+              Keep all your rewards programs in one accessible place.
+            </div>
+          </div>
+          <div className="col-2 d-flex justify-content-end align-items-center">
+            <Link to="/reward-programs" className="nav-link">
+              <FontAwesomeIcon
+                icon="fa-solid fa-plus"
+                size="lg"
+                style={{ color: "#0BB6C0" }}
+              />
+            </Link>
+          </div>
         </div>
-        <div className="col-2 d-flex justify-content-end">
-          <Link to="/profile/reward-programs" className="nav-link">
-            <FontAwesomeIcon
-              icon="fa-solid fa-plus"
-              size="lg"
-              style={{ color: "#0BB6C0" }}
-            />
-          </Link>
-        </div>
-      </div>
-      <div className="outlined-box mb-4">
+        {/* <div className="outlined-box mb-4">
         <div
           className="container collapsible"
           style={{
@@ -344,6 +326,7 @@ function Profile({
             )}
           </div>
         ) : null}
+      </div> */}
       </div>
       <div className="row">
         <div>

@@ -28,7 +28,7 @@ $color-orange-accent: #EEBC69;
   position:fixed;
   top:60;
   width:100%;
-  z-index:100;
+  z-index:99;
 
   .breadcrumb {
     font-size: 12px;
@@ -109,6 +109,7 @@ a {
   color: black;
   display: inline-block;
   padding: 1em 2em;
+  width: 100%;
 }
 .ticket:before,
 .ticket:after{
@@ -156,7 +157,7 @@ a {
   width: 100%; /* Set navbar width to 100% */
   top: 0;
   left: 0;
-  // z-index: 99;
+  z-index:100;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -276,7 +277,7 @@ a {
   background-color:#fff;
   overflow-x: hidden;
   transition: 0.5s;
-  z-index: 99;
+  z-index:100;
   box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.05);
 
 
@@ -455,7 +456,8 @@ label, .label {
 button {
   border-style: none;
   border-radius: 5px !important;
-  background-color: $color-blue;
+  background-color: $color-orange;
+  color: #fff;
   padding: 10px;
 
   .btn-link {
@@ -642,6 +644,12 @@ button {
     padding: 0px 5px 5px;
  
 
+    .title {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+padding: 10px;
+    }
     .close{
       display: flex;
       justify-content: end;

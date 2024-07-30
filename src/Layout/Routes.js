@@ -7,9 +7,11 @@ import Login from "../Account/AccountAccess/Login";
 import FlightList from "../Trip/Flights/FlightList";
 import Flight from "../Trip/Flights/Flight";
 import Register from "../Account/AccountAccess/Register";
-import Trip from "../Trip/Trips/Trip";
+import TripList from "../Account/Trips/TripList";
+import Trip from "../Account/Trips/Trip";
 import Profile from "../Account/Profile";
-import RewardProgram from "../Account/RewardProgram";
+import RewardProgramList from "../Account/RewardPrograms/RewardProgramList";
+import RewardProgram from "../Account/RewardPrograms/RewardProgram";
 import ActivityList from "../Trip/Activities/ActivityList";
 import Activity from "../Trip/Activities/Activity";
 import CruiseList from "../Trip/Cruise/CruiseList";
@@ -37,9 +39,20 @@ function Content({ ...props }) {
             <Route path="/profile" element={<Profile navigate={navigate} />} />
 
             <Route
-              path="/profile/reward-programs"
+              path="/reward-programs"
+              element={<RewardProgramList navigate={navigate} />}
+            />
+            <Route
+              path="/reward-programs/add"
               element={<RewardProgram navigate={navigate} />}
             />
+
+            <Route path="/trips" element={<TripList navigate={navigate} />} />
+            <Route
+              path="/trips/:edit/:id"
+              element={<Trip navigate={navigate} />}
+            />
+            <Route path="/trips/*" element={<Trip navigate={navigate} />} />
 
             <Route path="/hotels" element={<HotelList navigate={navigate} />} />
             <Route
@@ -122,13 +135,6 @@ function Content({ ...props }) {
               element={<Note navigate={navigate} />}
             />
             <Route path="/notes/add" element={<Note navigate={navigate} />} />
-
-            <Route path="/trips" element={<Trip navigate={navigate} />} />
-            <Route
-              path="/trips/:edit/:id"
-              element={<Trip navigate={navigate} />}
-            />
-            <Route path="/trips/*" element={<Trip navigate={navigate} />} />
           </>
         )}
       </Routes>

@@ -68,7 +68,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
       const isOpen = openHotelId === hotel._id;
       return (
         <div className="outlined-box p-0 mb-4" key={index}>
-          <div style={{ padding: "25px 20px" }}>
+          <div style={{ padding: "25px" }}>
             <div className="col-12">
               <div>
                 {Methods.formatLongDate(hotel.startDate)}
@@ -134,7 +134,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
       <Breadcrumbs additionalCrumb="Hotels" />
       <div className="content-body hotel-list" style={{ paddingTop: "50px" }}>
         <Header
-          rightTitle="+ Add a Reservation"
+          rightTitle="+ Add New"
           // rightIcon="add"
           destination={"/hotels/add"}
         />

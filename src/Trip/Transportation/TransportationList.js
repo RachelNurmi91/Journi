@@ -89,8 +89,8 @@ function TransportationList({
     return transportationList?.map((transportation, index) => {
       const isOpen = openTransportationId === transportation._id;
       return (
-        <div className="outlined-box p-0 mb-4" key={index}>
-          <div style={{ padding: "25px 20px" }}>
+        <div className="ticket p-0 mb-4" key={index}>
+          <div style={{ padding: "25px" }}>
             <div className="row">
               <div className="col-12">
                 {Methods.formatLongDate(transportation.startDate)}{" "}
@@ -166,7 +166,8 @@ function TransportationList({
         style={{ paddingTop: "50px" }}
       >
         <Header
-          rightTitle="+ Add Transportation"
+          title="Transporation"
+          rightTitle="+ Add"
           destination={"/transportation/add"}
         />
         {transportationListData?.length

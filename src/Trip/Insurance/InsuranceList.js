@@ -63,7 +63,7 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
     return insuranceList?.map((insurance, index) => {
       return (
         <div className="outlined-box p-0 mb-4" key={index}>
-          <div style={{ padding: "25px 20px" }}>
+          <div style={{ padding: "25px" }}>
             <div
               className="b22-mon  primary-color"
               // style={{ lineHeight: "20px" }}
@@ -115,7 +115,7 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
         className="content-body insurance-list"
         style={{ paddingTop: "50px" }}
       >
-        <Header rightTitle="+ Add Insurance" destination={"/insurance/add"} />
+        <Header rightTitle="+ Add New" destination={"/insurance/add"} />
         {insuranceListData?.length
           ? displayInsurance()
           : "Shit happens. Add your first insurance!"}

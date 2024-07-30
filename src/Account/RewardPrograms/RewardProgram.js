@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import Button from "../Shared/UI/Button";
-import Header from "../Shared/UI/Header";
-import Input from "../Shared/UI/Input";
-import Loading from "../Shared/UI/Loading";
-import AccountRequests from "../Requests/AccountRequests";
+import Button from "../../Shared/UI/Button";
+import Header from "../../Shared/UI/Header";
+import Input from "../../Shared/UI/Input";
+import Loading from "../../Shared/UI/Loading";
+import AccountRequests from "../../Requests/AccountRequests";
 import {
   fetchUpdatedTrips,
   fetchUpdatedAccount,
-} from "../Redux/Operations/AccountOperations";
+} from "../../Redux/Operations/AccountOperations";
 
 const DEFAULT_FORM_DATA = {
   name: null,
