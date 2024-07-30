@@ -15,6 +15,7 @@ import TripRequests from "../../Requests/TripRequests";
 import { removeLoggedInUserData } from "../../Redux/Actions/AccountActions";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Header from "../../Shared/UI/Header";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function TripsList({
   fetchUpdatedTrips,
@@ -158,65 +159,72 @@ function TripsList({
   };
 
   return (
-    <div className="content-body profile">
-      <Header
-        title="Trips"
-        subtitle="Manage your active trips, or add a new one"
-        rightTitle="+ Add New"
+    <>
+      <Breadcrumbs
+        prevCrumb="Profile"
+        prevCrumbLink={"/profile"}
+        currentCrumb="Trips"
       />
-      {tripsData.length ? (
-        renderTripList()
-      ) : (
-        <div className="mt-3">"Friend, you need a vacation."</div>
-      )}
+      <div className="content-body profile" style={{ paddingTop: "50px" }}>
+        <Header
+          title="Trips"
+          subtitle="Manage your active trips, or add a new one"
+          rightTitle="+ Add New"
+        />
+        {tripsData.length ? (
+          renderTripList()
+        ) : (
+          <div className="mt-3">"Friend, you need a vacation."</div>
+        )}
 
-      {tripsData.length > 1 ? (
-        <div className="text-center mt-2">
-          {openPrograms ? (
-            <FontAwesomeIcon
-              icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
-              style={{ color: "#0BB6C0" }}
-              onClick={toggleOpenTrips}
-            />
-          ) : (
-            <FontAwesomeIcon
-              icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
-              style={{ color: "#0BB6C0" }}
-              onClick={toggleOpenTrips}
-            />
-          )}
-        </div>
-      ) : null}
-
-      <Modal isOpen={showDeleteModal}>
-        <ModalBody>
-          <div className="row">
-            <div className="title col-9">
-              <h3 className="mb-0 primary-color">{`Delete This Trip?`}</h3>
-            </div>
-
-            <div className="close col-3" onClick={toggleDeleteModal}>
+        {tripsData.length > 1 ? (
+          <div className="text-center mt-2">
+            {openPrograms ? (
               <FontAwesomeIcon
-                icon="fa-solid fa-xmark"
-                style={{ color: "#0BB6C0", fontSize: "25px" }}
+                icon={["fas", "angle-up"]} // Assuming you're using FontAwesome 5
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpenTrips}
               />
+            ) : (
+              <FontAwesomeIcon
+                icon={["fas", "angle-down"]} // Assuming you're using FontAwesome 5
+                style={{ color: "#0BB6C0" }}
+                onClick={toggleOpenTrips}
+              />
+            )}
+          </div>
+        ) : null}
+
+        <Modal isOpen={showDeleteModal}>
+          <ModalBody>
+            <div className="row">
+              <div className="title col-9">
+                <h3 className="mb-0 primary-color">{`Delete This Trip?`}</h3>
+              </div>
+
+              <div className="close col-3" onClick={toggleDeleteModal}>
+                <FontAwesomeIcon
+                  icon="fa-solid fa-xmark"
+                  style={{ color: "#0BB6C0", fontSize: "25px" }}
+                />
+              </div>
             </div>
-          </div>
 
-          <p className="py-4">
-            You are about to delete:{" "}
-            <span className="fw-bold">{selectedTrip?.name}</span>. Know that if
-            you delete this trip all associated saved data will be lost.
-          </p>
+            <p className="py-4">
+              You are about to delete:{" "}
+              <span className="fw-bold">{selectedTrip?.name}</span>. Know that
+              if you delete this trip all associated saved data will be lost.
+            </p>
 
-          <div className="text-center">
-            <button className="w-100" onClick={deleteTrip}>
-              Delete {selectedTrip?.name}
-            </button>
-          </div>
-        </ModalBody>
-      </Modal>
-    </div>
+            <div className="text-center">
+              <button className="w-100" onClick={deleteTrip}>
+                Delete {selectedTrip?.name}
+              </button>
+            </div>
+          </ModalBody>
+        </Modal>
+      </div>
+    </>
   );
 }
 

@@ -20,7 +20,7 @@ function Header({
             <FontAwesomeIcon
               icon="fa-solid fa-plus"
               size="lg"
-              style={{ color: "#0BB6C0" }}
+              style={{ color: "#D87151" }}
             />
           </Link>
         );
@@ -35,7 +35,7 @@ function Header({
         <FontAwesomeIcon
           icon="fa-chevron-left"
           size="lg"
-          style={{ color: "#0BB6C0" }}
+          style={{ color: "#D87151" }}
           onClick={() => navigate("/profile")}
           className="pl-0"
         />
@@ -48,13 +48,13 @@ function Header({
       {leftIcon ? (
         <div className="col-1 mt-1">{renderLeftIcon(leftIcon)}</div>
       ) : null}
-      <div className={`${rightIcon || leftIcon ? "col-11" : "col-7"}`}>
+      <div className={`${rightIcon || leftIcon ? "col-11" : "col-12"}`}>
         <h2 className=" mb-0">{title}</h2>
         <div className="subtitle mx-1 b13-mon">{subtitle}</div>
       </div>
-      {rightIcon || rightTitle ? (
-        <div className="col-5 d-flex justify-content-end align-items-center">
-          {renderRightIcon(rightIcon)}
+      {rightIcon ? (
+        <div className="col-1 d-flex justify-content-end align-items-center">
+          {renderRightIcon("add")}
           <span className="link-action label b14-mon mx-2">{rightTitle}</span>
         </div>
       ) : null}

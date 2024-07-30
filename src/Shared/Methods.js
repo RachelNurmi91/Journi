@@ -10,7 +10,6 @@ export default class Methods {
     const year = date.getFullYear().toString().slice(-2);
 
     const formattedDate = `${month}/${day}/${year}`;
-    console.log(formattedDate);
     return formattedDate;
   };
 
@@ -77,7 +76,7 @@ export default class Methods {
     // Convert the difference from milliseconds to days
     const millisecondsInADay = 1000 * 60 * 60 * 24;
     const differenceInDays = differenceInTime / millisecondsInADay;
-    console.log(differenceInDays);
+
     return differenceInDays;
   };
 }

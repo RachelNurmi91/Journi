@@ -17,6 +17,7 @@ import AccountRequests from "../../Requests/AccountRequests";
 import Loading from "../../Shared/UI/Loading";
 import { removeLoggedInUserData } from "../../Redux/Actions/AccountActions";
 import Header from "../../Shared/UI/Header";
+import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 // import ImageUploading from "react-images-uploading";
 
 function RewardProgramList({
@@ -106,7 +107,6 @@ function RewardProgramList({
 
   const renderProgramsList = () => {
     return rewardProgramsList?.map((program, index) => {
-      console.log(program);
       return (
         <div key={index} className="outlined-box p-0 container mb-3">
           <div className="p-4 row ">
@@ -134,17 +134,28 @@ function RewardProgramList({
   };
 
   return (
-    <div className="content-body profile">
-      <Header title="Reward Programs" rightTitle="+ Add New" />
+    <>
+      <Breadcrumbs
+        prevCrumb="Profile"
+        prevCrumbLink={"/profile"}
+        currentCrumb="Reward Programs"
+      />
+      <div className="content-body profile" style={{ paddingTop: "50px" }}>
+        <Header
+          title="Reward Programs"
+          rightIcon={true}
+          destination={"/reward-programs/add"}
+        />
 
-      {rewardProgramsData?.length ? (
-        renderProgramsList()
-      ) : (
-        <div className="mt-2">Add your reward programs!</div>
-      )}
+        {rewardProgramsData?.length ? (
+          renderProgramsList()
+        ) : (
+          <div className="mt-2">Add your reward programs!</div>
+        )}
 
-      <Loading loading={loading} />
-    </div>
+        <Loading loading={loading} />
+      </div>
+    </>
   );
 }
 
