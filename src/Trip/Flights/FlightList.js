@@ -7,10 +7,14 @@ import Header from "../../Shared/UI/Header";
 import Methods from "../../Shared/Methods";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
-import { Collapse } from "reactstrap";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
-function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
+function FlightList({
+  fetchUpdatedTrips,
+  flightListData,
+  activeTrip,
+  ...props
+}) {
   const [sortedFlights, setSortedFlights] = useState([]);
   const [openFlightId, setOpenFlightId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -246,13 +250,13 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Flights"
+      />
       <div className="content-body flight-list" style={{ paddingTop: "50px" }}>
-        <Header
-          title="Flights"
-          rightTitle="+ Add"
-          destination={"/flights/add"}
-        />
+        <Header title="Flights" rightIcon={true} destination={"/flights/add"} />
 
         {flightListData.length
           ? displayFlights()
@@ -266,6 +270,7 @@ function FlightList({ fetchUpdatedTrips, flightListData, ...props }) {
 function mapStateToProps(state) {
   return {
     flightListData: state.account?.activeTrip?.flights,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

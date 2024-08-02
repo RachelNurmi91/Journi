@@ -8,7 +8,12 @@ import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
-function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
+function InsuranceList({
+  fetchUpdatedTrips,
+  insuranceListData,
+  activeTrip,
+  ...props
+}) {
   const [insuranceList, setInsuranceList] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -110,12 +115,20 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Insurance"
+      />
       <div
         className="content-body insurance-list"
         style={{ paddingTop: "50px" }}
       >
-        <Header rightTitle="+ Add New" destination={"/insurance/add"} />
+        <Header
+          title="Insurance"
+          rightIcon={true}
+          destination={"/insurance/add"}
+        />
         {insuranceListData?.length
           ? displayInsurance()
           : "Shit happens. Add your first insurance!"}
@@ -128,6 +141,7 @@ function InsuranceList({ fetchUpdatedTrips, insuranceListData, ...props }) {
 function mapStateToProps(state) {
   return {
     insuranceListData: state.account?.activeTrip?.insurance,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

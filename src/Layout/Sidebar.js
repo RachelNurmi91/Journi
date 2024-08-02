@@ -58,6 +58,7 @@ function Sidebar({
     return (
       <>
         <div className={activeTrip ? "flex-grow-1 mt-2" : ""}>
+          <h1>{activeTrip?.name}</h1>
           {/* <h1 className="white-color text-center">
             {activeTrip?.name?.toUpperCase()}
           </h1> */}

@@ -502,8 +502,13 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body">
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Flights"
+      />
+
+      <div className="content-body" style={{ paddingTop: "50px" }}>
         <Header
           title={updating ? "Update Flight" : "Add Flight"}
           leftIcon={activeTrip?.flights?.length ? true : false}

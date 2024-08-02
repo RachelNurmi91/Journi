@@ -114,8 +114,13 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body">
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Insurance"
+      />
+
+      <div className="content-body" style={{ paddingTop: "50px" }}>
         <Header
           title={updating ? "Update Insurance" : "Add Insurance"}
           leftIcon={activeTrip?.insurance?.length ? true : false}

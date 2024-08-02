@@ -243,8 +243,13 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body">
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Hotels"
+      />
+
+      <div className="content-body" style={{ paddingTop: "50px" }}>
         <Header
           title={updating ? "Update Hotel" : "Add Hotel"}
           leftIcon={activeTrip?.hotels?.length ? true : false}

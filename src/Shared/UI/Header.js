@@ -55,7 +55,6 @@ function Header({
       {rightIcon ? (
         <div className="col-1 d-flex justify-content-end align-items-center">
           {renderRightIcon("add")}
-          <span className="link-action label b14-mon mx-2">{rightTitle}</span>
         </div>
       ) : null}
     </div>

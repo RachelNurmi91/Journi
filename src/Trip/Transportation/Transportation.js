@@ -228,8 +228,15 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body">
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Transportation"
+      />
+      <div
+        className="content-body transportation-list"
+        style={{ paddingTop: "50px" }}
+      >
         <Header
           title={updating ? "Update Transportation" : "Add Transportation"}
           leftIcon={activeTrip?.transportation?.length ? true : false}

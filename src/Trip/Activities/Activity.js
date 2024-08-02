@@ -224,8 +224,12 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body activity">
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Activities"
+      />
+      <div className="content-body activity" style={{ paddingTop: "50px" }}>
         <Header
           title={updating ? "Update Activity" : "Add Activity"}
           leftIcon={activeTrip?.activities?.length ? true : false}

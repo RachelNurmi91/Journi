@@ -22,7 +22,7 @@ $color-orange-accent: #EEBC69;
 
 .breadcrumb-container {
   // background-color: $color-white;
-  background-color: #fff;
+  // background-color: #fff;
   padding: 10px 25px;
   border-bottom: 1px solid $color-white;
   position:fixed;
@@ -282,7 +282,7 @@ a {
 
 
   h1 {
-    color: $color-white;
+    color: $color-orange-accent;
   }
 
   .menu {

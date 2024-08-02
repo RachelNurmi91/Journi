@@ -6,10 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import Loading from "../../Shared/UI/Loading";
-import { Collapse } from "reactstrap";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
-function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
+function HotelList({ fetchUpdatedTrips, hotelListData, activeTrip, ...props }) {
   const [hotelList, setHotelList] = useState(null);
   const [openHotelId, setOpenHotelId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -131,13 +130,13 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
 
   return (
     <>
-      <Breadcrumbs additionalCrumb="Hotels" />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Hotels"
+      />
       <div className="content-body hotel-list" style={{ paddingTop: "50px" }}>
-        <Header
-          rightTitle="+ Add New"
-          // rightIcon="add"
-          destination={"/hotels/add"}
-        />
+        <Header title="Hotels" rightIcon={true} destination={"/hotels/add"} />
         {hotelListData.length
           ? displayHotels()
           : "Sleep is important, so add your first hotel!"}
@@ -150,6 +149,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, ...props }) {
 function mapStateToProps(state) {
   return {
     hotelListData: state.account?.activeTrip?.hotels,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

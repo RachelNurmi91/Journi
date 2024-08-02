@@ -7,12 +7,12 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
-import { Collapse } from "reactstrap";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 function TransportationList({
   fetchUpdatedTrips,
   transportationListData,
+  activeTrip,
   ...props
 }) {
   const [transportationList, setTransportationList] = useState(null);
@@ -160,14 +160,18 @@ function TransportationList({
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Transportation"
+      />
       <div
         className="content-body transportation-list"
         style={{ paddingTop: "50px" }}
       >
         <Header
           title="Transporation"
-          rightTitle="+ Add"
+          rightIcon={true}
           destination={"/transportation/add"}
         />
         {transportationListData?.length
@@ -182,6 +186,7 @@ function TransportationList({
 function mapStateToProps(state) {
   return {
     transportationListData: state.account?.activeTrip?.transportation,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

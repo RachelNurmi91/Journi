@@ -8,7 +8,7 @@ import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
-function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
+function NoteList({ fetchUpdatedTrips, noteListData, activeTrip, ...props }) {
   const [loading, setLoading] = useState(false);
   const [sortedNotes, setSortedNotes] = useState(null);
 
@@ -73,13 +73,13 @@ function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Activities"
+      />
       <div className="content-body note-list" style={{ paddingTop: "50px" }}>
-        <Header
-          rightTitle="+ Add Note"
-          // rightIcon="add"
-          destination={"/notes/add"}
-        />
+        <Header title="Notes" rightIcon={true} destination={"/notes/add"} />
         {noteListData?.length ? (
           <div>
             <ul>{displayNotes()}</ul>
@@ -96,6 +96,7 @@ function NoteList({ fetchUpdatedTrips, noteListData, ...props }) {
 function mapStateToProps(state) {
   return {
     noteListData: state.account?.activeTrip?.notes,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

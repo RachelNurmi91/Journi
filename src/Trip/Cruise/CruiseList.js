@@ -13,6 +13,7 @@ function CruiseList({
   fetchUpdatedTrips,
   cruiseListData,
   deleteTripData,
+  activeTrip,
   ...props
 }) {
   const [cruiseList, setCruiseList] = useState(null);
@@ -135,13 +136,13 @@ function CruiseList({
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Cruise"
+      />
       <div className="content-body cruise-list" style={{ paddingTop: "50px" }}>
-        <Header
-          rightTitle="+ Add New"
-          // rightIcon="add"
-          destination={"/cruises/add"}
-        />
+        <Header title="Cruise" rightIcon={true} destination={"/cruises/add"} />
         {cruiseListData?.length
           ? displayCruises()
           : "Cruiser, add your first cruise!"}
@@ -154,6 +155,7 @@ function CruiseList({
 function mapStateToProps(state) {
   return {
     cruiseListData: state.account?.activeTrip?.cruises,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

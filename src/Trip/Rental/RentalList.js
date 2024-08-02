@@ -7,19 +7,19 @@ import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
 import TripRequests from "../../Requests/TripRequests";
 import { deleteTripData } from "../../Redux/Actions/AccountActions";
 import Loading from "../../Shared/UI/Loading";
-import { Collapse } from "reactstrap";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
-function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
+function RentalList({
+  fetchUpdatedTrips,
+  rentalListData,
+  activeTrip,
+  ...props
+}) {
   const [rentalList, setRentalList] = useState(null);
-  const [openRentalId, setOpenRentalId] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const tripRequest = new TripRequests();
 
-  const toggleOpen = (id) => {
-    setOpenRentalId((prevId) => (prevId === id ? null : id));
-  };
   const sortByDate = useCallback(() => {
     let sortedRentals;
 
@@ -67,7 +67,6 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
 
   const displayRentals = () => {
     return rentalList?.map((rental, index) => {
-      const isOpen = openRentalId === rental._id;
       return (
         <div className="outlined-box p-0 mb-4" key={index}>
           <div style={{ padding: "25px" }}>
@@ -162,11 +161,15 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Rental Cars"
+      />
       <div className="content-body rental-list" style={{ paddingTop: "50px" }}>
         <Header
-          rightTitle="+ Add New"
-          // title="Rentals" rightIcon="add"
+          title="Rental Cars"
+          rightIcon={true}
           destination={"/rentals/add"}
         />
         {rentalListData?.length
@@ -181,6 +184,7 @@ function RentalList({ fetchUpdatedTrips, rentalListData, ...props }) {
 function mapStateToProps(state) {
   return {
     rentalListData: state.account?.activeTrip?.rentals,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

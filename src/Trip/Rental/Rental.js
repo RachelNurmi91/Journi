@@ -288,8 +288,12 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body">
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Rental Cars"
+      />
+      <div className="content-body rental-list" style={{ paddingTop: "50px" }}>
         <Header
           title={updating ? "Update Rental Car" : "Add Rental Car"}
           leftIcon={activeTrip?.rentals?.length ? true : false}

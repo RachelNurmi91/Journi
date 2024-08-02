@@ -12,7 +12,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Collapse } from "reactstrap";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
-function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
+function ActivityList({
+  fetchUpdatedTrips,
+  activityListData,
+  activeTrip,
+  ...props
+}) {
   const [activityList, setActivityList] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
@@ -208,7 +213,11 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Activities"
+      />
       <div
         className="content-body activity-list"
         style={{ paddingTop: "50px" }}
@@ -244,7 +253,7 @@ function ActivityList({ fetchUpdatedTrips, activityListData, ...props }) {
 function mapStateToProps(state) {
   return {
     activityListData: state.account?.activeTrip?.activities,
-    trip: state.account?.activeTrip,
+    activeTrip: state.account?.activeTrip,
   };
 }
 

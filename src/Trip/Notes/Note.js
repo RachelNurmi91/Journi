@@ -99,8 +99,13 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
 
   return (
     <>
-      <Breadcrumbs />
-      <div className="content-body">
+      <Breadcrumbs
+        prevCrumb={activeTrip?.name}
+        prevCrumbLink={"/trips"}
+        currentCrumb="Notes"
+      />
+
+      <div className="content-body" style={{ paddingTop: "50px" }}>
         <Header
           title={updating ? "Update Note" : "Add Note"}
           leftIcon={activeTrip?.notes?.length ? true : false}
