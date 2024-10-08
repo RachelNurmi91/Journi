@@ -169,7 +169,8 @@ function TripsList({
         <Header
           title="Trips"
           subtitle="Manage your active trips, or add a new one"
-          rightTitle="+ Add New"
+          rightIcon="add"
+          destination={"/trips/add"}
         />
         {tripsData.length ? (
           renderTripList()

@@ -43,6 +43,8 @@ function Header({
     );
   };
 
+  console.log(rightIcon);
+
   return (
     <div className="row mt-2 mb-3">
       {leftIcon ? (
