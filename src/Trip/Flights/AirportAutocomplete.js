@@ -1,8 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CountryList } from "../../Shared/Data/CountryList";
 import { AirportList } from "../../Shared/Data/AirportList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AirportAutocomplete = ({ placeholder, onChange, value, name }) => {
+const AirportAutocomplete = ({
+  placeholder,
+  onChange,
+  value,
+  name,
+  inputError,
+  labelIcon,
+  label,
+}) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const inputRef = useRef(null);
@@ -52,10 +61,27 @@ const AirportAutocomplete = ({ placeholder, onChange, value, name }) => {
   };
 
   return (
-    <div
-      className="autocomplete-container form-group"
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="autocomplete-container" onMouseLeave={handleMouseLeave}>
+      <label
+        htmlFor={name}
+        className={inputError?.includes(name) ? "error-color" : ""}
+      >
+        <div>
+          <FontAwesomeIcon
+            icon={`labelIcon ${labelIcon}`}
+            style={{ color: "#0bb6c0" }}
+          />
+          <span
+            className={
+              inputError?.includes("airport")
+                ? "label error-color mx-2"
+                : "label mx-2"
+            }
+          >
+            {label}
+          </span>
+        </div>
+      </label>
       <input
         ref={inputRef}
         type="text"
@@ -64,6 +90,7 @@ const AirportAutocomplete = ({ placeholder, onChange, value, name }) => {
         onChange={handleChange}
         placeholder={placeholder}
         name={name}
+        style={{ width: "125px" }}
       />
       <ul className="autocomplete-input" style={{ width: inputWidth }}>
         {suggestions.map((item, index) => (

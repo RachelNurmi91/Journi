@@ -573,6 +573,9 @@ button {
 
 
 .autocomplete-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .autocomplete-input {
     position: absolute;

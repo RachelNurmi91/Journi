@@ -6,7 +6,6 @@ import Button from "../../Shared/UI/Button";
 import Header from "../../Shared/UI/Header";
 import Radio from "../../Shared/UI/Radio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Calendar from "../../Shared/UI/Calendar";
 import TimeCalendar from "../../Shared/UI/TimeCalendar";
 import TripRequests from "../../Requests/TripRequests";
 import { fetchUpdatedTrips } from "../../Redux/Operations/AccountOperations";
@@ -14,7 +13,6 @@ import { useLocation } from "react-router-dom";
 import Loading from "../../Shared/UI/Loading";
 import RoundTrip from "./RoundTrip";
 import OneWay from "./OneWay";
-import Time from "../../Shared/UI/Time";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
 
 const DEFAULT_FORM_DATA = {
@@ -235,7 +233,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
     }
   };
 
-  const handleDepartureDate = (date) => {
+  const handleDepartureDateTime = (date) => {
     if (inputError) {
       if (inputError?.includes("date")) {
         let updateError = inputError.filter((err) => err !== "date");
@@ -259,7 +257,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
       }
 
       if (returnDate && returnDate < selectedDate) {
-        handleReturnDate(date);
+        handleReturnDateTime(date);
       }
     }
 
@@ -268,11 +266,12 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
       departureFlight: {
         ...prevFormData.departureFlight,
         date: date,
+        time: date,
       },
     }));
   };
 
-  const handleReturnDate = (date) => {
+  const handleReturnDateTime = (date) => {
     if (inputError) {
       if (inputError?.includes("returnDate")) {
         let updateError = inputError.filter((err) => err !== "returnDate");
@@ -299,29 +298,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
       returnFlight: {
         ...prevFormData.returnFlight,
         date: date,
-      },
-    }));
-  };
-
-  // const handleShowNameInput = () => {
-  //   setDisplayNewNameInput(!displayNewNameInput);
-  // };
-
-  const handleDepartureTime = (time) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      departureFlight: {
-        ...prevFormData.departureFlight,
-        time: time,
-      },
-    }));
-  };
-  const handleReturnTime = (time) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      returnFlight: {
-        ...prevFormData.returnFlight,
-        time: time,
+        time: date,
       },
     }));
   };
@@ -371,47 +348,18 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
           <hr />
           <div className="row">
             <div className="col-6 text-center">
-              <div className="mb-1">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-plane-departure"
-                  style={{ color: "#0bb6c0" }}
-                />
-                <span
-                  className={
-                    inputError?.includes("airport")
-                      ? "label error-color mx-3"
-                      : "label mx-3"
-                  }
-                >
-                  From
-                </span>
-              </div>
               <AirportAutocomplete
-                placeholder="Departure city"
+                placeholder="City or IATA"
                 onChange={handleDepartureAirport}
                 value={formData?.departureFlight?.airport}
                 name="airport"
+                labelIcon="fa-plane-departure"
+                label="Departure"
               />
             </div>
             <div className="col-6 text-center">
-              <div className="mb-1">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-plane-arrival"
-                  style={{ color: "#0bb6c0" }}
-                />
-                <span
-                  className={
-                    inputError?.includes("returnAirport") ||
-                    inputError?.includes("destinationAirport")
-                      ? "label error-color mx-3"
-                      : "label mx-3"
-                  }
-                >
-                  To
-                </span>
-              </div>
               <AirportAutocomplete
-                placeholder="Arrival city"
+                placeholder="City or IATA"
                 onChange={handleReturnAirport}
                 value={
                   formData?.isRoundTrip
@@ -421,81 +369,34 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
                 name={
                   formData?.isRoundTrip ? "returnAirport" : "destinationAirport"
                 }
+                labelIcon="fa-plane-arrival"
+                label="Arrival"
               />
             </div>
           </div>
           <div className="row mt-3">
             <div className="col-6 text-center">
-              <FontAwesomeIcon
-                icon="fa-solid fa-calendar-days"
-                style={{ color: "#0bb6c0" }}
-              />
-              <span
-                className={
-                  inputError?.includes("date")
-                    ? "label error-color mx-3"
-                    : "label mx-3"
-                }
-              >
-                Depart
-              </span>
               <TimeCalendar
                 selectedDate={formData?.departureFlight?.date}
-                onDateChange={handleDepartureDate}
+                onDateChange={handleDepartureDateTime}
                 placeholder="Select Date"
+                name="departureDate"
+                label="Depart"
               />
             </div>
-            <div className="col text-center">
-              <FontAwesomeIcon
-                icon="fa-solid fa-clock"
-                style={{ color: "#0bb6c0" }}
-              />
-              <span className="label mx-3">Time</span>
-              <Time
-                selectedDate={formData?.departureFlight?.time}
-                onChange={handleDepartureTime}
-                placeholder="Select Time"
-              />
-            </div>
-          </div>
 
-          {!formData?.isRoundTrip ? null : (
-            <div className="row mt-3">
+            {!formData?.isRoundTrip ? null : (
               <div className="col-6 text-center">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-calendar-days"
-                  style={{ color: "#0bb6c0" }}
-                />
-                <span
-                  className={
-                    inputError?.includes("returnDate")
-                      ? "label error-color mx-3"
-                      : "label mx-3"
-                  }
-                >
-                  Return
-                </span>
-
-                <Calendar
+                <TimeCalendar
                   selectedDate={formData?.returnFlight?.date}
-                  onDateChange={handleReturnDate}
+                  onDateChange={handleReturnDateTime}
                   placeholder="Select Date"
+                  name="returnDate"
+                  label="Return"
                 />
               </div>
-              <div className="col text-center">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-clock"
-                  style={{ color: "#0bb6c0" }}
-                />
-                <span className="label mx-3">Time</span>
-                <Time
-                  selectedDate={formData?.returnFlight?.time}
-                  onChange={handleReturnTime}
-                  placeholder="Select Time"
-                />
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </>
     );
