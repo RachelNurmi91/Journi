@@ -1,12 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function Calendar({
-  selectedDate,
-  onDateChange,
-  placeholder,
-  showTimes = false,
-}) {
+function TimeCalendar({ selectedDate, onDateChange, placeholder }) {
   return (
     <DatePicker
       selected={selectedDate}
@@ -14,9 +9,11 @@ function Calendar({
       minDate={new Date()}
       disabledKeyboardNavigation
       className="date-time"
+      showTimeSelect
+      timeFormat="HH:mm:ss"
       withPortal
       placeholderText={placeholder}
     />
   );
 }
-export default Calendar;
+export default TimeCalendar;

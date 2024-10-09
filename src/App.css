@@ -90,17 +90,6 @@ a:active {
   z-index: 99;
 }
 
-.navbar-toggle {
-  margin-left: 20px;
-  display: inline;
-}
-
-.navbar-body {
-  height: 5px;
-  border-bottom: 1px solid #c0c0c0;
-}
-
-
 .profile-icon {
   display: flex;
   align-items: center;

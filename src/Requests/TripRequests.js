@@ -22,6 +22,7 @@ export default class TripRequests {
   }
 
   updateTrip(data) {
+    console.log("data: ", data);
     const token = localStorage.getItem("token");
     return axios
       .put(`${SERVER}/trips/${data._id}`, data, {

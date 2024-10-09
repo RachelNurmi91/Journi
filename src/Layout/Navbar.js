@@ -2,11 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import logo from "../Media/Images/logo-white.png";
 import { useLocation, Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "./Sidebar";
 import { Sling as Hamburger } from "hamburger-react";
 
-function Navbar({ userData, account, activeTrip, userId }) {
+function Navbar({ userData, userId }) {
   const [showSideBar, setShowSideBar] = useState(false);
   const sideRef = useRef();
   const clickInside = useRef(false);
@@ -50,11 +49,17 @@ function Navbar({ userData, account, activeTrip, userId }) {
   }, [location.pathname]);
 
   return (
-    <div className="row mx-0">
-      <nav className="navbar">
-        <div className="toggle" onClick={toggleSideNav} style={{ zIndex: 2 }}>
-          <Hamburger rounded label="Show menu" color="#fff" size={30} />
-        </div>
+    <div>
+      <nav
+        className={`navbar d-flex ${
+          userId ? "justify-content-between" : "justify-content-center"
+        }`}
+      >
+        {userId && (
+          <div className="toggle" onClick={toggleSideNav} style={{ zIndex: 2 }}>
+            <Hamburger rounded label="Show menu" color="#fff" size={30} />
+          </div>
+        )}
 
         <Link to="/" onClick={closeSideNav}>
           <div className="logo-container">
@@ -75,6 +80,7 @@ function Navbar({ userData, account, activeTrip, userId }) {
           </div>
         ) : null}
       </nav>
+
       <div ref={sideRef}>
         <Sidebar showSideBar={showSideBar} closeSideNav={closeSideNav} />
       </div>

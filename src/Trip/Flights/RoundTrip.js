@@ -66,7 +66,7 @@ const RoundTrip = ({
           <Input
             name="name"
             onChange={handleDepartureInputChange}
-            placeholder="Airline"
+            placeholder=""
             label="Airline"
             value={departureFlight?.name}
             inputError={inputError}
@@ -82,7 +82,7 @@ const RoundTrip = ({
           <Input
             name="flightNo"
             onChange={handleDepartureInputChange}
-            placeholder="Flight Number"
+            placeholder="i.e. DL8103"
             label="Flight Number"
             value={departureFlight?.flightNo}
           />
@@ -91,7 +91,7 @@ const RoundTrip = ({
           <Input
             name="seat"
             onChange={handleDepartureInputChange}
-            placeholder="Seat"
+            placeholder=""
             label="Seat"
             value={departureFlight?.seat}
           />
@@ -102,7 +102,7 @@ const RoundTrip = ({
           <Input
             name="confirmationNo"
             onChange={handleDepartureInputChange}
-            placeholder="Confirmation #"
+            placeholder="Booking or confirmation number"
             label="Confirmation"
             value={departureFlight?.confirmationNo}
           />
@@ -133,7 +133,7 @@ const RoundTrip = ({
           <Input
             name="flightNo"
             onChange={handleReturnInputChange}
-            placeholder="Flight Number"
+            placeholder="i.e. DL8869"
             label="Flight Number"
             value={returnFlight?.flightNo}
           />
@@ -142,7 +142,7 @@ const RoundTrip = ({
           <Input
             name="seat"
             onChange={handleReturnInputChange}
-            placeholder="Seat"
+            placeholder=""
             label="Seat"
             value={returnFlight?.seat}
           />

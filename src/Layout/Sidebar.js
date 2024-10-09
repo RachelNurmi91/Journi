@@ -57,11 +57,10 @@ function Sidebar({
   const loggedInSideBar = () => {
     return (
       <>
-        <div className={activeTrip ? "flex-grow-1 mt-2" : ""}>
-          <h1>{activeTrip?.name}</h1>
-          {/* <h1 className="white-color text-center">
-            {activeTrip?.name?.toUpperCase()}
-          </h1> */}
+        <div className={activeTrip ? "flex-grow-1 mt-3" : ""}>
+          <h1 className="text-center text-dark text-uppercase">
+            {activeTrip?.name}
+          </h1>
           <div className="col align-self-center mb-3 w-75 mx-auto">
             {TripSelectorMemo}
           </div>

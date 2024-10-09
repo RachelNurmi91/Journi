@@ -1,3 +1,4 @@
+import "./SegmentStyles.scss";
 import { useRef } from "react";
 
 function Input({
@@ -11,10 +12,22 @@ function Input({
 }) {
   const inputRef = useRef(null);
   return (
+    // <div class="form-floating mb-3">
+    //   <input
+    //     ref={inputRef}
+    //     type={type}
+    //     class="form-control"
+    //     id={name}
+    //     placeholder={placeholder}
+    //     onChange={onChange}
+    //     value={value ? value : ""}
+    //   />
+    //   <label htmlFor={name}>{label}</label>
+    // </div>
     <div className="form-group my-2">
       <label
         htmlFor={name}
-        className={inputError?.includes(name) ? "error-color mb-2" : "mb-2"}
+        className={inputError?.includes(name) ? "error-color" : ""}
       >
         {label}
       </label>

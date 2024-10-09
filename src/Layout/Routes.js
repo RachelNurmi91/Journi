@@ -30,8 +30,8 @@ function Content({ ...props }) {
   return (
     <div style={{ marginTop: "60px" }}>
       <Routes>
-        <Route path="/" element={<Summary />} />
-        <Route path="*" element={<Summary />} />
+        <Route path="/" element={<Summary navigate={navigate} />} />
+        <Route path="*" element={<Summary navigate={navigate} />} />
         <Route path="/login" element={<Login navigate={navigate} />} />
         <Route path="/register" element={<Register navigate={navigate} />} />
         {props.userId && (

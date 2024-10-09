@@ -202,13 +202,13 @@ function Trip({
       return;
     }
 
-    selectedDate = new Date(selectedDate);
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       endDate: selectedDate,
     }));
   };
+
+  console.log(formData);
 
   const onCheck = (event) => {
     //If theres an error and user updates field remove error.

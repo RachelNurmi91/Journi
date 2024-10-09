@@ -5,8 +5,16 @@ import Methods from "../Shared/Methods";
 import TodaysItinerary from "./TodaysItinerary";
 import Button from "../Shared/UI/Button";
 
-function Summary({ userData, activeTrip }) {
+function Summary({ userData, activeTrip, ...props }) {
   const USER_ID = userData.id;
+
+  const navigateToLogin = () => {
+    props.navigate(`/login`);
+  };
+
+  const navigateToRegister = () => {
+    props.navigate(`/register`);
+  };
 
   const formatTodaysDate = () => {
     const date = new Date();
@@ -99,6 +107,16 @@ function Summary({ userData, activeTrip }) {
           size="5x"
         />
         <p>Login or register to start planning.</p>
+        <Button
+          label="login"
+          onClick={navigateToLogin}
+          style={{ margin: "10px", maxWidth: "150px" }}
+        />
+        <Button
+          label="register"
+          onClick={navigateToRegister}
+          style={{ margin: "10px", maxWidth: "150px" }}
+        />
       </div>
     );
   };

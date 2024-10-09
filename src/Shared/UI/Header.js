@@ -1,15 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 
-function Header({
-  title,
-  rightIcon,
-  leftIcon,
-  destination,
-  props,
-  subtitle,
-  rightTitle,
-}) {
+function Header({ title, rightIcon, leftIcon, destination, props, subtitle }) {
   let navigate = useNavigate();
 
   const renderRightIcon = (icon) => {

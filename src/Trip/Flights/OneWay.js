@@ -33,7 +33,7 @@ const OneWay = ({ formData, setFormData, inputError, setInputError }) => {
             <Input
               name="name"
               onChange={handleInputChange}
-              placeholder="Airline"
+              placeholder=""
               label="Airline"
               value={flight?.name}
               inputError={inputError}
@@ -46,7 +46,7 @@ const OneWay = ({ formData, setFormData, inputError, setInputError }) => {
             <Input
               name="confirmationNo"
               onChange={handleInputChange}
-              placeholder="Confirmation #"
+              placeholder="Your reservations confirmation number"
               label="Confirmation"
               value={flight?.confirmationNo}
             />
@@ -57,7 +57,7 @@ const OneWay = ({ formData, setFormData, inputError, setInputError }) => {
             <Input
               name="flightNo"
               onChange={handleInputChange}
-              placeholder="Flight Number"
+              placeholder="i.e. DL8103"
               label="Flight Number"
               value={flight?.flightNo}
             />
@@ -66,7 +66,7 @@ const OneWay = ({ formData, setFormData, inputError, setInputError }) => {
             <Input
               name="seat"
               onChange={handleInputChange}
-              placeholder="Seat"
+              placeholder=""
               label="Seat"
               value={flight?.seat}
             />
