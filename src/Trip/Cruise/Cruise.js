@@ -216,7 +216,7 @@ function Cruise({ fetchUpdatedTrips, activeTrip, ...props }) {
         currentCrumb="Cruise"
       />
 
-      <div className="content-body" style={{ paddingTop: "50px" }}>
+      <div className="content-body">
         <Header
           title={updating ? "Update Cruise" : "Add Cruise"}
           leftIcon={activeTrip?.cruises?.length ? true : false}

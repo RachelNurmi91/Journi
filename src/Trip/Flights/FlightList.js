@@ -255,7 +255,7 @@ function FlightList({
         prevCrumbLink={"/trips"}
         currentCrumb="Flights"
       />
-      <div className="content-body flight-list" style={{ paddingTop: "50px" }}>
+      <div className="content-body flight-list">
         <Header title="Flights" rightIcon={true} destination={"/flights/add"} />
 
         {flightListData.length

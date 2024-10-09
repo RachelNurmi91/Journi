@@ -218,10 +218,7 @@ function ActivityList({
         prevCrumbLink={"/trips"}
         currentCrumb="Activities"
       />
-      <div
-        className="content-body activity-list"
-        style={{ paddingTop: "50px" }}
-      >
+      <div className="content-body activity-list">
         <Header
           title="Activities"
           rightTitle="+ Add New"

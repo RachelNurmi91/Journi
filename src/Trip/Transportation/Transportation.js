@@ -233,10 +233,7 @@ function Transportation({ fetchUpdatedTrips, activeTrip, ...props }) {
         prevCrumbLink={"/trips"}
         currentCrumb="Transportation"
       />
-      <div
-        className="content-body transportation-list"
-        style={{ paddingTop: "50px" }}
-      >
+      <div className="content-body transportation-list">
         <Header
           title={updating ? "Update Transportation" : "Add Transportation"}
           leftIcon={activeTrip?.transportation?.length ? true : false}

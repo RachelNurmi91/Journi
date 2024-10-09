@@ -165,10 +165,7 @@ function TransportationList({
         prevCrumbLink={"/trips"}
         currentCrumb="Transportation"
       />
-      <div
-        className="content-body transportation-list"
-        style={{ paddingTop: "50px" }}
-      >
+      <div className="content-body transportation-list">
         <Header
           title="Transporation"
           rightIcon={true}

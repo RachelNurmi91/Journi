@@ -120,7 +120,7 @@ function Insurance({ fetchUpdatedTrips, activeTrip, ...props }) {
         currentCrumb="Insurance"
       />
 
-      <div className="content-body" style={{ paddingTop: "50px" }}>
+      <div className="content-body">
         <Header
           title={updating ? "Update Insurance" : "Add Insurance"}
           leftIcon={activeTrip?.insurance?.length ? true : false}

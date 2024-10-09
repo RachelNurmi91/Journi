@@ -135,7 +135,7 @@ function HotelList({ fetchUpdatedTrips, hotelListData, activeTrip, ...props }) {
         prevCrumbLink={"/trips"}
         currentCrumb="Hotels"
       />
-      <div className="content-body hotel-list" style={{ paddingTop: "50px" }}>
+      <div className="content-body hotel-list">
         <Header title="Hotels" rightIcon={true} destination={"/hotels/add"} />
         {hotelListData.length
           ? displayHotels()

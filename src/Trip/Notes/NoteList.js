@@ -78,7 +78,7 @@ function NoteList({ fetchUpdatedTrips, noteListData, activeTrip, ...props }) {
         prevCrumbLink={"/trips"}
         currentCrumb="Activities"
       />
-      <div className="content-body note-list" style={{ paddingTop: "50px" }}>
+      <div className="content-body note-list">
         <Header title="Notes" rightIcon={true} destination={"/notes/add"} />
         {noteListData?.length ? (
           <div>

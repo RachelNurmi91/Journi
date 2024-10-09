@@ -165,7 +165,7 @@ function TripsList({
         prevCrumbLink={"/profile"}
         currentCrumb="Trips"
       />
-      <div className="content-body profile" style={{ paddingTop: "50px" }}>
+      <div className="content-body profile">
         <Header
           title="Trips"
           subtitle="Manage your active trips, or add a new one"

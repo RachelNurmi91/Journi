@@ -141,7 +141,7 @@ function CruiseList({
         prevCrumbLink={"/trips"}
         currentCrumb="Cruise"
       />
-      <div className="content-body cruise-list" style={{ paddingTop: "50px" }}>
+      <div className="content-body cruise-list">
         <Header title="Cruise" rightIcon={true} destination={"/cruises/add"} />
         {cruiseListData?.length
           ? displayCruises()

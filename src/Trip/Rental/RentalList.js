@@ -166,7 +166,7 @@ function RentalList({
         prevCrumbLink={"/trips"}
         currentCrumb="Rental Cars"
       />
-      <div className="content-body rental-list" style={{ paddingTop: "50px" }}>
+      <div className="content-body rental-list">
         <Header
           title="Rental Cars"
           rightIcon={true}

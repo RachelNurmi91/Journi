@@ -509,7 +509,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
         currentCrumb="Flights"
       />
 
-      <div className="content-body" style={{ paddingTop: "50px" }}>
+      <div className="content-body">
         <Header
           title={updating ? "Update Flight" : "Add Flight"}
           leftIcon={activeTrip?.flights?.length ? true : false}

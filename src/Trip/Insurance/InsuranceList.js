@@ -120,10 +120,7 @@ function InsuranceList({
         prevCrumbLink={"/trips"}
         currentCrumb="Insurance"
       />
-      <div
-        className="content-body insurance-list"
-        style={{ paddingTop: "50px" }}
-      >
+      <div className="content-body insurance-list">
         <Header
           title="Insurance"
           rightIcon={true}

@@ -105,7 +105,7 @@ function Note({ fetchUpdatedTrips, activeTrip, ...props }) {
         currentCrumb="Notes"
       />
 
-      <div className="content-body" style={{ paddingTop: "50px" }}>
+      <div className="content-body">
         <Header
           title={updating ? "Update Note" : "Add Note"}
           leftIcon={activeTrip?.notes?.length ? true : false}

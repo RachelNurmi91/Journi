@@ -249,7 +249,7 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
         currentCrumb="Hotels"
       />
 
-      <div className="content-body" style={{ paddingTop: "50px" }}>
+      <div className="content-body">
         <Header
           title={updating ? "Update Hotel" : "Add Hotel"}
           leftIcon={activeTrip?.hotels?.length ? true : false}

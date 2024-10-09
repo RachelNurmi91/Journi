@@ -140,7 +140,7 @@ function RewardProgramList({
         prevCrumbLink={"/profile"}
         currentCrumb="Reward Programs"
       />
-      <div className="content-body profile" style={{ paddingTop: "50px" }}>
+      <div className="content-body profile">
         <Header
           title="Reward Programs"
           rightIcon={true}

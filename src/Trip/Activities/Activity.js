@@ -229,7 +229,7 @@ function Activity({ fetchUpdatedTrips, activeTrip, ...props }) {
         prevCrumbLink={"/trips"}
         currentCrumb="Activities"
       />
-      <div className="content-body activity" style={{ paddingTop: "50px" }}>
+      <div className="content-body activity">
         <Header
           title={updating ? "Update Activity" : "Add Activity"}
           leftIcon={activeTrip?.activities?.length ? true : false}

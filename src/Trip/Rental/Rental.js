@@ -293,7 +293,7 @@ function Rental({ fetchUpdatedTrips, activeTrip, ...props }) {
         prevCrumbLink={"/trips"}
         currentCrumb="Rental Cars"
       />
-      <div className="content-body rental-list" style={{ paddingTop: "50px" }}>
+      <div className="content-body rental-list">
         <Header
           title={updating ? "Update Rental Car" : "Add Rental Car"}
           leftIcon={activeTrip?.rentals?.length ? true : false}
