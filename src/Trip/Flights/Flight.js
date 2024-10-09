@@ -439,7 +439,7 @@ function Flight({ fetchUpdatedTrips, activeTrip, ...props }) {
               >
                 Depart
               </span>
-              <Calendar
+              <TimeCalendar
                 selectedDate={formData?.departureFlight?.date}
                 onDateChange={handleDepartureDate}
                 placeholder="Select Date"
