@@ -89,13 +89,13 @@ function HotelList({ fetchUpdatedTrips, hotelListData, activeTrip, ...props }) {
                 {hotel.name}
               </div>
 
-              {hotel.city || hotel.country ? (
+              {hotel.address ? (
                 <div>
                   <FontAwesomeIcon
                     icon="fa-solid fa-location-dot"
                     style={{ color: "#0bb6c0" }}
                   />{" "}
-                  {hotel.city}, {hotel.country}
+                  {hotel.address}
                 </div>
               ) : null}
             </div>
