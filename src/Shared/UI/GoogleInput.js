@@ -1,4 +1,4 @@
-import "./SegmentStyles.scss";
+import "./Styles.scss";
 import { usePlacesWidget } from "react-google-autocomplete";
 
 function GoogleInput({
