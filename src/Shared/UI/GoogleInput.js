@@ -22,13 +22,7 @@ function GoogleInput({
   });
 
   return (
-    <div className="form-group my-2">
-      <label
-        htmlFor={name}
-        className={inputError?.includes(name) ? "error-color" : ""}
-      >
-        {label}
-      </label>
+    <div class="form-floating my-2">
       <input
         ref={ref}
         className="form-control"
@@ -37,6 +31,12 @@ function GoogleInput({
         placeholder={placeholder}
         type={type}
       />
+      <label
+        htmlFor={name}
+        className={inputError?.includes(name) ? "error-color" : ""}
+      >
+        {label}
+      </label>
     </div>
   );
 }
