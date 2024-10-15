@@ -1,16 +1,26 @@
 import "./SegmentStyles.scss";
-import { useRef } from "react";
+import { usePlacesWidget } from "react-google-autocomplete";
 
-function Input({
+function GoogleInput({
   name,
   onChange,
   placeholder,
   label,
   type = "text",
-  value,
   inputError,
+  searchTypes,
 }) {
-  const inputRef = useRef(null);
+  const { ref } = usePlacesWidget({
+    apiKey: process.env.REACT_APP_GOOGLE_MAPS_API,
+    onPlaceSelected: (place) => {
+      onChange(place);
+    },
+    options: {
+      types: searchTypes,
+      fields: ["name", "formatted_address", "address_components"],
+    },
+  });
+
   return (
     <div className="form-group my-2">
       <label
@@ -20,17 +30,15 @@ function Input({
         {label}
       </label>
       <input
-        ref={inputRef}
+        ref={ref}
         className="form-control"
         name={name}
         id={name}
         placeholder={placeholder}
-        onChange={onChange}
         type={type}
-        value={value ? value : ""}
       />
     </div>
   );
 }
 
-export default Input;
+export default GoogleInput;

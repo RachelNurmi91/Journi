@@ -13,10 +13,11 @@ import { useLocation } from "react-router-dom";
 import Checkbox from "../../Shared/UI/Checkbox";
 import Loading from "../../Shared/UI/Loading";
 import Breadcrumbs from "../../Shared/UI/Breadcrumbs";
+import GoogleInput from "../../Shared/UI/GoogleInput";
 
 const DEFAULT_FORM_DATA = {
   name: null,
-  city: null,
+  address: null,
   country: null,
   startDate: null,
   endDate: null,
@@ -67,10 +68,29 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
     setFormData((prevState) => ({ ...prevState, [targetKey]: newValue }));
   };
 
-  const handleCountrySelect = (country) => {
+  const handleHotelChange = (place) => {
+    const name = place.name;
+    const address = place.formatted_address;
+    const country = place.address_components.find((component) => {
+      if (component.types.includes("country")) {
+        return component;
+      } else return null;
+    });
+
+    if (inputError) {
+      //If theres an error and user updates field remove error.
+      if (inputError?.includes("hotel")) {
+        let updateError = inputError.filter((err) => err !== "hotel");
+        console.error(updateError);
+        setInputError(updateError);
+      }
+    }
+
     setFormData((prevState) => ({
       ...prevState,
-      country: country,
+      name: name,
+      address: address,
+      country: country ? country.short_name : null,
     }));
   };
 
@@ -95,8 +115,8 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
       errors.push("endDate");
     }
     if (!formData.name) {
-      console.error("Save failed: Rental agency name missing.");
-      errors.push("name");
+      console.error("Save failed: Hotel missing.");
+      errors.push("hotel");
     }
 
     if (errors.length) {
@@ -261,12 +281,12 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
         <div className="container">
           <div className="row"> {renderOptionsBox()}</div>
           <div className="row mt-2">
-            <Input
-              name="name"
-              onChange={handleChange}
-              placeholder="Hotel"
+            <GoogleInput
+              name="hotel"
+              placeholder="Hotel Name"
               label="Hotel"
-              value={formData.name}
+              onChange={handleHotelChange}
+              searchTypes={["lodging"]}
               inputError={inputError}
             />
 
@@ -277,26 +297,6 @@ function Hotel({ fetchUpdatedTrips, activeTrip, ...props }) {
               label="Confirmation #"
               value={formData.confirmationNo}
             />
-            <div className="container">
-              <div className="row">
-                <div className="col-6">
-                  <Input
-                    name="city"
-                    onChange={handleChange}
-                    placeholder="City"
-                    label="City"
-                    value={formData.city}
-                  />
-                </div>
-                <div className="col-6">
-                  <CountryAutocomplete
-                    onChange={handleCountrySelect}
-                    value={formData.country}
-                  />
-                </div>
-              </div>
-            </div>
-
             <div>
               <Checkbox
                 label="Reservation is under another name"
