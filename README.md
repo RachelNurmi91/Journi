@@ -4,4 +4,4 @@ Journi was created as a fullstack application to allow users to store upcoming t
 
 ### Included Packges/Libraries
 Journi relies on the following packages and libraries.
-* https://redux.js.org/
+* [Redux](https://redux.js.org/)
