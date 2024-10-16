@@ -1,6 +1,6 @@
 # Journi Travel Companion
 
-Journi was created as a fullstack application to allow users to store upcoming travel plans. Confirmations and bookings get lost in emails and there are too many accounts to sign into to access travel information. Journi allows a user to store and access that data in a singular space.
+While traveling, I noticed confirmations and bookings get lost in emails and there are too many accounts to sign into to access travel information quickly. To combat that issue I created Journi, a fullstack application that allow users to store upcoming travel plans in a singuar place. 
 
 ### Included Packges/Libraries
 Journi relies on the following packages and libraries.
